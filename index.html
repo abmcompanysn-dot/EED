@@ -176,7 +176,7 @@
 
         /* Sections Générales */
         section {
-            padding: 80px 0;
+            padding: 100px 0;
         }
 
         h1, h2, h3 {
@@ -517,10 +517,10 @@
 
         /* --- Nouveaux styles pour le compte à rebours --- */
         #next-event {
-            background-color: rgba(0,0,0,0.2);
             border-radius: 15px;
             border: 1px solid var(--border-color);
-            backdrop-filter: blur(5px);
+            background-color: transparent;
+            border: none;
         }
         #countdown-timer {
             display: flex;
@@ -644,12 +644,10 @@
         .prayer-section-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 50px;
             align-items: center;
-            background-color: var(--dark-card);
-            border-radius: 15px;
+            background-color: transparent;
             overflow: hidden;
-            padding: 40px;
         }
         .prayer-image-container img { width: 100%; height: auto; border-radius: 10px; object-fit: cover; }
         .prayer-content h3 { font-size: 1.8em; color: var(--neon-blue); }
@@ -712,7 +710,7 @@
         </div>
     </div>
 
-    <main>
+    <main style="padding-top: 100px;">
         <section class="hero">
             <div class="hero-overlay"></div>
             <div class="container hero-text-content">
@@ -720,7 +718,7 @@
             </div>
         </section>
 
-        <section id="next-event" class="container" style="display: none; padding-top: 40px; padding-bottom: 40px;">
+        <section id="next-event" class="container" style="display: none;">
             <h2 class="section-title">Prochain Événement</h2>
             <p id="event-title" class="section-subtitle">Chargement de l'événement...</p>
             <div id="countdown-timer">
@@ -737,7 +735,7 @@
         </section>
 
         <section id="communaute" class="container">
-            <div class="prayer-section-layout animated-card">
+            <div class="prayer-section-layout">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
                 </div>
@@ -782,7 +780,7 @@
         </section>
 
         <section id="ressources-promo" class="container">
-            <div class="prayer-section-layout animated-card">
+            <div class="prayer-section-layout">
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
@@ -795,11 +793,11 @@
             </div>
         </section>
 
-        <section id="contact" class="container" style="padding-bottom: 80px;">
+        <section id="contact" class="container">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
             <div class="grid-2" style="gap: 40px; align-items: flex-start;">
-                <form id="main-contact-form" class="card" onsubmit="handleContactSubmit(event)">
+                <form id="main-contact-form" onsubmit="handleContactSubmit(event)">
                     <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
                     <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
@@ -808,12 +806,12 @@
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
-                    <div class="card" style="margin-bottom: 20px;">
+                    <div>
                         <h3>Nos Coordonnées</h3>
                         <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
                         <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Téléphone :</strong><br>33 824 52 94</p>
                     </div>
-                    <div class="card" style="padding: 10px; border-radius: 12px;">
+                    <div style="padding: 10px; border-radius: 12px; margin-top: 20px;">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
