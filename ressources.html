@@ -34,10 +34,14 @@
         nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--blue), var(--red)); transition: all 0.3s ease-in-out; }
         nav ul a:hover::after { width: 100%; left: 0; }
         nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
-        .nav-actions { display: flex; align-items: center; gap: 20px; }
-        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
-        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; background: none; border: none; padding: 0; }
+        .nav-links-mobile { 
+            display: flex; position: fixed; top: 0; left: -100%; width: 100%; height: 100%; 
+            background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; 
+            align-items: center; gap: 40px; font-size: 1.5em; transition: left 0.5s ease-in-out;
+        }
         .nav-links-mobile.active { display: flex; }
+        .nav-links-mobile.active { left: 0; }
         body.no-scroll { overflow: hidden; }
         section { padding: 80px 0; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
@@ -50,6 +54,29 @@
         .btn { display: inline-block; width: 100%; text-align: center; padding: 12px; background: var(--blue); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, opacity 0.2s; border: none; cursor: pointer; font-size: 1em; }
         .btn:hover { opacity: 0.9; transform: scale(1.02); }
         
+        /* Section Héros */
+        .hero-section {
+            padding: 120px 0;
+            background-image: 
+                linear-gradient(rgba(10, 10, 35, 0.9), rgba(10, 10, 35, 0.9)), 
+                url('r/rs.svg'),
+                radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: cover;
+            background-position: center, center, 0 0;
+            background-repeat: no-repeat, no-repeat, repeat;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background-blend-mode: normal, overlay, normal;
+        }
+        .hero-section .section-title {
+            font-size: 3.5em;
+            color: var(--luminous-white);
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+        .hero-section .section-subtitle {
+            margin-bottom: 0;
+        }
+
         /* Styles spécifiques à la page ressources */
         .search-bar {
             display: flex;
@@ -85,7 +112,6 @@
 
         @media (max-width: 992px) {
             nav ul.desktop-links { display: none; }
-            .nav-actions a.primary { display: none; }
             .menu-burger { display: block; }
         }
     </style>
@@ -96,36 +122,36 @@
             <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
-                <li><a href="organisation.html">Organisation</a></li>
+                <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="evenements.html">Événements</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="ressources.html" style="color: var(--luminous-white);">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="Boutique.html">Faire un Don</a>
-                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
-            </div>
+            <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
         </nav>
     </header>
 
     <div class="nav-links-mobile">
         <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
-        <a href="organisation.html" onclick="toggleMobileMenu()">Organisation</a>
+        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
         <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()" class="primary">Faire un Don</a>
     </div>
 
     <main>
-        <section class="container" style="background:none;">
+        <section class="hero-section">
             <h1 class="section-title">Bibliothèque de Ressources</h1>
             <p class="section-subtitle">Explorez nos sermons, études bibliques et autres enseignements pour grandir dans votre foi.</p>
+        </section>
 
+        <section class="container">
             <div class="search-bar">
                 <input type="search" placeholder="Rechercher par thème, orateur, date..." onkeyup="filterResources()">
                 <select onchange="filterResources()">
