@@ -751,16 +751,16 @@
             </div>
         </section>
 
-        <section id="communaute" class="container animated-card slide-in-left" style="padding-top: 0;">
-            <div class="prayer-section-layout animated-card">
+        <section id="communaute" class="container animated-card slide-in-left" style="padding-top: 0; padding-bottom: 0;">
+            <div class="promo-card">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
-                </div>
+                </div> 
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-                    <a href="demande-priere.html" class="btn-luxurious" style="width: auto; margin-top: 10px;">Soumettre une demande</a>
+                    <a href="demande-priere.html" class="btn-luxe" style="width: auto; margin-top: 10px;">Soumettre une demande</a>
                 </div>
             </div>
         </section>
@@ -796,19 +796,65 @@
             </div>
         </section>
 
-        <section id="ressources-promo" class="container animated-card slide-in-right">
-            <div class="prayer-section-layout animated-card">
+        <section id="ressources-promo" class="container animated-card slide-in-right" style="padding-top: 40px; padding-bottom: 0;">
+            <div class="promo-card">
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
-                    <a href="ressources.html" class="btn-luxurious" style="width: auto; margin-top: 10px;">Visiter la Bibliothèque</a>
-                </div>
-                <div class="prayer-image-container" style="max-height: 300px; display: flex; align-items: center;">
-                    <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: brightness(0.9) contrast(1.1); width: 80%; margin: auto;">
+                    <a href="ressources.html" class="btn-luxe" style="width: auto; margin-top: 10px;">Visiter la Bibliothèque</a>
+                </div> 
+                <div class="prayer-image-container">
+                    <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: opacity(0.5) drop-shadow(0 0 10px var(--neon-blue));">
                 </div>
             </div>
         </section>
+
+        <style>
+            .promo-card {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 50px;
+                align-items: center;
+                background-color: var(--dark-card);
+                padding: 40px;
+                border-radius: 15px;
+                border: 1px solid var(--border-color);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .promo-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
+            }
+            .promo-card .prayer-image-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+            @media (max-width: 992px) {
+                .promo-card {
+                    grid-template-columns: 1fr;
+                }
+                #communaute .prayer-image-container {
+                    order: -1; /* Met l'image avant le texte sur mobile */
+                }
+            }
+        </style>
+
+        <!-- ==================== Section Derniers Articles du Blog ==================== -->
+        <section id="blog-promo" class="container">
+            <h2 class="section-title">Derniers Articles du Blog</h2>
+            <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
+            <div class="grid-3" id="latest-posts-grid">
+                <!-- Les articles du blog seront injectés ici par JavaScript -->
+                <p style="text-align: center; grid-column: 1 / -1;">Chargement des articles...</p>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="blog.html" class="btn-luxe">Voir tous les articles</a>
+            </div>
+        </section>
+
 
         <section id="contact" class="container animated-card slide-in-left">
             <h2 class="section-title">Nous Contacter</h2>
@@ -819,7 +865,7 @@
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
                     <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
                     <div class="form-group"><label for="contact-message">Votre Message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
-                    <button type="submit" id="contact-submit-btn" class="btn btn-gradient">Envoyer le Message</button>
+                    <button type="submit" id="contact-submit-btn" class="btn-luxe">Envoyer le Message</button>
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
@@ -923,6 +969,39 @@
         .carousel-btn.prev { left: 15px; }
         .carousel-btn.next { right: 15px; }
 
+        /* --- Styles pour la section Blog Promo --- */
+        #blog-promo .card {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            padding: 0; /* Le padding sera dans le content */
+        }
+        #blog-promo .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        #blog-promo .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        #blog-promo .card-content h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: var(--luminous-white);
+        }
+        #blog-promo .card-content .meta {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        #blog-promo .card-content p {
+            flex-grow: 1;
+        }
+
         /* --- Nouvelles animations au défilement --- */
         .animated-card {
             opacity: 0;
@@ -957,6 +1036,14 @@
         }
         #next-event, #temoignages .section-title, #temoignages .section-subtitle {
             animation-name: fade-in;
+        }
+
+        /* Amélioration responsive de l'image "Ressources" */
+        @media (max-width: 992px) {
+            #ressources-promo .prayer-image-container {
+                order: -1; /* Met l'image avant le texte sur mobile */
+                max-height: none; /* Enlève la hauteur max */
+            }
         }
     </style>
 
@@ -1092,6 +1179,111 @@
                 }
                 observer.observe(card);
             });
+        });
+
+        // --- Logique pour le carrousel "Joie avec Jésus" ---
+        const slidesData = [
+            {
+                image: 'r/a.jpg',
+                title: '"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d\'eux."',
+                subtitle: 'Matthieu 18:20'
+            },
+            {
+                image: 'r/b.jpg',
+                title: '"Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos."',
+                subtitle: 'Matthieu 11:28'
+            },
+            {
+                image: 'r/c.jpg',
+                title: '"Je vous ai dit ces choses, afin que ma joie soit en vous, et que votre joie soit parfaite."',
+                subtitle: 'Jean 15:11'
+            }
+        ];
+
+        let currentSlide = 0;
+        let slideInterval;
+
+        function createSlides() {
+            const container = document.querySelector('.carousel-container');
+            // Vide le conteneur sauf les boutons
+            container.innerHTML = '<button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button><button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>';
+
+            slidesData.forEach((slide, index) => {
+                const slideEl = document.createElement('div');
+                slideEl.className = 'carousel-slide';
+                if (index === 0) slideEl.classList.add('active');
+                slideEl.style.backgroundImage = `url('${slide.image}')`;
+                slideEl.innerHTML = `<div class="slide-content"><h3>${slide.title}</h3><p>${slide.subtitle}</p></div>`;
+                container.prepend(slideEl); // prepend pour que les boutons restent au-dessus
+            });
+        }
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function moveSlide(n) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            currentSlide = (currentSlide + n + slides.length) % slides.length;
+            showSlide(currentSlide);
+            resetInterval();
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => moveSlide(1), 7000); // Change toutes les 7 secondes
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createSlides();
+            resetInterval();
+        });
+
+        // --- Logique pour charger les derniers articles du blog ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('latest-posts-grid');
+
+            callApi('getBlogPosts')
+                .then(data => {
+                    if (data.success && data.posts.length > 0) {
+                        grid.innerHTML = ''; // Vide le message de chargement
+                        // Prend les 3 articles les plus récents
+                        const latestPosts = data.posts.slice(0, 3);
+
+                        latestPosts.forEach(post => {
+                            const card = document.createElement('div');
+                            card.className = 'card animated-card zoom-in'; // Ajout des classes pour l'animation
+
+                            const excerpt = post.Contenu.substring(0, 120) + '...';
+                            const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
+                                day: 'numeric', month: 'long', year: 'numeric'
+                            });
+
+                            card.innerHTML = `
+                                <a href="article.html?id=${post.ID}"><img src="${post.ImageURL}" alt="Image pour ${post.Titre}"></a>
+                                <div class="card-content">
+                                    <p class="meta">${postDate.toUpperCase()} • PAR ${post.Auteur}</p>
+                                    <h3><a href="article.html?id=${post.ID}" style="color: inherit; text-decoration: none;">${post.Titre}</a></h3>
+                                    <p>${excerpt}</p>
+                                    <a href="article.html?id=${post.ID}" style="margin-top: 15px; color: var(--neon-blue); font-weight: bold;">Lire la suite →</a>
+                                </div>
+                            `;
+                            grid.appendChild(card);
+                        });
+
+                        // Ré-attacher l'observateur pour les nouvelles cartes
+                        setupScrollAnimation();
+
+                    } else {
+                        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucun article à afficher pour le moment.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des articles du blog:', error);
+                    grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les articles.</p>';
+                });
         });
 
         // --- Logique pour le compte à rebours du prochain événement ---
