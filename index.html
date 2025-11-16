@@ -734,8 +734,8 @@
             </div>
         </section>
 
-        <section id="communaute" class="container">
-            <div class="prayer-section-layout">
+        <section id="communaute" class="container" style="padding-top: 0;">
+            <div class="prayer-section-layout animated-card">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
                 </div>
@@ -780,15 +780,15 @@
         </section>
 
         <section id="ressources-promo" class="container">
-            <div class="prayer-section-layout">
+            <div class="prayer-section-layout animated-card">
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
                     <a href="ressources.html" class="btn btn-gradient" style="width: auto; padding: 12px 30px; margin-top: 10px;">Visiter la Bibliothèque</a>
                 </div>
-                <div class="prayer-image-container">
-                    <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: brightness(0.9) contrast(1.1);">
+                <div class="prayer-image-container" style="max-height: 300px; display: flex; align-items: center;">
+                    <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: brightness(0.9) contrast(1.1); width: 80%; margin: auto;">
                 </div>
             </div>
         </section>
@@ -796,8 +796,8 @@
         <section id="contact" class="container">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2" style="gap: 40px; align-items: flex-start;">
-                <form id="main-contact-form" onsubmit="handleContactSubmit(event)">
+            <div class="grid-2 animated-card" style="gap: 40px; align-items: flex-start; background-color: var(--dark-card); padding: 40px; border-radius: 15px;">
+                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none;">
                     <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
                     <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
@@ -806,12 +806,12 @@
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
-                    <div>
+                    <div style="background: none; padding: 0; border: none;">
                         <h3>Nos Coordonnées</h3>
                         <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
                         <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Téléphone :</strong><br>33 824 52 94</p>
                     </div>
-                    <div style="padding: 10px; border-radius: 12px; margin-top: 20px;">
+                    <div style="padding: 0; border-radius: 12px; margin-top: 20px;">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
