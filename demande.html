@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de la page, mis à jour dynamiquement par JavaScript -->
+    <title>Détail de la Demande - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+        /* Styles généraux du corps de la page */
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        /* Conteneur principal pour centrer le contenu */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        /* En-tête de la page */
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        /* Navigation principale */
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        /* Logo */
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        /* Liens de navigation desktop */
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--luminous-white); }
+        /* Bouton d'action principal dans la navigation */
+        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; color: var(--luminous-white); }
+        
+        /* Styles pour le menu mobile (modal) */
+        .nav-links-mobile {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 10, 35, 0.9); backdrop-filter: blur(10px);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 1001;
+        }
+        /* Contenu du menu mobile */
+        .nav-links-mobile-content {
+            display: flex; flex-direction: column; gap: 30px; text-align: center;
+            transform: translateY(20px); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        /* Liens du menu mobile */
+        .nav-links-mobile a { font-size: 1.8em; color: var(--luminous-white); text-decoration: none; }
+        /* Icône du menu burger */
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        /* Style pour l'icône de fermeture du menu burger */
+        .menu-burger.close-icon { position: fixed; top: 25px; right: 25px; z-index: 1002; }
+
+        /* Styles de la section principale */
+        main { padding: 80px 0; }
+        /* Styles des titres */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        
+        /* Styles spécifiques à la page de détail de la demande */
+        .need-detail-header { text-align: center; margin-bottom: 40px; }
+        .need-detail-title { font-size: 3em; color: var(--neon-blue); margin-bottom: 15px; }
+        .need-detail-image { width: 100%; height: auto; max-height: 450px; object-fit: cover; border-radius: 10px; margin-bottom: 40px; }
+        .need-detail-content { line-height: 1.8; font-size: 1.1em; }
+        .need-detail-content p { margin-bottom: 1.5em; }
+
+        .progress-section {
+            /* Section de la barre de progression */
+            background-color: var(--dark-card);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        /* Barre de progression */
+        .progress-bar { background-color: #2c2c54; border-radius: 5px; overflow: hidden; height: 20px; margin-bottom: 10px; }
+        /* Intérieur de la barre de progression */
+        .progress-bar-inner { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); height: 100%; border-radius: 5px; text-align: center; color: white; font-weight: bold; line-height: 20px; }
+        /* Texte de progression (montant collecté vs objectif) */
+        .progress-text { display: flex; justify-content: space-between; font-size: 1em; color: var(--text-secondary); }
+
+        /* Bouton avec dégradé */
+        .btn-gradient {
+            display: inline-block;
+            text-align: center;
+            padding: 15px 30px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            color: var(--luminous-white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .btn-gradient:hover {
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+            transform: scale(1.02);
+        }
+
+        /* --- Styles pour la section des commentaires --- */
+        .comments-section {
+            background-color: var(--dark-card);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 60px;
+        }
+        .comments-section h2 {
+            color: var(--luminous-white);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .comment-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: var(--neon-blue);
+            margin-bottom: 5px;
+        }
+        .comment-date {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+        /* Styles pour le skeleton loader */
+        .skeleton .line { height: 1em; background-color: #2c2c54; border-radius: 4px; margin: 0 auto 15px auto; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton .title { height: 2.5em; width: 70%; margin-bottom: 40px; }
+        .skeleton .image { height: 400px; width: 100%; background-color: #2c2c54; border-radius: 10px; margin-bottom: 40px; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton .text { width: 100%; }
+        .skeleton .text.short { width: 80%; }
+
+        @keyframes pulse {
+            0% { background-color: #2c2c54; }
+            50% { background-color: #3a3a6a; }
+            100% { background-color: #2c2c54; }
+        }
+
+        /* Styles pour le formulaire de commentaire */
+        .comment-form {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .comment-form label {
+            color: var(--luminous-white);
+            font-weight: 600;
+        }
+        .comment-form input[type="text"],
+        .comment-form textarea {
+            background-color: #2c2c54;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: var(--luminous-white);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+        }
+        .comment-form textarea {
+            min-height: 100px;
+        }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Barre de navigation principale -->
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#about">À Propos</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">En Direct</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+                <!-- Icône du menu burger pour mobile -->
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+    <!-- Menu de navigation mobile (modal) -->
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <div class="nav-links-mobile-content">
+            <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+            <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+            <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+            <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+        </div>
+    </div>
+
+    <!-- Contenu principal de la page -->
+    <main class="container" id="need-detail-container">
+        <!-- Skeleton Loader -->
+        <div class="skeleton">
+            <div class="line title"></div>
+            <div class="image"></div>
+            <div class="line text"></div>
+            <div class="line text"></div>
+            <div class="line text short"></div>
+        </div>
+    </main>
+
+    <script>
+        // L'URL de l'API est chargée depuis config.js
+        // Fonction pour basculer l'affichage du menu mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const burgerIcon = document.querySelector('.menu-burger');
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+            burgerIcon.classList.toggle('close-icon', mobileMenu.classList.contains('active'));
+        }
+
+        // Ajout d'une classe pour désactiver le défilement du corps quand le menu mobile est ouvert
+        document.body.classList.add('no-scroll'); // Ajout initial pour éviter un flash
+        document.body.classList.remove('no-scroll'); // Retrait après le chargement
+
+        // Événement DOMContentLoaded pour s'assurer que le HTML est entièrement chargé avant d'exécuter le script
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('need-detail-container');
+            const urlParams = new URLSearchParams(window.location.search);
+            const needId = urlParams.get('id');
+
+            // Vérifie si un ID de demande est spécifié dans l'URL
+            if (!needId) {
+                container.innerHTML = '<p>Erreur : Aucune demande spécifiée.</p>';
+                return;
+            }
+
+            // Récupération des détails de la demande via l'API
+            fetch(API_URL + `?action=getNeedById&id=${needId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.need) {
+                        const need = data.need;
+                        document.title = `${need.Titre} - Soutenir ce projet`;
+                        const percentage = Math.round((need.MontantActuel / need.MontantObjectif) * 100);
+                        container.innerHTML = `
+                            <article>
+                                <header class="need-detail-header">
+                                    <h1 class="need-detail-title">${need.Titre}</h1>
+                                </header>
+                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}" class="need-detail-image">
+                                
+                                <div class="progress-section">
+                                    <h3>Progression du financement</h3>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-inner" style="width: ${percentage}%;">${percentage}%</div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>${need.MontantActuel.toLocaleString('fr-FR')} CFA collectés</span>
+                                        <span>Objectif : ${need.MontantObjectif.toLocaleString('fr-FR')} CFA</span>
+                                    </div>
+                                </div>
+
+                                <div class="need-detail-content">
+                                    <h3>Raison de la demande</h3>
+                                    <p>${need.Raison.replace(/\n/g, '<br>')}</p>
+                                    <h3>Moyens et détails</h3>
+                                    <p>${need.Moyens.replace(/\n/g, '<br>')}</p>
+                                </div>
+
+                                <div style="text-align: center; margin-top: 40px;">
+                                     <a href="Boutique.html" class="btn-gradient">Faire un don pour ce projet</a>
+                                </div>
+
+                                <!-- Section des commentaires -->
+                                <section class="comments-section">
+                                    <h2>Commentaires</h2>
+                                    <div id="comments-list">
+                                        <!-- Les commentaires seront chargés ici par JavaScript -->
+                                        <p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>
+                                    </div>
+
+                                    <!-- Formulaire pour ajouter un nouveau commentaire -->
+                                    <form id="comment-form" class="comment-form">
+                                        <h3>Ajouter un commentaire</h3>
+                                        <label for="comment-author">Votre nom :</label>
+                                        <input type="text" id="comment-author" name="author" required>
+
+                                        <label for="comment-text">Votre commentaire :</label>
+                                        <textarea id="comment-text" name="commentText" required></textarea>
+
+                                        <button type="submit" class="btn-gradient">Envoyer le commentaire</button>
+                                    </form>
+                                </section>
+                            </article>
+                        `;
+                        // Une fois le contenu chargé, charge les commentaires
+                        loadComments(needId);
+                        // Attache l'événement de soumission du formulaire de commentaire
+                        document.getElementById('comment-form').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Empêche le rechargement de la page
+                            submitComment(needId);
+                        });
+                    } else {
+                        container.innerHTML = `<p>Erreur : Demande non trouvée.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    container.innerHTML = `<p>Impossible de charger les détails de la demande. Veuillez réessayer plus tard.</p>`;
+                });
+        });
+
+        /**
+         * Charge et affiche les commentaires pour une demande spécifique.
+         * @param {string} needId - L'ID de la demande.
+         */
+        function loadComments(needId) {
+            const commentsList = document.getElementById('comments-list');
+            commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>';
+
+            fetch(API_URL + `?action=getComments&needId=${needId}`)
+                .then(response => response.json())
+                .then(data => {
+                    commentsList.innerHTML = ''; // Vide le message de chargement
+                    if (data.success && data.comments && data.comments.length > 0) {
+                        data.comments.forEach(comment => {
+                            const commentElement = document.createElement('div');
+                            commentElement.classList.add('comment-item');
+                            commentElement.innerHTML = `
+                                <p class="comment-author">${comment.author}</p>
+                                <p>${comment.text}</p>
+                                <p class="comment-date">${new Date(comment.timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                            `;
+                            commentsList.appendChild(commentElement);
+                        });
+                    } else {
+                        commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire pour le moment. Soyez le premier !</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des commentaires:', error);
+                    commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Impossible de charger les commentaires.</p>';
+                });
+        }
+
+        /**
+         * Soumet un nouveau commentaire pour une demande spécifique.
+         * @param {string} needId - L'ID de la demande.
+         */
+        function submitComment(needId) {
+            const author = document.getElementById('comment-author').value;
+            const commentText = document.getElementById('comment-text').value;
+
+            // Ici, vous enverriez les données à votre API (par exemple, Google Apps Script)
+            // Exemple de fetch (POST request)
+            console.log(`Soumission du commentaire pour la demande ${needId} par ${author}: "${commentText}"`);
+            alert('Commentaire soumis ! (Fonctionnalité backend non implémentée dans ce fichier)');
+            // Après une soumission réussie, vous rechargeriez les commentaires:
+            // loadComments(needId);
+            // Et videriez le formulaire:
+            // document.getElementById('comment-form').reset();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de Prière - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; color: var(--luminous-white); }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .nav-links-mobile.active { display: flex; }
+        body.no-scroll { overflow: hidden; }
+        
+        main { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+
+        /* Styles du formulaire */
+        .form-card {
+            background-color: var(--dark-card);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 10px; }
+        .form-control {
+            width: 100%; padding: 12px; background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color); border-radius: 5px;
+            color: var(--luminous-white); font-size: 1em; box-sizing: border-box;
+        }
+        textarea.form-control { min-height: 150px; resize: vertical; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .checkbox-group label { margin-bottom: 0; }
+
+        .btn-gradient {
+            display: inline-block; text-align: center; padding: 12px 30px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            color: var(--luminous-white); text-decoration: none; border-radius: 5px;
+            font-weight: bold; transition: transform 0.2s, box-shadow 0.3s;
+            border: none; cursor: pointer; font-size: 1.1em;
+        }
+        .btn-gradient:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-gradient:hover:not(:disabled) { box-shadow: 0 0 20px rgba(255, 69, 0, 0.6); transform: scale(1.02); }
+
+        .form-message {
+            display: none; padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: bold;
+        }
+        .form-message.success { background-color: var(--success-color); color: white; }
+        .form-message.error { background-color: var(--error-color); color: white; }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#about">À Propos</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">En Direct</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="index.html#about" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">En Direct</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+    </div>
+
+    <main class="container">
+        <section>
+            <h1 class="section-title">Demande de Prière</h1>
+            <p class="section-subtitle">"Ne vous inquiétez de rien; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec des actions de grâces." - Philippiens 4:6</p>
+
+            <div class="form-card">
+                <form id="prayer-request-form" onsubmit="handlePrayerSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="prayer-name">Votre Nom (optionnel)</label>
+                            <input type="text" id="prayer-name" class="form-control" placeholder="Ex: Jean Dupont">
+                        </div>
+                        <div class="form-group">
+                            <label for="prayer-email">Votre Email (optionnel, pour un suivi)</label>
+                            <input type="email" id="prayer-email" class="form-control" placeholder="Ex: jean.dupont@email.com">
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="prayer-country">Pays (optionnel)</label>
+                            <input type="text" id="prayer-country" class="form-control" placeholder="Ex: Sénégal">
+                        </div>
+                        <div class="form-group">
+                            <label for="prayer-nationality">Nationalité (optionnel)</label>
+                            <input type="text" id="prayer-nationality" class="form-control" placeholder="Ex: Sénégalaise">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prayer-phone">Numéro de téléphone (optionnel)</label>
+                        <input type="tel" id="prayer-phone" class="form-control" placeholder="Ex: +221 77 123 45 67">
+                    </div>
+                    <div class="form-group">
+                        <label for="prayer-request">Votre sujet de prière</label>
+                        <textarea id="prayer-request" class="form-control" rows="6" required placeholder="Partagez votre demande ici..."></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="prayer-confidential" name="confidential">
+                        <label for="prayer-confidential">Garder cette demande confidentielle (partagée uniquement avec l'équipe pastorale)</label>
+                    </div>
+                    <button type="submit" id="prayer-submit-btn" class="btn-gradient">Envoyer ma demande</button>
+                    <div id="prayer-form-message" class="form-message"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        }
+
+        function handlePrayerSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('prayer-submit-btn');
+            const messageDiv = document.getElementById('prayer-form-message');
+            button.disabled = true;
+            button.textContent = 'Envoi en cours...';
+            messageDiv.style.display = 'none';
+
+            const prayerData = {
+                name: document.getElementById('prayer-name').value,
+                email: document.getElementById('prayer-email').value,
+                country: document.getElementById('prayer-country').value,
+                nationality: document.getElementById('prayer-nationality').value,
+                phone: document.getElementById('prayer-phone').value,
+                request: document.getElementById('prayer-request').value,
+                isConfidential: document.getElementById('prayer-confidential').checked
+            };
+
+            const formData = new FormData();
+            formData.append('action', 'handlePrayerRequest');
+            formData.append('payload', JSON.stringify(prayerData));
+
+            fetch(API_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        messageDiv.textContent = response.message;
+                        messageDiv.className = 'form-message success';
+                        document.getElementById('prayer-request-form').reset();
+                    } else {
+                        throw new Error(response.error || 'Une erreur inconnue est survenue.');
+                    }
+                })
+                .catch(error => {
+                    messageDiv.textContent = 'Erreur : ' + error.message;
+                    messageDiv.className = 'form-message error';
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Envoyer ma demande';
+                    messageDiv.style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>

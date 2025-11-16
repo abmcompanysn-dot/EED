@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .nav-links-mobile.active { display: flex; }
+        body.no-scroll { overflow: hidden; }
+        section { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+        
+        .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .event-card { 
+            background-color: var(--dark-card); border-radius: 10px; border: 1px solid var(--border-color); 
+            overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease-out, transform 0.5s ease-out;
+            opacity: 0; transform: translateY(20px);
+        }
+        .event-card.is-visible { opacity: 1; transform: translateY(0); }
+        .event-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 191, 255, 0.2); }
+        .event-card img { width: 100%; height: 200px; object-fit: cover; }
+        .event-content { padding: 25px; }
+        .event-content h3 { color: var(--neon-blue); margin-top: 0; margin-bottom: 15px; }
+        .event-meta { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px; }
+        .event-description { margin-bottom: 20px; }
+        .btn { display: inline-block; text-align: center; padding: 10px 20px; background: var(--neon-blue); color: var(--night-blue); text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, box-shadow 0.3s; border: none; cursor: pointer; }
+        .btn:hover { box-shadow: 0 0 15px var(--neon-blue); transform: scale(1.03); }
+
+        /* Squelette de chargement */
+        .skeleton-card {
+            background-color: var(--dark-card); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden;
+        }
+        .skeleton-image {
+            height: 200px; background-color: #2c2c54; animation: pulse 1.5s infinite ease-in-out;
+        }
+        .skeleton-content { padding: 25px; }
+        .skeleton-line {
+            height: 1em; background-color: #2c2c54; border-radius: 4px;
+            margin-bottom: 10px; animation: pulse 1.5s infinite ease-in-out;
+        }
+        .skeleton-line.short { width: 60%; }
+        .skeleton-line.title { height: 1.5em; width: 80%; margin-bottom: 15px; }
+
+        @keyframes pulse {
+            0% { background-color: #2c2c54; }
+            50% { background-color: #3a3a6a; }
+            100% { background-color: #2c2c54; }
+        }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#about">À Propos</a></li>
+                <li><a href="evenements.html" style="color: var(--luminous-white);">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">En Direct</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="index.html#about" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">En Direct</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+    </div>
+
+    <main>
+        <section class="container">
+            <h1 class="section-title">Nos Événements</h1>
+            <p class="section-subtitle">Ne manquez pas nos prochains rassemblements, conférences et activités spéciales.</p>
+
+            <div class="events-grid" id="events-grid">
+                <!-- Le squelette de chargement sera injecté ici -->
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.nav-links-mobile');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('events-grid');
+            
+            // Afficher le squelette de chargement
+            let skeletonHTML = '';
+            for (let i = 0; i < 3; i++) {
+                skeletonHTML += `
+                    <div class="skeleton-card">
+                        <div class="skeleton-image"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line short"></div>
+                            <div class="skeleton-line title"></div>
+                            <div class="skeleton-line"></div>
+                        </div>
+                    </div>`;
+            }
+            grid.innerHTML = skeletonHTML;
+
+            fetch(API_URL + '?action=getEvents')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.events.length > 0) {
+                        grid.innerHTML = '';
+                        data.events.forEach(event => {
+                            const card = document.createElement('article');
+                            card.className = 'event-card';
+
+                            const eventDate = new Date(event.Date).toLocaleDateString('fr-FR', {
+                                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                            });
+
+                            card.innerHTML = `
+                                <img src="${event.ImageURL}" alt="Image pour ${event.Titre}">
+                                <div class="event-content">
+                                    <p class="event-meta">${eventDate} à ${event.Heure} • ${event.Lieu}</p>
+                                    <h3>${event.Titre}</h3>
+                                    <p class="event-description">${event.Description}</p>
+                                    ${event.LienInscription ? `<a href="${event.LienInscription}" target="_blank" class="btn">S'inscrire</a>` : ''}
+                                </div>
+                            `;
+                            grid.appendChild(card);
+                        });
+                        setupScrollAnimation(); // Lancer l'animation après chargement
+                    } else {
+                        grid.innerHTML = '<p>Aucun événement à venir pour le moment.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    grid.innerHTML = '<p>Impossible de charger les événements. Veuillez réessayer plus tard.</p>';
+                });
+        });
+
+        function setupScrollAnimation() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => observer.observe(card));
+        }
+    </script>
+</body>
+</html>

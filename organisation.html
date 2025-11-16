@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organisation - Lumière du Futur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .nav-links-mobile.active { display: flex; }
+        body.no-scroll { overflow: hidden; }
+        section { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+        .grid-3 { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 191, 255, 0.1); }
+        .card h3 { color: var(--neon-blue); margin-top: 0; }
+
+        .leader-card { text-align: center; }
+        .leader-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-blue);
+            margin-bottom: 15px;
+        }
+        .leader-card h4 { margin: 10px 0 5px 0; font-size: 1.2em; }
+        .leader-card p { margin: 0; color: var(--text-secondary); }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .menu-burger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="organisation.html" style="color: var(--luminous-white);">Organisation</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="organisation.html" onclick="toggleMobileMenu()">Organisation</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+    </div>
+
+    <main>
+        <section class="container">
+            <h1 class="section-title">Notre Organisation</h1>
+            <p class="section-subtitle">Une communauté structurée pour servir Dieu et les hommes avec excellence et passion.</p>
+
+            <h2 class="section-title" style="font-size: 2.2em; margin-top: 80px;">Notre Leadership</h2>
+            <p class="section-subtitle">Une équipe passionnée au service de la vision de l'église.</p>
+            <div class="grid-3" id="leadership-grid">
+                <div class="card leader-card">
+                    <img src="r/dirigeant1.jpg" alt="Pasteur Principal">
+                    <h4>Pasteur Jean Martin</h4>
+                    <p>Pasteur Principal</p>
+                </div>
+                <div class="card leader-card">
+                    <img src="r/dirigeant2.jpg" alt="Responsable des Ministères">
+                    <h4>Aïcha Diop</h4>
+                    <p>Responsable des Ministères</p>
+                </div>
+                <div class="card leader-card">
+                    <img src="r/dirigeant3.jpg" alt="Ancien de l'église">
+                    <h4>Moussa Gueye</h4>
+                    <p>Ancien de l'église</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="padding-top: 40px;" id="departments-section">
+            <h2 class="section-title" style="font-size: 2.2em;">Nos Départements</h2>
+            <p class="section-subtitle">Chaque membre a un rôle à jouer. Découvrez les différents ministères au service de la communauté.</p>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Jeunesse</h3>
+                    <p>Un groupe dynamique pour les adolescents et jeunes adultes, centré sur la croissance spirituelle et des amitiés solides.</p>
+                </div>
+                <div class="card">
+                    <h3>Louange & Adoration</h3>
+                    <p>Conduire le peuple de Dieu dans l'adoration à travers la musique et le chant, avec excellence et passion.</p>
+                </div>
+                <div class="card">
+                    <h3>École du Dimanche</h3>
+                    <p>Enseigner les fondements de la foi aux enfants de manière ludique et adaptée à chaque âge.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.nav-links-mobile');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+        }
+
+        // Animation au défilement
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Ajoute un petit délai pour chaque carte pour un effet décalé
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('animated-card'); // Ajoute la classe pour l'état initial
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

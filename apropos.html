@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; } /* Géré par le menu modal */
+        
+        main { padding-top: 80px; }
+        section { padding: 40px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 700px; margin: 0 auto 60px auto; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .card h3 { color: var(--neon-blue); }
+
+        /* --- Styles pour la section Dirigeants --- */
+        .animated-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .leader-card {
+            background-color: transparent;
+            perspective: 1000px;
+            min-height: 380px;
+            border: none;
+        }
+        .leader-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+        .leader-card:hover .leader-card-inner { transform: rotateY(180deg); }
+        .leader-card-front, .leader-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            background-color: var(--dark-card);
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+        .leader-card-front {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .leader-card-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-blue);
+            margin-bottom: 20px;
+        }
+        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; }
+        .leader-card-front p { margin: 0; color: var(--text-secondary); }
+        .leader-card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+        }
+        .leader-card-back h4 { color: var(--neon-blue); }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html" style="color: var(--luminous-white);">À Propos</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">En Direct</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <!-- Le menu mobile est géré par le même JS que index.html -->
+    </div>
+
+    <main>
+        <section class="container">
+            <h1 class="section-title">Notre Foi, Notre Histoire</h1>
+            <p class="section-subtitle">Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Histoire de l'Église</h3>
+                    <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
+                </div>
+                <div class="card">
+                    <h3>Mission et Vision</h3>
+                    <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2 class="section-title" style="font-size: 2.2em;">Notre Équipe Dirigeante</h2>
+            <p class="section-subtitle">Une équipe dévouée au service de la vision de l'église et de sa communauté.</p>
+            <div class="leader-grid">
+                <div class="leader-card">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1374" alt="Pasteur Principal">
+                            <h4>Pasteur Jean Martin</h4>
+                            <p>Pasteur Principal</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Pasteur Jean Martin</h4>
+                            <p>Avec plus de 20 ans de ministère, Pasteur Jean guide notre communauté avec sagesse, passion et une profonde connaissance des Écritures.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1376" alt="Responsable des Ministères">
+                            <h4>Aïcha Diop</h4>
+                            <p>Responsable des Ministères</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Aïcha Diop</h4>
+                            <p>Aïcha coordonne avec énergie et dévouement les différents départements de l'église, s'assurant que chaque membre puisse trouver sa place et servir efficacement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=1471" alt="Ancien de l'église">
+                            <h4>Moussa Gueye</h4>
+                            <p>Ancien de l'église</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Moussa Gueye</h4>
+                            <p>En tant qu'ancien, Moussa apporte une perspective précieuse et un soutien pastoral essentiel à la vie de notre communauté.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+
+    <script>
+        // Le menu mobile est partagé, donc on peut réutiliser la logique
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+            burgerIcon.classList.toggle('close-icon', mobileMenu.classList.contains('active'));
+        }
+
+        // Charger le contenu du menu mobile depuis index.html pour éviter la duplication
+        // Note: Cette approche simple ne fonctionnera que si le site est servi par un serveur.
+        // Pour des fichiers locaux, il faudrait copier/coller le HTML du menu.
+        fetch('index.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const mobileMenuContent = doc.getElementById('mobile-menu').innerHTML;
+                document.getElementById('mobile-menu').innerHTML = mobileMenuContent;
+            });
+
+        // Animation au défilement pour les cartes
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animated-card').forEach(card => observer.observe(card));
+        });
+    </script>
+</body>
+</html>

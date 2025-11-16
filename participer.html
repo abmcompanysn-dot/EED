@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participer à une collecte - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; color: var(--luminous-white); }
+        
+        main { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+
+        .form-card { background-color: var(--dark-card); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 10px; }
+        .form-control { width: 100%; padding: 12px; background-color: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 5px; color: var(--luminous-white); font-size: 1em; box-sizing: border-box; }
+        .btn-gradient { display: inline-block; text-align: center; padding: 12px 30px; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); color: var(--luminous-white); text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, box-shadow 0.3s; border: none; cursor: pointer; font-size: 1.1em; }
+        .btn-gradient:disabled { opacity: 0.6; cursor: not-allowed; }
+        .form-message { display: none; padding: 15px; border-radius: 5px; margin-top: 20px; font-weight: bold; }
+        .form-message.success { background-color: var(--success-color); color: white; }
+        .form-message.error { background-color: var(--error-color); color: white; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section>
+            <h1 class="section-title">Participer à la collecte</h1>
+            <p class="section-subtitle" id="project-title-subtitle">Chargement du projet...</p>
+
+            <div class="form-card">
+                <p style="color: var(--text-secondary); margin-top: 0;">Enregistrez votre promesse de don. Vous serez contacté pour finaliser votre contribution.</p>
+                <form id="participation-form" onsubmit="handleParticipationSubmit(event)">
+                    <input type="hidden" id="participation-need-id" name="needId">
+                    <div class="form-group">
+                        <label for="participant-name">Votre Nom Complet</label>
+                        <input type="text" id="participant-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant-email">Votre Email</label>
+                        <input type="email" id="participant-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participation-amount">Montant de votre participation (CFA)</label>
+                        <input type="number" id="participation-amount" class="form-control" required>
+                    </div>
+                    <button type="submit" id="participation-submit-btn" class="btn-gradient">Enregistrer ma participation</button>
+                    <div id="participation-form-message" class="form-message"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subtitle = document.getElementById('project-title-subtitle');
+            const hiddenInput = document.getElementById('participation-need-id');
+            const urlParams = new URLSearchParams(window.location.search);
+            const needId = urlParams.get('id');
+
+            if (!needId) {
+                subtitle.textContent = 'Erreur : Aucun projet spécifié.';
+                document.getElementById('participation-form').style.display = 'none';
+                return;
+            }
+
+            hiddenInput.value = needId;
+
+            fetch(API_URL + `?action=getNeedById&id=${needId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.need) {
+                        document.title = `Participer : ${data.need.Titre}`;
+                        subtitle.textContent = `Vous êtes sur le point de soutenir le projet : "${data.need.Titre}"`;
+                    } else {
+                        subtitle.textContent = 'Erreur : Projet non trouvé.';
+                        document.getElementById('participation-form').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    subtitle.textContent = 'Impossible de charger les détails du projet.';
+                });
+        });
+
+        function handleParticipationSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('participation-submit-btn');
+            const messageDiv = document.getElementById('participation-form-message');
+            button.disabled = true;
+            button.textContent = 'Enregistrement...';
+            messageDiv.style.display = 'none';
+
+            const participationData = {
+                needId: document.getElementById('participation-need-id').value,
+                name: document.getElementById('participant-name').value,
+                email: document.getElementById('participant-email').value,
+                amount: document.getElementById('participation-amount').value
+            };
+
+            const formData = new FormData();
+            formData.append('action', 'participateToNeed');
+            formData.append('payload', JSON.stringify(participationData));
+
+            fetch(API_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        messageDiv.textContent = "Merci ! Votre participation a bien été enregistrée. Vous pouvez fermer cette page.";
+                        messageDiv.className = 'form-message success';
+                        document.getElementById('participation-form').reset();
+                    } else {
+                        throw new Error(response.error || 'Une erreur est survenue.');
+                    }
+                })
+                .catch(error => {
+                    messageDiv.textContent = 'Erreur : ' + error.message;
+                    messageDiv.className = 'form-message error';
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Enregistrer ma participation';
+                    messageDiv.style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>

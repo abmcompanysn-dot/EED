@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live & Replay - Lumière du Futur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--blue), var(--red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .nav-links-mobile.active { display: flex; }
+        body.no-scroll { overflow: hidden; }
+        section { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+        .grid-3 { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .card h3 { color: var(--neon-blue); margin-top: 0; font-family: 'Orbitron', sans-serif; }
+
+        /* Styles spécifiques à la page live */
+        .live-player-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        .live-player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .live-status {
+            display: inline-block;
+            background-color: var(--red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .video-archive-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="organisation.html">Organisation</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html" style="color: var(--luminous-white);">Live</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="organisation.html" onclick="toggleMobileMenu()">Organisation</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()" class="primary">Faire un Don</a>
+    </div>
+
+    <main>
+        <section class="container" style="background:none;">
+            <h1 class="section-title">Culte en Direct</h1>
+            <p class="section-subtitle">Rejoignez-nous en direct chaque dimanche à 10h00. Si vous manquez le direct, retrouvez nos cultes en rediffusion ci-dessous.</p>
+
+            <div class="live-status">EN DIRECT</div>
+            <div class="live-player-wrapper">
+                <!-- Remplacez "VIDEO_ID" par l'ID de votre vidéo YouTube Live -->
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="container" style="background:none;">
+            <h2 class="section-title">Archives Vidéos</h2>
+            <p class="section-subtitle">Revivez les moments forts de nos précédents cultes et événements.</p>
+
+            <div class="grid-3">
+                <div class="card video-archive-card">
+                    <a href="#"><img src="r/sermon1.jpg" alt="Culte du 12 Décembre"></a>
+                    <h3>Culte du 12 Décembre 2023</h3>
+                    <p>Thème : Le Pouvoir de la Grâce</p>
+                </div>
+                <div class="card video-archive-card">
+                    <a href="#"><img src="r/sermon2.jpg" alt="Culte du 05 Décembre"></a>
+                    <h3>Culte du 05 Décembre 2023</h3>
+                    <p>Thème : Prier avec Efficacité</p>
+                </div>
+                <div class="card video-archive-card">
+                    <a href="#"><img src="r/sermon3.jpg" alt="Culte du 28 Novembre"></a>
+                    <h3>Culte du 28 Novembre 2023</h3>
+                    <p>Thème : La Mission du Croyant</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.nav-links-mobile');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+
+            if (mobileMenu.classList.contains('active')) {
+                burgerIcon.innerHTML = '✕';
+            } else {
+                burgerIcon.innerHTML = '☰';
+            }
+        }
+    </script>
+</body>
+</html>

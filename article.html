@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Lumière du Futur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        
+        main { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        
+        .article-header { text-align: center; margin-bottom: 40px; }
+        .article-title { font-size: 3em; color: var(--neon-blue); margin-bottom: 15px; }
+        .article-meta { color: var(--text-secondary); }
+        .article-image { width: 100%; height: auto; max-height: 450px; object-fit: cover; border-radius: 10px; margin-bottom: 40px; }
+        .article-content { line-height: 1.8; font-size: 1.1em; }
+        
+        /* --- Nouveaux styles pour le contenu de l'article --- */
+        .article-content p { 
+            margin-bottom: 1.5em; 
+        }
+        .article-content h3 { /* Pour les sous-titres comme "Constat", "Révélation" */
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            color: var(--neon-blue);
+            font-size: 1.4em;
+            border-left: 3px solid var(--fire-red);
+            padding-left: 15px;
+        }
+        .article-content blockquote { /* Pour le verset biblique */
+            font-size: 1.2em;
+            font-style: italic;
+            margin: 2em 20px;
+            padding: 20px;
+            border-left: 5px solid var(--neon-blue);
+            background-color: var(--dark-card);
+            border-radius: 0 8px 8px 0;
+        }
+        .article-content blockquote footer {
+            font-style: normal;
+            font-size: 0.8em;
+            text-align: right;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+        .cle-lecture { /* Pour la "clé de lecture" */
+            background-color: rgba(44, 44, 84, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 2em 0;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* --- Nouveaux styles pour les boutons de partage --- */
+        .share-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .share-section h3 {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+        .share-btn:hover { opacity: 0.85; }
+        .share-btn.facebook { background-color: #1877F2; }
+        .share-btn.whatsapp { background-color: #25D366; }
+
+        /* --- Styles pour la section des commentaires --- */
+        .comments-section {
+            background-color: var(--dark-card);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 60px;
+        }
+        .comments-section h2 {
+            color: var(--luminous-white);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .comment-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: var(--neon-blue);
+            margin-bottom: 5px;
+        }
+        .comment-date {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        /* Styles pour le formulaire de commentaire */
+        .comment-form {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .comment-form label {
+            color: var(--luminous-white);
+            font-weight: 600;
+        }
+        .comment-form input[type="text"],
+        .comment-form textarea {
+            background-color: #2c2c54;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: var(--luminous-white);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+        }
+        .comment-form textarea { min-height: 100px; }
+        /* Styles pour le skeleton loader de l'article */
+        .skeleton-article .skeleton-line {
+            height: 1em;
+            background-color: #2c2c54;
+            border-radius: 4px;
+            margin: 0 auto 15px auto;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .skeleton-article .title { height: 2.5em; width: 70%; margin-bottom: 20px; }
+        .skeleton-article .meta { height: 1em; width: 40%; margin-bottom: 40px; }
+        .skeleton-article .image { height: 400px; width: 100%; background-color: #2c2c54; border-radius: 10px; margin-bottom: 40px; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton-article .text { width: 100%; }
+        .skeleton-article .text.short { width: 80%; }
+
+        @keyframes pulse {
+            0% { background-color: #2c2c54; }
+            50% { background-color: #3a3a6a; }
+            100% { background-color: #2c2c54; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="organisation.html">Organisation</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html">Faire un Don</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" id="article-container">
+        <!-- Le skeleton loader sera injecté ici par JS -->
+    </main>
+
+    <script src="config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('article-container');
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
+
+            // Afficher le skeleton loader
+            container.innerHTML = `
+                <div class="skeleton-article">
+                    <div class="skeleton-line title"></div>
+                    <div class="skeleton-line meta"></div>
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-line text"></div>
+                    <div class="skeleton-line text"></div>
+                    <div class="skeleton-line text short"></div>
+                    <br>
+                    <div class="skeleton-line text"></div>
+                    <div class="skeleton-line text short"></div>
+                </div>
+            `;
+
+            if (!articleId) {
+                container.innerHTML = '<p class="loading-message">Erreur : Aucun article spécifié.</p>';
+                return;
+            }
+
+            fetch(API_URL + `?action=getBlogPostById&id=${articleId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.post) {
+                        const post = data.post;
+                        document.title = `${post.Titre} - Lumière du Futur`;
+
+                        const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
+                            day: 'numeric', month: 'long', year: 'numeric'
+                        });
+
+                        container.innerHTML = `
+                            <article>
+                                <header class="article-header">
+                                    <h1 class="article-title">${post.Titre}</h1>
+                                    <p class="article-meta">Par ${post.Auteur} • ${postDate}</p>
+                                </header>
+                                <img src="${post.ImageURL}" alt="Image pour ${post.Titre}" class="article-image">
+                                <div class="article-content">
+                                    ${post.Contenu.replace(/\n/g, '<br>')}
+                                </div>
+                                <footer class="share-section">
+                                    <h3>Partager cet article</h3>
+                                    <div class="share-buttons">
+                                        <a id="share-facebook" href="#" target="_blank" class="share-btn facebook">Facebook</a>
+                                        <a id="share-whatsapp" href="#" target="_blank" class="share-btn whatsapp">WhatsApp</a>
+                                    </div>
+                                </footer>
+
+                                <!-- Section des commentaires -->
+                                <section class="comments-section">
+                                    <h2>Commentaires</h2>
+                                    <div id="comments-list">
+                                        <p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>
+                                    </div>
+                                    <form id="comment-form" class="comment-form">
+                                        <h3>Laisser un commentaire</h3>
+                                        <label for="comment-author">Votre nom :</label>
+                                        <input type="text" id="comment-author" name="author" required>
+                                        <label for="comment-text">Votre commentaire :</label>
+                                        <textarea id="comment-text" name="commentText" required></textarea>
+                                        <button type="submit" class="share-btn" style="background: var(--neon-blue); border: none;">Envoyer</button>
+                                    </form>
+                                </section>
+                            </article>
+                        `;
+
+                        // Logique pour mettre à jour les liens de partage
+                        const pageUrl = window.location.href;
+                        const shareText = encodeURIComponent(`Découvrez cet article : "${post.Titre}"`);
+
+                        document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+                        document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${shareText} ${encodeURIComponent(pageUrl)}`;
+
+                        // Charger les commentaires et attacher l'événement au formulaire
+                        loadComments(articleId);
+                        document.getElementById('comment-form').addEventListener('submit', function(event) {
+                            event.preventDefault();
+                            submitComment(articleId);
+                        });
+
+                    } else {
+                        container.innerHTML = `<p class="loading-message">Erreur : Article non trouvé. (${data.error || ''})</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    container.innerHTML = '<p class="loading-message">Impossible de charger l\'article. Veuillez réessayer plus tard.</p>';
+                });
+        });
+
+        /**
+         * Charge et affiche les commentaires pour un article spécifique.
+         * @param {string} articleId - L'ID de l'article.
+         */
+        function loadComments(articleId) {
+            const commentsList = document.getElementById('comments-list');
+            commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>';
+
+            fetch(API_URL + `?action=getComments&articleId=${articleId}`)
+                .then(response => response.json())
+                .then(data => {
+                    commentsList.innerHTML = ''; // Vider le message de chargement
+                    if (data.success && data.comments && data.comments.length > 0) {
+                        data.comments.forEach(comment => {
+                            const commentElement = document.createElement('div');
+                            commentElement.classList.add('comment-item');
+                            commentElement.innerHTML = `
+                                <p class="comment-author">${comment.author}</p>
+                                <p>${comment.text}</p>
+                                <p class="comment-date">${new Date(comment.timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                            `;
+                            commentsList.appendChild(commentElement);
+                        });
+                    } else {
+                        commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire pour le moment. Soyez le premier !</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des commentaires:', error);
+                    commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Impossible de charger les commentaires.</p>';
+                });
+        }
+
+        /**
+         * Soumet un nouveau commentaire pour un article spécifique.
+         * @param {string} articleId - L'ID de l'article.
+         */
+        function submitComment(articleId) {
+            const authorInput = document.getElementById('comment-author');
+            const textInput = document.getElementById('comment-text');
+            const button = document.querySelector('#comment-form button');
+
+            const commentData = {
+                articleId: articleId,
+                author: authorInput.value,
+                commentText: textInput.value
+            };
+
+            button.disabled = true;
+            button.textContent = 'Envoi...';
+
+            const formData = new FormData();
+            formData.append('action', 'postComment');
+            formData.append('payload', JSON.stringify(commentData));
+
+            fetch(API_URL, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        authorInput.value = '';
+                        textInput.value = '';
+                        loadComments(articleId); // Recharger les commentaires
+                    } else {
+                        alert('Erreur lors de la soumission du commentaire : ' + response.error);
+                    }
+                })
+                .catch(err => alert('Erreur réseau. Veuillez réessayer.'))
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Envoyer';
+                });
+        }
+    </script>
+</body>
+</html>

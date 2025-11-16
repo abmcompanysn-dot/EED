@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière du Futur - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* public-styles.css */
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a; /* Un bleu très sombre pour les cartes */
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4; /* Un blanc bleuté pour le texte secondaire */
+            --border-color: #2c2c54;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            /* Application du dégradé sur tout l'arrière-plan */
+            background-color: var(--night-blue);
+            /* Ajout d'un fond subtil de circuits/constellations */
+            background-image: 
+                radial-gradient(var(--border-color) 1px, transparent 1px),
+                radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-attachment: fixed; /* Le dégradé reste fixe au défilement */
+            color: var(--luminous-white);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Barre de Navigation Améliorée */
+        header {
+            background-color: transparent; /* Fond transparent */
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease; /* Transition douce */
+            padding: 10px 0; /* Hauteur réduite */
+            position: fixed; /* Reste fixe en haut de l'écran */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Style de la barre de navigation après défilement */
+        header.scrolled {
+            background-color: rgba(10, 10, 35, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Pour la compatibilité avec Safari */
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: var(--luminous-white);
+            text-decoration: none;
+        }
+
+        .logo img {
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        nav ul a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav ul a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--text-light)"] {
+            color: var(--luminous-white);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-actions a.primary {
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Menu Burger pour mobile */
+        .menu-burger {
+            display: none; /* Caché sur bureau */
+            font-size: 1.8em;
+            cursor: pointer;
+            color: var(--luminous-white);
+            z-index: 1001;
+        }
+
+        .nav-links-mobile {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 35, 0.98);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            font-size: 1.5em;
+        }
+        .nav-links-mobile.active {
+            display: flex;
+        }
+        .nav-links-mobile a {
+            color: var(--luminous-white);
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
+        .nav-links-mobile.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .nav-links-mobile.active .nav-links-mobile-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Sections Générales */
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.2;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+        }
+
+        /* Section Hero spécifique */
+        .hero {
+            position: relative;
+            min-height: 80vh; /* Prend au moins 80% de la hauteur de l'écran */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            overflow: hidden; /* Important pour l'effet de zoom */
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('r/1.webp');
+            background-size: cover;
+            background-position: center;
+            animation: slowZoom 20s infinite alternate ease-in-out;
+            z-index: -2;
+        }
+
+        @keyframes slowZoom {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 35, 0.6);
+            z-index: -1;
+        }
+        .hero-text-content h1 {
+            font-size: 3.5em;
+            margin: 0;
+            /* Styles pour l'effet dactylo */
+            display: inline-block; /* Nécessaire pour que le conteneur s'adapte au texte */
+            overflow: hidden; /* Cache le texte qui n'est pas encore "tapé" */
+            white-space: nowrap; /* Empêche le retour à la ligne pendant l'animation */
+            border-right: .15em solid var(--fire-red); /* Curseur clignotant */
+            animation: 
+                typing 4s steps(42, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        /* Animation de frappe */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* Animation du curseur clignotant */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--fire-red); }
+        }
+
+        /* Cartes Produit spécifiques */
+        .product-card .price {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .price span {
+            font-size: 0.5em;
+            font-weight: normal;
+            color: var(--text-secondary);
+        }
+
+        /* Grilles et Cartes */
+        .grid-2, .grid-3 {
+            display: grid;
+            gap: 30px;
+        }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+        .card {
+            background-color: var(--dark-card);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            color: var(--blue);
+            margin-top: 0;
+        }
+
+        /* Boutons */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            background: var(--blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--blue), var(--red));
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) { /* Point de rupture ajusté pour une meilleure transition */
+            nav ul.desktop-links {
+                display: none;
+            }
+            .nav-actions a.primary {
+                display: none; /* Cache le bouton connexion principal */
+            }
+            .nav-actions a#cart-link {
+                display: none; /* Cache le panier sur mobile */
+            }
+            .menu-burger {
+                display: block;
+            }
+            .nav-actions {
+                gap: 15px; /* Réduit l'espace pour le panier */
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                height: 70vh;
+            }
+            .hero-text-content h1 {
+                font-size: 2.5em;
+            }
+            .hero-text-content h1 {
+                white-space: normal; /* Permet le retour à la ligne sur mobile */
+                animation: none; /* Désactive l'animation sur mobile pour une meilleure lisibilité */
+            }
+        }
+
+        /* Styles pour le défilement des logos */
+        .logo-scroller {
+            max-width: 100%;
+            overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+        }
+
+        .logo-scroller-inner {
+            display: flex;
+            gap: 40px; /* Espace entre les logos */
+            width: fit-content;
+            animation: scroll 30s linear infinite;
+        }
+
+        .logo-scroller-inner img {
+            height: 75px; /* Taille des logos agrandie */
+            width: auto;
+            opacity: 0.8; /* Légère transparence pour un effet doux */
+            transition: filter 0.3s;
+        }
+
+        .logo-scroller:hover .logo-scroller-inner {
+            animation-play-state: paused; /* Met en pause l'animation au survol */
+        }
+
+        .logo-scroller-inner img:hover {
+            opacity: 1; /* Le logo survolé devient totalement opaque */
+        }
+
+        @keyframes scroll {
+            to {
+                transform: translateX(calc(-50% - 20px)); /* -50% pour la moitié du conteneur, -20px pour la moitié du gap */
+            }
+        }
+
+        #trusted-by {
+            background-color: var(--luminous-white);
+            padding-top: 40px; /* Réduction du padding pour un look plus intégré */
+            padding-bottom: 40px;
+        }
+
+        #trusted-by .section-title {
+            /* Applique le dégradé du site au texte du titre */
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* --- Styles pour la section Dirigeants --- */
+        .leader-card {
+            background-color: transparent;
+            perspective: 1000px; /* Important pour l'effet 3D */
+            min-height: 350px;
+            border: none;
+        }
+
+        .leader-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+
+        .leader-card:hover .leader-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .leader-card-front, .leader-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 15px;
+            background-color: var(--dark-card);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .leader-card-front {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .leader-card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .leader-card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Styles pour la section Témoignages --- */
+        .testimonial-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--neon-blue);
+        }
+        .testimonial-author h4 {
+            margin: 0;
+            color: var(--luminous-white);
+        }
+        .testimonial-author p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+        .testimonial-card blockquote {
+            margin: 0;
+            font-style: italic;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--fire-red);
+            padding-left: 15px;
+        }
+
+        /* --- Nouveaux styles pour les animations au défilement --- */
+        .animated-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Nouveaux styles pour le compte à rebours --- */
+        #next-event {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+        }
+        #countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            text-align: center;
+            margin-top: 30px;
+            flex-wrap: wrap; /* Pour les petits écrans */
+        }
+        #countdown-timer > div {
+            background: var(--dark-card);
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 90px;
+            border: 1px solid var(--border-color);
+        }
+        #countdown-timer span {
+            display: block;
+        }
+        #countdown-timer span:first-child {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: var(--neon-blue);
+        }
+        #countdown-timer span:last-child { color: var(--text-secondary); }
+    </style>
+    <style>
+        /* --- Nouveaux styles pour la modale de prière --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(10, 10, 35, 0.9);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--dark-card);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            position: relative;
+            animation: slideIn 0.4s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            color: var(--text-secondary);
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 8px; }
+        .form-control {
+            width: 100%; padding: 12px; background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color); border-radius: 5px;
+            color: var(--luminous-white); font-size: 1em; box-sizing: border-box;
+        }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .form-message {
+            display: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .form-message.success {
+            background-color: #28a745;
+            color: white;
+        }
+        .form-message.error {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* --- Nouveaux styles pour la section Dons --- */
+        #dons .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            align-items: stretch; /* Assure que les cartes ont la même hauteur */
+        }
+        .donation-card {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        .donation-card .card-content {
+            flex-grow: 1;
+        }
+        .donation-card img.payment-logo {
+            height: 40px;
+            margin-bottom: 20px;
+        }
+        .donation-card h3 {
+            color: var(--luminous-white);
+            font-size: 1.5em;
+        }
+        .donation-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        .donation-card .account-info {
+            background-color: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        /* --- Nouveaux styles pour la section Communauté/Prière --- */
+        .prayer-section-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            background-color: var(--dark-card);
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 40px;
+        }
+        .prayer-image-container img { width: 100%; height: auto; border-radius: 10px; object-fit: cover; }
+        .prayer-content h3 { font-size: 1.8em; color: var(--neon-blue); }
+        @media (max-width: 992px) { .prayer-section-layout { grid-template-columns: 1fr; padding: 30px; } }
+
+        /* --- Nouveaux styles pour le menu mobile modal --- */
+        .nav-links-mobile {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 10, 35, 0.9); backdrop-filter: blur(10px);
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease; pointer-events: none; z-index: 1001;
+        }
+        .nav-links-mobile-content {
+            display: flex; flex-direction: column; gap: 30px; text-align: center;
+            transform: translateY(20px); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .nav-links-mobile a { font-size: 1.8em; color: var(--luminous-white); text-decoration: none; }
+        .menu-burger.close-icon { position: fixed; top: 25px; right: 25px; z-index: 1002; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html" style="color: var(--luminous-white);">Accueil</a></li>
+                <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">En Direct</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html" class="primary">Faire un Don</a>
+                <!-- Conteneur pour le QR Code, caché par défaut -->
+                <div id="nav-qrcode-container" style="display: none;">
+                    <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
+                    <div id="nav-qrcode-popup">
+                        <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
+                    </div>
+                </div>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <div class="nav-links-mobile-content">
+            <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+            <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
+            <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+            <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+            <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+            <a href="live.html" onclick="toggleMobileMenu()">En Direct</a>
+            <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+            <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-text-content">
+                <h1>Église Évangélique de Dakar</h1>
+            </div>
+        </section>
+
+        <section id="next-event" class="container" style="display: none; padding-top: 40px; padding-bottom: 40px;">
+            <h2 class="section-title">Prochain Événement</h2>
+            <p id="event-title" class="section-subtitle">Chargement de l'événement...</p>
+            <div id="countdown-timer">
+                <div><span id="days">00</span><span>Jours</span></div>
+                <div><span id="hours">00</span><span>Heures</span></div>
+                <div><span id="minutes">00</span><span>Minutes</span></div>
+                <div><span id="seconds">00</span><span>Secondes</span></div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="evenements.html" id="event-link" class="btn btn-gradient" style="width: auto; padding: 12px 30px;">
+                    Voir les détails
+                </a>
+            </div>
+        </section>
+
+        <section id="communaute" class="container">
+            <div class="prayer-section-layout animated-card">
+                <div class="prayer-image-container">
+                    <img src="r/p.png" alt="Demande de prière">
+                </div>
+                <div class="prayer-content">
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
+                    <h3>Demander une Prière</h3>
+                    <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
+                    <a href="demande-priere.html" class="btn btn-gradient" style="width: auto; padding: 12px 30px; margin-top: 10px;">Soumettre une demande</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="temoignages" class="container">
+            <h2 class="section-title">Paroles de la Communauté</h2>
+            <p class="section-subtitle">Découvrez comment Dieu agit dans la vie de nos membres.</p>
+            <div class="grid-2">
+                <div class="card testimonial-card animated-card">
+                    <div class="testimonial-author">
+                        <img src="r/membre1.jpg" alt="Photo de Marie Ndiaye">
+                        <div>
+                            <h4>Marie Ndiaye</h4>
+                            <p>Membre depuis 5 ans</p>
+                        </div>
+                    </div>
+                    <blockquote>
+                        "Depuis que j'ai rejoint cette église, ma vie a été transformée. J'ai trouvé une vraie famille spirituelle et un soutien constant dans la prière. C'est une bénédiction."
+                    </blockquote>
+                </div>
+                <div class="card testimonial-card animated-card">
+                    <div class="testimonial-author">
+                        <img src="r/membre2.jpg" alt="Photo de David Faye">
+                        <div>
+                            <h4>David Faye</h4>
+                            <p>Visiteur régulier</p>
+                        </div>
+                    </div>
+                    <blockquote>
+                        "L'accueil chaleureux et la profondeur des enseignements m'ont tout de suite marqué. Chaque culte est une source d'inspiration et de renouvellement pour ma semaine."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container" style="padding-bottom: 80px;">
+            <h2 class="section-title">Nous Contacter</h2>
+            <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
+            <div class="grid-2" style="gap: 40px; align-items: flex-start;">
+                <form id="main-contact-form" class="card" onsubmit="handleContactSubmit(event)">
+                    <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
+                    <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
+                    <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
+                    <div class="form-group"><label for="contact-message">Votre Message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
+                    <button type="submit" id="contact-submit-btn" class="btn btn-gradient">Envoyer le Message</button>
+                    <div id="contact-form-message" class="form-message"></div>
+                </form>
+                <div>
+                    <div class="card" style="margin-bottom: 20px;">
+                        <h3>Nos Coordonnées</h3>
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Téléphone :</strong><br>33 824 52 94</p>
+                    </div>
+                    <div class="card" style="padding: 10px; border-radius: 12px;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script>
+        // ... (votre fonction toggleMobileMenu existante)
+
+        // --- Logique pour la modale de prière ---
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Fermer la modale si on clique en dehors
+        window.onclick = function(event) {
+            const modal = document.getElementById('prayer-modal');
+            if (event.target == modal) {
+                closeModal('prayer-modal');
+            }
+        }
+
+        // --- Logique pour la soumission du formulaire de prière ---
+        function handlePrayerSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('prayer-submit-btn');
+            const messageDiv = document.getElementById('prayer-form-message');
+            button.disabled = true;
+            button.textContent = 'Envoi en cours...';
+            messageDiv.style.display = 'none';
+
+            const prayerData = {
+                name: document.getElementById('prayer-name').value,
+                email: document.getElementById('prayer-email').value,
+                request: document.getElementById('prayer-request').value,
+                isConfidential: document.getElementById('prayer-confidential').checked
+            };
+
+            // Utilisation de la fonction callApi centralisée
+            callApi('handlePrayerRequest', { payload: prayerData })
+                .then(response => {
+                    if (response.success) {
+                        messageDiv.textContent = response.message;
+                        messageDiv.className = 'form-message success';
+                        messageDiv.style.display = 'block';
+                        document.getElementById('prayer-form').reset();
+                        setTimeout(() => closeModal('prayer-modal'), 3000); // Ferme après 3s
+                    } else {
+                        throw new Error(response.error || 'Une erreur inconnue est survenue.');
+                    }
+                })
+                .catch(error => {
+                    messageDiv.textContent = 'Erreur : ' + error.message;
+                    messageDiv.className = 'form-message error';
+                    messageDiv.style.display = 'block';
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Envoyer ma demande';
+                });
+        }
+
+        // --- Logique pour la soumission du formulaire de contact principal ---
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('contact-submit-btn');
+            const messageDiv = document.getElementById('contact-form-message');
+            button.disabled = true;
+            button.textContent = 'Envoi en cours...';
+            messageDiv.style.display = 'none';
+
+            const contactData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                subject: document.getElementById('contact-subject').value,
+                message: document.getElementById('contact-message').value
+            };
+
+            callApi('handleContactForm', { payload: contactData })
+                .then(response => {
+                    if (response.success) {
+                        messageDiv.textContent = response.message;
+                        messageDiv.className = 'form-message success';
+                        messageDiv.style.display = 'block';
+                        document.getElementById('main-contact-form').reset();
+                    } else {
+                        throw new Error(response.error || 'Une erreur inconnue est survenue.');
+                    }
+                })
+                .catch(error => {
+                    messageDiv.textContent = 'Erreur : ' + error.message;
+                    messageDiv.className = 'form-message error';
+                    messageDiv.style.display = 'block';
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Envoyer le Message';
+                });
+        }
+
+        /**
+         * Fonction centralisée pour appeler l'API backend via POST.
+         */
+        function callApi(action, data = {}) {
+            const formData = new FormData();
+            formData.append('action', action);
+            if (data.payload) {
+                formData.append('payload', JSON.stringify(data.payload));
+            }
+            return fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json());
+        }
+
+        // --- Logique pour l'animation au défilement ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Ajoute un délai pour un effet d'apparition en cascade
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, index * 100); // Délai de 100ms entre chaque carte
+                        observer.unobserve(entry.target); // Cesse d'observer une fois l'animation jouée
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const cards = document.querySelectorAll('.animated-card');
+            cards.forEach(card => observer.observe(card));
+        });
+
+        // --- Logique pour le compte à rebours du prochain événement ---
+        document.addEventListener('DOMContentLoaded', () => {
+            callApi('getEvents')
+                .then(data => {
+                    if (!data.success || data.events.length === 0) return;
+
+                    const now = new Date();
+                    const upcomingEvents = data.events
+                        .map(event => ({ ...event, dateObj: new Date(event.Date + 'T' + event.Heure) }))
+                        .filter(event => event.dateObj > now)
+                        .sort((a, b) => a.dateObj - b.dateObj);
+
+                    if (upcomingEvents.length === 0) return;
+
+                    const nextEvent = upcomingEvents[0];
+                    const eventSection = document.getElementById('next-event');
+                    
+                    document.getElementById('event-title').textContent = nextEvent.Titre;
+                    if (nextEvent.LienInscription) {
+                        document.getElementById('event-link').href = nextEvent.LienInscription;
+                        document.getElementById('event-link').textContent = "S'inscrire";
+                    } else {
+                        document.getElementById('event-link').href = "evenements.html";
+                    }
+                    eventSection.style.display = 'block';
+
+                    const countdownInterval = setInterval(() => {
+                        const currentTime = new Date().getTime();
+                        const distance = nextEvent.dateObj.getTime() - currentTime;
+
+                        if (distance < 0) {
+                            clearInterval(countdownInterval);
+                            eventSection.style.display = 'none'; // Cache la section si l'événement est passé
+                            return;
+                        }
+
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        document.getElementById('days').textContent = String(days).padStart(2, '0');
+                        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                    }, 1000);
+                })
+                .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
+        });
+    </script>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+
+            // Change l'icône et sa position
+            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+            burgerIcon.classList.toggle('close-icon', mobileMenu.classList.contains('active'));
+        }
+
+        // --- Logique pour le changement de la barre de navigation au défilement ---
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            // Ajoute la classe 'scrolled' si on a défilé de plus de 50px, sinon la retire
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+    </script>
+</body>
+</html>

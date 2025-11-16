@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources - Lumière du Futur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--blue), var(--red)); transition: all 0.3s ease-in-out; }
+        nav ul a:hover::after { width: 100%; left: 0; }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
+        .nav-links-mobile.active { display: flex; }
+        body.no-scroll { overflow: hidden; }
+        section { padding: 80px 0; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
+        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
+        .grid-3 { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .card h3 { color: var(--neon-blue); margin-top: 0; font-family: 'Orbitron', sans-serif; }
+        .btn { display: inline-block; width: 100%; text-align: center; padding: 12px; background: var(--blue); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, opacity 0.2s; border: none; cursor: pointer; font-size: 1em; }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        /* Styles spécifiques à la page ressources */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .search-bar input, .search-bar select {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 5px; color: var(--luminous-white);
+            font-size: 1em;
+        }
+        .resource-card {
+            text-align: center;
+        }
+        .resource-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .resource-card .meta {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 992px) {
+            nav ul.desktop-links { display: none; }
+            .nav-actions a.primary { display: none; }
+            .menu-burger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="organisation.html">Organisation</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="ressources.html" style="color: var(--luminous-white);">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="Boutique.html">Faire un Don</a>
+                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="organisation.html" onclick="toggleMobileMenu()">Organisation</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()" class="primary">Faire un Don</a>
+    </div>
+
+    <main>
+        <section class="container" style="background:none;">
+            <h1 class="section-title">Bibliothèque de Ressources</h1>
+            <p class="section-subtitle">Explorez nos sermons, études bibliques et autres enseignements pour grandir dans votre foi.</p>
+
+            <div class="search-bar">
+                <input type="search" placeholder="Rechercher par thème, orateur, date..." onkeyup="filterResources()">
+                <select onchange="filterResources()">
+                    <option value="all">Toutes les catégories</option>
+                    <option value="sermon">Sermons</option>
+                    <option value="etude">Études Bibliques</option>
+                    <option value="article">Articles</option>
+                </select>
+            </div>
+
+            <div class="grid-3" id="resources-grid">
+                <!-- Les cartes de ressources seront générées ici, voici des exemples -->
+                <div class="card resource-card" data-category="sermon">
+                    <img src="r/sermon1.jpg" alt="Sermon sur la Grâce">
+                    <h3>Le Pouvoir de la Grâce</h3>
+                    <p class="meta">Sermon • Pasteur Jean • 12/12/2023</p>
+                    <p>Découvrez comment la grâce de Dieu peut transformer radicalement votre vie.</p>
+                    <a href="#" class="btn">Voir la vidéo</a>
+                </div>
+                <div class="card resource-card" data-category="etude">
+                    <img src="r/etude1.jpg" alt="Etude sur l'Apocalypse">
+                    <h3>Introduction à l'Apocalypse</h3>
+                    <p class="meta">Étude Biblique • Dr. Aïcha • 05/12/2023</p>
+                    <p>Une étude approfondie pour déchiffrer les symboles du dernier livre de la Bible.</p>
+                    <a href="#" class="btn">Télécharger le PDF</a>
+                </div>
+                <div class="card resource-card" data-category="sermon">
+                    <img src="r/sermon2.jpg" alt="Sermon sur la Prière">
+                    <h3>Prier avec Efficacité</h3>
+                    <p class="meta">Sermon • Pasteur Moussa • 03/12/2023</p>
+                    <p>Apprenez les clés d'une vie de prière puissante et exaucée.</p>
+                    <a href="#" class="btn">Écouter l'audio</a>
+                </div>
+                 <!-- D'autres cartes peuvent être ajoutées ici -->
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.nav-links-mobile');
+            const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
+
+            mobileMenu.classList.toggle('active');
+            body.classList.toggle('no-scroll');
+
+            if (mobileMenu.classList.contains('active')) {
+                burgerIcon.innerHTML = '✕';
+            } else {
+                burgerIcon.innerHTML = '☰';
+            }
+        }
+
+        function filterResources() {
+            // Logique de filtrage simple pour la démonstration
+            const searchValue = document.querySelector('.search-bar input').value.toLowerCase();
+            const categoryValue = document.querySelector('.search-bar select').value;
+            const resources = document.querySelectorAll('.resource-card');
+
+            resources.forEach(resource => {
+                const textContent = resource.textContent.toLowerCase();
+                const category = resource.getAttribute('data-category');
+
+                const matchesSearch = textContent.includes(searchValue);
+                const matchesCategory = (categoryValue === 'all' || category === categoryValue);
+
+                if (matchesSearch && matchesCategory) {
+                    resource.style.display = 'block';
+                } else {
+                    resource.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
