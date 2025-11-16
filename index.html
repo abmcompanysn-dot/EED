@@ -734,6 +734,23 @@
             </div>
         </section>
 
+        <!-- ==================== Section Joie avec Jésus (Carrousel) ==================== -->
+        <section id="joie-jesus">
+            <h2 class="section-title">La Joie avec Jésus</h2>
+            <p class="section-subtitle">Laissez la parole de Dieu illuminer votre cœur et vous remplir de sa paix.</p>
+            <div class="carousel-container">
+                <div class="carousel-slide active" style="background-image: url('r/a.jpg');">
+                    <div class="slide-content">
+                        <h3>"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux."</h3>
+                        <p>Matthieu 18:20</p>
+                    </div>
+                </div>
+                <!-- Les autres slides seront ajoutées par JavaScript -->
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+        </section>
+
         <section id="communaute" class="container" style="padding-top: 0;">
             <div class="prayer-section-layout animated-card">
                 <div class="prayer-image-container">
@@ -743,7 +760,7 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-                    <a href="demande-priere.html" class="btn btn-gradient" style="width: auto; padding: 12px 30px; margin-top: 10px;">Soumettre une demande</a>
+                    <a href="demande-priere.html" class="btn-outline" style="width: auto; padding: 12px 30px; margin-top: 10px;">Soumettre une demande</a>
                 </div>
             </div>
         </section>
@@ -785,7 +802,7 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
-                    <a href="ressources.html" class="btn btn-gradient" style="width: auto; padding: 12px 30px; margin-top: 10px;">Visiter la Bibliothèque</a>
+                    <a href="ressources.html" class="btn-outline" style="width: auto; padding: 12px 30px; margin-top: 10px;">Visiter la Bibliothèque</a>
                 </div>
                 <div class="prayer-image-container" style="max-height: 300px; display: flex; align-items: center;">
                     <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: brightness(0.9) contrast(1.1); width: 80%; margin: auto;">
@@ -818,6 +835,82 @@
             </div>
         </section>
     </main>
+    <style>
+        /* ==================== Styles du Carrousel "Joie avec Jésus" ==================== */
+        #joie-jesus {
+            padding-bottom: 60px; /* Espace réduit après le carrousel */
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px; /* Largeur maximale du carrousel */
+            height: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            animation: zoomEffect 20s infinite alternate;
+        }
+        @keyframes zoomEffect {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .slide-content {
+            background-color: rgba(10, 10, 35, 0.6);
+            padding: 20px 40px;
+            border-radius: 10px;
+            color: var(--luminous-white);
+            max-width: 80%;
+        }
+        .slide-content h3 {
+            font-size: 1.8em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .slide-content p {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            line-height: 20px;
+            transition: background-color 0.3s;
+        }
+        .carousel-btn:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+        .carousel-btn.prev { left: 15px; }
+        .carousel-btn.next { right: 15px; }
+    </style>
 
     <script src="config.js"></script>
     <script>
