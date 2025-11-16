@@ -751,7 +751,7 @@
             </div>
         </section>
 
-        <section id="communaute" class="container" style="padding-top: 0;">
+        <section id="communaute" class="container animated-card slide-in-left" style="padding-top: 0;">
             <div class="prayer-section-layout animated-card">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
@@ -760,7 +760,7 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-                    <a href="demande-priere.html" class="btn-outline" style="width: auto; padding: 12px 30px; margin-top: 10px;">Soumettre une demande</a>
+                    <a href="demande-priere.html" class="btn-luxurious" style="width: auto; margin-top: 10px;">Soumettre une demande</a>
                 </div>
             </div>
         </section>
@@ -796,13 +796,13 @@
             </div>
         </section>
 
-        <section id="ressources-promo" class="container">
+        <section id="ressources-promo" class="container animated-card slide-in-right">
             <div class="prayer-section-layout animated-card">
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
-                    <a href="ressources.html" class="btn-outline" style="width: auto; padding: 12px 30px; margin-top: 10px;">Visiter la Bibliothèque</a>
+                    <a href="ressources.html" class="btn-luxurious" style="width: auto; margin-top: 10px;">Visiter la Bibliothèque</a>
                 </div>
                 <div class="prayer-image-container" style="max-height: 300px; display: flex; align-items: center;">
                     <img src="r/rs.svg" alt="Bibliothèque de ressources" style="filter: brightness(0.9) contrast(1.1); width: 80%; margin: auto;">
@@ -810,10 +810,10 @@
             </div>
         </section>
 
-        <section id="contact" class="container">
+        <section id="contact" class="container animated-card slide-in-left">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2 animated-card" style="gap: 40px; align-items: flex-start; background-color: var(--dark-card); padding: 40px; border-radius: 15px;">
+            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--dark-card); padding: 40px; border-radius: 15px;">
                 <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none;">
                     <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
@@ -859,6 +859,33 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            /* État initial : invisible et flou */
+            opacity: 0;
+            filter: blur(20px);
+            transition: opacity 1.2s ease-in-out, filter 1.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .carousel-slide.active {
+            /* État actif : visible, net et avec l'animation de zoom */
+            opacity: 1;
+            filter: blur(0px);
+            animation: zoomEffect 20s infinite alternate;
+        }
+        @keyframes zoomEffect {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
             opacity: 0;
             transition: opacity 1s ease-in-out;
             display: flex;
@@ -875,21 +902,6 @@
             to { transform: scale(1.1); }
         }
         .slide-content {
-            background-color: rgba(10, 10, 35, 0.6);
-            padding: 20px 40px;
-            border-radius: 10px;
-            color: var(--luminous-white);
-            max-width: 80%;
-        }
-        .slide-content h3 {
-            font-size: 1.8em;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .slide-content p {
-            font-size: 1.1em;
-            color: var(--text-secondary);
-        }
-        .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -910,6 +922,42 @@
         }
         .carousel-btn.prev { left: 15px; }
         .carousel-btn.next { right: 15px; }
+
+        /* --- Nouvelles animations au défilement --- */
+        .animated-card {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-card.fade-in {
+            transform: translateY(20px);
+        }
+        .animated-card.slide-in-left {
+            transform: translateX(-50px);
+        }
+        .animated-card.slide-in-right {
+            transform: translateX(50px);
+        }
+        .animated-card.zoom-in {
+            transform: scale(0.95);
+        }
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        /* Appliquer les animations aux sections */
+        #joie-jesus, #temoignages .testimonial-card {
+            animation-name: zoom-in;
+        }
+        #communaute, #contact {
+            animation-name: slide-in-left;
+        }
+        #ressources-promo {
+            animation-name: slide-in-right;
+        }
+        #next-event, #temoignages .section-title, #temoignages .section-subtitle {
+            animation-name: fade-in;
+        }
     </style>
 
     <script src="config.js"></script>
@@ -1025,20 +1073,25 @@
 
         // --- Logique pour l'animation au défilement ---
         document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Ajoute un délai pour un effet d'apparition en cascade
-                        setTimeout(() => {
-                            entry.target.classList.add('is-visible');
-                        }, index * 100); // Délai de 100ms entre chaque carte
-                        observer.unobserve(entry.target); // Cesse d'observer une fois l'animation jouée
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.15 }); // Se déclenche quand 15% de l'élément est visible
 
             const cards = document.querySelectorAll('.animated-card');
-            cards.forEach(card => observer.observe(card));
+            cards.forEach(card => {
+                // Appliquer le type d'animation de base
+                if (card.classList.contains('slide-in-left') || card.classList.contains('slide-in-right') || card.classList.contains('zoom-in')) {
+                    // Ces classes ont déjà leur transform initial
+                } else {
+                    card.classList.add('fade-in'); // Animation par défaut
+                }
+                observer.observe(card);
+            });
         });
 
         // --- Logique pour le compte à rebours du prochain événement ---
