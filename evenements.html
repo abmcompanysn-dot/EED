@@ -79,6 +79,19 @@
             50% { background-color: #3a3a6a; }
             100% { background-color: #2c2c54; }
         }
+        
+        /* Squelette de chargement pour les cartes d'événements */
+        .skeleton-event-card {
+            background-color: var(--dark-card); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden;
+        }
+        .skeleton-event-card .skeleton-image { height: 200px; background-color: #2c2c54; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton-event-card .skeleton-content { padding: 25px; }
+        .skeleton-event-card .skeleton-line { height: 1em; background-color: #2c2c54; border-radius: 4px; margin-bottom: 10px; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse {
+            0% { background-color: #2c2c54; }
+            50% { background-color: #3a3a6a; }
+            100% { background-color: #2c2c54; }
+        }
 
         @media (max-width: 992px) {
             nav ul.desktop-links { display: none; }
@@ -147,16 +160,17 @@
             
             // Afficher le squelette de chargement
             let skeletonHTML = '';
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 3; i++) { // Affiche 3 cartes "fantômes"
                 skeletonHTML += `
-                    <div class="skeleton-card">
+                    <div class="skeleton-event-card">
                         <div class="skeleton-image"></div>
                         <div class="skeleton-content">
                             <div class="skeleton-line short"></div>
                             <div class="skeleton-line title"></div>
                             <div class="skeleton-line"></div>
                         </div>
-                    </div>`;
+                    </div>
+                `;
             }
             grid.innerHTML = skeletonHTML;
 
