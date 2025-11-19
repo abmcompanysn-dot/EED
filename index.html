@@ -554,6 +554,29 @@
             font-size: 2.5em;
             color: var(--neon-blue);
         }
+
+        .btn-lux-rounded {
+            display: inline-block;
+            padding: 14px 32px;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 999px; /* forme très arrondie */
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-lux-rounded:hover {
+            background-color: white;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
         #countdown-timer span:last-child { color: var(--text-secondary); }
     </style>
     <style> /* Styles supplémentaires pour d'autres sections */
@@ -892,46 +915,6 @@
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
                     <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
-
-<style>
-.btn-lux-rounded {
-  display: inline-block;
-  padding: 14px 32px;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 999px; /* forme très arrondie */
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  margin-top: 10px;
-}
-
-.btn-lux-rounded::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
-}
-
-.btn-lux-rounded:hover::before {
-  left: 100%;
-}
-
-.btn-lux-rounded:hover {
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-</style>
                 </div> 
                 <div class="prayer-image-container">
                     <img src="r/rs.svg" alt="Bibliothèque de ressources">
@@ -981,46 +964,6 @@
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="blog.html" class="btn-lux-rounded">Voir tous les articles</a>
-
-<style>
-.btn-lux-rounded {
-  display: inline-block;
-  padding: 14px 32px;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 999px; /* forme très arrondie */
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  margin-top: 10px;
-}
-
-.btn-lux-rounded::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
-}
-
-.btn-lux-rounded:hover::before {
-  left: 100%;
-}
-
-.btn-lux-rounded:hover {
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-</style>
             </div>
         </section>
 
@@ -1035,46 +978,6 @@
                     <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
                     <div class="form-group"><label for="contact-message">Votre Message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
                     <button type="submit" id="contact-submit-btn" class="btn-lux-rounded">Envoyer le Message</button>
-
-<style>
-.btn-lux-rounded {
-  display: inline-block;
-  padding: 14px 32px;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 999px; /* forme très arrondie */
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-
-.btn-lux-rounded::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
-}
-
-.btn-lux-rounded:hover::before {
-  left: 100%;
-}
-
-.btn-lux-rounded:hover {
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-</style>
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
