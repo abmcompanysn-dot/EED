@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Ajout de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="footer.css">
     <style>
         :root {
             --neon-blue: #00BFFF;
@@ -120,15 +123,15 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
-            <ul class="desktop-links">
+            <ul class="desktop-links"> 
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html">Ateliers</a></li>
+                <li><a href="carrieres.html">Carrières</a></li>
                 <li><a href="ressources.html" style="color: var(--luminous-white);">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
-                <li><a href="Boutique.html">Faire un Don</a></li>
+                <li><a href="Boutique.html">Boutique</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
             <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
@@ -140,10 +143,10 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
+        <a href="carrieres.html" onclick="toggleMobileMenu()">Carrières</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Boutique</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
     </div>
 
@@ -192,6 +195,46 @@
         </section>
     </main>
 
+    <footer class="footer-section">
+        <div class="container footer-grid">
+           <!-- Colonne Logo + Mission -->
+           <div class="footer-col">
+             <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+             <p class="footer-tagline">
+               Annoncer l'Évangile, former des disciples,<br />
+               manifester l'amour de Christ à Dakar et au-delà.
+             </p>
+           </div>
+       
+           <!-- Colonne Navigation -->
+           <div class="footer-col">
+             <h4 class="footer-title">Navigation</h4>
+             <ul class="footer-links">
+               <li><a href="index.html">Accueil</a></li>
+               <li><a href="apropos.html">À Propos</a></li>
+               <li><a href="ministeres.html">Ministères</a></li>
+               <li><a href="evenements.html">Événements</a></li>
+               <li><a href="ressources.html">Ressources</a></li>
+               <li><a href="index.html#contact">Contact</a></li>
+             </ul>
+           </div>
+       
+           <!-- Colonne Contact -->
+           <div class="footer-col">
+             <h4 class="footer-title">Contact</h4>
+             <ul class="footer-contact">
+               <li><i class="fas fa-map-marker-alt"></i> Rue 11, Villa 4237 Amitié II</li>
+               <li><i class="fas fa-envelope"></i> BP : 3816, Dakar 18523</li>
+               <li><i class="fas fa-phone-alt"></i> 33 824 52 94</li>
+             </ul>
+           </div>
+         </div>
+       
+         <!-- Bas de page -->
+         <div class="footer-bottom">
+           <p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p>
+         </div>
+       </footer>
     <script src="config.js"></script>
 
     <script>
