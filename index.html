@@ -804,54 +804,45 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
-                    <a href="ressources.html" class="btn-luxury">Visiter la Bibliothèque</a>
+                    <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
 
 <style>
-.btn-luxury {
+.btn-lux-rounded {
   display: inline-block;
-  padding: 14px 28px;
+  padding: 14px 32px;
   border: 2px solid white;
-  background: transparent;
+  background-color: transparent;
   color: white;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
-  border-radius: 50px; /* forme fluide, non carrée */
+  border-radius: 999px; /* forme très arrondie */
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease;
   margin-top: 10px;
 }
 
-.btn-luxury::before {
+.btn-lux-rounded::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: rotate(25deg);
-  transition: all 0.5s ease;
-  opacity: 0;
-}
-
-.btn-luxury:hover::before {
   top: 0;
-  left: 0;
-  opacity: 1;
-  animation: shimmer 1.2s linear infinite;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
 }
 
-.btn-luxury:hover {
+.btn-lux-rounded:hover::before {
+  left: 100%;
+}
+
+.btn-lux-rounded:hover {
+  background-color: white;
   color: #000;
-  background: white;
   box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%) rotate(25deg); }
-  100% { transform: translateX(100%) rotate(25deg); }
 }
 </style>
                 </div> 
