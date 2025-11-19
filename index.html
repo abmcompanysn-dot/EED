@@ -1024,7 +1024,47 @@
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
                     <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
                     <div class="form-group"><label for="contact-message">Votre Message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
-                    <button type="submit" id="contact-submit-btn" class="btn-luxe">Envoyer le Message</button>
+                    <button type="submit" id="contact-submit-btn" class="btn-lux-rounded">Envoyer le Message</button>
+
+<style>
+.btn-lux-rounded {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 999px; /* forme très arrondie */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.btn-lux-rounded::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+
+.btn-lux-rounded:hover::before {
+  left: 100%;
+}
+
+.btn-lux-rounded:hover {
+  background-color: white;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+</style>
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
