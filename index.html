@@ -888,14 +888,13 @@
         }
         .carousel-container {
             position: relative;
-            width: 100%;
-            max-width: 1000px; /* Largeur maximale du carrousel */
+            width: 100vw; /* Prend toute la largeur de la vue */
+            max-width: 100%; /* S'assure de ne pas déborder */
             height: 500px;
-            margin: 0 auto;
+            margin: 0; /* Supprime les marges latérales */
+            padding: 0; /* Supprime le padding */
             overflow: hidden;
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            /* Les bordures et ombres sont retirées pour un affichage plein écran */
         }
         .carousel-slide {
             position: absolute;
@@ -903,7 +902,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
+            background-size: cover; /* Similaire à object-fit: cover pour les images de fond */
             background-position: center;
             /* État initial : invisible et flou */
             opacity: 0;
@@ -948,23 +947,27 @@
             to { transform: scale(1.1); }
         }
         .slide-content {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px 40px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0,0,0,0.4);
+            background: linear-gradient(to right, #2c3e50, #3498db);
             color: white;
             border: none;
-            padding: 15px;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
             cursor: pointer;
-            font-size: 1.5em;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            line-height: 20px;
-            transition: background-color 0.3s;
+            font-size: 1.2em;
         }
         .carousel-btn:hover {
-            background-color: rgba(0,0,0,0.7);
+            transform: translateY(-50%) scale(1.05);
         }
         .carousel-btn.prev { left: 15px; }
         .carousel-btn.next { right: 15px; }
@@ -1044,6 +1047,47 @@
                 order: -1; /* Met l'image avant le texte sur mobile */
                 max-height: none; /* Enlève la hauteur max */
             }
+        }
+
+        /* Style pour les versets bibliques défilants */
+        .bible-verse-marquee {
+            background-color: #f9f9f9;
+            color: #333;
+            font-style: italic;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden; /* Cache le contenu qui dépasse */
+            white-space: nowrap; /* Empêche le retour à la ligne */
+        }
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%; /* Commence en dehors de l'écran à droite */
+            animation: marquee-scroll 30s linear infinite;
+        }
+        .marquee-content p {
+            display: inline-block;
+            margin: 0 40px; /* Espace entre les versets */
+        }
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Style amélioré pour les boutons de section (disponible pour usage général) */
+        .section-button {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .section-button:hover {
+            transform: scale(1.05);
+            cursor: pointer;
         }
     </style>
 

@@ -401,6 +401,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- Section Versets Bibliques -->
+        <section class="bible-verse-marquee">
+            <div class="marquee-content">
+                <p>“L'Éternel est mon berger : je ne manquerai de rien.” – Psaume 23:1</p>
+                <p>“Je puis tout par celui qui me fortifie.” – Philippiens 4:13</p>
+                <p>“Car je connais les projets que j’ai formés sur vous.” – Jérémie 29:11</p>
+            </div>
+        </section>
     </main>
 
     <div id="back-to-top" onclick="scrollToTop()">&#8679;</div>
@@ -598,6 +607,140 @@
                 });
         }
 
+    </script>
+    <style>
+        /* Style pour les versets bibliques défilants */
+        .bible-verse-marquee {
+            background-color: #f9f9f9;
+            color: #333;
+            font-style: italic;
+            font-size: 1.1em;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden; /* Cache le contenu qui dépasse */
+            white-space: nowrap; /* Empêche le retour à la ligne */
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%; /* Commence en dehors de l'écran à droite */
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        .marquee-content p {
+            display: inline-block;
+            margin: 0 40px; /* Espace entre les versets */
+        }
+
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Style amélioré pour les boutons de section */
+        .section-button {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .section-button:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>
+
+<!--
+        .bible-verse-marquee {
+            background-color: #f9f9f9;
+            color: #333;
+            font-style: italic;
+            font-size: 1.1em;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden; 
+            white-space: nowrap; 
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%; 
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        .marquee-content p {
+            display: inline-block;
+            margin: 0 40px; 
+        }
+
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .section-button {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .section-button:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    -->
+        .bible-verse-marquee {
+            background-color: #f9f9f9;
+            color: #333;
+            font-style: italic;
+            font-size: 1.1em;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden; /* Cache le contenu qui dépasse */
+            white-space: nowrap; /* Empêche le retour à la ligne */
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%; /* Commence en dehors de l'écran à droite */
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        .marquee-content p {
+            display: inline-block;
+            margin: 0 40px; /* Espace entre les versets */
+        }
+
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Style amélioré pour les boutons de section */
+        .section-button {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+        .section-button:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
     </script>
 </body>
 </html>
