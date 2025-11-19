@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrières - Lumière du Futur</title>
+    <title>Ateliers - Lumière du Futur</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -53,6 +53,18 @@
         .hero-section .section-title { font-size: 3.5em; color: var(--luminous-white); text-shadow: 0 0 15px var(--neon-blue); }
         .hero-section .section-subtitle { margin-bottom: 0; }
 
+        .content-section {
+            background-color: var(--dark-card);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: -60px auto 60px auto;
+            position: relative;
+            z-index: 10;
+        }
+        .content-section ul { list-style-type: '• '; padding-left: 20px; }
+
         @media (max-width: 992px) {
             nav ul.desktop-links { display: none; }
             .menu-burger { display: block; }
@@ -68,7 +80,7 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html" style="color: var(--luminous-white);">Carrières</a></li>
+                <li><a href="carrieres.html" style="color: var(--luminous-white);">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
@@ -83,7 +95,7 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="carrieres.html" onclick="toggleMobileMenu()">Carrières</a>
+        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
         <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
@@ -92,14 +104,26 @@
 
     <main>
         <section class="hero-section">
-            <h1 class="section-title">Carrières</h1>
-            <p class="section-subtitle">Découvrez ce que c'est que de travailler chez Life.Church et explorez tous nos postes à pourvoir.</p>
+            <h1 class="section-title">🗣️ Annonce : Cours de wolof gratuit</h1>
+            <p class="section-subtitle">L’église vous invite à découvrir la richesse de la langue et de la culture wolof.</p>
         </section>
 
-        <section class="container">
-            <h2 class="section-title">Postes à pourvoir</h2>
-            <p class="section-subtitle">Nous n'avons actuellement aucun poste à pourvoir, mais revenez bientôt !</p>
-            <!-- Vous pourrez ajouter les offres d'emploi ici -->
+        <section class="container content-section">
+            <h2>Cours de langue wolof – Gratuit et ouvert à tous</h2>
+            <p>L’église vous invite à découvrir la richesse de la langue et de la culture wolof à travers un cours gratuit, accessible à tous les âges et tous les niveaux.</p>
+            <p>
+                📍 <strong>Lieu :</strong> [Nom de l’église ou centre communautaire]<br>
+                📅 <strong>Date :</strong> [À préciser]<br>
+                🕒 <strong>Heure :</strong> [À préciser]
+            </p>
+            <h3>🎯 Objectif : Apprendre à communiquer en wolof, valoriser notre patrimoine linguistique, et renforcer les liens communautaires.</h3>
+            <h4>Ce que vous allez apprendre :</h4>
+            <ul>
+                <li>Les bases de la langue wolof (salutations, expressions courantes)</li>
+                <li>L’histoire et les valeurs culturelles associées</li>
+                <li>Des échanges pratiques et des mises en situation</li>
+            </ul>
+            <p><strong>Inscription gratuite sur place ou par téléphone.</strong><br>Venez nombreux, seul ou en famille, pour partager ce moment d’apprentissage et de fraternité.</p>
         </section>
     </main>
 
