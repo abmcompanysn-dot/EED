@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- ==================== META-DONNÉES ET TITRE ==================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumière du Futur - Église Évangélique de Dakar</title>
+
+    <!-- ==================== POLICES D'ÉCRITURE (GOOGLE FONTS) ==================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         /* public-styles.css */
         :root {
@@ -19,6 +23,7 @@
             --border-color: #2c2c54;
         }
 
+        /* ==================== STYLES GÉNÉRAUX DU CORPS DE LA PAGE ==================== */
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
@@ -42,7 +47,7 @@
             padding: 0 20px;
         }
 
-        /* Barre de Navigation Améliorée */
+        /* ==================== BARRE DE NAVIGATION (HEADER) ==================== */
         header {
             background-color: transparent; /* Fond transparent */
             transition: background-color 0.4s ease, backdrop-filter 0.4s ease; /* Transition douce */
@@ -132,7 +137,7 @@
             font-weight: bold;
         }
 
-        /* Menu Burger pour mobile */
+        /* ==================== MENU MOBILE (BURGER & MODAL) ==================== */
         .menu-burger {
             display: none; /* Caché sur bureau */
             font-size: 1.8em;
@@ -174,7 +179,7 @@
             opacity: 1;
         }
 
-        /* Sections Générales */
+        /* ==================== STYLES DES SECTIONS GÉNÉRALES ==================== */
         section {
             padding: 100px 0;
         }
@@ -198,7 +203,7 @@
             margin: 0 auto 60px auto;
         }
 
-        /* Section Hero spécifique */
+        /* ==================== SECTION HÉROS (BANNIÈRE PRINCIPALE) ==================== */
         .hero {
             position: relative;
             min-height: 80vh; /* Prend au moins 80% de la hauteur de l'écran */
@@ -253,7 +258,7 @@
                 blink-caret .75s step-end infinite;
         }
 
-        /* Animation de frappe */
+        /* --- Animation de frappe pour le titre du héros --- */
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
@@ -265,7 +270,7 @@
             50% { border-color: var(--fire-red); }
         }
 
-        /* Cartes Produit spécifiques */
+        /* --- Styles spécifiques pour les cartes de produits (non utilisé ici) --- */
         .product-card .price {
             font-size: 2em;
             font-weight: bold;
@@ -277,7 +282,7 @@
             color: var(--text-secondary);
         }
 
-        /* Grilles et Cartes */
+        /* ==================== GRILLES ET CARTES (STYLES COMMUNS) ==================== */
         .grid-2, .grid-3 {
             display: grid;
             gap: 30px;
@@ -303,7 +308,7 @@
             margin-top: 0;
         }
 
-        /* Boutons */
+        /* ==================== BOUTONS ==================== */
         .btn {
             display: inline-block;
             width: 100%;
@@ -327,7 +332,7 @@
             background: linear-gradient(90deg, var(--blue), var(--red));
         }
 
-        /* Responsive */
+        /* ==================== DESIGN RESPONSIVE (ADAPTATION MOBILE) ==================== */
         @media (max-width: 992px) { /* Point de rupture ajusté pour une meilleure transition */
             nav ul.desktop-links {
                 display: none;
@@ -515,7 +520,7 @@
             transform: translateY(0);
         }
 
-        /* --- Nouveaux styles pour le compte à rebours --- */
+        /* ==================== COMPTE À REBOURS ==================== */
         #next-event {
             border-radius: 15px;
             border: 1px solid var(--border-color);
@@ -547,7 +552,7 @@
         }
         #countdown-timer span:last-child { color: var(--text-secondary); }
     </style>
-    <style>
+    <style> /* Styles supplémentaires pour d'autres sections */
         /* --- Nouveaux styles pour la modale de prière --- */
         .modal {
             display: none;
@@ -653,7 +658,7 @@
         .prayer-content h3 { font-size: 1.8em; color: var(--neon-blue); }
         @media (max-width: 992px) { .prayer-section-layout { grid-template-columns: 1fr; padding: 30px; } }
 
-        /* --- Styles pour le menu mobile et l'icône de fermeture --- */
+        /* --- Styles pour l'icône de fermeture du menu mobile --- */
         body.no-scroll {
             overflow: hidden;
         }
@@ -664,8 +669,10 @@
 
     </style>
 </head>
+
 <body>
 
+    <!-- ==================== EN-TÊTE ET BARRE DE NAVIGATION ==================== -->
     <header>
         <nav class="container">
             <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
@@ -693,6 +700,7 @@
         </nav>
     </header>
 
+    <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
     <div class="nav-links-mobile" id="mobile-menu">
         <!-- Contenu du menu mobile pour les animations -->
         <div class="nav-links-mobile-content">
@@ -708,7 +716,9 @@
         </div>
     </div>
 
+    <!-- ==================== CONTENU PRINCIPAL DE LA PAGE ==================== -->
     <main style="padding-top: 100px;">
+        <!-- ---------- Section Héros (Bannière) ---------- -->
         <section class="hero">
             <div class="hero-overlay"></div>
             <div class="container hero-text-content">
@@ -787,7 +797,7 @@
             </div>
         </section>
 
-        <section id="communaute" class="container animated-card slide-in-left" style="padding-top: 0; padding-bottom: 0;">
+        <section id="communaute" class="container animated-card" style="padding-top: 0; padding-bottom: 0;">
             <div class="promo-card">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
@@ -840,7 +850,7 @@
             </div>
         </section>
 
-        <section id="temoignages" class="container">
+        <section id="temoignages" class="container animated-card">
             <h2 class="section-title">Paroles de la Communauté</h2>
             <p class="section-subtitle">Découvrez comment Dieu agit dans la vie de nos membres.</p>
             <div class="grid-2">
@@ -871,7 +881,7 @@
             </div>
         </section>
 
-        <section id="ressources-promo" class="container animated-card slide-in-right" style="padding-top: 40px; padding-bottom: 0;">
+        <section id="ressources-promo" class="container animated-card" style="padding-top: 40px; padding-bottom: 0;">
             <div class="promo-card">
                 <div class="prayer-content">
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
@@ -957,7 +967,7 @@
             }
         </style>
 
-        <!-- ==================== Section Derniers Articles du Blog ==================== -->
+        <!-- ==================== Section Derniers Articles du Blog (Promo) ==================== -->
         <section id="blog-promo" class="container">
             <h2 class="section-title">Derniers Articles du Blog</h2>
             <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
@@ -1011,7 +1021,7 @@
         </section>
 
 
-        <section id="contact" class="container animated-card slide-in-left">
+        <section id="contact" class="container animated-card">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
             <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--dark-card); padding: 40px; border-radius: 15px;">
@@ -1076,11 +1086,13 @@
             </div>
         </section>
     </main>
+
+    <!-- ==================== STYLES SPÉCIFIQUES (NON CRITIQUES) ==================== -->
     <style>
+        /* Ces styles sont placés ici pour ne pas bloquer le rendu initial de la page. */
+
         /* ==================== Styles du Carrousel "Joie avec Jésus" ==================== */
-        #joie-jesus {
-            padding-bottom: 60px; /* Espace réduit après le carrousel */
-        }
+        #joie-jesus { padding-bottom: 60px; }
         .carousel-container {
             position: relative;
             width: 100vw; /* Prend toute la largeur de la vue */
@@ -1182,7 +1194,7 @@
             flex-grow: 1;
         }
 
-        /* --- Nouvelles animations au défilement --- */
+        /* ==================== Animations au défilement (classes d'animation) ==================== */
         .animated-card {
             opacity: 0;
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -1204,7 +1216,7 @@
             transform: translateY(0) translateX(0) scale(1);
         }
 
-        /* Appliquer les animations aux sections */
+        /* --- Application des animations aux sections --- */
         #joie-jesus, #temoignages .testimonial-card {
             animation-name: zoom-in;
         }
@@ -1218,7 +1230,7 @@
             animation-name: fade-in;
         }
 
-        /* Amélioration responsive de l'image "Ressources" */
+        /* --- Amélioration responsive pour les cartes promo --- */
         @media (max-width: 992px) {
             #ressources-promo .prayer-image-container {
                 order: -1; /* Met l'image avant le texte sur mobile */
@@ -1226,7 +1238,7 @@
             }
         }
 
-        /* Style pour les versets bibliques défilants */
+        /* ==================== Versets bibliques défilants ==================== */
         .bible-verse-marquee {
             background-color: #f9f9f9;
             color: #333;
@@ -1252,7 +1264,7 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Style amélioré pour les boutons de section (disponible pour usage général) */
+        /* ==================== Boutons de section (style alternatif) ==================== */
         .section-button {
             background: linear-gradient(to right, #2c3e50, #3498db);
             color: white;
@@ -1268,10 +1280,12 @@
         }
     </style>
 
+    <!-- ==================== SCRIPTS JAVASCRIPT ==================== -->
     <script src="config.js"></script>
     <script>
         // ... (votre fonction toggleMobileMenu existante)
 
+        // ==================== Logique pour la modale de prière ====================
         // --- Logique pour la modale de prière ---
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'block';
@@ -1289,7 +1303,7 @@
             }
         }
 
-        // --- Logique pour la soumission du formulaire de prière ---
+        // --- Logique pour la soumission du formulaire de prière (via API) ---
         function handlePrayerSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('prayer-submit-btn');
@@ -1329,7 +1343,7 @@
                 });
         }
 
-        // --- Logique pour la soumission du formulaire de contact principal ---
+        // --- Logique pour la soumission du formulaire de contact (via API) ---
         function handleContactSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('contact-submit-btn');
@@ -1368,7 +1382,7 @@
         }
 
         /**
-         * Fonction centralisée pour appeler l'API backend via POST.
+         * Fonction centralisée pour appeler l'API Google Apps Script via POST.
          */
         function callApi(action, data = {}) {
             const formData = new FormData();
@@ -1379,7 +1393,7 @@
             return fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json());
         }
 
-        // --- Logique pour l'animation au défilement ---
+        // ==================== Logique pour l'animation au défilement ====================
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -1402,7 +1416,7 @@
             });
         });
 
-        // --- Logique pour le carrousel "Joie avec Jésus" ---
+        // ==================== Logique pour le carrousel "Joie avec Jésus" ====================
         const slidesData = [
             {
                 image: 'r/a.jpg', // Foi et confiance
@@ -1497,7 +1511,7 @@
             resetInterval();
         });
 
-        // --- Logique pour charger les derniers articles du blog ---
+        // ==================== Logique pour charger les derniers articles du blog ====================
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('latest-posts-grid');
 
@@ -1542,7 +1556,7 @@
                 });
         });
 
-        // --- Logique pour le compte à rebours du prochain événement ---
+        // ==================== Logique pour le compte à rebours du prochain événement ====================
         document.addEventListener('DOMContentLoaded', () => {
             callApi('getEvents')
                 .then(data => {
@@ -1593,6 +1607,7 @@
                 .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
         });
     </script>
+
 
     <script>
         function toggleMobileMenu() {
