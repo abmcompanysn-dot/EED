@@ -907,7 +907,7 @@
             /* État initial : invisible et flou */
             opacity: 0;
             filter: blur(20px);
-            transition: opacity 1.2s ease-in-out, filter 1.2s ease-in-out;
+            transition: opacity 0.6s ease-in-out, filter 0.6s ease-in-out; /* Transition plus rapide */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1243,37 +1243,37 @@
                 subtitle: 'Hébreux 11:1'
             },
             {
-                image: 'r/d.jpg', // Espérance et force
+                image: 'r/a.jpg', // Espérance et force
                 title: '« Ceux qui se confient en l’Éternel renouvellent leur force. »',
                 subtitle: 'Ésaïe 40:31'
             },
             {
-                image: 'r/e.jpg', // Espérance et force
+                image: 'r/b.jpg', // Espérance et force
                 title: '« Je puis tout par celui qui me fortifie. »',
                 subtitle: 'Philippiens 4:13'
             },
             {
-                image: 'r/f.jpg', // Espérance et force
+                image: 'r/c.jpg', // Espérance et force
                 title: '« Toutes choses concourent au bien de ceux qui aiment Dieu. »',
                 subtitle: 'Romains 8:28'
             },
             {
-                image: 'r/g.jpg', // Lumière et guidance
+                image: 'r/a.jpg', // Lumière et guidance
                 title: '« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. »',
                 subtitle: 'Psaume 119:105'
             },
             {
-                image: 'r/h.jpg', // Lumière et guidance
+                image: 'r/b.jpg', // Lumière et guidance
                 title: '« Je suis la lumière du monde ; celui qui me suit ne marchera pas dans les ténèbres. »',
                 subtitle: 'Jean 8:12'
             },
             {
-                image: 'r/i.jpg', // Amour et paix
+                image: 'r/c.jpg', // Amour et paix
                 title: '« Car Dieu a tant aimé le monde qu’il a donné son Fils unique… »',
                 subtitle: 'Jean 3:16'
             },
             {
-                image: 'r/j.jpg', // Amour et paix
+                image: 'r/a.jpg', // Amour et paix
                 title: '« Maintenant donc ces trois choses demeurent : la foi, l’espérance, l’amour ; mais la plus grande de ces choses, c’est l’amour. »',
                 subtitle: '1 Corinthiens 13:13'
             }
@@ -1312,7 +1312,7 @@
 
         function resetInterval() {
             clearInterval(slideInterval);
-            slideInterval = setInterval(() => moveSlide(1), 7000); // Change toutes les 7 secondes
+            slideInterval = setInterval(() => moveSlide(1), 5000); // Change toutes les 5 secondes
         }
 
         document.addEventListener('DOMContentLoaded', () => {
