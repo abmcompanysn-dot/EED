@@ -1295,12 +1295,11 @@
          * Fonction centralisée pour appeler l'API Google Apps Script via POST.
          */
         function callApi(action, data = {}) {
-            const formData = new FormData();
-            formData.append('action', action);
-            if (data.payload) {
-                formData.append('payload', JSON.stringify(data.payload));
-            }
-            return fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json());
+            // Utilise GET pour les actions de récupération de données
+            const url = new URL(API_URL);
+            url.searchParams.append('action', action);
+            url.searchParams.append('origin', window.location.origin); // Ajoute l'origine pour CORS
+            return fetch(url).then(res => res.json());
         }
 
         // ==================== Logique pour l'animation au défilement ====================

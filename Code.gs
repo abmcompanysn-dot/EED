@@ -11,7 +11,34 @@
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
-  return corsify({ status: 'API en ligne', message: 'Veuillez utiliser des requêtes POST.' });
+  try {
+    const action = e.parameter.action;
+    let result;
+
+    // Aiguillage pour les actions GET
+    switch (action) {
+      case 'getBlogPosts':
+        result = getBlogPosts();
+        break;
+      case 'getBlogPostById':
+        result = getBlogPostById(e.parameter.id);
+        break;
+      case 'getEvents':
+        result = getEvents();
+        break;
+      case 'getComments':
+        result = getComments(e.parameter.articleId);
+        break;
+      default:
+        result = { success: false, error: 'Action GET non reconnue.' };
+        break;
+    }
+    return corsify(result, false, e.parameter.origin);
+  } catch (err) {
+    const errorMessage = `Erreur dans l'action GET '${e.parameter.action}': ${err.message}`;
+    logAction(e.parameter.action, 'ERROR', errorMessage, 'anonyme');
+    return corsify({ error: "Une erreur interne est survenue." }, false, e.parameter.origin);
+  }
 }
 
 /**
@@ -55,7 +82,7 @@ function doPost(e) {
 
     // Enregistre l'action réussie dans l'historique.
     logAction(action, 'SUCCESS', `Action exécutée avec succès.`);
-    // Renvoie le résultat au client, formaté en JSON avec les en-têtes CORS.
+    // Renvoie le résultat au client, formaté en JSON avec les en-têtes CORS. (e.parameter.origin n'est pas standard pour POST)
     return corsify(result);
 
   } catch (err) {
@@ -85,29 +112,29 @@ function doOptions(e) {
  * @param {boolean} [isOptions=false] - S'il s'agit d'une requête OPTIONS.
  * @returns {ContentService.TextOutput} La réponse formatée.
  */
-function corsify(data, isOptions = false, reqOrigin = '') {
+function corsify(data, isOptions = false, reqOrigin) {
   const allowedOrigins = [
     'https://eed.abmcy.com',
-    
+    'http://127.0.0.1:5500' // J'ajoute l'origine locale pour vos tests
   ];
-
-  const origin = allowedOrigins.includes(reqOrigin) ? reqOrigin : 'null';
-
-  const headers = {
-    'Access-Control-Allow-Origin': origin,
-    'Content-Type': 'application/json'
-  };
+  
+  const originHeader = (reqOrigin && allowedOrigins.includes(reqOrigin)) ? reqOrigin : allowedOrigins[0];
+  
+  const output = ContentService.createTextOutput();
+  output.setMimeType(ContentService.MimeType.JSON);
+  output.setContent(JSON.stringify(data || {})); // S'assurer que data n'est pas null
+  output.setHeaders({
+    'Access-Control-Allow-Origin': originHeader
+  });
 
   if (isOptions) {
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS';
-    headers['Access-Control-Allow-Headers'] = 'Content-Type';
+    output.setHeaders({
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Origin': originHeader
+    });
   }
-
-  return {
-    statusCode: 200,
-    headers,
-    body: JSON.stringify(data)
-  };
+  return output;
 }
 
 
