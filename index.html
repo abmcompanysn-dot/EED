@@ -804,27 +804,54 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
-                    <a href="ressources.html" class="btn-luxe">Visiter la Bibliothèque</a>
+                    <a href="ressources.html" class="btn-luxury">Visiter la Bibliothèque</a>
 
 <style>
-.btn-luxe {
+.btn-luxury {
   display: inline-block;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border: 2px solid white;
-  background-color: transparent;
+  background: transparent;
   color: white;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  border-radius: 50px; /* forme fluide, non carrée */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
   margin-top: 10px;
 }
 
-.btn-luxe:hover {
-  background-color: white;
+.btn-luxury::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.btn-luxury:hover::before {
+  top: 0;
+  left: 0;
+  opacity: 1;
+  animation: shimmer 1.2s linear infinite;
+}
+
+.btn-luxury:hover {
   color: #000;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  background: white;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(100%) rotate(25deg); }
 }
 </style>
                 </div> 
