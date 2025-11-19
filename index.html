@@ -733,17 +733,7 @@
 
     <!-- ==================== CONTENU PRINCIPAL DE LA PAGE ==================== -->
     <main style="padding-top: 100px;">
-        <!-- ---------- Section Héros (Bannière) ---------- -->
-        <section class="hero">
-            <video autoplay loop muted playsinline class="hero-video">
-                <source src="r/vid.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la vidéo.
-            </video>
-            <div class="hero-overlay"></div>
-            <div class="container hero-text-content">
-                <h1>Église Évangélique de Dakar</h1>
-            </div>
-        </section>
+        <!-- Le contenu principal commence ici, la section héros est maintenant en dehors -->
 
         <section id="next-event" class="container" style="display: none;">
             <h2 class="section-title">Prochain Événement</h2>
@@ -1545,5 +1535,16 @@
         });
 
     </script>
+    <!-- La section héros est maintenant en dehors et avant 'main' pour être en plein écran -->
+    <section class="hero">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="r/vid.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container hero-text-content">
+            <h1>Église Évangélique de Dakar</h1>
+        </div>
+    </section>
 </body>
 </html>
