@@ -13,6 +13,7 @@
     
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="footer.css">
 
     <style>
         /* public-styles.css */
@@ -1134,10 +1135,6 @@
 
     <!-- ==================== STYLES SPÉCIFIQUES (NON CRITIQUES) ==================== -->
     <style>
-        /* Ces styles sont placés ici pour ne pas bloquer le rendu initial de la page. */
-
-        /* ==================== Styles du Carrousel "Joie avec Jésus" ==================== */
-        #joie-jesus { padding-bottom: 60px; }
         .carousel-container {
             position: relative;
             width: 100vw; /* Prend toute la largeur de la vue */
@@ -1261,10 +1258,6 @@
             transform: translateY(0) translateX(0) scale(1);
         }
 
-        /* --- Application des animations aux sections --- */
-        #joie-jesus, #temoignages .testimonial-card {
-            animation-name: zoom-in;
-        }
         #communaute, #contact {
             animation-name: slide-in-left;
         }
@@ -1274,16 +1267,6 @@
         #next-event, #temoignages .section-title, #temoignages .section-subtitle {
             animation-name: fade-in;
         }
-
-        /* --- Amélioration responsive pour les cartes promo --- */
-        @media (max-width: 992px) {
-            #ressources-promo .prayer-image-container {
-                order: -1; /* Met l'image avant le texte sur mobile */
-                max-height: none; /* Enlève la hauteur max */
-            }
-        }
-
-        /* ==================== Versets bibliques défilants ==================== */
         .bible-verse-marquee {
             background-color: #f9f9f9;
             color: #333;
@@ -1309,25 +1292,6 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* ==================== Boutons de section (style alternatif) ==================== */
-        .section-button {
-            background: linear-gradient(to right, #2c3e50, #3498db);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
-        }
-        .section-button:hover {
-            transform: scale(1.05);
-            cursor: pointer;
-        }
-
-        /* ==================== Styles du Pied de Page (Footer) ==================== */
-        .footer-section{background:#0a0a0a;color:#f0f0f0;padding:60px 20px 30px;font-family:'Poppins',sans-serif}.footer-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px}.footer-col{flex:1 1 250px}.footer-logo{width:160px;margin-bottom:20px}.footer-title{font-size:1.2rem;margin-bottom:15px;color:#fff;border-bottom:2px solid #e63946;display:inline-block;padding-bottom:5px}.footer-links li,.footer-contact li{list-style:none;margin-bottom:10px}.footer-links a{color:#f0f0f0;text-decoration:none;transition:color .3s ease}.footer-links a:hover{color:#e63946}.footer-contact i{margin-right:10px;color:#e63946}.footer-bottom{text-align:center;margin-top:40px;border-top:1px solid #333;padding-top:20px;font-size:.9rem;color:#aaa}
-        /* Ajout de la police Poppins pour le footer */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     </style>
 
     <!-- ==================== SCRIPTS JAVASCRIPT ==================== -->

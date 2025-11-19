@@ -1,0 +1,66 @@
+/* c:/Users/Admin/OneDrive/Pictures/im/Desktop/no mini projet/EED/footer.css */
+
+/* Importation de la police Poppins pour le pied de page */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.footer-section {
+  background: #0a0a0a;
+  color: #f0f0f0;
+  padding: 60px 20px 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-col {
+  flex: 1 1 250px;
+}
+
+.footer-logo {
+  width: 160px;
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #ffffff;
+  border-bottom: 2px solid #e63946;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-links li,
+.footer-contact li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #e63946;
+}
+
+.footer-contact i {
+  margin-right: 10px;
+  color: #e63946;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid #333;
+  padding-top: 20px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
