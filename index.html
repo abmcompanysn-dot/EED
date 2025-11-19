@@ -730,8 +730,46 @@
                 <div><span id="seconds">00</span><span>Secondes</span></div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
-                <a href="evenements.html" id="event-link" class="btn btn-gradient" style="width: auto; padding: 12px 30px;">
-                    Voir les détails
+                <<a href="evenements.html" id="event-link" class="btn-gradient-rounded">Voir les détails</a>
+
+<style>
+.btn-gradient-rounded {
+  display: inline-block;
+  padding: 12px 30px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 999px; /* forme arrondie */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.btn-gradient-rounded::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+
+.btn-gradient-rounded:hover::before {
+  left: 100%;
+}
+
+.btn-gradient-rounded:hover {
+  background-color: white;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+</style>
                 </a>
             </div>
         </section>
