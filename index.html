@@ -1525,13 +1525,21 @@
             const burgerIcon = document.querySelector('.menu-burger');
             const body = document.body;
 
-            // Ajoute/retire la classe 'active' pour le menu et 'no-scroll' pour le body
             mobileMenu.classList.toggle('active');
             body.classList.toggle('no-scroll');
 
-            // Change l'icône (burger/croix) et sa position
             burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
             burgerIcon.classList.toggle('close-icon', mobileMenu.classList.contains('active'));
+
+            // --- Nouvelle logique pour l'animation des liens ---
+            const links = mobileMenu.querySelectorAll('a');
+            if (mobileMenu.classList.contains('active')) {
+                links.forEach((link, index) => {
+                    link.style.transitionDelay = `${index * 0.05}s`; // Applique un décalage
+                    link.style.opacity = '1';
+                    link.style.transform = 'translateY(0)';
+                });
+            }
         }
 
         // --- Logique pour le changement de la barre de navigation au défilement ---

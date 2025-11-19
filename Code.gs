@@ -85,10 +85,17 @@ function doOptions(e) {
  * @param {boolean} [isOptions=false] - S'il s'agit d'une requête OPTIONS.
  * @returns {ContentService.TextOutput} La réponse formatée.
  */
-function corsify(data, isOptions = false) {
+function corsify(data, isOptions = false, reqOrigin = '') {
+  const allowedOrigins = [
+    'https://eed.abmcy.com',
+    
+  ];
+
+  const origin = allowedOrigins.includes(reqOrigin) ? reqOrigin : 'null';
+
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': origin,
+    'Content-Type': 'application/json'
   };
 
   if (isOptions) {
@@ -98,10 +105,12 @@ function corsify(data, isOptions = false) {
 
   return {
     statusCode: 200,
-    headers: headers,
+    headers,
     body: JSON.stringify(data)
   };
 }
+
+
 /**
  * ==================================================================
  * LOGIQUE DE L'APPLICATION
