@@ -800,8 +800,47 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-                    <a href="demande-priere.html" class="btn-luxe" style="width: auto; margin-top: 10px;">Soumettre une demande</a>
-                </div>
+<a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
+
+<style>
+.btn-lux-rounded {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 999px; /* forme très arrondie */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  margin-top: 10px;
+}
+
+.btn-lux-rounded::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform: skewX(-20deg);
+  transition: all 0.5s ease;
+}
+
+.btn-lux-rounded:hover::before {
+  left: 100%;
+}
+
+.btn-lux-rounded:hover {
+  background-color: white;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+}
+</style>                </div>
             </div>
         </section>
 
