@@ -28,7 +28,15 @@
         }
 
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        header {
+            background-color: rgba(10, 10, 35, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 0;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
         nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px;}
         .logo img { transition: transform 0.3s ease; }
         .logo:hover img { transform: scale(1.05); }
@@ -37,13 +45,41 @@
         nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
         nav ul a:hover::after { width: 100%; left: 0; }
         nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
-        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; background: none; border: none; padding: 0; }
-        .nav-links-mobile { 
-            display: none; position: fixed; top: 0; left: -100%; width: 100%; height: 100%; 
-            background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; 
-            align-items: center; gap: 40px; font-size: 1.5em; transition: left 0.5s ease-in-out;
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .menu-burger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 1002;
         }
-        .nav-links-mobile.active { left: 0; display: flex; }
+        .menu-burger:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        }
+        .menu-burger .bar { width: 100%; height: 2px; background-color: white; border-radius: 2px; }
+        .nav-links-mobile { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 10, 35, 0.95); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            transform: translateX(-100%); transition: transform 0.4s ease-in-out;
+            pointer-events: none; z-index: 1001;
+        }
+        .nav-links-mobile.active { transform: translateX(0); pointer-events: auto; }
+        .nav-links-mobile-content { display: flex; flex-direction: column; gap: 30px; width: 100%; padding: 0 40px; box-sizing: border-box; }
+        .nav-links-mobile a {
+            color: var(--luminous-white); font-size: 18px; text-decoration: none;
+            padding: 16px 10px; width: 100%; border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-links-mobile a:hover { background-color: rgba(255, 255, 255, 0.1); }
         body.no-scroll { overflow: hidden; }
         section { padding: 40px 0; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
@@ -76,32 +112,30 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
-            <ul class="desktop-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="apropos.html">À Propos</a></li>
-                <li><a href="ministeres.html" style="color: var(--luminous-white);">Ministères</a></li>
-                <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html">Ateliers</a></li>
-                <li><a href="ressources.html">Ressources</a></li>
-                <li><a href="live.html">Live</a></li>
-                <li><a href="Boutique.html">Faire un Don</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-            <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
+            <div class="container" style="max-width: 1200px;">
+                <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+                <ul class="desktop-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="apropos.html">À Propos</a></li>
+                    <li><a href="ministeres.html" style="color: var(--luminous-white);">Ministères</a></li>
+                    <li><a href="evenements.html">Événements</a></li>
+                    <li><a href="carrieres.html">Ateliers</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="live.html">Live</a></li>
+                    <li><a href="Boutique.html">Faire un Don</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <div class="nav-links-mobile">
-        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
-        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
-        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
-        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
-        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
-        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
-        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+    <div class="nav-links-mobile" id="mobile-menu">
+        <div class="nav-links-mobile-content">
+            <!-- Liens injectés par JS -->
+        </div>
     </div>
 
     <main>
@@ -124,37 +158,47 @@
 
     <footer class="footer-section">
         <div class="container footer-grid">
-           <!-- Colonne Logo + Mission -->
-           <div class="footer-col">
-             <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
-             <p class="footer-tagline">
-               Annoncer l'Évangile, former des disciples,<br />
-               manifester l'amour de Christ à Dakar et au-delà.
-             </p>
-           </div>
-       
-           <!-- Colonne Navigation -->
-           <div class="footer-col">
-             <h4 class="footer-title">Navigation</h4>
-             <ul class="footer-links">
-               <li><a href="index.html">Accueil</a></li>
-               <li><a href="apropos.html">À Propos</a></li>
-               <li><a href="ministeres.html">Ministères</a></li>
-               <li><a href="evenements.html">Événements</a></li>
-               <li><a href="ressources.html">Ressources</a></li>
-               <li><a href="index.html#contact">Contact</a></li>
-             </ul>
-           </div>
-       
-           <!-- Colonne Contact -->
-           <div class="footer-col">
-             <h4 class="footer-title">Contact</h4>
-             <ul class="footer-contact">
-               <li><i class="fas fa-map-marker-alt"></i> Rue 11, Villa 4237 Amitié II</li>
-               <li><i class="fas fa-envelope"></i> BP : 3816, Dakar 18523</li>
-               <li><i class="fas fa-phone-alt"></i> 33 824 52 94</li>
-             </ul>
-           </div>
+            <!-- Colonne Logo + Mission -->
+             <div class="footer-col">
+                 <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                 <p class="footer-tagline">
+                     Annoncer l'Évangile, former des disciples,<br />
+                     manifester l'amour de Christ à Dakar et au-delà.
+                 </p>
+             </div>
+     
+             <!-- Colonne Navigation -->
+             <div class="footer-col">
+                 <h4 class="footer-title">Navigation</h4>
+                 <ul class="footer-links">
+                     <li><a href="index.html">Accueil</a></li>
+                     <li><a href="apropos.html">À Propos</a></li>
+                     <li><a href="ministeres.html">Ministères</a></li>
+                     <li><a href="evenements.html">Événements</a></li>
+                     <li><a href="ressources.html">Ressources</a></li>
+                     <li><a href="index.html#contact">Contact</a></li>
+                 </ul>
+             </div>
+     
+             <!-- Colonne Contact -->
+             <div class="footer-col">
+                 <h4 class="footer-title">Contact</h4>
+                 <ul class="footer-contact">
+                     <li><a href="https://www.google.com/maps/place/Eglise+Evang%C3%A9lique+de+Dakar/@14.7071192,-17.471158,17z/data=!3m1!4b1!4m6!3m5!1s0xec173b354b33535:0x47941cc55d57596c!8m2!3d14.707114!4d-17.4685831!16s%2Fg%2F11b6h_y5g1?entry=ttu" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i> Rue 11, Villa 4237 Amitié II</a></li>
+                     <li><a href="tel:+221338245294"><i class="fas fa-phone-alt"></i> 33 824 52 94</a></li>
+                     <li><i class="fas fa-envelope"></i> BP : 3816, Dakar 18523</li>
+                 </ul>
+             </div>
+ 
+             <!-- Colonne Réseaux Sociaux -->
+             <div class="footer-col">
+                 <h4 class="footer-title">Suivez-nous</h4>
+                 <div class="social-icons">
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                 </div>
+             </div>
         </div>
        
          <!-- Bas de page -->
@@ -164,13 +208,19 @@
        </footer>
     <script>
         function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.nav-links-mobile');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
+            const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
         }
+
+        // Charger le contenu du menu mobile
+        fetch('index.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const mobileMenuContent = doc.querySelector('.nav-links-mobile-content').innerHTML;
+                document.querySelector('#mobile-menu .nav-links-mobile-content').innerHTML = mobileMenuContent;
+            });
     </script>
 </body>
 </html>

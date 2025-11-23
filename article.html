@@ -23,7 +23,15 @@
             background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
         }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        header {
+            background-color: rgba(10, 10, 35, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 0;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
         nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
         .logo img { transition: transform 0.3s ease; }
         .logo:hover img { transform: scale(1.05); }
@@ -32,8 +40,40 @@
         nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
         nav ul a:hover::after { width: 100%; left: 0; }
         nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
-        .nav-actions { display: flex; align-items: center; gap: 20px; }
-        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
+        .menu-burger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 1002;
+        }
+        .menu-burger:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
+        }
+        .menu-burger .bar { width: 100%; height: 2px; background-color: white; border-radius: 2px; }
+        .nav-links-mobile {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10, 10, 35, 0.95); backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            transform: translateX(-100%); transition: transform 0.4s ease-in-out;
+            pointer-events: none; z-index: 1001;
+        }
+        .nav-links-mobile.active { transform: translateX(0); pointer-events: auto; }
+        .nav-links-mobile-content { display: flex; flex-direction: column; gap: 30px; width: 100%; padding: 0 40px; box-sizing: border-box; }
+        .nav-links-mobile a {
+            color: var(--luminous-white); font-size: 18px; text-decoration: none;
+            padding: 16px 10px; width: 100%; border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-links-mobile a:hover { background-color: rgba(255, 255, 255, 0.1); }
         
         main { padding: 80px 0; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
@@ -189,23 +229,41 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
-            <ul class="desktop-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="apropos.html">À Propos</a></li>
-                <li><a href="evenements.html">Événements</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="ressources.html">Ressources</a></li>
-                <li><a href="live.html">Live</a></li>
-                <li><a href="Boutique.html">Faire un Don</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-            <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
+            <div class="container">
+                <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+                <ul class="desktop-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="apropos.html">À Propos</a></li>
+                    <li><a href="ministeres.html">Ministères</a></li>
+                    <li><a href="evenements.html">Événements</a></li>
+                    <li><a href="carrieres.html">Ateliers</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="live.html">Live</a></li>
+                    <li><a href="Boutique.html">Faire un Don</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <!-- Conteneur pour le QR Code, caché par défaut -->
+                    <div id="nav-qrcode-container" style="display: none;">
+                        <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
+                        <div id="nav-qrcode-popup">
+                            <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                    <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main class="container" id="article-container">
-        <!-- Le skeleton loader sera injecté ici par JS -->
+    <div class="nav-links-mobile" id="mobile-menu">
+        <div class="nav-links-mobile-content">
+            <!-- Liens injectés par JS -->
+        </div>
+    </div>
+
+    <main class="container" id="article-container" style="padding-top: 100px;">
+        <!-- Le contenu de l'article sera injecté ici -->
     </main>
 
     <footer>
@@ -235,14 +293,23 @@
 
     <script src="config.js"></script>
     <style>
-        footer{background-color:var(--dark-card);color:var(--text-secondary);padding:60px 0 20px 0;margin-top:80px;border-top:2px solid var(--neon-blue)}.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px}.footer-logo{height:60px;margin-bottom:20px}.footer-col h4{color:var(--luminous-white);font-family:'Orbitron',sans-serif;margin-bottom:20px}.footer-col ul{list-style:none;padding:0}.footer-col ul li{margin-bottom:10px}.footer-col a{color:var(--text-secondary);text-decoration:none;transition:color .3s}.footer-col a:hover{color:var(--luminous-white)}.footer-bottom{text-align:center;padding-top:20px;border-top:1px solid var(--border-color)}
+        /* Styles du footer ici pour éviter un autre fichier CSS */
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('article-container');
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
-
+            
+            // Charger le menu mobile
+            fetch('index.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const mobileMenuContent = doc.querySelector('.nav-links-mobile-content').innerHTML;
+                    document.querySelector('#mobile-menu .nav-links-mobile-content').innerHTML = mobileMenuContent;
+                });
             // Afficher le skeleton loader
             container.innerHTML = `
                 <div class="skeleton-article">
@@ -365,6 +432,11 @@
                     console.error('Erreur lors du chargement des commentaires:', error);
                     commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Impossible de charger les commentaires.</p>';
                 });
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('active');
         }
 
         /**

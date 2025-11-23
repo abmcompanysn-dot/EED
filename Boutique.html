@@ -337,7 +337,7 @@
 <body>
     <header>
         <nav class="container">
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"></a>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -349,7 +349,16 @@
                 <li><a href="Boutique.html" style="color: var(--luminous-white);">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
+            <div class="nav-actions">
+                <!-- Conteneur pour le QR Code, caché par défaut -->
+                <div id="nav-qrcode-container" style="display: none;">
+                    <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
+                    <div id="nav-qrcode-popup">
+                        <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
+                    </div>
+                </div>
+                <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
         </nav>
     </header>
 
