@@ -26,7 +26,15 @@
             background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        header { background-color: rgba(10, 10, 35, 0.85); backdrop-filter: blur(10px); padding: 10px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        header {
+            background-color: rgba(10, 10, 35, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 0;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
         nav { display: flex; justify-content: space-between; align-items: center; }
         .logo img { transition: transform 0.3s ease; }
         .logo:hover img { transform: scale(1.05); }
@@ -36,7 +44,6 @@
         nav ul a:hover::after { width: 100%; left: 0; }
         nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
         .nav-actions { display: flex; align-items: center; gap: 20px; }
-        .nav-actions a.primary { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); padding: 8px 15px; border-radius: 5px; font-weight: bold; }
         .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; }
         .nav-links-mobile { display: none; } /* Géré par le menu modal */
         
@@ -134,11 +141,11 @@
                 <li><a href="carrieres.html">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="Boutique.html" class="primary">Faire un Don</a>
-                <div class="menu-burger" onclick="toggleMobileMenu()">☰</div>
+                <div class="menu-burger" onclick="toggleMobileMenu()" style="padding: 0; background: none; border: none;">☰</div>
             </div>
         </nav>
     </header>

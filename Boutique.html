@@ -45,9 +45,12 @@
         header {
             background-color: rgba(10, 10, 35, 0.85);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Pour Safari */
             padding: 10px 0; /* Hauteur réduite */
-            position: sticky;
+            position: fixed; /* Reste fixe en haut */
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
         }
@@ -728,6 +731,10 @@
             cursor: pointer;
         }
     -->
+        
+    </script>
+</body>
+</html>
         
     </script>
 </body>
