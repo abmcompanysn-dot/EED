@@ -53,22 +53,16 @@
 
         /* ==================== BARRE DE NAVIGATION (HEADER) ==================== */
         header {
-            background-color: transparent; /* Fond transparent */
-            transition: background-color 0.4s ease, backdrop-filter 0.4s ease; /* Transition douce */
+            background-color: rgba(10, 10, 35, 0.85); /* Fond semi-transparent permanent */
+            backdrop-filter: blur(10px); /* Effet de flou permanent */
+            -webkit-backdrop-filter: blur(10px); /* Pour la compatibilité avec Safari */
             padding: 10px 0; /* Hauteur réduite */
             position: fixed; /* Reste fixe en haut de l'écran */
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-        }
-
-        /* Style de la barre de navigation après défilement */
-        header.scrolled {
-            background-color: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Pour la compatibilité avec Safari */
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Bordure blanche subtile */
         }
 
         nav {
@@ -1557,17 +1551,6 @@
                 });
             }
         }
-
-        // --- Logique pour le changement de la barre de navigation au défilement ---
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            // Ajoute la classe 'scrolled' si on a défilé de plus de 50px, sinon la retire
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
 
     </script>
 </body>
