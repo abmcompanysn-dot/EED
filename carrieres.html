@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
     <style>
         /* ... (les styles existants restent ici) ... */
         :root {
@@ -26,31 +28,6 @@
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        header {
-            background-color: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 10px 0;
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo img { transition: transform 0.3s ease; }
-        .logo:hover img { transform: scale(1.05); }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
-        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
-        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
-        nav ul a:hover::after { width: 100%; left: 0; }
-        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
-        .menu-burger { display: none; font-size: 1.8em; cursor: pointer; color: var(--luminous-white); z-index: 1001; background: none; border: none; padding: 0; }
-        .nav-links-mobile { 
-            display: none; position: fixed; top: 0; left: -100%; width: 100%; height: 100%; 
-            background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; 
-            align-items: center; gap: 40px; font-size: 1.5em; transition: left 0.5s ease-in-out;
-        }
-        .nav-links-mobile.active { left: 0; display: flex; }
-        body.no-scroll { overflow: hidden; }
         section { padding: 80px 0; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
         .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
@@ -75,37 +52,34 @@
         .content-section ul { list-style-type: '• '; padding-left: 20px; }
 
         @media (max-width: 992px) {
-            nav ul.desktop-links { display: none; }
-            .menu-burger { display: block; }
+            .hero-section .section-title { font-size: 2.5em; }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html" style="color: var(--luminous-white);">Ateliers</a></li>
+                <li><a href="carrieres.html" class="active">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="nav-actions">
-                <!-- Conteneur pour le QR Code, caché par défaut -->
-                <div id="nav-qrcode-container" style="display: none;">
-                    <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
-                </div>
-                <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
             </div>
         </nav>
     </header>
 
-    <div class="nav-links-mobile">
+    <div class="nav-links-mobile" id="mobile-menu">
         <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
@@ -113,8 +87,8 @@
         <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
     <main>
@@ -194,12 +168,13 @@
        </footer>
     <script>
         function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.nav-links-mobile');
+            const mobileMenu = document.getElementById('mobile-menu');
             const burgerIcon = document.querySelector('.menu-burger');
             const body = document.body;
+
             mobileMenu.classList.toggle('active');
+            burgerIcon.classList.toggle('active');
             body.classList.toggle('no-scroll');
-            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
         }
     </script>
 </body>
