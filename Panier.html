@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page - Église Évangélique de Dakar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="navbar.css">
     <style>
         /* public-styles.css */
         :root {
@@ -34,45 +38,6 @@
         }
 
         /* Barre de Navigation Améliorée */
-        header {
-            background-color: rgba(18, 18, 18, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 10px 0; /* Hauteur réduite */
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 1.5em;
-            color: var(--text-light);
-            text-decoration: none;
-        }
-
-        .logo img {
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 30px;
-        }
-
         nav a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -81,23 +46,6 @@
             position: relative;
             padding-bottom: 5px;
         }
-
-        nav ul a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background: linear-gradient(90deg, var(--blue), var(--red));
-            transition: all 0.3s ease-in-out;
-        }
-
-        nav ul a:hover::after {
-            width: 100%;
-            left: 0;
-        }
-
         nav a:hover, .nav-actions a.primary {
             color: var(--text-light);
         }
@@ -268,31 +216,37 @@
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo"><img src="r/logo.png" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"></a>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="blog.html">Blog</a></li>
+                <li><a href="carrieres.html">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <button class="menu-burger" onclick="toggleMobileMenu()" aria-label="Ouvrir le menu de navigation">☰</button>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+            </div>
         </nav>
     </header>
 
-    <div class="nav-links-mobile">
+    <div class="nav-links-mobile" id="mobile-menu">
         <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
     <main>
@@ -309,15 +263,9 @@
             const mobileMenu = document.querySelector('.nav-links-mobile');
             const burgerIcon = document.querySelector('.menu-burger');
             const body = document.body;
-
             mobileMenu.classList.toggle('active');
+            burgerIcon.classList.toggle('active');
             body.classList.toggle('no-scroll');
-
-            if (mobileMenu.classList.contains('active')) {
-                burgerIcon.innerHTML = '✕'; // Icône de fermeture
-            } else {
-                burgerIcon.innerHTML = '☰';
-            }
         }
     </script>
 </body>

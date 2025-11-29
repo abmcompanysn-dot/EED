@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Ajout de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
     <style>
         /* public-styles.css */
         :root {
@@ -42,48 +45,6 @@
         }
 
         /* Barre de Navigation Améliorée */
-        header {
-            background-color: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Pour Safari */
-            padding: 10px 0; /* Hauteur réduite */
-            position: fixed; /* Reste fixe en haut */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 1.5em;
-            color: var(--luminous-white);
-            text-decoration: none;
-        }
-
-        .logo img {
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 30px;
-        }
-
         nav a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -91,21 +52,6 @@
             transition: color 0.3s;
             position: relative;
             padding-bottom: 5px;
-        }
-
-        nav ul a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            left: 50%;
-            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
-            transition: all 0.3s ease-in-out;
-        }
-
-        nav ul a:hover::after {
-            width: 100%;
-            left: 0;
         }
         nav a:hover, .nav-actions a.primary, nav a[style*="var(--text-light)"] {
             color: var(--luminous-white);
@@ -336,8 +282,8 @@
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -346,18 +292,13 @@
                 <li><a href="carrieres.html">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
-                <li><a href="Boutique.html" style="color: var(--luminous-white);">Faire un Don</a></li>
+                <li><a href="Boutique.html" class="active">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="nav-actions">
-                <!-- Conteneur pour le QR Code, caché par défaut -->
-                <div id="nav-qrcode-container" style="display: none;">
-                    <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
-                    <div id="nav-qrcode-popup">
-                        <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
-                    </div>
-                </div>
-                <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
             </div>
         </nav>
     </header>
@@ -370,8 +311,8 @@
         <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
     <main>
@@ -470,10 +411,9 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const burgerIcon = document.querySelector('.menu-burger');
             const body = document.body;
-
             mobileMenu.classList.toggle('active');
+            burgerIcon.classList.toggle('active');
             body.classList.toggle('no-scroll');
-            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
         }
 
         // Fonction pour copier dans le presse-papiers
