@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        /* ... (les styles existants restent ici) ... */
         :root {
             --neon-blue: #00BFFF;
             --fire-red: #FF4500;
@@ -141,15 +142,21 @@
         </section>
     </main>
 
-    <footer>
+    <footer class="footer-section">
         <div class="container footer-grid">
+           <!-- Colonne Logo + Mission -->
             <div class="footer-col">
-                <img src="r/LOGO.svg" alt="Logo Lumière du Futur" class="footer-logo">
-                <p>Annoncer l'Évangile, former des disciples et manifester l'amour de Christ à Dakar et au-delà.</p>
+                <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                <p class="footer-tagline">
+                    Annoncer l'Évangile, former des disciples,<br />
+                    manifester l'amour de Christ à Dakar et au-delà.
+                </p>
             </div>
+    
+            <!-- Colonne Navigation -->
             <div class="footer-col">
-                <h4>Navigation</h4>
-                <ul>
+                <h4 class="footer-title">Navigation</h4>
+                <ul class="footer-links">
                     <li><a href="index.html">Accueil</a></li>
                     <li><a href="apropos.html">À Propos</a></li>
                     <li><a href="ministeres.html">Ministères</a></li>
@@ -158,13 +165,33 @@
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
             </div>
+    
+            <!-- Colonne Contact -->
             <div class="footer-col">
-                <h4>Contactez-nous</h4>
-                <p>Rue 11, Villa 4237 Amitié II<br>BP : 3816, Dakar 18523<br>Téléphone : 33 824 52 94</p>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-contact">
+                    <li><a href="https://www.google.com/maps/place/Eglise+Evang%C3%A9lique+de+Dakar/@14.7071192,-17.471158,17z/data=!3m1!4b1!4m6!3m5!1s0xec173b354b33535:0x47941cc55d57596c!8m2!3d14.707114!4d-17.4685831!16s%2Fg%2F11b6h_y5g1?entry=ttu" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i> Rue 11, Villa 4237 Amitié II</a></li>
+                    <li><a href="tel:+221338245294"><i class="fas fa-phone-alt"></i> 33 824 52 94</a></li>
+                    <li><i class="fas fa-envelope"></i> BP : 3816, Dakar 18523</li>
+                </ul>
             </div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p></div>
-    </footer>
+
+            <!-- Colonne Réseaux Sociaux -->
+            <div class="footer-col">
+                <h4 class="footer-title">Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+         </div>
+       
+         <!-- Bas de page -->
+         <div class="footer-bottom">
+           <p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p>
+         </div>
+       </footer>
     <script>
         function toggleMobileMenu() {
             const mobileMenu = document.querySelector('.nav-links-mobile');
@@ -175,8 +202,5 @@
             burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
         }
     </script>
-    <style>
-        footer{background-color:var(--dark-card);color:var(--text-secondary);padding:60px 0 20px 0;margin-top:80px;border-top:2px solid var(--neon-blue)}.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:40px}.footer-logo{height:60px;margin-bottom:20px}.footer-col h4{color:var(--luminous-white);font-family:'Orbitron',sans-serif;margin-bottom:20px}.footer-col ul{list-style:none;padding:0}.footer-col ul li{margin-bottom:10px}.footer-col a{color:var(--text-secondary);text-decoration:none;transition:color .3s}.footer-col a:hover{color:var(--luminous-white)}.footer-bottom{text-align:center;padding-top:20px;border-top:1px solid var(--border-color)}
-    </style>
 </body>
 </html>
