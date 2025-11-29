@@ -1006,27 +1006,18 @@
 
         /**
          * Fonction centralisée pour appeler l'API Google Apps Script via POST.
+         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
          */
         function callApi(action, data) {
-            const url = new URL(API_URL);
-            url.searchParams.append('action', action);
-
-            // Utilise GET pour les actions de récupération de données (pas de 'data' fourni)
-            if (!data) {
-                url.searchParams.append('origin', window.location.origin); // Ajoute l'origine pour CORS sur GET
-                return fetch(url).then(res => res.json());
-            }
-
-            // Utilise POST pour les actions qui envoient des données
+            const payload = { action, ...data };
             const postOptions = {
                 method: 'POST',
+                redirect: 'follow',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
-                body: `action=${encodeURIComponent(action)}&payload=${encodeURIComponent(JSON.stringify(data.payload))}`
+                body: JSON.stringify(payload)
             };
-
-            // Pour POST, l'URL n'a pas besoin des paramètres dans la query string
             return fetch(API_URL, postOptions).then(res => res.json());
         }
 
@@ -1207,7 +1198,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('latest-posts-grid');
 
-            callApi('getBlogPosts')
+            callApi('getBlogPosts', {})
                 .then(data => {
                     if (data.success && data.posts.length > 0) {
                         grid.innerHTML = ''; // Vide le message de chargement
@@ -1250,7 +1241,7 @@
 
         // ==================== Logique pour le compte à rebours du prochain événement ====================
         document.addEventListener('DOMContentLoaded', () => {
-            callApi('getEvents')
+            callApi('getEvents', {})
                 .then(data => {
                     if (!data.success || data.events.length === 0) return;
 

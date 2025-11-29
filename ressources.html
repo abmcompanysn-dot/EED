@@ -225,6 +225,23 @@
     <link rel="stylesheet" href="footer.css">
 
     <script>
+        /**
+         * Fonction centralisée pour appeler l'API Google Apps Script.
+         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
+         */
+        function callApi(action, data) {
+            const payload = { action, ...data };
+            const postOptions = {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(payload)
+            };
+            return fetch(API_URL, postOptions).then(res => res.json());
+        }
+
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const burgerIcon = document.querySelector('.menu-burger');
@@ -233,6 +250,47 @@
             burgerIcon.classList.toggle('active');
             body.classList.toggle('no-scroll');
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('resources-grid');
+            grid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Chargement des ressources...</p>';
+
+            // Appel API pour récupérer les articles de blog (qui servent de ressources ici)
+            callApi('getBlogPosts', {})
+                .then(data => {
+                    if (data.success && data.posts.length > 0) {
+                        grid.innerHTML = ''; // Vide le message de chargement
+
+                        data.posts.forEach(post => {
+                            const card = document.createElement('div');
+                            card.className = 'card resource-card';
+                            card.setAttribute('data-category', post.Categorie.toLowerCase());
+
+                            const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
+                                day: 'numeric', month: 'long', year: 'numeric'
+                            });
+
+                            card.innerHTML = `
+                                <a href="article.html?id=${post.ID}">
+                                    <img src="${post.ImageURL}" alt="Image pour ${post.Titre}">
+                                </a>
+                                <h3><a href="article.html?id=${post.ID}" style="color: inherit; text-decoration: none;">${post.Titre}</a></h3>
+                                <p class="meta">${post.Categorie} • ${post.Auteur} • ${postDate}</p>
+                                <p>${post.Contenu.substring(0, 100)}...</p>
+                                <a href="article.html?id=${post.ID}" class="btn">Lire la suite</a>
+                            `;
+                            grid.appendChild(card);
+                        });
+                    } else {
+                        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucune ressource à afficher pour le moment.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des ressources:', error);
+                    grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les ressources.</p>';
+                });
+        });
+
 
         function filterResources() {
             // Logique de filtrage simple pour la démonstration
