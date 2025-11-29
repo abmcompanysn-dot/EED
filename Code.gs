@@ -34,36 +34,16 @@ const CONFIG = {
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
-  try {
-    const action = e && e.parameter ? e.parameter.action : 'unknown';
-    let result;
-
-    // Aiguillage pour les actions GET
-    switch (action) {
-      case 'getBlogPosts':
-        result = getBlogPosts();
-        break;
-      case 'getBlogPostById':
-        result = getBlogPostById(e.parameter ? e.parameter.id : null);
-        break;
-      case 'getEvents':
-        result = getEvents();
-        break;
-      case 'getComments':
-        result = getComments(e.parameter ? e.parameter.articleId : null);
-        break;
-      default:
-        result = { success: false, error: 'Action GET non reconnue.' };
-        break;
-    }
-    logAction(action, 'SUCCESS', `Action GET '${action}' exécutée.`);
-    return corsify(result, e);
-  } catch (err) {
-    const actionName = e && e.parameter ? e.parameter.action : 'unknown';
-    const errorMessage = `Erreur dans l'action GET '${actionName}': ${err.message}`;
-    logAction(actionName, 'ERROR', errorMessage, 'anonyme');
-    return corsify({ error: "Une erreur interne est survenue." }, e);
-  }
+  // Crée la sortie de texte
+  const output = ContentService.createTextOutput(JSON.stringify({message: "ok"}));
+  
+  // Définit le type MIME sur JSON
+  output.setMimeType(ContentService.MimeType.JSON);
+  
+  // La méthode setHeaders() n'est pas supportée ici et doit être supprimée.
+  // output.setHeaders({"Access-Control-Allow-Origin": "*"});
+  
+  return output;
 }
 
 /**
