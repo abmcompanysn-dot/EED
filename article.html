@@ -292,9 +292,7 @@
     </footer>
 
     <script src="config.js"></script>
-    <style>
-        /* Styles du footer ici pour éviter un autre fichier CSS */
-    </style>
+    <script src="main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('article-container');
@@ -430,11 +428,6 @@
                     console.error('Erreur lors du chargement des commentaires:', error);
                     commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Impossible de charger les commentaires.</p>';
                 });
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('active');
         }
 
         /**

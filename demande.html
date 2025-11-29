@@ -223,20 +223,9 @@
         </div>
     </main>
 
+    <script src="config.js"></script>
+    <script src="main.js"></script>
     <script>
-        // L'URL de l'API est chargée depuis config.js
-        // Fonction pour basculer l'affichage du menu mobile
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-
-            mobileMenu.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-
-            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
-            burgerIcon.classList.toggle('close-icon', mobileMenu.classList.contains('active'));
-        }
-
         // Ajout d'une classe pour désactiver le défilement du corps quand le menu mobile est ouvert
         document.body.classList.add('no-scroll'); // Ajout initial pour éviter un flash
         document.body.classList.remove('no-scroll'); // Retrait après le chargement

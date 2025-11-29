@@ -159,17 +159,8 @@
     </main>
 
     <script src="config.js"></script>
+    <script src="main.js"></script>
     <script>
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-
-            burgerIcon.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-        }
-
         function handlePrayerSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('prayer-submit-btn');

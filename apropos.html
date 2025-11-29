@@ -258,19 +258,8 @@
        </footer>
 
     <script src="config.js"></script>
-
+    <script src="main.js"></script>
     <script>
-        // Le menu mobile est partagé, donc on peut réutiliser la logique
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-
-            mobileMenu.classList.toggle('active');
-            burgerIcon.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-        }
-
         // Animation au défilement pour les cartes
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {

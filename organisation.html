@@ -163,16 +163,8 @@
         </div>
         <div class="footer-bottom"><p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p></div>
     </footer>
+    <script src="main.js"></script>
     <script>
-        function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.nav-links-mobile');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-            mobileMenu.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-            burgerIcon.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
-        }
-
         // Animation au défilement
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {

@@ -225,15 +225,6 @@
     <link rel="stylesheet" href="footer.css">
 
     <script>
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-            mobileMenu.classList.toggle('active');
-            burgerIcon.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('resources-grid');
             grid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Chargement des ressources...</p>';

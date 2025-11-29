@@ -415,6 +415,7 @@
         </div>
        </footer>
     <script src="config.js"></script>
+    <script src="main.js"></script>
     <script>
         // Logique pour le bouton "Retour en Haut"
         const backToTopButton = document.getElementById('back-to-top');
@@ -427,15 +428,6 @@
         };
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-            mobileMenu.classList.toggle('active');
-            burgerIcon.classList.toggle('active');
-            body.classList.toggle('no-scroll');
         }
 
         // Fonction pour copier dans le presse-papiers
@@ -457,92 +449,6 @@
                     element.innerHTML = originalText;
                     element.style.backgroundColor = 'rgba(0,0,0,0.2)';
                 }, 2000);
-            });
-        }
-
-        // Logique pour charger les besoins de la communauté
-        document.addEventListener('DOMContentLoaded', function() {
-            const needsGrid = document.getElementById('needs-grid');
-            const categoryFilter = document.getElementById('category-needs-filter');
-
-            // Afficher le squelette de chargement
-            let skeletonHTML = '';
-            for (let i = 0; i < 3; i++) {
-                skeletonHTML += `
-                    <div class="skeleton-card">
-                        <div class="skeleton-image"></div>
-                        <div class="skeleton-content">
-                            <div class="skeleton-line title"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                        </div>
-                    </div>`;
-            }
-            needsGrid.innerHTML = skeletonHTML;
-
-            fetch(API_URL + '?action=getNeeds')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.needs.length > 0) {
-                        needsGrid.innerHTML = '';
-                        const categories = new Set();
-                        data.needs.forEach(need => {
-                            if (need.Categorie) categories.add(need.Categorie);
-                            const card = document.createElement('div');
-                            card.className = 'need-card';
-
-                            const percentage = (need.MontantActuel / need.MontantObjectif) * 100;
-
-                            card.innerHTML = `
-                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}">
-                                <div class="need-content">
-                                    <h4>${need.Titre}</h4>
-                                    <p>${need.DescriptionCourte}</p>
-                                    <div class="progress-bar">
-                                        <div class="progress-bar-inner" style="width: ${percentage}%;"></div>
-                                    </div>
-                                    <div class="progress-text">
-                                        <span>${need.MontantActuel.toLocaleString('fr-FR')} CFA</span>
-                                        <span>Objectif : ${need.MontantObjectif.toLocaleString('fr-FR')} CFA</span>
-                                    </div>
-                                    <a href="participer.html?id=${need.ID}" class="btn btn-support">Soutenir ce projet</a>
-                                </div>
-                            `;
-                            needsGrid.appendChild(card);
-                        });
-
-                        // Remplir le filtre des catégories
-                        categories.forEach(cat => {
-                            const option = document.createElement('option');
-                            option.value = cat;
-                            option.textContent = cat;
-                            categoryFilter.appendChild(option);
-                        });
-
-                    } else {
-                        needsGrid.innerHTML = '<p>Aucun besoin spécifique à soutenir pour le moment. Vos dons généraux sont toujours appréciés !</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur de chargement des besoins:', error);
-                    needsGrid.innerHTML = '<p>Impossible de charger les besoins de la communauté. Veuillez réessayer plus tard.</p>';
-                });
-        });
-
-        function filterNeeds() {
-            const searchTerm = document.getElementById('search-needs-input').value.toLowerCase();
-            const category = document.getElementById('category-needs-filter').value;
-            const cards = document.querySelectorAll('.need-card');
-
-            cards.forEach(card => {
-                const title = card.querySelector('h4').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
-                const cardCategory = card.dataset.category;
-
-                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-                const matchesCategory = (category === 'all' || cardCategory === category);
-
-                card.style.display = (matchesSearch && matchesCategory) ? 'flex' : 'none';
             });
         }
 
