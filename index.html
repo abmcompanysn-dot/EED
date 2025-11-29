@@ -267,26 +267,22 @@
         .hero-text-content h1 {
             font-size: 3.5em;
             margin: 0;
-            /* Styles pour l'effet dactylo */
-            display: inline-block; /* Nécessaire pour que le conteneur s'adapte au texte */
-            overflow: hidden; /* Cache le texte qui n'est pas encore "tapé" */
-            white-space: nowrap; /* Empêche le retour à la ligne pendant l'animation */
-            border-right: .15em solid var(--fire-red); /* Curseur clignotant */
-            animation: 
-                typing 4s steps(42, end),
-                blink-caret .75s step-end infinite;
+            /* --- Nouvelle animation subtile --- */
+            opacity: 0; /* Commence invisible */
+            transform: translateY(20px); /* Commence légèrement décalé vers le bas */
+            animation: fadeInUp 1.5s ease-out 0.5s forwards; /* Animation: nom durée timing délai fin */
         }
 
-        /* --- Animation de frappe pour le titre du héros --- */
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        /* Animation du curseur clignotant */
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--fire-red); }
+        /* --- Keyframes pour l'animation du titre --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- Styles spécifiques pour les cartes de produits (non utilisé ici) --- */
@@ -383,7 +379,6 @@
             }
             .hero-text-content h1 {
                 white-space: normal; /* Permet le retour à la ligne sur mobile */
-                animation: none; /* Désactive l'animation sur mobile pour une meilleure lisibilité */
             }
         }
 
