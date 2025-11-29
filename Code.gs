@@ -34,16 +34,8 @@ const CONFIG = {
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
-  // Crée la sortie de texte
-  const output = ContentService.createTextOutput(JSON.stringify({message: "ok"}));
-  
-  // Définit le type MIME sur JSON
-  output.setMimeType(ContentService.MimeType.JSON);
-  
-  // La méthode setHeaders() n'est pas supportée ici et doit être supprimée.
-  // output.setHeaders({"Access-Control-Allow-Origin": "*"});
-  
-  return output;
+  // Utilise HtmlService pour renvoyer du JSON. Le client devra parser la réponse en texte puis en JSON.
+  return HtmlService.createHtmlOutput(JSON.stringify({message: "ok"}));
 }
 
 /**
