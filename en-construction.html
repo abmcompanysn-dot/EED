@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site en Construction - Église Évangélique de Dakar</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="navbar.css">
+
+    <style>
+        :root {
+            --neon-blue: #00BFFF;
+            --fire-red: #FF4500;
+            --night-blue: #0A0A23;
+            --dark-card: #1a1a3a;
+            --luminous-white: #FFFFFF;
+            --text-secondary: #A9A9D4;
+            --border-color: #2c2c54;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--night-blue);
+            background-image: 
+                radial-gradient(var(--border-color) 1px, transparent 1px),
+                radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-attachment: fixed;
+            color: var(--luminous-white);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .construction-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .construction-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .construction-container p {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .gears-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .gears-container .fas {
+            position: absolute;
+            color: var(--text-secondary);
+            text-shadow: 0 0 5px rgba(169, 169, 212, 0.5);
+        }
+
+        .gear-one {
+            font-size: 6em;
+            top: 0;
+            left: 0;
+            animation: spin 10s linear infinite;
+        }
+
+        .gear-two {
+            font-size: 4em;
+            bottom: 0;
+            right: 0;
+            animation: spin-reverse 10s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="ministeres.html">Ministères</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="carrieres.html">Ateliers</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
+    </div>
+
+    <main>
+        <div class="construction-container">
+            <h1>Site en Construction</h1>
+            <p>Nous sommes en train de mettre à jour cette section pour vous offrir une meilleure expérience. Revenez bientôt !</p>
+            <div class="gears-container">
+                <i class="fas fa-cog gear-one"></i>
+                <i class="fas fa-cog gear-two"></i>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-section">
+        <!-- Le contenu de votre footer existant est ici -->
+    </footer>
+
+    <script src="main.js"></script>
+
+</body>
+</html>

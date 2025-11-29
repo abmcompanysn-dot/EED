@@ -534,10 +534,6 @@
                 <div><span id="hours">00</span><span>Heures</span></div>
                 <div><span id="minutes">00</span><span>Minutes</span></div>
                 <div><span id="seconds">00</span><span>Secondes</span></div>
-            </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="evenements.html" id="event-link" class="btn-lux-rounded btn-gradient-rounded">Voir les détails</a>
-            </div>
         </section>
 
         <!-- ==================== Section Joie avec Jésus (Carrousel) ==================== -->
@@ -919,8 +915,24 @@
 
         /* Style pour le conteneur de la section blog */
         .blog-section-wrapper {
-            background-color: rgba(0,0,0,0.15); /* Fond légèrement différent */
-            padding: 1px 0; /* Astuce pour contenir les marges des enfants */
+            background-color: var(--luminous-white);
+            padding: 100px 0;
+        }
+        .blog-section-wrapper .section-title {
+            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .blog-section-wrapper .section-subtitle {
+            color: #555; /* Un gris foncé pour le sous-titre */
+        }
+        .blog-section-wrapper #blog-promo {
+            padding: 0; /* La section interne n'a plus besoin de padding */
+        }
+        .blog-section-wrapper .btn-lux-rounded {
+            border-color: var(--night-blue);
+            color: var(--night-blue);
         }
 
     </style>
