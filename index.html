@@ -237,7 +237,7 @@
         /* ==================== SECTION HÉROS (BANNIÈRE PRINCIPALE) ==================== */
         .hero {
             position: relative;
-            min-height: 80vh; /* Prend au moins 80% de la hauteur de l'écran */
+            height: 100vh; /* Prend 100% de la hauteur de l'écran */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -764,20 +764,20 @@
         </div>
     </div>
 
+    <!-- ---------- Section Héros (Bannière) ---------- -->
+    <section class="hero">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="r/vid.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container hero-text-content">
+            <h1>Église Évangélique de Dakar</h1>
+        </div>
+    </section>
+
     <!-- ==================== CONTENU PRINCIPAL DE LA PAGE ==================== -->
     <main style="padding-top: 100px;">
-        <!-- ---------- Section Héros (Bannière) ---------- -->
-        <section class="hero">
-            <video autoplay loop muted playsinline class="hero-video">
-                <source src="r/vid.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la vidéo.
-            </video>
-            <div class="hero-overlay"></div>
-            <div class="container hero-text-content">
-                <h1>Église Évangélique de Dakar</h1>
-            </div>
-        </section>
-
         <section id="next-event" class="container" style="display: none;">
             <h2 class="section-title">Prochain Événement</h2>
             <p id="event-title" class="section-subtitle">Chargement de l'événement...</p>
