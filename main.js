@@ -22,7 +22,25 @@ function callApi(action, data) {
         },
         body: JSON.stringify(payload)
     };
-    return fetch(API_URL, postOptions).then(res => res.json());
+    return fetch(API_URL, postOptions)
+        .then(res => {
+            if (!res.ok) {
+                // Gère les erreurs HTTP (ex: 500 Internal Server Error)
+                throw new Error(`Erreur HTTP: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .catch(error => {
+            // Enregistre l'erreur côté client dans la feuille de calcul
+            const errorPayload = {
+                action: 'logAction',
+                payload: { origin: 'Front-End', action: action, status: 'ERROR', message: error.message, suggestion: 'Vérifiez la connexion réseau, l\'URL de l\'API et les erreurs serveur dans la feuille de logs.' }
+            };
+            // On envoie l'erreur au serveur, mais on ne se soucie pas de la réponse pour éviter une boucle infinie.
+            fetch(API_URL, { method: 'POST', body: JSON.stringify(errorPayload), headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
+            // Renvoie une erreur pour que le code appelant puisse la gérer
+            return { success: false, error: `Erreur côté client: ${error.message}` };
+        });
 }
 
 /**

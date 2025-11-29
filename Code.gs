@@ -1,7 +1,7 @@
 /**
- * ==================================================================
+ * =================================================================================
  * CONFIGURATION CENTRALE
- * ==================================================================
+ * =================================================================================
  */
 const CONFIG = {
   SHEETS: {
@@ -22,9 +22,9 @@ const CONFIG = {
 };
 
 /**
- * ==================================================================
+ * =================================================================================
  * GESTIONNAIRES DE REQUÊTES (doGet, doPost, doOptions)
- * ==================================================================
+ * =================================================================================
  */
 
 /**
@@ -34,14 +34,16 @@ const CONFIG = {
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
-  // Utilise HtmlService pour renvoyer du JSON. Le client devra parser la réponse en texte puis en JSON.
-  return HtmlService.createHtmlOutput(JSON.stringify({ message: "ok" }));
+  // Renvoie une réponse simple pour les tests de connectivité.
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "success", message: "API en ligne." }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**
  * Gère les requêtes HTTP POST. C'est le point d'entrée principal pour toutes les actions.
  * Il agit comme un routeur qui appelle la bonne fonction en fonction du paramètre 'action'.
- * @param {Object} e - L'objet événement de la requête, contenant les paramètres.
+ * @param {Object} e - L'objet événement de la requête.
  * @returns {ContentService.TextOutput} Une réponse JSON formatée avec les en-têtes CORS.
  */
 function doPost(e) {
@@ -58,7 +60,7 @@ function doPost(e) {
     const payload = data.payload || data; // Le payload peut être à la racine ou dans une clé 'payload'
     let result;
 
-    // Initialisation de la feuille de calcul
+    // Initialisation de la feuille de calcul pour les fonctions qui en ont besoin
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
     // Aiguillage (switch) pour appeler la fonction correspondante à l'action demandée.
@@ -66,7 +68,7 @@ function doPost(e) {
       // Actions liées au contenu (Blog, Événements, Besoins)
       case 'getBlogPosts': result = getBlogPosts(); break;
       case 'getBlogPostById': result = getBlogPostById(payload.id); break;
-      case 'getEvents': result = getEvents(); break;
+      case 'getEvents': result = getEvents(); break; // Conserve getEvents pour la page événements
       case 'getUpcomingEvents': result = getUpcomingEvents(); break; // Nouvelle action pour les 3 prochains événements
       case 'getNeeds': result = getNeeds(); break;
       case 'getNeedById': result = getNeedById(payload.id); break;
@@ -80,7 +82,7 @@ function doPost(e) {
 
       // Cas par défaut si l'action n'est pas reconnue.
       default:
-        result = { error: 'Action POST non reconnue.' };
+        result = { success: false, error: 'Action POST non reconnue.' };
         break;
     }
 
@@ -102,13 +104,18 @@ function doPost(e) {
  * Gère les requêtes "preflight" CORS envoyées par les navigateurs.
  */
 function doOptions(e) {
-  return corsify(null, e, true);
+  // Construit et renvoie une réponse vide avec les en-têtes CORS nécessaires.
+  // La méthode correcte est de retourner un objet TextOutput avec les headers.
+  // Google Apps Script ne fournit pas de méthode setHeaders ou addHeader.
+  // La plateforme gère les en-têtes CORS pour les Web Apps.
+  // Cette fonction est un placeholder pour la gestion de preflight.
+  return ContentService.createTextOutput();
 }
 
 /**
- * ==================================================================
+ * =================================================================================
  * FONCTION UTILITAIRE CORS
- * ==================================================================
+ * =================================================================================
  */
 
 /**
@@ -119,60 +126,17 @@ function doOptions(e) {
  * @returns {ContentService.TextOutput} La réponse formatée.
  */
 function corsify(data, e, isOptions = false) {
-  const requestOrigin = e && e.requestHeaders && e.requestHeaders.origin ? e.requestHeaders.origin : (e && e.parameter && e.parameter.origin);
-  const originHeader = (requestOrigin && CONFIG.ALLOWED_ORIGINS.includes(requestOrigin)) ? requestOrigin : CONFIG.ALLOWED_ORIGINS[0];
-  
-  const output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-  output.setContent(JSON.stringify(data || {})); // S'assurer que data n'est pas null
-  output.setHeaders({
-    'Access-Control-Allow-Origin': originHeader,
-    'Vary': 'Origin' // Indique que la réponse peut varier en fonction de l'origine
-  });
-
-  if (isOptions) {
-    output.setHeaders({
-      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Origin': originHeader,
-      'Access-Control-Max-Age': '86400', // Cache la réponse preflight pour 24h
-      'Content-Length': '0'
-    });
-  }
-  return output;
-}
-
-
-/**
- * ==================================================================
- * FONCTIONS UTILITAIRES POUR GOOGLE SHEETS
- * ==================================================================
- */
-
-/**
- * Convertit les données d'une feuille de calcul en un tableau d'objets.
- * @param {Sheet} sheet - L'objet feuille de calcul.
- * @returns {Array<Object>} Un tableau d'objets représentant les lignes.
- */
-function sheetToObjects(sheet) {
-  if (!sheet || sheet.getLastRow() < 1) return [];
-  const data = sheet.getDataRange().getValues();
-  const headers = data.shift().map(h => h.trim()); // Nettoie les en-têtes
-  if (!headers || headers.length === 0) return [];
-
-  return data.map(row => {
-    const obj = {};
-    headers.forEach((header, index) => {
-      obj[header] = row[index];
-    });
-    return obj;
-  });
+  // Pour une Web App, Google Apps Script gère les en-têtes CORS.
+  // Il suffit de retourner un objet TextOutput avec le bon type MIME.
+  return ContentService
+    .createTextOutput(JSON.stringify(data || {}))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**
- * ==================================================================
+ * =================================================================================
  * FONCTIONS UTILITAIRES POUR GOOGLE SHEETS
- * ==================================================================
+ * =================================================================================
  */
 
 /**
@@ -188,15 +152,17 @@ function sheetToObjects(sheet) {
 
   return data.map(row => {
     const obj = {};
-    headers.forEach((header, index) => { obj[header] = row[index]; });
+    headers.forEach((header, index) => {
+      obj[header] = row[index];
+    });
     return obj;
   });
 }
 
 /**
- * ==================================================================
+ * =================================================================================
  * LOGIQUE DE L'APPLICATION
- * ==================================================================
+ * =================================================================================
  */
 
 /**
@@ -207,8 +173,9 @@ function sheetToObjects(sheet) {
 function onOpen() {
   SpreadsheetApp.getUi()
       .createMenu('Admin Église')
-      .addItem('1. Vérifier/Réparer la Structure', 'verifyAndFixSheetStructure')
-      .addItem('2. Initialiser les feuilles (si vides)', 'setupSpreadsheet')
+      .addItem('1. Vérifier/Réparer la Structure', 'verifyAndFixSheetStructure') // Pour réparer les feuilles existantes
+      .addItem('2. Initialiser les feuilles (si vides)', 'setupSpreadsheet') // Pour une première installation
+      .addItem('3. Remplir avec données de test', 'initializeWithSeedData') // Pour le développement
       .addToUi();
 }
 
@@ -319,7 +286,7 @@ function setupSpreadsheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   // Définition de la structure de chaque feuille de calcul nécessaire à l'application.
   const sheetsToCreate = [    
-    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
+    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Email', 'Suggestion'] },
     { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
@@ -336,18 +303,6 @@ function setupSpreadsheet() {
       sheet.getRange(1, 1, 1, sheetInfo.headers.length).setValues([sheetInfo.headers]).setFontWeight('bold');
       SpreadsheetApp.flush(); // Applique les changements
       Logger.log(`Feuille "${sheetInfo.name}" créée.`);
-      
-      // Ajout de données d'exemple pour les statistiques pour tester le graphique
-      if (sheetInfo.name === 'Statistiques' && sheet.getLastRow() < 2) {
-        const exampleData = [
-          ['profil_test', new Date(), 'NFC'],
-          ['profil_test', new Date(), 'NFC'],
-          ['profil_test', new Date(), 'QR Code'],
-          ['profil_test', new Date(), 'Lien'],
-          ['profil_test', new Date(), 'NFC']
-        ];
-        sheet.getRange(2, 1, exampleData.length, exampleData[0].length).setValues(exampleData);
-      }
     } else {
       Logger.log(`La feuille "${sheetInfo.name}" existe déjà.`);
     }
@@ -367,7 +322,7 @@ function verifyAndFixSheetStructure() {
 
   // Liste des feuilles et de leurs colonnes requises.
   const requiredSheets = [    
-    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
+    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Email', 'Suggestion'] },
     { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
@@ -413,11 +368,11 @@ function verifyAndFixSheetStructure() {
  * @param {string} [userEmail='anonyme'] - L'email de l'utilisateur effectuant l'action.
  * @param {string} [suggestion=''] - Une suggestion de correction en cas d'erreur.
  */
-function logAction(origin, action, status, message, userEmail = 'anonyme', suggestion = '') {
+function logAction(origin, action, status, message, email = 'anonyme', suggestion = '') {
   try {
     const logSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.LOGS);
     if (logSheet) {
-      logSheet.appendRow([new Date(), origin, action, status, message, userEmail, suggestion]);
+      logSheet.appendRow([new Date(), origin, action, status, message, email, suggestion]);
     }
   } catch (e) {
     Logger.log(`Impossible d'écrire dans la feuille d'historique: ${e.message}`);
@@ -425,9 +380,9 @@ function logAction(origin, action, status, message, userEmail = 'anonyme', sugge
 }
 
 /**
- * ==================================================================
+ * =================================================================================
  * NOUVELLES FONCTIONS POUR LE CONTENU DYNAMIQUE
- * ==================================================================
+ * =================================================================================
  */
 
 /**
@@ -437,7 +392,7 @@ function logAction(origin, action, status, message, userEmail = 'anonyme', sugge
 function getBlogPosts() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.BLOG}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
     
     const posts = sheetToObjects(sheet)
       .filter(post => post.Statut === 'Publié'); // On ne récupère que les articles publiés
@@ -455,7 +410,7 @@ function getBlogPostById(id) {
   try {
     if (!id) throw new Error("Aucun ID d'article fourni.");
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.BLOG}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
     
     const posts = sheetToObjects(sheet);
     const post = posts.find(p => String(p.ID) === String(id));
@@ -478,7 +433,7 @@ function getBlogPostById(id) {
 function getEvents() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.EVENTS}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.EVENTS}' est introuvable.`);
 
     const events = sheetToObjects(sheet)
       .filter(event => new Date(event.Date) >= new Date()); // Uniquement les événements futurs
@@ -497,7 +452,7 @@ function getEvents() {
 function getUpcomingEvents() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.EVENTS}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.EVENTS}' est introuvable.`);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Pour inclure les événements du jour même.
@@ -521,11 +476,11 @@ function getUpcomingEvents() {
  */
 function handlePrayerRequest(payload) {
   try {
-    if (!payload || !payload.request) throw new Error("Les données de la demande de prière sont invalides ou manquantes.");
+    if (!payload || !payload.request) throw new Error("Le contenu de la demande (payload.request) est manquant.");
     
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(CONFIG.SHEETS.PRAYER);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.PRAYER}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.PRAYER}' est introuvable.`);
 
     const name = payload.name || 'Anonyme';
     const email = payload.email || 'Non fourni';
@@ -550,7 +505,7 @@ function handlePrayerRequest(payload) {
 function getNeeds() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.NEEDS);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.NEEDS}' est introuvable.`);
     
     const needs = sheetToObjects(sheet)
       .filter(need => need.Statut === 'Actif');
@@ -571,7 +526,7 @@ function getNeedById(id) {
   try {
     if (!id) throw new Error("Aucun ID de besoin fourni.");
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.NEEDS);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.NEEDS}' est introuvable.`);
     
     const needs = sheetToObjects(sheet);
     const need = needs.find(n => String(n.ID) === String(id));
@@ -604,7 +559,7 @@ function participateToNeed(payload, ss) {
 
     // Met à jour le montant actuel dans la feuille "Besoins".
     const needsSheet = ss.getSheetByName(CONFIG.SHEETS.NEEDS);
-    if (!needsSheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable pour la mise à jour.`);
+    if (!needsSheet) throw new Error(`La feuille '${CONFIG.SHEETS.NEEDS}' est introuvable pour la mise à jour.`);
 
     const needsData = needsSheet.getDataRange().getValues();
     const headers = needsData[0];
@@ -679,7 +634,7 @@ function postComment(payload) {
     }
 
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.COMMENTS);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.COMMENTS}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.COMMENTS}' est introuvable.`);
 
     // Ajoute le commentaire avec le statut "Approuvé" par défaut.
     // Pour un système de modération, changez 'Approuvé' par 'En attente'.
@@ -704,7 +659,7 @@ function handleContactForm(payload) {
     }
     
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.CONTACT);
-    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.CONTACT}' introuvable.`);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.CONTACT}' est introuvable.`);
 
     sheet.appendRow([new Date(), payload.name, payload.email, payload.subject || 'Aucun sujet', payload.message]);
     return { success: true, message: 'Votre message a bien été envoyé. Nous vous répondrons bientôt.' };
