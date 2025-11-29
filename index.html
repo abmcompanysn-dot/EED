@@ -285,18 +285,6 @@
             }
         }
 
-        /* --- Styles spécifiques pour les cartes de produits (non utilisé ici) --- */
-        .product-card .price {
-            font-size: 2em;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .price span {
-            font-size: 0.5em;
-            font-weight: normal;
-            color: var(--text-secondary);
-        }
-
         /* ==================== GRILLES ET CARTES (STYLES COMMUNS) ==================== */
         .grid-2, .grid-3 {
             display: grid;
@@ -318,11 +306,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .card h3 {
-            color: var(--blue);
-            margin-top: 0;
-        }
-
         /* ==================== BOUTONS ==================== */
         .btn {
             display: inline-block;
@@ -342,9 +325,6 @@
         .btn:hover {
             opacity: 0.9;
             transform: scale(1.02);
-        }
-        .btn-gradient {
-            background: linear-gradient(90deg, var(--blue), var(--red));
         }
 
         /* ==================== DESIGN RESPONSIVE (ADAPTATION MOBILE) ==================== */
@@ -430,61 +410,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-
-        /* --- Styles pour la section Dirigeants --- */
-        .leader-card {
-            background-color: transparent;
-            perspective: 1000px; /* Important pour l'effet 3D */
-            min-height: 350px;
-            border: none;
-        }
-
-        .leader-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.7s;
-            transform-style: preserve-3d;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
-        }
-
-        .leader-card:hover .leader-card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .leader-card-front, .leader-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden; /* Safari */
-            backface-visibility: hidden;
-            border-radius: 15px;
-            background-color: var(--dark-card);
-            border: 1px solid var(--neon-blue);
-        }
-
-        .leader-card-front {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .leader-card-front img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .leader-card-back {
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
         }
 
         /* --- Styles pour la section Témoignages --- */
@@ -586,6 +511,21 @@
             color: #000;
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
+        .btn-lux-rounded::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+            transform: skewX(-20deg);
+            transition: all 0.5s ease;
+        }
+        .btn-lux-rounded:hover::before {
+            left: 100%;
+        }
+
 
         #countdown-timer span:last-child { color: var(--text-secondary); }
     </style>
@@ -649,39 +589,6 @@
             color: white;
         }
 
-        /* --- Nouveaux styles pour la section Dons --- */
-        #dons .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            align-items: stretch; /* Assure que les cartes ont la même hauteur */
-        }
-        .donation-card {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-        .donation-card .card-content {
-            flex-grow: 1;
-        }
-        .donation-card img.payment-logo {
-            height: 40px;
-            margin-bottom: 20px;
-        }
-        .donation-card h3 {
-            color: var(--luminous-white);
-            font-size: 1.5em;
-        }
-        .donation-card p {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-        .donation-card .account-info {
-            background-color: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            word-break: break-all;
-        }
-
         /* --- Nouveaux styles pour la section Communauté/Prière --- */
         .prayer-section-layout {
             display: grid;
@@ -706,6 +613,48 @@
         /* ==================== STYLES DES SECTIONS GÉNÉRALES ==================== */
         section {
             padding: 100px 0;
+        }
+
+        /* --- Styles pour la section Promo --- */
+        .promo-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            background-color: var(--dark-card);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .promo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
+        }
+        .promo-card .prayer-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        @media (max-width: 992px) {
+            .promo-card {
+                grid-template-columns: 1fr;
+            }
+            #communaute .prayer-image-container {
+                order: -1; /* Met l'image avant le texte sur mobile */
+            }
+        }
+
+        /* --- Styles pour le bouton du prochain événement --- */
+        .btn-gradient-rounded {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 999px; /* forme arrondie */
+        }
+        .btn-gradient-rounded:hover {
+            background-color: white;
+            color: #000;
         }
 
     </style>
@@ -783,47 +732,7 @@
                 <div><span id="seconds">00</span><span>Secondes</span></div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
-                <<a href="evenements.html" id="event-link" class="btn-gradient-rounded">Voir les détails</a>
-
-<style>
-.btn-gradient-rounded {
-  display: inline-block;
-  padding: 12px 30px;
-  border: 2px solid white;
-  background: transparent;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 999px; /* forme arrondie */
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.btn-gradient-rounded::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
-}
-
-.btn-gradient-rounded:hover::before {
-  left: 100%;
-}
-
-.btn-gradient-rounded:hover {
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-</style>
-                </a>
+                <a href="evenements.html" id="event-link" class="btn-lux-rounded btn-gradient-rounded">Voir les détails</a>
             </div>
         </section>
 
@@ -853,47 +762,8 @@
                     <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-<a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
-
-<style>
-.btn-lux-rounded {
-  display: inline-block;
-  padding: 14px 32px;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 999px; /* forme très arrondie */
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  margin-top: 10px;
-}
-
-.btn-lux-rounded::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
-  transform: skewX(-20deg);
-  transition: all 0.5s ease;
-}
-
-.btn-lux-rounded:hover::before {
-  left: 100%;
-}
-
-.btn-lux-rounded:hover {
-  background-color: white;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-}
-</style>                </div>
+                    <a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
+                </div>
             </div>
         </section>
 
@@ -941,38 +811,6 @@
                 </div>
             </div>
         </section>
-
-        <style>
-            .promo-card {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 50px;
-                align-items: center;
-                background-color: var(--dark-card);
-                padding: 40px;
-                border-radius: 15px;
-                border: 1px solid var(--border-color);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-            .promo-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
-            }
-            .promo-card .prayer-image-container img {
-                width: 100%;
-                height: auto;
-                border-radius: 10px;
-                object-fit: cover;
-            }
-            @media (max-width: 992px) {
-                .promo-card {
-                    grid-template-columns: 1fr;
-                }
-                #communaute .prayer-image-container {
-                    order: -1; /* Met l'image avant le texte sur mobile */
-                }
-            }
-        </style>
 
         <!-- ==================== Section Derniers Articles du Blog (Promo) ==================== -->
         <section id="blog-promo" class="container">
@@ -1134,9 +972,19 @@
             transform: translateY(-50%) scale(1.05);
         }
         .carousel-btn.prev { left: 15px; }
-        .carousel-btn.next { right: 15px; }
-
-        /* --- Styles pour la section Blog Promo --- */
+        #blog-promo .card-content h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: var(--luminous-white);
+        }
+        #blog-promo .card-content .meta {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        #blog-promo .card-content p {
+            flex-grow: 1;
+        }
         #blog-promo .card {
             display: flex;
             flex-direction: column;
@@ -1155,19 +1003,8 @@
             display: flex;
             flex-direction: column;
         }
-        #blog-promo .card-content h3 {
-            margin-top: 0;
-            font-size: 1.3em;
-            color: var(--luminous-white);
-        }
-        #blog-promo .card-content .meta {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-        #blog-promo .card-content p {
-            flex-grow: 1;
-        }
+
+
 
         /* ==================== Animations au défilement (classes d'animation) ==================== */
         .animated-card {
@@ -1199,30 +1036,6 @@
         }
         #next-event, #temoignages .section-title, #temoignages .section-subtitle {
             animation-name: fade-in;
-        }
-        .bible-verse-marquee {
-            background-color: #f9f9f9;
-            color: #333;
-            font-style: italic;
-            font-size: 1.1em;
-            padding: 10px 20px;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-            overflow: hidden; /* Cache le contenu qui dépasse */
-            white-space: nowrap; /* Empêche le retour à la ligne */
-        }
-        .marquee-content {
-            display: inline-block;
-            padding-left: 100%; /* Commence en dehors de l'écran à droite */
-            animation: marquee-scroll 30s linear infinite;
-        }
-        .marquee-content p {
-            display: inline-block;
-            margin: 0 40px; /* Espace entre les versets */
-        }
-        @keyframes marquee-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
         }
 
     </style>
