@@ -837,25 +837,11 @@
             .testimonial-dot.active { background-color: var(--neon-blue); }
         }
 
-
-        #blog-promo .card-content h3 {
-            margin-top: 0;
-            font-size: 1.3em;
-            color: var(--luminous-white);
-        }
-        #blog-promo .card-content .meta {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-        #blog-promo .card-content p {
-            flex-grow: 1;
-        }
-        #blog-promo .card {
             display: flex;
             flex-direction: column;
             text-align: left;
             padding: 0; /* Le padding sera dans le content */
+            height: 100%; /* Permet à la carte de prendre toute la hauteur de la cellule de la grille */
         }
         #blog-promo .card img {
             width: 100%;
@@ -868,21 +854,25 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-        }
-
-        /* --- Styles pour s'assurer que les cartes de blog ont la même hauteur --- */
-        #blog-promo .card {
-            height: 100%; /* Permet à la carte de prendre toute la hauteur de la cellule de la grille */
-        }
-
-        #blog-promo .card-content {
             height: 100%; /* Permet au contenu de s'étirer */
+        }
+
+        #blog-promo .card-content h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: var(--luminous-white);
+        }
+        #blog-promo .card-content .meta {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
         }
 
         #blog-promo .card-content p:last-of-type {
             /* Limite l'extrait à 3 lignes */
             display: -webkit-box;
             -webkit-line-clamp: 3;
+            line-clamp: 3;
             -webkit-box-orient: vertical;  
             overflow: hidden;
             text-overflow: ellipsis;
