@@ -16,6 +16,7 @@ const CONFIG = {
   },
   ALLOWED_ORIGINS: [
     'https://eed.abmcy.com',
+    'https://eed1.abmcy.com',
     'http://127.0.0.1:5500' // Pour les tests en local
   ]
 };
