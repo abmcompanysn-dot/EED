@@ -83,20 +83,23 @@
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
+    /* Supprimer centrage forcé */
     .footer-grid {
-        text-align: center;
-    }
-    .footer-logo, .social-icons {
-        align-self: center;
-        justify-content: center;
+        text-align: left; /* garder alignement gauche */
     }
 
-    /* Exemple : cacher les liens rapides sur mobile */
+    /* Cacher logo et liens sur mobile */
+    .footer-logo,
     .footer-links {
         display: none;
     }
 
-    /* Exemple : cacher tagline sur mobile */
+    /* Garder uniquement contact + icônes alignés à gauche */
+    .social-icons {
+        justify-content: flex-start;
+    }
+
+    /* Optionnel : cacher tagline aussi */
     .footer-tagline {
         display: none;
     }
