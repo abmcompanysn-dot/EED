@@ -35,7 +35,7 @@ const CONFIG = {
  */
 function doGet(e) {
   try {
-    const action = e.parameter.action;
+    const action = e && e.parameter ? e.parameter.action : 'unknown';
     let result;
 
     // Aiguillage pour les actions GET
@@ -44,13 +44,13 @@ function doGet(e) {
         result = getBlogPosts();
         break;
       case 'getBlogPostById':
-        result = getBlogPostById(e.parameter.id);
+        result = getBlogPostById(e.parameter ? e.parameter.id : null);
         break;
       case 'getEvents':
         result = getEvents();
         break;
       case 'getComments':
-        result = getComments(e.parameter.articleId);
+        result = getComments(e.parameter ? e.parameter.articleId : null);
         break;
       default:
         result = { success: false, error: 'Action GET non reconnue.' };
@@ -59,8 +59,9 @@ function doGet(e) {
     logAction(action, 'SUCCESS', `Action GET '${action}' exécutée.`);
     return corsify(result, e);
   } catch (err) {
-    const errorMessage = `Erreur dans l'action GET '${e.parameter.action}': ${err.message}`;
-    logAction(e.parameter.action, 'ERROR', errorMessage, 'anonyme');
+    const actionName = e && e.parameter ? e.parameter.action : 'unknown';
+    const errorMessage = `Erreur dans l'action GET '${actionName}': ${err.message}`;
+    logAction(actionName, 'ERROR', errorMessage, 'anonyme');
     return corsify({ error: "Une erreur interne est survenue." }, e);
   }
 }
@@ -73,9 +74,16 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
-    // Récupération de l'action et des données (payload) depuis la requête.
-    const action = e.parameter.action;
-    const payload = e.parameter.payload ? JSON.parse(e.parameter.payload) : {};
+    let data;
+    // Gère les requêtes envoyées avec Content-Type 'text/plain' ou 'application/json'
+    if (e && e.postData && e.postData.contents) {
+      data = JSON.parse(e.postData.contents);
+    } else {
+      // Gère les requêtes envoyées en 'application/x-www-form-urlencoded' (ancienne méthode)
+      data = e.parameter;
+    }
+    const action = data.action;
+    const payload = data.payload || data; // Le payload peut être à la racine ou dans une clé 'payload'
     let result;
 
     // Initialisation de la feuille de calcul pour la passer à certaines fonctions si nécessaire.
@@ -85,14 +93,14 @@ function doPost(e) {
     switch (action) {
       // Actions liées au contenu (Blog, Événements, Besoins)
       case 'getBlogPosts': result = getBlogPosts(); break;
-      case 'getBlogPostById': result = getBlogPostById(e.parameter.id); break;
+      case 'getBlogPostById': result = getBlogPostById(payload.id); break;
       case 'getEvents': result = getEvents(); break;
       case 'getUpcomingEvents': result = getUpcomingEvents(); break; // Nouvelle action pour les 3 prochains événements
       case 'getNeeds': result = getNeeds(); break;
-      case 'getNeedById': result = getNeedById(e.parameter.id); break;
+      case 'getNeedById': result = getNeedById(payload.id); break;
 
       // Actions interactives (Commentaires, Participations, Formulaires)
-      case 'getComments': result = getComments(e.parameter.articleId); break;
+      case 'getComments': result = getComments(payload.articleId); break;
       case 'postComment': result = postComment(payload); break;
       case 'participateToNeed': result = participateToNeed(payload, ss); break;
       case 'handlePrayerRequest': result = handlePrayerRequest(payload); break;
@@ -111,8 +119,9 @@ function doPost(e) {
 
   } catch (err) {
     // En cas d'erreur globale, on l'enregistre et on renvoie une réponse d'erreur générique.
-    const errorMessage = `Erreur dans l'action POST '${e.parameter.action}': ${err.message} (Ligne: ${err.lineNumber})`;
-    logAction(e.parameter.action, 'ERROR', errorMessage, 'anonyme', 'Vérifiez les données envoyées et la structure des feuilles Google Sheets.');
+    const actionName = (e && e.parameter && e.parameter.action) || (e && e.postData && e.postData.contents && JSON.parse(e.postData.contents).action) || 'unknown';
+    const errorMessage = `Erreur dans l'action POST '${actionName}': ${err.message} (Ligne: ${err.lineNumber})`;
+    logAction(actionName, 'ERROR', errorMessage, 'anonyme', 'Vérifiez les données envoyées et la structure des feuilles Google Sheets.');
     return corsify({ error: "Une erreur interne est survenue. L'incident a été enregistré." });
   }
 }
@@ -138,7 +147,7 @@ function doOptions(e) {
  * @returns {ContentService.TextOutput} La réponse formatée.
  */
 function corsify(data, e, isOptions = false) {
-  const requestOrigin = e.requestHeaders.origin || (e.parameter && e.parameter.origin);
+  const requestOrigin = e && e.requestHeaders && e.requestHeaders.origin ? e.requestHeaders.origin : (e && e.parameter && e.parameter.origin);
   const originHeader = (requestOrigin && CONFIG.ALLOWED_ORIGINS.includes(requestOrigin)) ? requestOrigin : CONFIG.ALLOWED_ORIGINS[0];
   
   const output = ContentService.createTextOutput();
@@ -209,30 +218,53 @@ function onOpen() {
 
 const seedData = {
   blog: [
-    ['1', 'La Joie de Servir', 'Pasteur Jean', new Date('2024-05-28'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Un article inspirant sur le bonheur de s\'engager dans l\'œuvre de Dieu...', 'Réflexions', 'Publié'],
-    ['2', 'L\'Importance de la Prière', 'Soeur Marie', new Date('2024-05-25'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Un guide pratique pour développer une vie de prière efficace et significative...', 'Enseignements', 'Publié'],
-    ['3', 'La Foi en Action', 'Frère David', new Date('2024-05-20'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Des exemples concrets de personnes qui ont manifesté leur foi à travers des actions concrètes...', 'Témoignages', 'Publié']
+    ['1', 'La Joie de Servir', 'Pasteur Jean', new Date('2024-05-28'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Découvrez le bonheur profond et la satisfaction que procure le service désintéressé au sein de notre communauté et pour l\'œuvre de Dieu. Cet article explore les bénédictions cachées du don de soi.', 'Réflexions', 'Publié'],
+    ['2', 'L\'Importance de la Prière Quotidienne', 'Soeur Marie', new Date('2024-05-25'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Un guide pratique pour développer une vie de prière plus riche et plus constante. Apprenez à faire de la prière une conversation quotidienne avec Dieu, une source de force et de paix.', 'Enseignements', 'Publié'],
+    ['3', 'La Foi en Action : Témoignage de Frère David', 'Frère David', new Date('2024-05-20'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Lisez le témoignage touchant de Frère David, qui partage comment sa foi a été mise à l\'épreuve et renforcée à travers les défis de la vie. Une histoire d\'espérance et de persévérance.', 'Témoignages', 'Publié'],
+    ['4', 'Comprendre la Grâce : Un Don Immérité', 'Équipe Pastorale', new Date('2024-05-15'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Qu\'est-ce que la grâce ? Cet enseignement approfondi explore la nature du don gratuit de Dieu, son impact sur notre salut et notre vie de tous les jours. Un concept fondamental de notre foi.', 'Enseignements', 'Publié'],
+    ['5', 'La Communauté : Notre Ancre dans la Tempête', 'Pasteur Moussa', new Date('2024-05-10'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Dans les moments difficiles, la communauté de l\'église est un refuge. Cet article met en lumière l\'importance des liens fraternels, du soutien mutuel et de l\'amour partagé.', 'Vie d\'Église', 'Publié'],
+    ['6', 'Vivre le Pardon au Quotidien', 'Soeur Hélène', new Date('2024-05-05'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Le pardon est un chemin de libération. Découvrez des clés pratiques pour pardonner aux autres comme nous avons été pardonnés, et pour vivre libéré du poids du ressentiment.', 'Spiritualité', 'Publié'],
+    ['7', 'Annonce : Prochaine Retraite des Jeunes', 'Comité des Jeunes', new Date('2024-06-01'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Ne manquez pas notre retraite annuelle pour les jeunes ! Un week-end de partage, de louange et d\'activités pour grandir ensemble dans la foi. Inscriptions ouvertes !', 'Annonces', 'Publié'],
+    ['8', 'Étude Biblique : Les Paraboles de Jésus', 'Dr. Alain Dubois', new Date('2024-04-28'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Plongez au cœur des enseignements de Jésus à travers ses paraboles. Cette étude révèle les trésors de sagesse cachés dans ces histoires intemporelles.', 'Études Bibliques', 'Publié']
   ],
   blog_comments: [
     ['1', 'Visiteur Anonyme', 'Merci pour cet article édifiant !', new Date(), 'Approuvé'],
-    ['2', 'Lecteur Fidele', 'Amen ! La prière est vraiment notre force.', new Date(), 'Approuvé']
+    ['2', 'Lecteur Fidèle', 'Amen ! La prière est vraiment notre force.', new Date(), 'Approuvé'],
+    ['1', 'Sophie B.', 'Très inspirant, cela me motive à m\'engager davantage.', new Date(), 'Approuvé'],
+    ['3', 'Marc T.', 'Quel témoignage puissant ! Merci pour ce partage.', new Date(), 'Approuvé'],
+    ['5', 'Anonyme', 'J\'ai vraiment ressenti le soutien de la communauté récemment. Cet article est si vrai.', new Date(), 'Approuvé'],
+    ['2', 'Jeanne D.', 'De très bons conseils pratiques, je vais les appliquer dès aujourd\'hui.', new Date(), 'Approuvé']
   ],
   events: [
-    ['1', 'Conférence sur la Famille', new Date('2024-06-15'), '10:00', 'Salle des Fêtes', 'Une journée pour renforcer les liens familiaux et découvrir des outils pour une vie harmonieuse.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 'https://example.com/conference'],
-    ['2', 'Soirée d\'Adoration', new Date('2024-06-22'), '19:00', 'Sanctuaire Principal', 'Un moment de louange et d\'adoration intense pour se connecter à Dieu.', 'https://i.postimg.cc/nc96NVts/LOGO.png', '']
+    ['evt01', 'Conférence sur la Famille Chrétienne', new Date('2024-06-15'), '10:00', 'Salle des Fêtes', 'Une journée pour renforcer les liens familiaux et découvrir des outils bibliques pour une vie de famille harmonieuse.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 'https://example.com/conference'],
+    ['evt02', 'Soirée d\'Adoration et de Louange', new Date('2024-06-22'), '19:00', 'Sanctuaire Principal', 'Un moment de louange et d\'adoration intense pour se connecter profondément avec Dieu.', 'https://i.postimg.cc/nc96NVts/LOGO.png', ''],
+    ['evt03', 'Retraite Spirituelle "Source de Vie"', new Date('2024-07-05'), '09:00', 'Centre de Retraite "Le Repos"', 'Un week-end complet pour se ressourcer spirituellement, loin du tumulte quotidien. Places limitées.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 'https://example.com/retraite'],
+    ['evt04', 'Atelier sur l\'Évangélisation', new Date('2024-06-29'), '14:00', 'Salle Annexe', 'Apprenez des méthodes pratiques et bienveillantes pour partager votre foi avec assurance et amour.', 'https://i.postimg.cc/nc96NVts/LOGO.png', ''],
+    ['evt05', 'Concert de Gospel', new Date('2024-05-18'), '20:00', 'Grand Temple', 'Un événement passé pour tester l\'archivage. La chorale "Voix Célestes" a animé la soirée.', 'https://i.postimg.cc/nc96NVts/LOGO.png', ''],
+    ['evt06', 'Journée Portes Ouvertes', new Date('2024-07-13'), '10:00', 'Toute l\'Église', 'Invitez vos amis et votre famille à découvrir notre communauté, nos activités et nos ministères.', 'https://i.postimg.cc/nc96NVts/LOGO.png', '']
   ],
   prayer_requests: [
-    [new Date(), 'Anonyme', 'anonyme@email.com', 'Je demande la prière pour la guérison de ma mère.', 'Oui']
+    [new Date(), 'Anonyme', 'anonyme@email.com', 'Sénégal', 'Sénégalaise', '', 'Je demande la prière pour la guérison de ma mère.', 'Oui'],
+    [new Date(), 'Fatou K.', 'fatou@email.com', 'France', 'Française', '0612345678', 'Prière pour trouver un emploi et pour la paix dans ma famille.', 'Non'],
+    [new Date(), 'Moussa', '', 'Mali', 'Malienne', '', 'Que Dieu protège mon voyage et bénisse mon projet.', 'Non']
   ],
   contact_submissions: [
-    [new Date(), 'Jean Dupont', 'jean.dupont@email.com', 'Question sur les horaires', 'Bonjour, pourriez-vous me donner les horaires des cultes du dimanche ? Merci.']
+    [new Date(), 'Jean Dupont', 'jean.dupont@email.com', 'Question sur les horaires', 'Bonjour, pourriez-vous me donner les horaires des cultes du dimanche ? Merci.'],
+    [new Date(), 'Aïssatou Diallo', 'a.diallo@email.com', 'Demande d\'information', 'J\'aimerais savoir comment rejoindre un groupe de maison. Merci d\'avance.'],
+    [new Date(), 'Paul Martin', 'paul.m@email.com', 'Bénévolat', 'Je suis nouveau dans la communauté et je souhaiterais savoir où je peux servir en tant que bénévole.']
   ],
   needs: [
-    ['1', 'Rénovation du Toit', 'Nous avons besoin de votre aide pour réparer le toit de l\'église.', 'Le toit actuel fuit et cause des dommages importants au bâtiment...', 'Nous organisons une collecte de fonds et recherchons des bénévoles...', 'https://i.postimg.cc/nc96NVts/LOGO.png', 10000000, 3500000, 'Construction', 'Actif'],
-    ['2', 'Achat de Fournitures Scolaires', 'Aidez-nous à fournir des fournitures scolaires aux enfants défavorisés.', 'De nombreuses familles n\'ont pas les moyens d\'acheter les fournitures nécessaires...', 'Nous collectons des dons et organisons une distribution...', 'https://i.postimg.cc/nc96NVts/LOGO.png', 5000000, 2000000, 'Social', 'Actif']
+    ['need01', 'Rénovation du Toit de l\'Église', 'Aidez-nous à réparer le toit de notre lieu de culte.', 'Le toit actuel fuit et cause des dommages importants au bâtiment, menaçant nos activités...', 'Nous organisons une collecte de fonds et recherchons des bénévoles pour les travaux.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 10000000, 3500000, 'Construction', 'Actif'],
+    ['need02', 'Fournitures Scolaires pour la Rentrée', 'Offrons une bonne rentrée à 100 enfants défavorisés.', 'De nombreuses familles de notre quartier n\'ont pas les moyens d\'acheter les fournitures nécessaires pour leurs enfants...', 'Nous collectons des dons financiers et matériels (cahiers, stylos, etc.).', 'https://i.postimg.cc/nc96NVts/LOGO.png', 5000000, 2000000, 'Social', 'Actif'],
+    ['need03', 'Soutien à la Famille Ndiaye', 'Aidons une famille de notre communauté après un incendie.', 'La famille Ndiaye a tout perdu dans l\'incendie de leur maison. Ils ont besoin de notre soutien pour se reconstruire.', 'Une collecte spéciale est organisée pour les aider à trouver un nouveau logement et des biens de première nécessité.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 2500000, 2650000, 'Urgence', 'Terminé'],
+    ['need04', 'Nouveau Système de Sonorisation', 'Améliorons la qualité sonore de nos cultes.', 'Notre système de sonorisation actuel est vieillissant et ne permet pas une diffusion claire de la Parole et de la louange.', 'Nous souhaitons investir dans un équipement moderne et plus performant.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 7500000, 1200000, 'Équipement', 'Actif']
   ],
   participations: [
-    ['1', 'Donateur Généreux', 'donateur@email.com', 50000, new Date()]
+    ['need01', 'Donateur Généreux', 'donateur@email.com', 50000, new Date()],
+    ['need02', 'Marie S.', 'marie.s@email.com', 25000, new Date()],
+    ['need01', 'Anonyme', '', 100000, new Date()],
+    ['need03', 'Collecte du Dimanche', '', 1500000, new Date()],
+    ['need04', 'Frère Jacques', 'j.m@email.com', 75000, new Date()]
   ]
 };
 
