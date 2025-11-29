@@ -358,6 +358,10 @@
             </div>
         </section>
 
+        <section class="container">
+            <h2 class="section-title">Besoins de la communauté</h2>
+            <div class="grid-3" id="needs-grid"></div>
+        </section>
         <!-- Section Versets Bibliques -->
         <section class="bible-verse-marquee">
             <div class="marquee-content">
@@ -410,6 +414,7 @@
            <p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p>
         </div>
        </footer>
+    <script src="config.js"></script>
     <script>
         // Logique pour le bouton "Retour en Haut"
         const backToTopButton = document.getElementById('back-to-top');
@@ -540,6 +545,80 @@
                 card.style.display = (matchesSearch && matchesCategory) ? 'flex' : 'none';
             });
         }
+
+        /**
+         * Fonction centralisée pour appeler l'API Google Apps Script.
+         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
+         */
+        function callApi(action, data) {
+            const payload = { action, ...data };
+            const postOptions = {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(payload)
+            };
+            return fetch(API_URL, postOptions).then(res => res.json());
+        }
+
+        // Logique pour charger les besoins de la communauté
+        document.addEventListener('DOMContentLoaded', function() {
+            const needsGrid = document.getElementById('needs-grid');
+
+            // Afficher le squelette de chargement
+            let skeletonHTML = '';
+            for (let i = 0; i < 3; i++) {
+                skeletonHTML += `
+                    <div class="skeleton-card">
+                        <div class="skeleton-image"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line title"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>`;
+            }
+            needsGrid.innerHTML = skeletonHTML;
+
+            callApi('getNeeds', {})
+                .then(data => {
+                    if (data.success && data.needs.length > 0) {
+                        needsGrid.innerHTML = '';
+                        data.needs.forEach(need => {
+                            const card = document.createElement('div');
+                            card.className = 'need-card';
+                            card.dataset.category = need.Categorie;
+
+                            const percentage = Math.min((need.MontantActuel / need.MontantObjectif) * 100, 100);
+
+                            card.innerHTML = `
+                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}">
+                                <div class="need-content">
+                                    <h4>${need.Titre}</h4>
+                                    <p>${need.DescriptionCourte}</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-inner" style="width: ${percentage}%;"></div>
+                                    </div>
+                                    <div class="progress-text">
+                                        <span>${parseInt(need.MontantActuel).toLocaleString('fr-FR')} CFA</span>
+                                        <span>Objectif : ${parseInt(need.MontantObjectif).toLocaleString('fr-FR')} CFA</span>
+                                    </div>
+                                    <a href="participer.html?id=${need.ID}" class="btn btn-support">Soutenir ce projet</a>
+                                </div>
+                            `;
+                            needsGrid.appendChild(card);
+                        });
+                    } else {
+                        needsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucun besoin spécifique à soutenir pour le moment. Vos dons généraux sont toujours appréciés !</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur de chargement des besoins:', error);
+                    needsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les besoins de la communauté. Veuillez réessayer plus tard.</p>';
+                });
+        });
 
         // --- Logique pour la modale de participation ---
         function openModal(modalId) {

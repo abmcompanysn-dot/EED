@@ -630,8 +630,7 @@
             <h2 class="section-title">Derniers Articles du Blog</h2>
             <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
             <div class="grid-3" id="latest-posts-grid">
-                <!-- Les articles du blog seront injectés ici par JavaScript -->
-                <p style="text-align: center; grid-column: 1 / -1;">Chargement des articles...</p>
+                <!-- Le contenu (ou le squelette de chargement) sera injecté ici par JavaScript -->
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="blog.html" class="btn-lux-rounded">Voir tous les articles</a>
@@ -1198,6 +1197,21 @@
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('latest-posts-grid');
 
+            // Afficher le squelette de chargement pour les articles
+            let skeletonHTML = '';
+            for (let i = 0; i < 3; i++) {
+                skeletonHTML += `
+                    <div class="card animated-card zoom-in" style="padding:0;">
+                        <div style="height: 200px; background-color: #2c2c54; border-radius: 10px 10px 0 0;"></div>
+                        <div style="padding: 25px;">
+                            <div style="height: 1em; width: 50%; background-color: #2c2c54; border-radius: 4px; margin-bottom: 15px;"></div>
+                            <div style="height: 1.5em; width: 80%; background-color: #2c2c54; border-radius: 4px; margin-bottom: 15px;"></div>
+                            <div style="height: 1em; width: 100%; background-color: #2c2c54; border-radius: 4px; margin-bottom: 10px;"></div>
+                        </div>
+                    </div>`;
+            }
+            grid.innerHTML = skeletonHTML;
+
             callApi('getBlogPosts', {})
                 .then(data => {
                     if (data.success && data.posts.length > 0) {
@@ -1241,7 +1255,7 @@
 
         // ==================== Logique pour le compte à rebours du prochain événement ====================
         document.addEventListener('DOMContentLoaded', () => {
-            callApi('getEvents', {})
+            callApi('getUpcomingEvents', {})
                 .then(data => {
                     if (!data.success || data.events.length === 0) return;
 
@@ -1289,6 +1303,9 @@
                 })
                 .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
         });
+
+
+
     </script>
 
 
