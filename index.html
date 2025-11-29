@@ -628,16 +628,18 @@
         </section>
 
         <!-- ==================== Section Derniers Articles du Blog (Promo) ==================== -->
-     <section id="blog-promo" class="container">
-            <h2 class="section-title">Derniers Articles du Blog</h2>
-            <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
-            <div class="grid-3" id="latest-posts-grid">
-                <!-- Le contenu (ou le squelette de chargement) sera injecté ici par JavaScript -->
-            </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="blog.html" class="btn-lux-rounded">Voir tous les articles</a>
-            </div>
-        </section>
+        <div class="blog-section-wrapper">
+            <section id="blog-promo" class="container">
+                <h2 class="section-title">Derniers Articles du Blog</h2>
+                <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
+                <div class="grid-3" id="latest-posts-grid">
+                    <!-- Le contenu (ou le squelette de chargement) sera injecté ici par JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="blog.html" class="btn-lux-rounded">Voir tous les articles</a>
+                </div>
+            </section>
+        </div>
 
 
         <section id="contact" class="container animated-card">
@@ -900,6 +902,12 @@
         }
         #next-event, #temoignages .section-title, #temoignages .section-subtitle {
             animation-name: fade-in;
+        }
+
+        /* Style pour le conteneur de la section blog */
+        .blog-section-wrapper {
+            background-color: rgba(0,0,0,0.15); /* Fond légèrement différent */
+            padding: 1px 0; /* Astuce pour contenir les marges des enfants */
         }
 
     </style>
