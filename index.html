@@ -870,6 +870,28 @@
             flex-direction: column;
         }
 
+        /* --- Styles pour s'assurer que les cartes de blog ont la même hauteur --- */
+        #blog-promo .card {
+            height: 100%; /* Permet à la carte de prendre toute la hauteur de la cellule de la grille */
+        }
+
+        #blog-promo .card-content {
+            height: 100%; /* Permet au contenu de s'étirer */
+        }
+
+        #blog-promo .card-content p:last-of-type {
+            /* Limite l'extrait à 3 lignes */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #blog-promo .grid-3 {
+            align-items: stretch; /* Aligne les éléments pour qu'ils aient la même hauteur */
+        }
+
 
 
         /* ==================== Animations au défilement (classes d'animation) ==================== */
