@@ -573,40 +573,44 @@
             <h2 class="section-title">Paroles de la Communauté</h2>
             <p class="section-subtitle">Découvrez comment Dieu agit dans la vie de nos membres.</p>
             <div class="testimonial-carousel-container">
-                <div class="testimonial-slide active">
-                    <div class="card testimonial-card">
-                        <div class="testimonial-author">
-                            <img src="r/LOGO.svg" alt="Photo de Marie Ndiaye">
-                            <div>
-                                <h4>Marie Ndiaye</h4>
-                                <p>Membre depuis 5 ans</p>
+                <div class="testimonial-carousel-inner">
+                    <div class="testimonial-slide active">
+                        <div class="card testimonial-card">
+                            <div class="testimonial-author">
+                                <img src="r/LOGO.svg" alt="Photo de Marie Ndiaye">
+                                <div>
+                                    <h4>Marie Ndiaye</h4>
+                                    <p>Membre depuis 5 ans</p>
+                                </div>
                             </div>
+                            <blockquote>
+                                "Depuis que j'ai rejoint cette église, ma vie a été transformée. J'ai trouvé une vraie famille spirituelle et un soutien constant dans la prière. C'est une bénédiction."
+                            </blockquote>
                         </div>
-                        <blockquote>
-                            "Depuis que j'ai rejoint cette église, ma vie a été transformée. J'ai trouvé une vraie famille spirituelle et un soutien constant dans la prière. C'est une bénédiction."
-                        </blockquote>
                     </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="card testimonial-card">
-                        <div class="testimonial-author">
-                            <img src="r/LOGO.svg" alt="Photo de David Faye">
-                            <div>
-                                <h4>David Faye</h4>
-                                <p>Visiteur régulier</p>
+                    <div class="testimonial-slide">
+                        <div class="card testimonial-card">
+                            <div class="testimonial-author">
+                                <img src="r/LOGO.svg" alt="Photo de David Faye">
+                                <div>
+                                    <h4>David Faye</h4>
+                                    <p>Visiteur régulier</p>
+                                </div>
                             </div>
+                            <blockquote>
+                                "L'accueil chaleureux et la profondeur des enseignements m'ont tout de suite marqué. Chaque culte est une source d'inspiration et de renouvellement pour ma semaine."
+                            </blockquote>
                         </div>
-                        <blockquote>
-                            "L'accueil chaleureux et la profondeur des enseignements m'ont tout de suite marqué. Chaque culte est une source d'inspiration et de renouvellement pour ma semaine."
-                        </blockquote>
                     </div>
+                    <!-- Ajoutez d'autres <div class="testimonial-slide">...</div> ici pour plus de témoignages -->
                 </div>
-                <!-- Ajoutez d'autres <div class="testimonial-slide">...</div> ici pour plus de témoignages -->
                 <button class="carousel-btn prev" onclick="moveTestimonialSlide(-1)">&#10094;</button>
                 <button class="carousel-btn next" onclick="moveTestimonialSlide(1)">&#10095;</button>
+                <div class="testimonial-dots"></div>
             </div>
         </section>
 
+    
 <section id="ressources-promo" class="container animated-card" style="padding-top: 40px; padding-bottom: 0;">
             <div class="promo-card">
                 <div class="prayer-content">
@@ -803,6 +807,33 @@
             padding: 10px 15px;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Styles responsives pour le carrousel de témoignages sur mobile */
+        @media (max-width: 992px) {
+            .testimonial-carousel-container {
+                padding: 0;
+            }
+            .testimonial-carousel-inner {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 20px;
+                padding: 0 20px 20px 20px; /* Espace pour ne pas coller les bords et pour la barre de défilement */
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+            .testimonial-carousel-inner::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
+            .testimonial-slide {
+                display: block; /* Remplacer display:none */
+                flex: 0 0 90%; /* Chaque slide prend 90% de la largeur */
+                scroll-snap-align: center;
+            }
+            .testimonial-carousel-container .carousel-btn { display: none; } /* Cache les flèches */
+            .testimonial-dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+            .testimonial-dot { width: 10px; height: 10px; background-color: var(--border-color); border-radius: 50%; transition: background-color 0.3s; }
+            .testimonial-dot.active { background-color: var(--neon-blue); }
+        }
+
 
         #blog-promo .card-content h3 {
             margin-top: 0;
@@ -1104,21 +1135,57 @@
 
         // ==================== Logique pour le carrousel "Paroles de la Communauté" ====================
         let currentTestimonialSlide = 0;
-        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-
-        function showTestimonialSlide(index) {
-            testimonialSlides.forEach(slide => slide.classList.remove('active'));
-            testimonialSlides[index].classList.add('active');
-        }
-
-        function moveTestimonialSlide(n) {
-            currentTestimonialSlide = (currentTestimonialSlide + n + testimonialSlides.length) % testimonialSlides.length;
-            showTestimonialSlide(currentTestimonialSlide);
-        }
-
-        // Initialiser le premier slide
         document.addEventListener('DOMContentLoaded', () => {
-            if(testimonialSlides.length > 0) showTestimonialSlide(0);
+            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            const dotsContainer = document.querySelector('.testimonial-dots');
+            const innerCarousel = document.querySelector('.testimonial-carousel-inner');
+
+            if (testimonialSlides.length > 0) {
+                // Logique pour desktop (flèches)
+                function showTestimonialSlide(index) {
+                    testimonialSlides.forEach(slide => slide.classList.remove('active'));
+                    testimonialSlides[index].classList.add('active');
+                }
+
+                window.moveTestimonialSlide = function(n) {
+                    currentTestimonialSlide = (currentTestimonialSlide + n + testimonialSlides.length) % testimonialSlides.length;
+                    showTestimonialSlide(currentTestimonialSlide);
+                }
+                showTestimonialSlide(0);
+
+                // Logique pour mobile (points et défilement)
+                if (dotsContainer) {
+                    testimonialSlides.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('testimonial-dot');
+                        if (index === 0) dot.classList.add('active');
+                        dotsContainer.appendChild(dot);
+                    });
+
+                    const dots = document.querySelectorAll('.testimonial-dot');
+
+                    function updateDots(activeIndex) {
+                        dots.forEach((dot, index) => {
+                            dot.classList.toggle('active', index === activeIndex);
+                        });
+                    }
+
+                    if (innerCarousel) {
+                        innerCarousel.addEventListener('scroll', () => {
+                            // Trouve l'index du slide le plus proche du centre
+                            const scrollLeft = innerCarousel.scrollLeft;
+                            const slideWidth = testimonialSlides[0].offsetWidth;
+                            const gap = 20; // Correspond au gap dans le CSS
+                            const activeIndex = Math.round(scrollLeft / (slideWidth + gap));
+                            
+                            if (currentTestimonialSlide !== activeIndex) {
+                                currentTestimonialSlide = activeIndex;
+                                updateDots(activeIndex);
+                            }
+                        });
+                    }
+                }
+            }
         });
 
         // ==================== Logique pour charger les derniers articles du blog ====================
