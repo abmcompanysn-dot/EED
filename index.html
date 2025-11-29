@@ -1176,9 +1176,61 @@
             }
         });
 
+        // ==================== Logique pour le compte à rebours du prochain événement ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            callApi('getUpcomingEvents', {})
+                .then(data => {
+                    if (!data.success || data.events.length === 0) return;
+
+                    const now = new Date();
+                    const upcomingEvents = data.events
+                        .map(event => ({ ...event, dateObj: new Date(event.Date + 'T' + event.Heure) }))
+                        .filter(event => event.dateObj > now)
+                        .sort((a, b) => a.dateObj - b.dateObj);
+
+                    if (upcomingEvents.length === 0) return;
+
+                    const nextEvent = upcomingEvents[0];
+                    const eventSection = document.getElementById('next-event');
+                    
+                    document.getElementById('event-title').textContent = nextEvent.Titre;
+                    if (nextEvent.LienInscription) {
+                        document.getElementById('event-link').href = nextEvent.LienInscription;
+                        document.getElementById('event-link').textContent = "S'inscrire";
+                    } else {
+                        document.getElementById('event-link').href = "evenements.html";
+                    }
+                    eventSection.style.display = 'block';
+
+                    const countdownInterval = setInterval(() => {
+                        const currentTime = new Date().getTime();
+                        const distance = nextEvent.dateObj.getTime() - currentTime;
+
+                        if (distance < 0) {
+                            clearInterval(countdownInterval);
+                            eventSection.style.display = 'none'; // Cache la section si l'événement est passé
+                            return;
+                        }
+
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        document.getElementById('days').textContent = String(days).padStart(2, '0');
+                        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                    }, 1000);
+                })
+                .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
+        });
+
         // ==================== Logique pour charger les derniers articles du blog ====================
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('latest-posts-grid');
+            if (!grid) return;
 
             // Afficher le squelette de chargement pour les articles
             let skeletonHTML = '';
@@ -1234,57 +1286,6 @@
                     console.error('Erreur lors du chargement des articles du blog:', error);
                     grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les articles.</p>';
                 });
-        });
-
-        // ==================== Logique pour le compte à rebours du prochain événement ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            callApi('getUpcomingEvents', {})
-                .then(data => {
-                    if (!data.success || data.events.length === 0) return;
-
-                    const now = new Date();
-                    const upcomingEvents = data.events
-                        .map(event => ({ ...event, dateObj: new Date(event.Date + 'T' + event.Heure) }))
-                        .filter(event => event.dateObj > now)
-                        .sort((a, b) => a.dateObj - b.dateObj);
-
-                    if (upcomingEvents.length === 0) return;
-
-                    const nextEvent = upcomingEvents[0];
-                    const eventSection = document.getElementById('next-event');
-                    
-                    document.getElementById('event-title').textContent = nextEvent.Titre;
-                    if (nextEvent.LienInscription) {
-                        document.getElementById('event-link').href = nextEvent.LienInscription;
-                        document.getElementById('event-link').textContent = "S'inscrire";
-                    } else {
-                        document.getElementById('event-link').href = "evenements.html";
-                    }
-                    eventSection.style.display = 'block';
-
-                    const countdownInterval = setInterval(() => {
-                        const currentTime = new Date().getTime();
-                        const distance = nextEvent.dateObj.getTime() - currentTime;
-
-                        if (distance < 0) {
-                            clearInterval(countdownInterval);
-                            eventSection.style.display = 'none'; // Cache la section si l'événement est passé
-                            return;
-                        }
-
-                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                        document.getElementById('days').textContent = String(days).padStart(2, '0');
-                        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
-                    }, 1000);
-                })
-                .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
         });
 
 
