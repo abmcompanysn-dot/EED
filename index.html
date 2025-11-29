@@ -14,6 +14,7 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="navbar.css">
 
     <style>
         /* public-styles.css */
@@ -49,170 +50,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-
-        /* ==================== BARRE DE NAVIGATION (HEADER) ==================== */
-        header {
-            background-color: rgba(10, 10, 35, 0.85); /* Fond semi-transparent permanent */
-            backdrop-filter: blur(10px); /* Effet de flou permanent */
-            -webkit-backdrop-filter: blur(10px); /* Pour la compatibilité avec Safari */
-            padding: 10px 0; /* Hauteur réduite */
-            position: fixed; /* Reste fixe en haut de l'écran */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Bordure blanche subtile */
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 1.5em;
-            color: var(--luminous-white);
-            text-decoration: none;
-        }
-
-        .logo img {
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-
-        nav ul a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
-            transition: all 0.3s ease-in-out;
-        }
-
-        nav ul a:hover::after {
-            width: 100%;
-            left: 0;
-        }
-        nav a:hover, .nav-actions a.primary, nav a[style*="var(--text-light)"] {
-            color: var(--luminous-white);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-actions a.primary {
-            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        /* ==================== MENU MOBILE (BURGER & MODAL) ==================== */
-        .menu-burger {
-            display: none; /* Caché sur bureau */
-            font-size: 1.8em;
-            cursor: pointer;
-            color: var(--luminous-white);
-            z-index: 1001;
-        }
-        .menu-burger {
-            display: none; /* Caché sur bureau */
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: background-color 0.3s, box-shadow 0.3s;
-            z-index: 1002;
-        }
-        .menu-burger:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
-        }
-        .menu-burger .bar { width: 100%; height: 2px; background-color: white; border-radius: 2px; }
-
-
-        .nav-links-mobile {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 10, 35, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start; /* Aligner les liens à gauche */
-            transform: translateX(-100%);
-            transition: transform 0.4s ease-in-out;
-            pointer-events: none; /* N'intercepte pas les clics quand il est caché */
-            z-index: 1001;
-        }
-        .nav-links-mobile-content {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            padding: 0 40px;
-            box-sizing: border-box;
-        }
-        .nav-links-mobile.active {
-            transform: translateX(0);
-            pointer-events: auto;
-        }
-        .nav-links-mobile a {
-            color: var(--luminous-white);
-            font-size: 18px; /* Taille de police lisible */
-            text-decoration: none;
-            padding: 16px 10px; /* Padding vertical pour faciliter le clic */
-            width: 100%;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .nav-links-mobile a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .nav-links-mobile.active {
-            display: flex;
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .nav-links-mobile.active .nav-links-mobile-content {
-            transform: translateY(0);
-            opacity: 1;
         }
 
         h1, h2, h3 {
@@ -329,22 +166,6 @@
 
         /* ==================== DESIGN RESPONSIVE (ADAPTATION MOBILE) ==================== */
         @media (max-width: 992px) { /* Point de rupture ajusté pour une meilleure transition */
-            nav ul.desktop-links {
-                display: none;
-            }
-            .nav-actions a.primary {
-                display: none; /* Cache le bouton connexion principal */
-            }
-            .nav-actions a#cart-link {
-                display: none; /* Cache le panier sur mobile */
-            }
-            .menu-burger {
-                display: block;
-            }
-            .nav-actions {
-                gap: 15px; /* Réduit l'espace pour le panier */
-            }
-
             .section-title {
                 font-size: 2.2em;
             }
@@ -602,14 +423,6 @@
         .prayer-content h3 { font-size: 1.8em; color: var(--neon-blue); }
         @media (max-width: 992px) { .prayer-section-layout { grid-template-columns: 1fr; padding: 30px; } }
 
-        /* --- Styles pour l'icône de fermeture du menu mobile --- */
-        body.no-scroll {
-            overflow: hidden;
-        }
-        .nav-links-mobile a { font-size: 1.8em; color: var(--luminous-white); text-decoration: none; }
-        .menu-burger.close-icon {
-            position: fixed; top: 25px; right: 20px; z-index: 1002;
-        }
         /* ==================== STYLES DES SECTIONS GÉNÉRALES ==================== */
         section {
             padding: 100px 0;
@@ -664,10 +477,10 @@
 
     <!-- ==================== EN-TÊTE ET BARRE DE NAVIGATION ==================== -->
     <header>
-        <nav class="container">
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
-                <li><a href="index.html" style="color: var(--luminous-white);">Accueil</a></li>
+                <li><a href="index.html" class="active">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
@@ -677,35 +490,25 @@
                 <li><a href="Boutique.html">Faire un Don</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
-            <div class="nav-actions">
-                <!-- Conteneur pour le QR Code, caché par défaut -->
-                <div id="nav-qrcode-container" style="display: none;">
-                    <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
-                    <div id="nav-qrcode-popup">
-                        <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
-                    </div>
-                </div>
-                <div class="menu-burger" onclick="toggleMobileMenu()">
-                    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                </div>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
             </div>
         </nav>
     </header>
 
     <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
     <div class="nav-links-mobile" id="mobile-menu">
-        <!-- Contenu du menu mobile pour les animations -->
-        <div class="nav-links-mobile-content">
-            <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
-            <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
-            <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
-            <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-            <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
-            <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
-            <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-            <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
-            <a href="Boutique.html" onclick="toggleMobileMenu()" class="primary">Faire un Don</a>
-        </div>
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
+        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
+        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
+        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
     <!-- ---------- Section Héros (Bannière) ---------- -->
@@ -1372,11 +1175,11 @@
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const burgerIcon = document.querySelector('.menu-burger');
+            const body = document.body;
 
             mobileMenu.classList.toggle('active');
-            // L'icône de fermeture est maintenant gérée par CSS si nécessaire, ou on peut la changer ici.
-            // Pour garder la simplicité, on garde l'icône hamburger.
-            // Une animation de l'icône en croix (X) peut être ajoutée avec plus de CSS.
+            burgerIcon.classList.toggle('active');
+            body.classList.toggle('no-scroll');
         }
 
     </script>
