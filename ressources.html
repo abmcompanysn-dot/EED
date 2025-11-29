@@ -225,23 +225,6 @@
     <link rel="stylesheet" href="footer.css">
 
     <script>
-        /**
-         * Fonction centralisée pour appeler l'API Google Apps Script.
-         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
-         */
-        function callApi(action, data) {
-            const payload = { action, ...data };
-            const postOptions = {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
-                },
-                body: JSON.stringify(payload)
-            };
-            return fetch(API_URL, postOptions).then(res => res.json());
-        }
-
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const burgerIcon = document.querySelector('.menu-burger');

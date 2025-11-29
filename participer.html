@@ -97,23 +97,6 @@
 
     <script src="config.js"></script>
     <script>
-        /**
-         * Fonction centralisée pour appeler l'API Google Apps Script.
-         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
-         */
-        function callApi(action, data) {
-            const payload = { action, ...data };
-            const postOptions = {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
-                },
-                body: JSON.stringify(payload)
-            };
-            return fetch(API_URL, postOptions).then(res => res.json());
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const subtitle = document.getElementById('project-title-subtitle');
             const hiddenInput = document.getElementById('participation-need-id');

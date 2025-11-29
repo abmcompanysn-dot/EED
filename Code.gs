@@ -35,7 +35,7 @@ const CONFIG = {
  */
 function doGet(e) {
   // Utilise HtmlService pour renvoyer du JSON. Le client devra parser la réponse en texte puis en JSON.
-  return HtmlService.createHtmlOutput(JSON.stringify({message: "ok"}));
+  return HtmlService.createHtmlOutput(JSON.stringify({ message: "ok" }));
 }
 
 /**
@@ -58,7 +58,7 @@ function doPost(e) {
     const payload = data.payload || data; // Le payload peut être à la racine ou dans une clé 'payload'
     let result;
 
-    // Initialisation de la feuille de calcul pour la passer à certaines fonctions si nécessaire.
+    // Initialisation de la feuille de calcul
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
     // Aiguillage (switch) pour appeler la fonction correspondante à l'action demandée.
@@ -85,15 +85,15 @@ function doPost(e) {
     }
 
     // Enregistre l'action réussie dans l'historique.
-    logAction(action, 'SUCCESS', `Action POST '${action}' exécutée avec succès.`);
+    logAction('Back-End', action, 'SUCCESS', `Action POST '${action}' exécutée avec succès.`);
     // Renvoie le résultat au client, formaté en JSON avec les en-têtes CORS. (e.parameter.origin n'est pas standard pour POST)
     return corsify(result, e);
 
   } catch (err) {
     // En cas d'erreur globale, on l'enregistre et on renvoie une réponse d'erreur générique.
     const actionName = (e && e.parameter && e.parameter.action) || (e && e.postData && e.postData.contents && JSON.parse(e.postData.contents).action) || 'unknown';
-    const errorMessage = `Erreur dans l'action POST '${actionName}': ${err.message} (Ligne: ${err.lineNumber})`;
-    logAction(actionName, 'ERROR', errorMessage, 'anonyme', 'Vérifiez les données envoyées et la structure des feuilles Google Sheets.');
+    const errorMessage = `Erreur dans l'action POST '${actionName}': ${err.message}`;
+    logAction('Back-End', actionName, 'ERROR', errorMessage, 'anonyme', 'Vérifiez les données envoyées et la structure des feuilles Google Sheets.');
     return corsify({ error: "Une erreur interne est survenue. L'incident a été enregistré." });
   }
 }
@@ -171,6 +171,30 @@ function sheetToObjects(sheet) {
 
 /**
  * ==================================================================
+ * FONCTIONS UTILITAIRES POUR GOOGLE SHEETS
+ * ==================================================================
+ */
+
+/**
+ * Convertit les données d'une feuille de calcul en un tableau d'objets.
+ * @param {Sheet} sheet - L'objet feuille de calcul.
+ * @returns {Array<Object>} Un tableau d'objets représentant les lignes.
+ */
+function sheetToObjects(sheet) {
+  if (!sheet || sheet.getLastRow() < 1) return [];
+  const data = sheet.getDataRange().getValues();
+  const headers = data.shift().map(h => String(h || '').trim());
+  if (!headers || headers.length === 0) return [];
+
+  return data.map(row => {
+    const obj = {};
+    headers.forEach((header, index) => { obj[header] = row[index]; });
+    return obj;
+  });
+}
+
+/**
+ * ==================================================================
  * LOGIQUE DE L'APPLICATION
  * ==================================================================
  */
@@ -183,8 +207,8 @@ function sheetToObjects(sheet) {
 function onOpen() {
   SpreadsheetApp.getUi()
       .createMenu('Admin Église')
-      .addItem('Vérifier la Structure des Feuilles', 'verifyAndFixSheetStructure')
-      .addItem('1. Initialiser les feuilles', 'setupSpreadsheet')
+      .addItem('1. Vérifier/Réparer la Structure', 'verifyAndFixSheetStructure')
+      .addItem('2. Initialiser les feuilles (si vides)', 'setupSpreadsheet')
       .addToUi();
 }
 
@@ -294,8 +318,8 @@ function initializeWithSeedData() {
 function setupSpreadsheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   // Définition de la structure de chaque feuille de calcul nécessaire à l'application.
-  const sheetsToCreate = [
-    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
+  const sheetsToCreate = [    
+    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
     { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
@@ -342,8 +366,8 @@ function verifyAndFixSheetStructure() {
   let corrections = [];
 
   // Liste des feuilles et de leurs colonnes requises.
-  const requiredSheets = [
-    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
+  const requiredSheets = [    
+    { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Utilisateur_Email', 'Suggestion_Correction'] },
     { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
@@ -382,17 +406,18 @@ function verifyAndFixSheetStructure() {
 
 /**
  * Enregistre une action ou une erreur dans la feuille 'Historique_Actions'.
+ * @param {string} origin - 'Front-End' ou 'Back-End'.
  * @param {string} action - Le nom de l'action effectuée (ex: 'saveProfile').
  * @param {string} status - 'SUCCESS' ou 'ERROR'.
  * @param {string} message - Le message détaillé de l'événement.
  * @param {string} [userEmail='anonyme'] - L'email de l'utilisateur effectuant l'action.
  * @param {string} [suggestion=''] - Une suggestion de correction en cas d'erreur.
  */
-function logAction(action, status, message, userEmail = 'anonyme', suggestion = '') {
+function logAction(origin, action, status, message, userEmail = 'anonyme', suggestion = '') {
   try {
     const logSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.LOGS);
     if (logSheet) {
-      logSheet.appendRow([new Date(), action, status, message, userEmail, suggestion]);
+      logSheet.appendRow([new Date(), origin, action, status, message, userEmail, suggestion]);
     }
   } catch (e) {
     Logger.log(`Impossible d'écrire dans la feuille d'historique: ${e.message}`);
@@ -412,31 +437,25 @@ function logAction(action, status, message, userEmail = 'anonyme', suggestion = 
 function getBlogPosts() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.BLOG}' introuvable.`);
     
     const posts = sheetToObjects(sheet)
       .filter(post => post.Statut === 'Publié'); // On ne récupère que les articles publiés
 
-    // Trie les articles par date, du plus récent au plus ancien.
     posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
 
     return { success: true, posts: posts };
   } catch (e) {
-    logAction('getBlogPosts', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getBlogPosts', 'ERROR', e.message, 'API', "Vérifiez que la feuille 'Blog' existe et que sa structure est correcte.");
+    return { success: false, error: "Impossible de récupérer les articles." };
   }
 }
 
-/**
- * Récupère un article de blog spécifique par son ID.
- * @param {string} id - L'ID de l'article à récupérer.
- * @returns {Object} Un objet contenant l'article ou une erreur.
- */
 function getBlogPostById(id) {
   try {
     if (!id) throw new Error("Aucun ID d'article fourni.");
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.BLOG}' introuvable.`);
     
     const posts = sheetToObjects(sheet);
     const post = posts.find(p => String(p.ID) === String(id));
@@ -447,8 +466,8 @@ function getBlogPostById(id) {
 
     return { success: true, post: post };
   } catch (e) {
-    logAction('getBlogPostById', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getBlogPostById', 'ERROR', e.message, 'API', "Vérifiez l'ID fourni et la structure de la feuille 'Blog'.");
+    return { success: false, error: "Impossible de récupérer l'article." };
   }
 }
 
@@ -459,15 +478,15 @@ function getBlogPostById(id) {
 function getEvents() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.EVENTS}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.EVENTS}' introuvable.`);
 
     const events = sheetToObjects(sheet)
       .filter(event => new Date(event.Date) >= new Date()); // Uniquement les événements futurs
 
     return { success: true, events: events };
   } catch (e) {
-    logAction('getEvents', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getEvents', 'ERROR', e.message, 'API', "Vérifiez que la feuille 'Evenements' existe.");
+    return { success: false, error: "Impossible de récupérer les événements." };
   }
 }
 
@@ -478,7 +497,7 @@ function getEvents() {
 function getUpcomingEvents() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.EVENTS}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.EVENTS}' introuvable.`);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Pour inclure les événements du jour même.
@@ -490,8 +509,8 @@ function getUpcomingEvents() {
 
     return { success: true, events: events };
   } catch (e) {
-    logAction('getUpcomingEvents', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getUpcomingEvents', 'ERROR', e.message, 'API', "Vérifiez que la feuille 'Evenements' existe.");
+    return { success: false, error: "Impossible de récupérer les prochains événements." };
   }
 }
 
@@ -502,11 +521,11 @@ function getUpcomingEvents() {
  */
 function handlePrayerRequest(payload) {
   try {
-    if (!payload.request) throw new Error("Le contenu de la demande est manquant.");
+    if (!payload || !payload.request) throw new Error("Les données de la demande de prière sont invalides ou manquantes.");
     
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(CONFIG.SHEETS.PRAYER);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.PRAYER}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.PRAYER}' introuvable.`);
 
     const name = payload.name || 'Anonyme';
     const email = payload.email || 'Non fourni';
@@ -515,16 +534,12 @@ function handlePrayerRequest(payload) {
     const phone = payload.phone || '';
     const isConfidential = payload.isConfidential ? 'Oui' : 'Non';
 
-    // S'assure que les en-têtes de la feuille sont corrects.
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Timestamp', 'Nom', 'Email', 'Pays', 'Nationalite', 'Telephone', 'Demande', 'Confidentialite']);
-    }
-
     sheet.appendRow([new Date(), name, email, country, nationality, phone, payload.request, isConfidential]);
     return { success: true, message: 'Votre demande de prière a bien été envoyée.' };
   } catch (e) {
-    logAction('handlePrayerRequest', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    const userEmail = (payload && payload.email) || 'anonyme';
+    logAction('Front-End', 'handlePrayerRequest', 'ERROR', e.message, userEmail, "Vérifiez les données envoyées par le formulaire et l'existence de la feuille 'Demandes_Priere'.");
+    return { success: false, error: "Impossible d'enregistrer la demande de prière." };
   }
 }
 
@@ -535,15 +550,15 @@ function handlePrayerRequest(payload) {
 function getNeeds() {
   try {
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.NEEDS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.NEEDS}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable.`);
     
     const needs = sheetToObjects(sheet)
       .filter(need => need.Statut === 'Actif');
 
     return { success: true, needs: needs };
   } catch (e) {
-    logAction('getNeeds', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getNeeds', 'ERROR', e.message, 'API', "Vérifiez l'existence de la feuille 'Besoins'.");
+    return { success: false, error: "Impossible de récupérer les besoins." };
   }
 }
 
@@ -556,7 +571,7 @@ function getNeedById(id) {
   try {
     if (!id) throw new Error("Aucun ID de besoin fourni.");
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.NEEDS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.NEEDS}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable.`);
     
     const needs = sheetToObjects(sheet);
     const need = needs.find(n => String(n.ID) === String(id));
@@ -567,8 +582,8 @@ function getNeedById(id) {
 
     return { success: true, need: need };
   } catch (e) {
-    logAction('getNeedById', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Back-End', 'getNeedById', 'ERROR', e.message, 'API', "Vérifiez l'ID fourni et l'existence de la feuille 'Besoins'.");
+    return { success: false, error: "Impossible de récupérer le besoin." };
   }
 }
 
@@ -580,21 +595,17 @@ function getNeedById(id) {
  */
 function participateToNeed(payload, ss) {
   try {
-    // Vérification des données reçues.
-    if (!payload.needId || !payload.name || !payload.amount) {
+    if (!payload || !payload.needId || !payload.name || !payload.amount) {
       throw new Error("Données de participation incomplètes.");
     }
 
     const participationsSheet = ss.getSheetByName(CONFIG.SHEETS.PARTICIPATIONS) || ss.insertSheet(CONFIG.SHEETS.PARTICIPATIONS);
-    
-    if (participationsSheet.getLastRow() === 0) {
-      participationsSheet.appendRow(["ID_Besoin", "Nom", "Email", "Montant", "Date"]);
-    }
-    
     participationsSheet.appendRow([payload.needId, payload.name, payload.email || 'Non fourni', payload.amount, new Date()]);
 
     // Met à jour le montant actuel dans la feuille "Besoins".
     const needsSheet = ss.getSheetByName(CONFIG.SHEETS.NEEDS);
+    if (!needsSheet) throw new Error(`Feuille '${CONFIG.SHEETS.NEEDS}' introuvable pour la mise à jour.`);
+
     const needsData = needsSheet.getDataRange().getValues();
     const headers = needsData[0];
     const idIndex = headers.indexOf("ID");
@@ -611,8 +622,9 @@ function participateToNeed(payload, ss) {
 
     return { success: true, message: "Participation enregistrée." };
   } catch (err) {
-    logAction('participateToNeed', 'ERROR', err.message, 'API');
-    return { success: false, error: "Erreur serveur lors de l'enregistrement : " + err.message };
+    const userEmail = (payload && payload.email) || 'anonyme';
+    logAction('Front-End', 'participateToNeed', 'ERROR', err.message, userEmail, "Vérifiez les données du formulaire et l'existence des feuilles 'Participations' et 'Besoins'.");
+    return { success: false, error: "Impossible d'enregistrer la participation." };
   }
 }
 
@@ -662,12 +674,12 @@ function getComments(articleId) {
  */
 function postComment(payload) {
   try {
-    if (!payload.articleId || !payload.author || !payload.commentText) {
+    if (!payload || !payload.articleId || !payload.author || !payload.commentText) {
       throw new Error("Données de commentaire incomplètes.");
     }
 
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.COMMENTS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.COMMENTS}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.COMMENTS}' introuvable.`);
 
     // Ajoute le commentaire avec le statut "Approuvé" par défaut.
     // Pour un système de modération, changez 'Approuvé' par 'En attente'.
@@ -675,8 +687,8 @@ function postComment(payload) {
 
     return { success: true, message: "Commentaire soumis avec succès." };
   } catch (e) {
-    logAction('postComment', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    logAction('Front-End', 'postComment', 'ERROR', e.message, 'anonyme', "Vérifiez les données du formulaire et l'existence de la feuille 'Blog_Commentaires'.");
+    return { success: false, error: "Impossible de soumettre le commentaire." };
   }
 }
 
@@ -687,17 +699,18 @@ function postComment(payload) {
  */
 function handleContactForm(payload) {
   try {
-    if (!payload.name || !payload.email || !payload.message) {
+    if (!payload || !payload.name || !payload.email || !payload.message) {
       throw new Error("Les champs nom, email et message sont requis.");
     }
     
     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.CONTACT);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.CONTACT}' est introuvable.`);
+    if (!sheet) throw new Error(`Feuille '${CONFIG.SHEETS.CONTACT}' introuvable.`);
 
     sheet.appendRow([new Date(), payload.name, payload.email, payload.subject || 'Aucun sujet', payload.message]);
     return { success: true, message: 'Votre message a bien été envoyé. Nous vous répondrons bientôt.' };
   } catch (e) {
-    logAction('handleContactForm', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
+    const userEmail = (payload && payload.email) || 'anonyme';
+    logAction('Front-End', 'handleContactForm', 'ERROR', e.message, userEmail, "Vérifiez les données du formulaire et l'existence de la feuille 'Contact_Submissions'.");
+    return { success: false, error: "Impossible d'envoyer le message." };
   }
 }

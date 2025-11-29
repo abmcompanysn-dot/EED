@@ -1003,23 +1003,6 @@
                 });
         }
 
-        /**
-         * Fonction centralisée pour appeler l'API Google Apps Script via POST.
-         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
-         */
-        function callApi(action, data) {
-            const payload = { action, ...data };
-            const postOptions = {
-                method: 'POST',
-                redirect: 'follow',
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
-                },
-                body: JSON.stringify(payload)
-            };
-            return fetch(API_URL, postOptions).then(res => res.json());
-        }
-
         // ==================== Logique pour l'animation au défilement ====================
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries, obs) => {
