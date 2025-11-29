@@ -629,13 +629,10 @@
      <section id="blog-promo" class="container">
             <h2 class="section-title">Derniers Articles du Blog</h2>
             <p class="section-subtitle">Réflexions, témoignages et enseignements pour nourrir votre foi au quotidien.</p>
-            <div class="blog-carousel-container">
-                <div class="blog-carousel-inner" id="latest-posts-carousel">
-                    <!-- Les slides du blog seront injectés ici -->
+            <div class="blog-scroller" id="latest-posts-scroller">
+                <div class="blog-scroller-inner" id="latest-posts-scroller-inner">
+                    <!-- Les cartes d'articles seront injectées ici par JavaScript -->
                 </div>
-                <button class="carousel-btn prev" onclick="moveBlogSlide(-1)">&#10094;</button>
-                <button class="carousel-btn next" onclick="moveBlogSlide(1)">&#10095;</button>
-                <div class="blog-carousel-dots" id="blog-dots-container"></div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
                 <a href="blog.html" class="btn-lux-rounded">Voir tous les articles</a>
@@ -1233,85 +1230,51 @@
                 .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
         });
 
-        // ==================== Logique pour le carrousel des derniers articles du blog ====================
-        let currentBlogSlide = 0;
-        const blogSlides = [];
-
-        function updateBlogCarousel() {
-            const innerCarousel = document.getElementById('latest-posts-carousel');
-            const dots = document.querySelectorAll('.blog-dot');
-            
-            innerCarousel.style.transform = `translateX(-${currentBlogSlide * 100}%)`;
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentBlogSlide);
-            });
-        }
-
-        function moveBlogSlide(n) {
-            currentBlogSlide = (currentBlogSlide + n + blogSlides.length) % blogSlides.length;
-            updateBlogCarousel();
-        }
-
-        function goToBlogSlide(index) {
-            currentBlogSlide = index;
-            updateBlogCarousel();
-        }
-
+        // ==================== Logique pour le bandeau défilant des derniers articles du blog ====================
         document.addEventListener('DOMContentLoaded', () => {
-            const carouselInner = document.getElementById('latest-posts-carousel');
-            const dotsContainer = document.getElementById('blog-dots-container');
-            if (!carouselInner) return;
+            const scrollerInner = document.getElementById('latest-posts-scroller-inner');
+            if (!scrollerInner) return;
 
-            // Afficher un message de chargement
-            carouselInner.innerHTML = '<p style="width: 100%; text-align: center;">Chargement des articles...</p>';
+            scrollerInner.innerHTML = '<p style="width: 100%; text-align: center;">Chargement des articles...</p>';
 
             callApi('getBlogPosts', {})
                 .then(data => {
                     if (data.success && data.posts.length > 0) {
-                        carouselInner.innerHTML = ''; // Vide le message
-                        dotsContainer.innerHTML = ''; // Vide les points
+                        scrollerInner.innerHTML = ''; // Vide le message de chargement
+                        
+                        // Prend jusqu'à 5 articles pour un bandeau plus fourni
+                        const latestPosts = data.posts.slice(0, 5);
+                        
+                        // Duplique les articles pour un effet de boucle infini
+                        const postsToDisplay = [...latestPosts, ...latestPosts];
 
-                        // Prend les 3 articles les plus récents
-                        const latestPosts = data.posts.slice(0, 3);
-
-                        latestPosts.forEach((post, index) => {
-                            const slide = document.createElement('div');
-                            slide.className = 'blog-slide';
+                        postsToDisplay.forEach(post => {
+                            const card = document.createElement('div');
+                            card.className = 'card animated-card zoom-in';
 
                             const excerpt = post.Contenu.substring(0, 120) + '...';
                             const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
                                 day: 'numeric', month: 'long', year: 'numeric'
                             });
 
-                            slide.innerHTML = `
-                                    <div class="card-content">
-                                        <p class="meta">${postDate.toUpperCase()} • PAR ${post.Auteur}</p>
-                                        <h3><a href="article.html?id=${post.ID}" style="color: inherit; text-decoration: none;">${post.Titre}</a></h3>
-                                        <p>${excerpt}</p>
-                                        <a href="article.html?id=${post.ID}" style="margin-top: 15px; color: var(--neon-blue); font-weight: bold;">Lire la suite →</a>
-                                    </div>
+                            card.innerHTML = `
+                                <a href="article.html?id=${post.ID}"><img src="${post.ImageURL}" alt="Image pour ${post.Titre}"></a>
+                                <div class="card-content">
+                                    <p class="meta">${postDate.toUpperCase()} • PAR ${post.Auteur}</p>
+                                    <h3><a href="article.html?id=${post.ID}" style="color: inherit; text-decoration: none;">${post.Titre}</a></h3>
+                                    <p>${excerpt}</p>
+                                    <a href="article.html?id=${post.ID}" style="margin-top: 15px; color: var(--neon-blue); font-weight: bold;">Lire la suite →</a>
                                 </div>
                             `;
-                            carouselInner.appendChild(slide);
-                            blogSlides.push(slide);
-
-                            // Créer un point de navigation
-                            const dot = document.createElement('span');
-                            dot.className = 'blog-dot';
-                            dot.onclick = () => goToBlogSlide(index);
-                            dotsContainer.appendChild(dot);
+                            scrollerInner.appendChild(card);
                         });
-
-                        updateBlogCarousel(); // Afficher le premier slide et le bon point
-
                     } else {
-                        carouselInner.innerHTML = '<p style="width: 100%; text-align: center;">Aucun article à afficher pour le moment.</p>';
+                        scrollerInner.innerHTML = '<p style="width: 100%; text-align: center;">Aucun article à afficher pour le moment.</p>';
                     }
                 })
                 .catch(error => {
                     console.error('Erreur lors du chargement des articles du blog:', error);
-                    carouselInner.innerHTML = '<p style="width: 100%; text-align: center;">Impossible de charger les articles.</p>';
+                    scrollerInner.innerHTML = '<p style="width: 100%; text-align: center;">Impossible de charger les articles.</p>';
                 });
         });
 
