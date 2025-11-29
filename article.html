@@ -293,6 +293,22 @@
 
     <script src="config.js"></script>
     <style>
+        /**
+         * Fonction centralisée pour appeler l'API Google Apps Script.
+         * Utilise POST avec text/plain pour éviter les requêtes preflight (OPTIONS).
+         */
+        function callApi(action, data) {
+            const payload = { action, ...data };
+            const postOptions = {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(payload)
+            };
+            return fetch(API_URL, postOptions).then(res => res.json());
+        }
         /* Styles du footer ici pour éviter un autre fichier CSS */
     </style>
     <script>
@@ -330,8 +346,7 @@
                 return;
             }
 
-            fetch(API_URL + `?action=getBlogPostById&id=${articleId}`)
-                .then(response => response.json())
+            callApi('getBlogPostById', { id: articleId })
                 .then(data => {
                     if (data.success && data.post) {
                         const post = data.post;
@@ -409,8 +424,7 @@
             const commentsList = document.getElementById('comments-list');
             commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>';
 
-            fetch(API_URL + `?action=getComments&articleId=${articleId}`)
-                .then(response => response.json())
+            callApi('getComments', { articleId: articleId })
                 .then(data => {
                     commentsList.innerHTML = ''; // Vider le message de chargement
                     if (data.success && data.comments && data.comments.length > 0) {
@@ -457,12 +471,7 @@
             button.disabled = true;
             button.textContent = 'Envoi...';
 
-            const formData = new FormData();
-            formData.append('action', 'postComment');
-            formData.append('payload', JSON.stringify(commentData));
-
-            fetch(API_URL, { method: 'POST', body: formData })
-                .then(res => res.json())
+            callApi('postComment', { payload: commentData })
                 .then(response => {
                     if (response.success) {
                         authorInput.value = '';
