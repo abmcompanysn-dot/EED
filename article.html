@@ -22,7 +22,10 @@
             background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
             background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
         }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        /* Correction: Le conteneur englobe toute la navigation */
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; } 
+
         header {
             background-color: rgba(10, 10, 35, 0.85);
             backdrop-filter: blur(10px);
@@ -32,7 +35,7 @@
             top: 0; left: 0; width: 100%;
             z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        nav { display: flex; justify-content: space-between; align-items: center;}
         .logo img { transition: transform 0.3s ease; }
         .logo:hover img { transform: scale(1.05); }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
@@ -149,6 +152,8 @@
             text-decoration: none;
             font-weight: bold;
             transition: opacity 0.3s;
+            /* Ajout pour le formulaire de commentaire */
+            cursor: pointer; 
         }
         .share-btn:hover { opacity: 0.85; }
         .share-btn.facebook { background-color: #1877F2; }
@@ -224,26 +229,32 @@
             50% { background-color: #3a3a6a; }
             100% { background-color: #2c2c54; }
         }
+
+        /* MEDIA QUERIES pour le mobile */
+        @media (max-width: 768px) {
+            nav ul.desktop-links {
+                display: none;
+            }
+            .menu-burger {
+                display: flex; /* Afficher le bouton burger */
+            }
+            /* Correction: Supprimer le conteneur du header sur mobile si non nécessaire */
+            .header-container { padding: 0 10px; } 
+            
+            .article-title {
+                font-size: 2em; /* Réduire la taille du titre sur mobile */
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <nav>
-            <div class="container">
+        <div class="header-container">
+            <nav>
                 <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
-                <ul class="desktop-links">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="apropos.html">À Propos</a></li>
-                    <li><a href="ministeres.html">Ministères</a></li>
-                    <li><a href="evenements.html">Événements</a></li>
-                    <li><a href="carrieres.html">Ateliers</a></li>
-                    <li><a href="ressources.html">Ressources</a></li>
-                    <li><a href="live.html">Live</a></li>
-                    <li><a href="Boutique.html">Faire un Don</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
+                <ul class="desktop-links" id="desktop-nav-links">
+                    </ul>
                 <div class="nav-actions">
-                    <!-- Conteneur pour le QR Code, caché par défaut -->
                     <div id="nav-qrcode-container" style="display: none;">
                         <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
                         <div id="nav-qrcode-popup">
@@ -252,19 +263,17 @@
                     </div>
                     <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </header>
 
     <div class="nav-links-mobile" id="mobile-menu">
         <div class="nav-links-mobile-content">
-            <!-- Liens injectés par JS -->
-        </div>
+            </div>
     </div>
 
-    <main class="container" id="article-container" style="padding-top: 100px;">
-        <!-- Le contenu de l'article sera injecté ici -->
-    </main>
+    <main class="container" id="article-container">
+        </main>
 
     <footer>
         <div class="container footer-grid">
@@ -274,14 +283,8 @@
             </div>
             <div class="footer-col">
                 <h4>Navigation</h4>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="apropos.html">À Propos</a></li>
-                    <li><a href="ministeres.html">Ministères</a></li>
-                    <li><a href="evenements.html">Événements</a></li>
-                    <li><a href="ressources.html">Ressources</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
+                <ul id="footer-nav-links">
+                    </ul>
             </div>
             <div class="footer-col">
                 <h4>Contactez-nous</h4>
@@ -294,20 +297,27 @@
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
+        // --- DONNÉES DE NAVIGATION CENTRALISÉES ---
+        const NAV_LINKS = [
+            { href: "index.html", text: "Accueil" },
+            { href: "apropos.html", text: "À Propos" },
+            { href: "ministeres.html", text: "Ministères" },
+            { href: "evenements.html", text: "Événements" },
+            { href: "carrieres.html", text: "Ateliers" }, // Conservé le href "carrieres"
+            { href: "ressources.html", text: "Ressources" },
+            { href: "live.html", text: "Live" },
+            { href: "Boutique.html", text: "Faire un Don" }, // Conservé le href "Boutique"
+            { href: "index.html#contact", text: "Contact" }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('article-container');
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
+
+            // --- CORRECTION 1: Chargement et génération des menus ---
+            generateNavLinks();
             
-            // Charger le menu mobile
-            fetch('index.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const mobileMenuContent = doc.querySelector('.nav-links-mobile-content').innerHTML;
-                    document.querySelector('#mobile-menu .nav-links-mobile-content').innerHTML = mobileMenuContent;
-                });
             // Afficher le skeleton loader
             container.innerHTML = `
                 <div class="skeleton-article">
@@ -328,6 +338,13 @@
                 return;
             }
 
+            // Assurez-vous que la fonction callApi est définie dans main.js ou config.js
+            if (typeof callApi === 'undefined') {
+                 console.error("La fonction callApi n'est pas définie. Assurez-vous que config.js et main.js sont chargés correctement.");
+                 container.innerHTML = '<p class="loading-message">Erreur interne : La connexion à l\'API n\'est pas configurée.</p>';
+                 return;
+            }
+
             callApi('getBlogPostById', { id: articleId })
                 .then(data => {
                     if (data.success && data.post) {
@@ -338,6 +355,9 @@
                             day: 'numeric', month: 'long', year: 'numeric'
                         });
 
+                        // --- CORRECTION 2: Remplacement des retours à la ligne par formatage HTML sémantique ---
+                        const formattedContent = formatContent(post.Contenu);
+
                         container.innerHTML = `
                             <article>
                                 <header class="article-header">
@@ -346,7 +366,7 @@
                                 </header>
                                 <img src="${post.ImageURL}" alt="Image pour ${post.Titre}" class="article-image">
                                 <div class="article-content">
-                                    ${post.Contenu.replace(/\n/g, '<br>')}
+                                    ${formattedContent}
                                 </div>
                                 <footer class="share-section">
                                     <h3>Partager cet article</h3>
@@ -356,7 +376,6 @@
                                     </div>
                                 </footer>
 
-                                <!-- Section des commentaires -->
                                 <section class="comments-section">
                                     <h2>Commentaires</h2>
                                     <div id="comments-list">
@@ -398,6 +417,81 @@
                 });
         });
 
+        // --- NOUVELLE FONCTION: Formatage sémantique du contenu brut ---
+        /**
+         * Convertit le contenu texte brut du Sheets en HTML sémantique.
+         * Assume que les sous-titres sont précédés de '###' et les citations de '>'.
+         * @param {string} content - Le contenu de l'article brut.
+         * @returns {string} Le contenu formaté en HTML.
+         */
+        function formatContent(content) {
+            const lines = content.trim().split('\n');
+            let html = '';
+            let inParagraph = false;
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (line.startsWith('###')) {
+                    // Sous-titre
+                    if (inParagraph) { html += '</p>'; inParagraph = false; }
+                    html += `<h3>${line.substring(3).trim()}</h3>`;
+                } else if (line.startsWith('>')) {
+                    // Blockquote
+                    if (inParagraph) { html += '</p>'; inParagraph = false; }
+                    // Simple gestion de citation (peut être améliorée pour le footer)
+                    const citation = line.substring(1).trim().split('--');
+                    const text = citation[0].trim();
+                    const source = citation[1] ? `<footer>${citation[1].trim()}</footer>` : '';
+                    html += `<blockquote>${text}${source}</blockquote>`;
+                } else if (line.length > 0) {
+                    // Paragraphe
+                    if (!inParagraph) { html += '<p>'; inParagraph = true; }
+                    html += line + ' ';
+                } else {
+                    // Ligne vide (ferme le paragraphe)
+                    if (inParagraph) { html += '</p>'; inParagraph = false; }
+                }
+            });
+
+            // Fermer le dernier paragraphe si nécessaire
+            if (inParagraph) { html += '</p>'; }
+
+            return html;
+        }
+
+        // --- NOUVELLE FONCTION: Génération centralisée des liens de navigation ---
+        function generateNavLinks() {
+            const desktopNav = document.getElementById('desktop-nav-links');
+            const mobileContent = document.querySelector('#mobile-menu .nav-links-mobile-content');
+            const footerNav = document.getElementById('footer-nav-links');
+
+            // Générer pour le desktop et le pied de page
+            NAV_LINKS.forEach(link => {
+                const desktopItem = document.createElement('li');
+                desktopItem.innerHTML = `<a href="${link.href}">${link.text}</a>`;
+                desktopNav.appendChild(desktopItem);
+                
+                const footerItem = document.createElement('li');
+                footerItem.innerHTML = `<a href="${link.href}">${link.text}</a>`;
+                footerNav.appendChild(footerItem);
+            });
+
+            // Générer pour le mobile
+            NAV_LINKS.forEach(link => {
+                const mobileLink = document.createElement('a');
+                mobileLink.href = link.href;
+                mobileLink.textContent = link.text;
+                mobileLink.onclick = toggleMobileMenu; // Fermer le menu après un clic
+                mobileContent.appendChild(mobileLink);
+            });
+        }
+
+        // Assurez-vous que cette fonction est dans main.js ou définie globalement
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('active');
+        }
+
         /**
          * Charge et affiche les commentaires pour un article spécifique.
          * @param {string} articleId - L'ID de l'article.
@@ -406,20 +500,25 @@
             const commentsList = document.getElementById('comments-list');
             commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>';
 
+            // CORRECTION: Assurer la cohérence des noms de champs
             callApi('getComments', { articleId: articleId })
                 .then(data => {
                     commentsList.innerHTML = ''; // Vider le message de chargement
+                    // CORRECTION: data.comments doit être un tableau d'objets comme dans Sheets (ex: {Auteur: '...', Commentaire: '...', Timestamp: '...'})
                     if (data.success && data.comments && data.comments.length > 0) {
-                        data.comments.forEach(comment => {
+                        data.comments.filter(c => c.Statut === 'Approuvé').forEach(comment => { // Ajout du filtre Statut
                             const commentElement = document.createElement('div');
                             commentElement.classList.add('comment-item');
                             commentElement.innerHTML = `
-                                <p class="comment-author">${comment.author}</p>
-                                <p>${comment.text}</p>
-                                <p class="comment-date">${new Date(comment.timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                                <p class="comment-author">${comment.Auteur || 'Anonyme'}</p>
+                                <p>${comment.Commentaire}</p>
+                                <p class="comment-date">${new Date(comment.Timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                             `;
                             commentsList.appendChild(commentElement);
                         });
+                        if (data.comments.filter(c => c.Statut === 'Approuvé').length === 0) {
+                            commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire approuvé pour le moment. Soyez le premier !</p>';
+                        }
                     } else {
                         commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire pour le moment. Soyez le premier !</p>';
                     }
@@ -440,10 +539,16 @@
             const button = document.querySelector('#comment-form button');
 
             const commentData = {
+                // CORRECTION: Les noms de champs correspondent aux colonnes attendues dans Apps Script
                 articleId: articleId,
-                author: authorInput.value,
-                commentText: textInput.value
+                author: authorInput.value.trim(),
+                commentText: textInput.value.trim()
             };
+
+            if (!commentData.author || !commentData.commentText) {
+                alert("Veuillez remplir votre nom et votre commentaire.");
+                return;
+            }
 
             button.disabled = true;
             button.textContent = 'Envoi...';
@@ -451,9 +556,10 @@
             callApi('postComment', { payload: commentData })
                 .then(response => {
                     if (response.success) {
+                        alert("Commentaire envoyé avec succès. Il apparaîtra après approbation.");
                         authorInput.value = '';
                         textInput.value = '';
-                        loadComments(articleId); // Recharger les commentaires
+                        // Ne pas recharger les commentaires, car le nouveau commentaire n'est pas encore "Approuvé"
                     } else {
                         alert('Erreur lors de la soumission du commentaire : ' + response.error);
                     }
