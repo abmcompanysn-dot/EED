@@ -13,6 +13,12 @@
  * @returns {Promise<object>} - La réponse JSON du serveur.
  */
 function callApi(action, data) {
+    // Vérification : s'assurer que l'URL de l'API est définie.
+    if (typeof API_URL === 'undefined' || !API_URL) {
+        console.error("Erreur critique : La variable API_URL n'est pas définie. Assurez-vous que config.js est chargé avant main.js.");
+        return Promise.resolve({ success: false, error: "Configuration de l'API manquante." });
+    }
+
     const payload = { action, ...data };
     const postOptions = {
         method: 'POST',

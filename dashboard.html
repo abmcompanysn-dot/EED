@@ -2,51 +2,216 @@
 <html>
   <head>
     <base target="_top">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Tableau de Bord - Admin Église</title>
     <style>
-      body {
-        padding: 20px;
-        background-color: #f8f9fa;
-      }
-      .container {
-        max-width: 960px;
-      }
-      .card {
-        margin-bottom: 20px;
-      }
-      h1 {
-        color: #343a40;
-        margin-bottom: 30px;
-      }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f9; color: #333; margin: 0; padding: 20px; }
+      h1 { color: #2c3e50; text-align: center; }
+      #dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+      .card { background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; }
+      .card h2 { margin-top: 0; color: #3498db; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
+      .stat-item { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; padding: 8px 0; border-bottom: 1px solid #eee; }
+      .stat-item:last-child { border-bottom: none; }
+      .stat-item span:first-child { font-weight: bold; color: #555; }
+      .stat-item span:last-child { font-weight: bold; font-size: 1.2em; }
+      .stat-success { color: #2ecc71; }
+      .stat-error { color: #e74c3c; }
+      .chart-container { width: 100%; height: 350px; }
+      .loader { text-align: center; padding: 50px; font-size: 1.5em; color: #7f8c8d; }
     </style>
+    <!--Chargement de l'API Google Charts-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
-    <div class="container">
-      <h1>Tableau de Bord - Église Évangélique de Dakar</h1>
+
+    <h1>Tableau de Bord de Performance</h1>
+
+    <div id="loader" class="loader">
+      Chargement des données...
+    </div>
+
+    <div id="dashboard-container" style="display: none;">
       
+      <!-- Carte des Statistiques d'Appels API -->
       <div class="card">
-        <div class="card-header">
-          Statistiques Rapides
+        <h2>Statistiques de l'API</h2>
+        <div class="stat-item">
+          <span>Appels Totaux</span>
+          <span id="total-calls">0</span>
         </div>
-        <div class="card-body">
-          <p>Les statistiques du site apparaîtront ici.</p>
-          <ul>
-            <li>Nombre d'articles de blog : <strong>Chargement...</strong></li>
-            <li>Nombre d'événements à venir : <strong>Chargement...</strong></li>
-            <li>Nombre de demandes de prière : <strong>Chargement...</strong></li>
-          </ul>
+        <div class="stat-item">
+          <span>Appels Réussis</span>
+          <span id="success-calls" class="stat-success">0</span>
+        </div>
+        <div class="stat-item">
+          <span>Appels en Erreur</span>
+          <span id="error-calls" class="stat-error">0</span>
         </div>
       </div>
 
+      <!-- Carte du Résumé du Contenu -->
       <div class="card">
-        <div class="card-header">
-          Gestion du Contenu
+        <h2>Résumé du Contenu</h2>
+        <div class="stat-item">
+          <span>Articles de Blog</span>
+          <span id="total-posts">0</span>
         </div>
-        <div class="card-body">
-          <p>Les outils pour modifier les articles, événements et autres contenus seront ajoutés ici.</p>
+        <div class="stat-item">
+          <span>Événements</span>
+          <span id="total-events">0</span>
         </div>
+        <div class="stat-item">
+          <span>Besoins</span>
+          <span id="total-needs">0</span>
+        </div>
+        <div class="stat-item">
+          <span>Ressources</span>
+          <span id="total-resources">0</span>
+        </div>
+      </div>
+
+      <!-- Graphique des appels API (Succès vs Erreur) -->
+      <div class="card">
+        <h2>Répartition des Appels API</h2>
+        <div id="api-status-chart" class="chart-container"></div>
+      </div>
+
+      <!-- Graphique des appels par action -->
+      <div class="card">
+        <h2>Appels par Action</h2>
+        <div id="actions-chart" class="chart-container"></div>
       </div>
 
     </div>
+
+    <script>
+      // Charge l'API de visualisation et le package 'corechart'
+      google.charts.load('current', {'packages':['corechart', 'bar']});
+      // Définit une fonction de rappel à exécuter lorsque l'API est chargée
+      google.charts.setOnLoadCallback(fetchAndDrawDashboard);
+
+      function fetchAndDrawDashboard() {
+        // Affiche le loader et cache le contenu
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('dashboard-container').style.display = 'none';
+
+        google.script.run
+          .withSuccessHandler(response => {
+            if (response.success) {
+              const data = response.data;
+              
+              // Mettre à jour les cartes de statistiques
+              document.getElementById('total-calls').textContent = data.stats.totalCalls;
+              document.getElementById('success-calls').textContent = data.stats.successCalls;
+              document.getElementById('error-calls').textContent = data.stats.errorCalls;
+
+              // Mettre à jour le résumé du contenu
+              document.getElementById('total-posts').textContent = data.content.totalPosts;
+              document.getElementById('total-events').textContent = data.content.totalEvents;
+              document.getElementById('total-needs').textContent = data.content.totalNeeds;
+              document.getElementById('total-resources').textContent = data.content.totalResources;
+
+              // Dessiner les graphiques
+              drawApiStatusChart(data.stats.successCalls, data.stats.errorCalls);
+              drawActionsChart(data.stats.callsByAction);
+
+              // Cacher le loader et afficher le tableau de bord
+              document.getElementById('loader').style.display = 'none';
+              document.getElementById('dashboard-container').style.display = 'grid';
+
+            } else {
+              document.getElementById('loader').textContent = 'Erreur: ' + response.error;
+            }
+          })
+          .withFailureHandler(error => {
+            document.getElementById('loader').textContent = 'Erreur de communication avec le serveur: ' + error.message;
+          })
+          .getDashboardData(); // Appel de la fonction côté serveur
+      }
+
+      /**
+       * Dessine le graphique circulaire (camembert) pour le statut des appels API.
+       */
+      function drawApiStatusChart(success, errors) {
+        const data = google.visualization.arrayToDataTable([
+          ['Statut', 'Nombre'],
+          ['Réussis', success],
+          ['Erreurs', errors]
+        ]);
+
+        const options = {
+          title: 'Statut des Appels API',
+          pieHole: 0.4,
+          colors: ['#2ecc71', '#e74c3c'],
+          legend: { position: 'bottom' }
+        };
+
+        const chart = new google.visualization.PieChart(document.getElementById('api-status-chart'));
+        chart.draw(data, options);
+      }
+
+      /**
+       * Dessine le graphique en barres pour le nombre d'appels par action.
+       */
+      function drawActionsChart(callsByAction) {
+        let chartData = [['Action', 'Nombre d\'appels']];
+        for (const action in callsByAction) {
+          chartData.push([action, callsByAction[action]]);
+        }
+
+        const data = google.visualization.arrayToDataTable(chartData);
+
+        const options = {
+          title: 'Nombre d\'appels par type d\'action',
+          chartArea: {width: '60%'},
+          hAxis: {
+            title: 'Nombre d\'appels',
+            minValue: 0
+          },
+          vAxis: {
+            title: 'Action'
+          },
+          legend: { position: 'none' }
+        };
+
+        const chart = new google.visualization.BarChart(document.getElementById('actions-chart'));
+        chart.draw(data, options);
+      }
+
+      // Redessiner les graphiques si la fenêtre est redimensionnée
+      window.onresize = function() {
+        fetchAndDrawDashboard();
+      };
+
+    </script>
+  </body>
+</html> for (const action in callsByAction) {
+          chartData.push([action, callsByAction[action]]);
+        }
+
+        const data = google.visualization.arrayToDataTable(chartData);
+
+        const options = {
+          title: 'Nombre d\'appels par type d\'action',
+          chartArea: {width: '60%'},
+          hAxis: {
+            title: 'Nombre d\'appels',
+            minValue: 0
+          },
+          vAxis: {
+            title: 'Action'
+          },
+          legend: { position: 'none' }
+        };
+
+        const chart = new google.visualization.BarChart(document.getElementById('actions-chart'));
+        chart.draw(data, options);
+      }
+
+      // Redessiner les graphiques si la fenêtre est redimensionnée
+      window.onresize = function() {
+        fetchAndDrawDashboard();
+      };
+
+    </script>
   </body>
 </html>

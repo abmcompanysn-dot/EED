@@ -35,13 +35,27 @@ const CONFIG = {
  * @param {Object} e - L'objet événement de la requête.
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
-function doGet(e) {
-  // Renvoie une réponse simple pour les tests de connectivité.
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: "success", message: "API en ligne." }))
-    .setMimeType(ContentService.MimeType.JSON);
+function doGet(e) { 
+  // Si le paramètre 'page' est 'dashboard', on sert la page du tableau de bord.
+  if (e && e.parameter && e.parameter.page === 'dashboard') {
+    return HtmlService.createTemplateFromFile('Dashboard').evaluate()
+      .setTitle('Tableau de Bord - Admin Église')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
+  }
+  
+  // Comportement par défaut : test de connectivité de l'API
+  return apiConnectivityCheck(e);
 }
 
+/**
+ * Gère les requêtes GET pour un simple test de connectivité de l'API.
+ * @param {Object} e - L'objet événement de la requête.
+ * @returns {ContentService.TextOutput} Une réponse JSON.
+ */
+function apiConnectivityCheck(e) {
+  return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "API en ligne." }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 /**
  * Gère les requêtes HTTP POST. C'est le point d'entrée principal pour toutes les actions.
  * Il agit comme un routeur qui appelle la bonne fonction en fonction du paramètre 'action'.
@@ -82,6 +96,9 @@ function doPost(e) {
       case 'participateToNeed': result = participateToNeed(payload, ss); break;
       case 'handlePrayerRequest': result = handlePrayerRequest(payload); break;
       case 'handleContactForm': result = handleContactForm(payload); break;
+
+      // Action pour le tableau de bord
+      case 'getDashboardData': result = getDashboardData(); break;
 
       // Cas par défaut si l'action n'est pas reconnue.
       default:
@@ -479,6 +496,64 @@ function getEvents() {
   }
 }
 
+/**
+ * =================================================================================
+ * FONCTIONS POUR LE TABLEAU DE BORD
+ * =================================================================================
+ */
+
+/**
+ * Collecte et agrège les données de plusieurs feuilles pour le tableau de bord.
+ * @returns {Object} Un objet contenant toutes les statistiques pour le dashboard.
+ */
+function getDashboardData() {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    
+    // 1. Statistiques des logs
+    const logSheet = ss.getSheetByName(CONFIG.SHEETS.LOGS);
+    const logs = sheetToObjects(logSheet);
+    const totalCalls = logs.length;
+    const errorCalls = logs.filter(log => log.Statut === 'ERROR').length;
+    const successCalls = totalCalls - errorCalls;
+
+    const callsByAction = logs.reduce((acc, log) => {
+      acc[log.Action] = (acc[log.Action] || 0) + 1;
+      return acc;
+    }, {});
+
+    // 2. Résumé du contenu
+    const blogSheet = ss.getSheetByName(CONFIG.SHEETS.BLOG);
+    const eventsSheet = ss.getSheetByName(CONFIG.SHEETS.EVENTS);
+    const needsSheet = ss.getSheetByName(CONFIG.SHEETS.NEEDS);
+    const resourcesSheet = ss.getSheetByName(CONFIG.SHEETS.RESOURCES);
+
+    const totalPosts = blogSheet.getLastRow() - 1;
+    const totalEvents = eventsSheet.getLastRow() - 1;
+    const totalNeeds = needsSheet.getLastRow() - 1;
+    const totalResources = resourcesSheet.getLastRow() - 1;
+
+    const data = {
+      stats: {
+        totalCalls,
+        successCalls,
+        errorCalls,
+        callsByAction
+      },
+      content: {
+        totalPosts,
+        totalEvents,
+        totalNeeds,
+        totalResources
+      }
+    };
+
+    return { success: true, data: data };
+  } catch (e) {
+    logAction('Back-End', 'getDashboardData', 'ERROR', e.message, 'Admin', "Vérifiez l'existence des feuilles de logs et de contenu.");
+    return { success: false, error: "Impossible de récupérer les données du tableau de bord." };
+  }
+}
 /**
  * Récupère les 3 prochains événements à venir depuis la feuille 'Evenements'.
  * @returns {Object} Un objet contenant les 3 prochains événements ou une erreur.
