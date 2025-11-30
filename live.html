@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="footer.css">
+    <!-- Ajout des dépendances pour le Zoom Web SDK -->
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.18.2/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/2.18.2/css/react-select.css" />
     <style>
         :root {
             --neon-blue: #00BFFF;
@@ -38,6 +41,29 @@
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .card h3 { color: var(--neon-blue); margin-top: 0; font-family: 'Orbitron', sans-serif; }
 
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--neon-blue);
+            color: var(--night-blue);
+            border: 1px solid var(--neon-blue);
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+
         /* Styles spécifiques à la page live */
         .live-player-wrapper {
             position: relative;
@@ -58,12 +84,37 @@
         }
         .live-status {
             display: inline-block;
-            background-color: var(--red);
+            background-color: var(--fire-red);
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
             font-weight: bold;
             margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+        .zoom-join-card {
+            background-color: var(--dark-card);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: 20px;
+        }
+        .zoom-join-card h3 {
+            color: var(--luminous-white);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        #zoom-meeting-container h3 { /* Style pour le titre de secours */
+            color: var(--luminous-white);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .zoom-join-card p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
         }
         .video-archive-card img {
             width: 100%;
@@ -71,6 +122,81 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 15px;
+        }
+        .video-info {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+        .video-info p {
+            margin: 5px 0;
+        }
+        .video-info i {
+            margin-right: 8px;
+        }
+
+        /* --- Styles pour le compte à rebours --- */
+        #countdown-container {
+            background-color: var(--dark-card);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: 20px;
+        }
+        #countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .countdown-block {
+            background: var(--night-blue);
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 90px;
+        }
+        .countdown-block span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: var(--neon-blue);
+            line-height: 1;
+        }
+        .countdown-block p {
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        /* --- Styles pour l'intégration Zoom --- */
+        /* Cible le conteneur racine injecté par Zoom */
+        #zmmtg-root {
+            background-color: transparent !important;
+        }
+        /* Style la boîte de dialogue pour rejoindre la réunion */
+        .join-dialog {
+            background-color: var(--dark-card) !important;
+        }
+        /* Style les textes, labels et titres */
+        .join-dialog h2, .join-dialog label, .join-dialog p {
+            color: var(--luminous-white) !important;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        /* Style les champs de saisie */
+        .zm-input__inner {
+            background-color: var(--night-blue) !important;
+            color: var(--luminous-white) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        /* Style le bouton principal */
+        .zm-btn--primary {
+            background-color: var(--neon-blue) !important;
+            color: var(--night-blue) !important;
+            font-family: 'Orbitron', sans-serif !important;
+            border: none !important;
+        }
+        .zm-btn--primary:hover {
+            opacity: 0.9;
         }
 
         @media (max-width: 992px) {
@@ -120,33 +246,55 @@
             <h1 class="section-title">Culte en Direct</h1>
             <p class="section-subtitle">Rejoignez-nous en direct chaque dimanche à 10h00. Si vous manquez le direct, retrouvez nos cultes en rediffusion ci-dessous.</p>
 
-            <div class="live-status">EN DIRECT</div>
-            <div class="live-player-wrapper">
-                <!-- Remplacez "VIDEO_ID" par l'ID de votre vidéo YouTube Live -->
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!-- Conteneur pour le compte à rebours (initialement visible) -->
+            <div id="countdown-container">
+                <h3>Le prochain culte commence dans :</h3>
+                <div id="countdown-timer">
+                    <div class="countdown-block"><span id="days">00</span><p>Jours</p></div>
+                    <div class="countdown-block"><span id="hours">00</span><p>Heures</p></div>
+                    <div class="countdown-block"><span id="minutes">00</span><p>Minutes</p></div>
+                    <div class="countdown-block"><span id="seconds">00</span><p>Secondes</p></div>
+                </div>
+            </div>
+
+            <!-- Ce conteneur accueillera le client Zoom -->
+            <!-- Le style 'display: none' le cache au chargement de la page -->
+            <div id="zoom-meeting-container" class="zoom-join-card" style="display: none;">
+                <!-- Message affiché pendant le chargement ou en cas d'erreur -->
+                <div class="live-status">EN DIRECT</div>
+                <h3>Le culte est sur le point de commencer...</h3>
+                <p>Le lecteur vidéo du direct est en cours de chargement. Si rien ne s'affiche, le direct n'a peut-être pas encore commencé.</p>
             </div>
         </section>
 
-        <section class="container" style="background:none;">
-            <h2 class="section-title">Archives Vidéos</h2>
-            <p class="section-subtitle">Revivez les moments forts de nos précédents cultes et événements.</p>
+        <section class="container">
+            <h2 class="section-title" style="font-size: 2.5em;">Cultes Récents en Replay</h2>
+            <p class="section-subtitle">Revivez les moments forts de nos précédents cultes. Chaque message est une source d'inspiration et d'encouragement.</p>
 
             <div class="grid-3">
+                <!-- Exemple de carte vidéo 1 -->
                 <div class="card video-archive-card">
-                    <a href="#"><img src="r/sermon1.jpg" alt="Culte du 12 Décembre"></a>
-                    <h3>Culte du 12 Décembre 2023</h3>
-                    <p>Thème : Le Pouvoir de la Grâce</p>
+                    <a href="https://www.youtube.com/watch?v=VIDEO_ID_1" target="_blank" rel="noopener noreferrer">
+                        <img src="https://img.youtube.com/vi/VIDEO_ID_1/hqdefault.jpg" alt="Miniature du culte du 12 Mai 2024">
+                    </a>
+                    <h3>Titre du Culte 1</h3>
+                    <div class="video-info">
+                        <p><i class="fas fa-calendar-alt"></i> 12 Mai 2024</p>
+                        <p><i class="fas fa-user"></i> Pasteur Jean Dupont</p>
+                    </div>
                 </div>
+                <!-- Exemple de carte vidéo 2 -->
                 <div class="card video-archive-card">
-                    <a href="#"><img src="r/sermon2.jpg" alt="Culte du 05 Décembre"></a>
-                    <h3>Culte du 05 Décembre 2023</h3>
-                    <p>Thème : Prier avec Efficacité</p>
+                    <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" rel="noopener noreferrer">
+                        <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="Miniature du culte du 5 Mai 2024">
+                    </a>
+                    <h3>Titre du Culte 2</h3>
+                    <div class="video-info">
+                        <p><i class="fas fa-calendar-alt"></i> 5 Mai 2024</p>
+                        <p><i class="fas fa-user"></i> Prédicateur invité</p>
+                    </div>
                 </div>
-                <div class="card video-archive-card">
-                    <a href="#"><img src="r/sermon3.jpg" alt="Culte du 28 Novembre"></a>
-                    <h3>Culte du 28 Novembre 2023</h3>
-                    <p>Thème : La Mission du Croyant</p>
-                </div>
+                <!-- Ajoutez d'autres cartes ici -->
             </div>
         </section>
     </main>
@@ -193,5 +341,121 @@
        </footer>
     <script src="config.js"></script>
     <script src="main.js"></script>
+
+    <!-- Scripts pour le Zoom Web SDK -->
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/2.18.2/lib/vendor/lodash.min.js"></script>
+    <script src="https://source.zoom.us/zoom-meeting-2.18.2.min.js"></script>
+
+    <script>
+        // Assurez-vous que le SDK est prêt
+        ZoomMtg.preLoadWasm();
+        ZoomMtg.prepareWebSDK();
+
+        // Configuration de l'intégration du SDK Zoom
+        const zoomMeetingSDK = document.getElementById('zoom-meeting-container');
+
+        // Remplacez ces valeurs par les informations de votre meeting
+        const meetingConfig = {
+            meetingNumber: '1234567890', // Numéro de votre réunion Zoom
+            userName: 'Visiteur',       // Nom par défaut pour l'invité
+            passWord: '',               // Mot de passe de la réunion, si nécessaire
+            userEmail: '',              // L'email n'est pas requis pour rejoindre en tant qu'invité
+            // IMPORTANT: La clé API est publique et peut être mise ici.
+            apiKey: 'VOTRE_SDK_KEY', // Remplacez par votre SDK Key de Zoom
+            // IMPORTANT: La signature DOIT être générée sur votre serveur.
+            // Ne mettez JAMAIS votre SDK Secret ici.
+            signature: '' // Cette signature sera récupérée depuis votre serveur
+        };
+
+        /**
+         * Gère le compte à rebours et l'affichage conditionnel.
+         */
+        function setupCountdownAndLive() {
+            const countdownContainer = document.getElementById('countdown-container');
+            const zoomContainer = document.getElementById('zoom-meeting-container');
+            
+            const interval = setInterval(() => {
+                const now = new Date();
+                // Calcule la date du prochain dimanche à 10h00 GMT
+                const nextSunday = new Date();
+                nextSunday.setUTCDate(now.getUTCDate() - now.getUTCDay() + 7); // Prochain dimanche
+                nextSunday.setUTCHours(10, 0, 0, 0); // 10:00:00 GMT
+
+                // Si on est dimanche après 12h, on vise le dimanche suivant
+                if (now.getUTCDay() === 0 && now.getUTCHours() >= 12) {
+                    nextSunday.setUTCDate(now.getUTCDate() + 7);
+                }
+
+                const distance = nextSunday - now;
+
+                // Si on est dans la fenêtre du culte (dimanche entre 10h et 12h GMT)
+                if (now.getUTCDay() === 0 && now.getUTCHours() >= 10 && now.getUTCHours() < 12) {
+                    clearInterval(interval);
+                    countdownContainer.style.display = 'none';
+                    zoomContainer.style.display = 'block';
+                    getSignature(); // On lance la connexion à Zoom
+                } else {
+                    // Mise à jour du compte à rebours
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').innerText = String(days).padStart(2, '0');
+                    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+                }
+            }, 1000);
+        }
+
+        // Lance la logique du compte à rebours au chargement de la page
+        document.addEventListener('DOMContentLoaded', setupCountdownAndLive);
+
+
+        /**
+         * Récupère la signature depuis Google Apps Script et lance le meeting.
+         */
+        function getSignature() {
+            // On utilise la fonction callApi de main.js
+            callApi('getZoomSignature', { 
+                meetingNumber: meetingConfig.meetingNumber,
+                userName: meetingConfig.userName
+            }).then(response => {
+                if (response.success && response.signature) {
+                    // Une fois la signature reçue, on lance le meeting
+                    startMeeting(response.signature);
+                } else {
+                    console.error('Erreur lors de la récupération de la signature:', response.error);
+                    zoomMeetingSDK.innerHTML = '<h3>Erreur de connexion au direct</h3><p>Impossible de vérifier l\'autorisation pour rejoindre le culte. (' + (response.error || 'Erreur inconnue') + ')</p>';
+                }
+            })
+        }
+
+        function startMeeting(signature) {
+            zoomMeetingSDK.innerHTML = ''; // Nettoie le conteneur
+            ZoomMtg.init({
+                leaveUrl: window.location.href, // Page de redirection après avoir quitté
+                isSupportAV: true,
+                success: (success) => {
+                    console.log('SDK initialisé avec succès', success);
+                    ZoomMtg.join({ ...meetingConfig, signature: signature });
+                },
+                error: (error) => { console.error('Erreur d\'initialisation du SDK', error); }
+            });
+        }
+
+        // Pour tester SANS serveur (NON RECOMMANDÉ POUR LA PRODUCTION)
+        // 1. Allez sur votre App Marketplace Zoom > JWT App > App Credentials.
+        // 2. Générez un token avec une expiration (ex: 1 jour).
+        // 3. Collez ce token dans `meetingConfig.signature`.
+        // 4. Commentez l'appel à getSignature() et décommentez la ligne ci-dessous.
+        // startMeeting(meetingConfig.signature);
+
+    </script>
 </body>
 </html>
