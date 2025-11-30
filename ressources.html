@@ -155,29 +155,7 @@
             </div>
 
             <div class="grid-3" id="resources-grid">
-                <!-- Les cartes de ressources seront générées ici, voici des exemples -->
-                <div class="card resource-card" data-category="sermon">
-                    <img src="r/sermon1.jpg" alt="Sermon sur la Grâce">
-                    <h3>Le Pouvoir de la Grâce</h3>
-                    <p class="meta">Sermon • Pasteur Jean • 12/12/2023</p>
-                    <p>Découvrez comment la grâce de Dieu peut transformer radicalement votre vie.</p>
-                    <a href="#" class="btn">Voir la vidéo</a>
-                </div>
-                <div class="card resource-card" data-category="etude">
-                    <img src="r/etude1.jpg" alt="Etude sur l'Apocalypse">
-                    <h3>Introduction à l'Apocalypse</h3>
-                    <p class="meta">Étude Biblique • Dr. Aïcha • 05/12/2023</p>
-                    <p>Une étude approfondie pour déchiffrer les symboles du dernier livre de la Bible.</p>
-                    <a href="#" class="btn">Télécharger le PDF</a>
-                </div>
-                <div class="card resource-card" data-category="sermon">
-                    <img src="r/sermon2.jpg" alt="Sermon sur la Prière">
-                    <h3>Prier avec Efficacité</h3>
-                    <p class="meta">Sermon • Pasteur Moussa • 03/12/2023</p>
-                    <p>Apprenez les clés d'une vie de prière puissante et exaucée.</p>
-                    <a href="#" class="btn">Écouter l'audio</a>
-                </div>
-                 <!-- D'autres cartes peuvent être ajoutées ici -->
+                <!-- Le contenu sera chargé ici par JavaScript -->
             </div>
         </section>
     </main>
@@ -223,50 +201,8 @@
          </div>
        </footer>
     <script src="config.js"></script>
-    <link rel="stylesheet" href="footer.css">
-
+    <script src="main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('resources-grid');
-            grid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Chargement des ressources...</p>';
-
-            // Appel API pour récupérer les articles de blog (qui servent de ressources ici)
-            callApi('getBlogPosts', {})
-                .then(data => {
-                    if (data.success && data.posts.length > 0) {
-                        grid.innerHTML = ''; // Vide le message de chargement
-
-                        data.posts.forEach(post => {
-                            const card = document.createElement('div');
-                            card.className = 'card resource-card';
-                            card.setAttribute('data-category', post.Categorie.toLowerCase());
-
-                            const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
-                                day: 'numeric', month: 'long', year: 'numeric'
-                            });
-
-                            card.innerHTML = `
-                                <a href="article.html?id=${post.ID}">
-                                    <img src="${post.ImageURL}" alt="Image pour ${post.Titre}">
-                                </a>
-                                <h3><a href="article.html?id=${post.ID}" style="color: inherit; text-decoration: none;">${post.Titre}</a></h3>
-                                <p class="meta">${post.Categorie} • ${post.Auteur} • ${postDate}</p>
-                                <p>${post.Contenu.substring(0, 100)}...</p>
-                                <a href="article.html?id=${post.ID}" class="btn">Lire la suite</a>
-                            `;
-                            grid.appendChild(card);
-                        });
-                    } else {
-                        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucune ressource à afficher pour le moment.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur lors du chargement des ressources:', error);
-                    grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les ressources.</p>';
-                });
-        });
-
-
         function filterResources() {
             // Logique de filtrage simple pour la démonstration
             const searchValue = document.querySelector('.search-bar input').value.toLowerCase();
