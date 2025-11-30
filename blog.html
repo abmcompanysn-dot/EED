@@ -292,6 +292,9 @@
         let allPosts = []; // Pour stocker tous les articles
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Peuple le menu mobile
+            populateMobileMenu();
+
             const grid = document.getElementById('blog-grid');
             const categoryList = document.getElementById('category-list');
             

@@ -500,15 +500,6 @@
 
     <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
     <div class="nav-links-mobile" id="mobile-menu">
-        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
-        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
-        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
-        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
-        <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
-        <a href="live.html" onclick="toggleMobileMenu()">Live</a>
-        <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
-        <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
     <main>
@@ -1231,16 +1222,8 @@
 
 
     <script>
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const burgerIcon = document.querySelector('.menu-burger');
-            const body = document.body;
-
-            mobileMenu.classList.toggle('active');
-            burgerIcon.classList.toggle('active');
-            body.classList.toggle('no-scroll');
-        }
-
+        // La fonction toggleMobileMenu est maintenant dans main.js
+        document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
     </script>
 </body>
 </html>  

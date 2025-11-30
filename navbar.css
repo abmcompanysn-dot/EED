@@ -149,3 +149,16 @@ body.no-scroll { overflow: hidden; }
     background: var(--luminous-white); border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+
+/* Styles pour le QR Code dans la nav (si nécessaire) */
+#nav-qrcode-container {
+    position: relative;
+}
+#nav-qrcode-popup {
+    display: none;
+    position: absolute;
+    right: 0; top: 120%;
+    width: 150px; padding: 10px;
+    background: var(--luminous-white); border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
