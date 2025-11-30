@@ -12,7 +12,9 @@ const CONFIG = {
     PRAYER: 'Demandes_Priere',
     CONTACT: 'Contact_Submissions',
     NEEDS: 'Besoins',
-    PARTICIPATIONS: 'Participations'
+    PARTICIPATIONS: 'Participations',
+    RESOURCES: 'Ressources',
+    DASHBOARD_LOGS: 'Dashboard_Logs'
   },
   ALLOWED_ORIGINS: [
     'https://eed.abmcy.com',
@@ -34,12 +36,6 @@ const CONFIG = {
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
-  // Si le paramètre 'page' est 'dashboard', on affiche le tableau de bord.
-  if (e && e.parameter && e.parameter.page === 'dashboard') {
-    return HtmlService.createHtmlOutputFromFile('dashboard')
-      .setTitle('Tableau de Bord EED')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
-  }
   // Renvoie une réponse simple pour les tests de connectivité.
   return ContentService
     .createTextOutput(JSON.stringify({ status: "success", message: "API en ligne." }))
@@ -183,7 +179,6 @@ function onOpen() {
       .addItem('1. Vérifier/Réparer la Structure', 'verifyAndFixSheetStructure') // Pour réparer les feuilles existantes
       .addItem('2. Initialiser les feuilles (si vides)', 'setupSpreadsheet') // Pour une première installation
       .addItem('3. Remplir avec données de test', 'initializeWithSeedData') // Pour le développement
-      .addItem('Ouvrir le Tableau de Bord', 'openDashboard') // Nouveau menu pour le dashboard
       .addToUi();
 }
 
@@ -254,7 +249,7 @@ function initializeWithSeedData() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const ui = SpreadsheetApp.getUi();
 
-  const response = ui.alert('Confirmation', 'Cette action va effacer les données actuelles des feuilles Blog, Evenements et Besoins, et les remplacer par des données de test. Voulez-vous continuer ?', ui.ButtonSet.YES_NO);
+  const response = ui.alert('Confirmation', 'Cette action va effacer les données actuelles des feuilles (Blog, Commentaires, Evénements, Prières, Contacts, Besoins, Participations, Ressources) et les remplacer par des données de test. Voulez-vous continuer ?', ui.ButtonSet.YES_NO);
 
   if (response == ui.Button.YES) {
     try {
@@ -262,12 +257,12 @@ function initializeWithSeedData() {
       const sheetMapping = {
         blog: CONFIG.SHEETS.BLOG,
         blog_comments: CONFIG.SHEETS.COMMENTS,
-      events: CONFIG.SHEETS.EVENTS, 
-      resources: CONFIG.SHEETS.RESOURCES,
+        events: CONFIG.SHEETS.EVENTS, 
         prayer_requests: CONFIG.SHEETS.PRAYER,
         contact_submissions: CONFIG.SHEETS.CONTACT,
         needs: CONFIG.SHEETS.NEEDS,
-        participations: CONFIG.SHEETS.PARTICIPATIONS
+        participations: CONFIG.SHEETS.PARTICIPATIONS,
+        resources: CONFIG.SHEETS.RESOURCES
       };
 
       // Boucle sur chaque jeu de données pour remplir la feuille correspondante
@@ -310,7 +305,8 @@ function setupSpreadsheet() {
     { name: CONFIG.SHEETS.CONTACT, headers: ['Timestamp', 'Nom', 'Email', 'Sujet', 'Message'] },
     { name: CONFIG.SHEETS.NEEDS, headers: ['ID', 'Titre', 'DescriptionCourte', 'Raison', 'Moyens', 'ImageURL', 'MontantObjectif', 'MontantActuel', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.PARTICIPATIONS, headers: ['ID_Besoin', 'Nom', 'Email', 'Montant', 'Date'] },
-    { name: CONFIG.SHEETS.RESOURCES, headers: ['ID', 'Titre', 'Auteur', 'Preface', 'ImageURL', 'Categorie', 'FichierURL', 'Statut'] }
+    { name: CONFIG.SHEETS.RESOURCES, headers: ['ID', 'Titre', 'Auteur', 'Preface', 'ImageURL', 'Categorie', 'FichierURL', 'Statut'] }, // Correction: Ajout de la feuille Ressources
+    { name: CONFIG.SHEETS.DASHBOARD_LOGS, headers: ['Timestamp', 'Utilisateur', 'Action', 'Détails'] } // Ajout pour le futur tableau de bord
   ];
 
   sheetsToCreate.forEach(sheetInfo => {
@@ -706,14 +702,4 @@ function handleContactForm(payload) {
     logAction('Front-End', 'handleContactForm', 'ERROR', e.message, userEmail, "Vérifiez les données du formulaire et l'existence de la feuille 'Contact_Submissions'.");
     return { success: false, error: "Impossible d'envoyer le message." };
   }
-}
-
-/**
- * Ouvre le tableau de bord dans une nouvelle fenêtre du navigateur.
- * Cette fonction est appelée depuis le menu personnalisé de Google Sheets.
- */
-function openDashboard() {
-  const url = ScriptApp.getService().getUrl() + '?page=dashboard';
-  const html = `<html><body><script>window.open("${url}", "_blank");</script></body></html>`;
-  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html), 'Ouverture du Tableau de Bord');
 }
