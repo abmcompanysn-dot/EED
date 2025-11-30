@@ -64,7 +64,7 @@
         /* Styles spécifiques à la page live */
         .live-player-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Ratio 16:9 */
+            padding-bottom: 45%; /* Ratio plus large sur ordinateur */
             height: 0;
             overflow: hidden;
             max-width: 100%;
@@ -129,6 +129,9 @@
             nav ul.desktop-links { display: none; }
             .nav-actions a.primary { display: none; }
             .menu-burger { display: block; }
+        }
+        @media (max-width: 768px) {
+            .live-player-wrapper { padding-bottom: 75%; } /* Ratio 4:3, plus haut sur mobile */
         }
     </style>
 </head>

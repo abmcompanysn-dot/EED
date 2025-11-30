@@ -14,9 +14,7 @@ const CONFIG = {
     NEEDS: 'Besoins',
     PARTICIPATIONS: 'Participations',
     RESOURCES: 'Ressources',
-    DASHBOARD_LOGS: 'Dashboard_Logs',
-    ZOOM_CONFIG: 'ZoomConfig', // Ajout pour la configuration Zoom
-    ZOOM_ATTENDEES: 'ZoomAttendees' // Ajout pour le suivi des participants Zoom
+    DASHBOARD_LOGS: 'Dashboard_Logs'
   },
   ALLOWED_ORIGINS: [
     'https://eed.abmcy.com',
@@ -102,10 +100,6 @@ function doPost(e) {
       // Action pour le tableau de bord
       case 'getDashboardData': result = getDashboardData(); break;
 
-      // NOUVELLE ACTION POUR ZOOM
-      case 'getZoomSignature':
-        result = generateZoomSignature(payload);
-        break;
       // Cas par défaut si l'action n'est pas reconnue.
       default:
         result = { success: false, error: 'Action POST non reconnue.' };
@@ -330,10 +324,7 @@ function setupSpreadsheet() {
     { name: CONFIG.SHEETS.PARTICIPATIONS, headers: ['ID_Besoin', 'Nom', 'Email', 'Montant', 'Date'] },
     { name: CONFIG.SHEETS.RESOURCES, headers: ['ID', 'Titre', 'Auteur', 'Preface', 'ImageURL', 'Categorie', 'FichierURL', 'Statut'] }, // Correction: Ajout de la feuille Ressources
     { name: CONFIG.SHEETS.DASHBOARD_LOGS, headers: ['Timestamp', 'Utilisateur', 'Action', 'Détails'] } // Ajout pour le futur tableau de bord
-  ,
-    // Ajout des feuilles pour l'intégration Zoom
-    { name: CONFIG.SHEETS.ZOOM_CONFIG, headers: ['SDK_KEY', 'SDK_SECRET'] },
-    { name: CONFIG.SHEETS.ZOOM_ATTENDEES, headers: ['Timestamp', 'MeetingNumber', 'UserName', 'Status'] }  ];
+  ];
 
   sheetsToCreate.forEach(sheetInfo => {
     let sheet = ss.getSheetByName(sheetInfo.name);
@@ -415,84 +406,6 @@ function logAction(origin, action, status, message, email = 'anonyme', suggestio
     }
   } catch (e) {
     Logger.log(`Impossible d'écrire dans la feuille d'historique: ${e.message}`);
-  }
-}
-
-/**
- * =================================================================================
- * FONCTIONS POUR L'INTÉGRATION ZOOM
- * =================================================================================
- */
-
-/**
- * Récupère les clés API Zoom depuis la feuille 'ZoomConfig'.
- * @returns {object} Un objet contenant { sdkKey, sdkSecret }.
- */
-function getZoomApiKeys() {
-  const configSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.ZOOM_CONFIG);
-  if (!configSheet) {
-    throw new Error(`La feuille de configuration '${CONFIG.SHEETS.ZOOM_CONFIG}' est introuvable.`);
-  }
-  // On lit les clés depuis les cellules A2 et B2
-  const keys = configSheet.getRange("A2:B2").getValues()[0];
-  const sdkKey = keys[0];
-  const sdkSecret = keys[1];
-
-  if (!sdkKey || !sdkSecret) {
-    throw new Error("Les clés SDK Key ou SDK Secret sont manquantes dans la feuille 'ZoomConfig'.");
-  }
-  return { sdkKey, sdkSecret };
-}
-
-/**
- * Génère la signature JWT pour le Web SDK de Zoom.
- * @param {object} payload - Les données reçues du client, contenant meetingNumber et userName.
- * @returns {object} Un objet avec la signature ou une erreur.
- */
-function generateZoomSignature(payload) {
-  const attendeesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.ZOOM_ATTENDEES);
-  const { meetingNumber, userName } = payload;
-
-  try {
-    if (!meetingNumber || !userName) {
-      throw new Error("Le numéro de meeting ou le nom d'utilisateur est manquant.");
-    }
-
-    const { sdkKey, sdkSecret } = getZoomApiKeys();
-
-    const header = { alg: 'HS256', typ: 'JWT' };
-    const iat = Math.floor(Date.now() / 1000);
-    const exp = iat + 60 * 60 * 2; // Expiration dans 2 heures
-
-    const oPayload = {
-      sdkKey: sdkKey,
-      mn: meetingNumber,
-      role: 0, // 0 pour un participant, 1 pour l'hôte
-      iat: iat,
-      exp: exp,
-      appKey: sdkKey, // appKey est souvent le même que sdkKey
-      tokenExp: exp
-    };
-
-    const sHeader = Utilities.base64EncodeWebSafe(JSON.stringify(header)).replace(/=+$/, '');
-    const sPayload = Utilities.base64EncodeWebSafe(JSON.stringify(oPayload)).replace(/=+$/, '');
-    const signature = Utilities.computeHmacSha256Signature(`${sHeader}.${sPayload}`, sdkSecret);
-    const encodedSignature = Utilities.base64EncodeWebSafe(signature).replace(/=+$/, '');
-
-    const jwt = `${sHeader}.${sPayload}.${encodedSignature}`;
-
-    // Enregistrer la tentative de connexion réussie
-    if (attendeesSheet) {
-      attendeesSheet.appendRow([new Date(), meetingNumber, userName, 'SUCCESS']);
-    }
-    return { success: true, signature: jwt };
-
-  } catch (error) {
-    if (attendeesSheet) {
-      attendeesSheet.appendRow([new Date(), meetingNumber, userName || 'Inconnu', `ERROR: ${error.message}`]);
-    }
-    logAction('Back-End', 'generateZoomSignature', 'ERROR', error.message, 'API', "Vérifiez les clés dans 'ZoomConfig' et les données envoyées.");
-    return { success: false, error: error.message };
   }
 }
 
