@@ -22,7 +22,7 @@
             background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
             background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
         }
-        /* Correction: Le conteneur englobe toute la navigation */
+        /* Conteneurs pour centrage */
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; } 
 
@@ -78,7 +78,11 @@
         }
         .nav-links-mobile a:hover { background-color: rgba(255, 255, 255, 0.1); }
         
-        main { padding: 80px 0; }
+        /* Assure que le contenu démarre sous la barre de navigation fixe */
+        main { 
+            padding-top: 100px; 
+            padding-bottom: 80px; /* Conserver un padding bottom */
+        } 
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
         
         .article-header { text-align: center; margin-bottom: 40px; }
@@ -91,7 +95,7 @@
         .article-content p { 
             margin-bottom: 1.5em; 
         }
-        .article-content h3 { /* Pour les sous-titres comme "Constat", "Révélation" */
+        .article-content h3 { 
             margin-top: 2.5em;
             margin-bottom: 1em;
             color: var(--neon-blue);
@@ -99,7 +103,7 @@
             border-left: 3px solid var(--fire-red);
             padding-left: 15px;
         }
-        .article-content blockquote { /* Pour le verset biblique */
+        .article-content blockquote { 
             font-size: 1.2em;
             font-style: italic;
             margin: 2em 20px;
@@ -115,7 +119,7 @@
             color: var(--text-secondary);
             margin-top: 10px;
         }
-        .cle-lecture { /* Pour la "clé de lecture" */
+        .cle-lecture { 
             background-color: rgba(44, 44, 84, 0.5);
             border: 1px solid var(--border-color);
             padding: 15px;
@@ -152,7 +156,6 @@
             text-decoration: none;
             font-weight: bold;
             transition: opacity 0.3s;
-            /* Ajout pour le formulaire de commentaire */
             cursor: pointer; 
         }
         .share-btn:hover { opacity: 0.85; }
@@ -238,7 +241,6 @@
             .menu-burger {
                 display: flex; /* Afficher le bouton burger */
             }
-            /* Correction: Supprimer le conteneur du header sur mobile si non nécessaire */
             .header-container { padding: 0 10px; } 
             
             .article-title {
@@ -275,38 +277,19 @@
     <main class="container" id="article-container">
         </main>
 
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <img src="r/LOGO.svg" alt="Logo Lumière du Futur" class="footer-logo">
-                <p>Annoncer l'Évangile, former des disciples et manifester l'amour de Christ à Dakar et au-delà.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigation</h4>
-                <ul id="footer-nav-links">
-                    </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Contactez-nous</h4>
-                <p>Rue 11, Villa 4237 Amitié II<br>BP : 3816, Dakar 18523<br>Téléphone : 33 824 52 94</p>
-            </div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p></div>
-    </footer>
-
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
-        // --- DONNÉES DE NAVIGATION CENTRALISÉES ---
+        // --- DONNÉES DE NAVIGATION CENTRALISÉES (Footer retiré) ---
         const NAV_LINKS = [
             { href: "index.html", text: "Accueil" },
             { href: "apropos.html", text: "À Propos" },
             { href: "ministeres.html", text: "Ministères" },
             { href: "evenements.html", text: "Événements" },
-            { href: "carrieres.html", text: "Ateliers" }, // Conservé le href "carrieres"
+            { href: "carrieres.html", text: "Ateliers" }, 
             { href: "ressources.html", text: "Ressources" },
             { href: "live.html", text: "Live" },
-            { href: "Boutique.html", text: "Faire un Don" }, // Conservé le href "Boutique"
+            { href: "Boutique.html", text: "Faire un Don" }, 
             { href: "index.html#contact", text: "Contact" }
         ];
 
@@ -315,7 +298,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
-            // --- CORRECTION 1: Chargement et génération des menus ---
+            // --- Chargement et génération des menus ---
             generateNavLinks();
             
             // Afficher le skeleton loader
@@ -338,9 +321,8 @@
                 return;
             }
 
-            // Assurez-vous que la fonction callApi est définie dans main.js ou config.js
             if (typeof callApi === 'undefined') {
-                 console.error("La fonction callApi n'est pas définie. Assurez-vous que config.js et main.js sont chargés correctement.");
+                 console.error("La fonction callApi n'est pas définie.");
                  container.innerHTML = '<p class="loading-message">Erreur interne : La connexion à l\'API n\'est pas configurée.</p>';
                  return;
             }
@@ -355,7 +337,6 @@
                             day: 'numeric', month: 'long', year: 'numeric'
                         });
 
-                        // --- CORRECTION 2: Remplacement des retours à la ligne par formatage HTML sémantique ---
                         const formattedContent = formatContent(post.Contenu);
 
                         container.innerHTML = `
@@ -417,13 +398,7 @@
                 });
         });
 
-        // --- NOUVELLE FONCTION: Formatage sémantique du contenu brut ---
-        /**
-         * Convertit le contenu texte brut du Sheets en HTML sémantique.
-         * Assume que les sous-titres sont précédés de '###' et les citations de '>'.
-         * @param {string} content - Le contenu de l'article brut.
-         * @returns {string} Le contenu formaté en HTML.
-         */
+        // --- FONCTION: Formatage sémantique du contenu brut ---
         function formatContent(content) {
             const lines = content.trim().split('\n');
             let html = '';
@@ -432,48 +407,36 @@
             lines.forEach(line => {
                 line = line.trim();
                 if (line.startsWith('###')) {
-                    // Sous-titre
                     if (inParagraph) { html += '</p>'; inParagraph = false; }
                     html += `<h3>${line.substring(3).trim()}</h3>`;
                 } else if (line.startsWith('>')) {
-                    // Blockquote
                     if (inParagraph) { html += '</p>'; inParagraph = false; }
-                    // Simple gestion de citation (peut être améliorée pour le footer)
                     const citation = line.substring(1).trim().split('--');
                     const text = citation[0].trim();
                     const source = citation[1] ? `<footer>${citation[1].trim()}</footer>` : '';
                     html += `<blockquote>${text}${source}</blockquote>`;
                 } else if (line.length > 0) {
-                    // Paragraphe
                     if (!inParagraph) { html += '<p>'; inParagraph = true; }
                     html += line + ' ';
                 } else {
-                    // Ligne vide (ferme le paragraphe)
                     if (inParagraph) { html += '</p>'; inParagraph = false; }
                 }
             });
 
-            // Fermer le dernier paragraphe si nécessaire
             if (inParagraph) { html += '</p>'; }
-
             return html;
         }
 
-        // --- NOUVELLE FONCTION: Génération centralisée des liens de navigation ---
+        // --- FONCTION: Génération centralisée des liens de navigation ---
         function generateNavLinks() {
             const desktopNav = document.getElementById('desktop-nav-links');
             const mobileContent = document.querySelector('#mobile-menu .nav-links-mobile-content');
-            const footerNav = document.getElementById('footer-nav-links');
-
-            // Générer pour le desktop et le pied de page
+            
+            // Générer pour le desktop
             NAV_LINKS.forEach(link => {
                 const desktopItem = document.createElement('li');
                 desktopItem.innerHTML = `<a href="${link.href}">${link.text}</a>`;
                 desktopNav.appendChild(desktopItem);
-                
-                const footerItem = document.createElement('li');
-                footerItem.innerHTML = `<a href="${link.href}">${link.text}</a>`;
-                footerNav.appendChild(footerItem);
             });
 
             // Générer pour le mobile
@@ -481,12 +444,11 @@
                 const mobileLink = document.createElement('a');
                 mobileLink.href = link.href;
                 mobileLink.textContent = link.text;
-                mobileLink.onclick = toggleMobileMenu; // Fermer le menu après un clic
+                mobileLink.onclick = toggleMobileMenu; 
                 mobileContent.appendChild(mobileLink);
             });
         }
 
-        // Assurez-vous que cette fonction est dans main.js ou définie globalement
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('active');
@@ -494,30 +456,30 @@
 
         /**
          * Charge et affiche les commentaires pour un article spécifique.
-         * @param {string} articleId - L'ID de l'article.
          */
         function loadComments(articleId) {
             const commentsList = document.getElementById('comments-list');
             commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>';
 
-            // CORRECTION: Assurer la cohérence des noms de champs
             callApi('getComments', { articleId: articleId })
                 .then(data => {
-                    commentsList.innerHTML = ''; // Vider le message de chargement
-                    // CORRECTION: data.comments doit être un tableau d'objets comme dans Sheets (ex: {Auteur: '...', Commentaire: '...', Timestamp: '...'})
+                    commentsList.innerHTML = ''; 
                     if (data.success && data.comments && data.comments.length > 0) {
-                        data.comments.filter(c => c.Statut === 'Approuvé').forEach(comment => { // Ajout du filtre Statut
-                            const commentElement = document.createElement('div');
-                            commentElement.classList.add('comment-item');
-                            commentElement.innerHTML = `
-                                <p class="comment-author">${comment.Auteur || 'Anonyme'}</p>
-                                <p>${comment.Commentaire}</p>
-                                <p class="comment-date">${new Date(comment.Timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
-                            `;
-                            commentsList.appendChild(commentElement);
-                        });
-                        if (data.comments.filter(c => c.Statut === 'Approuvé').length === 0) {
-                            commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire approuvé pour le moment. Soyez le premier !</p>';
+                        const approvedComments = data.comments.filter(c => c.Statut === 'Approuvé');
+
+                        if (approvedComments.length > 0) {
+                            approvedComments.forEach(comment => { 
+                                const commentElement = document.createElement('div');
+                                commentElement.classList.add('comment-item');
+                                commentElement.innerHTML = `
+                                    <p class="comment-author">${comment.Auteur || 'Anonyme'}</p>
+                                    <p>${comment.Commentaire}</p>
+                                    <p class="comment-date">${new Date(comment.Timestamp).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                                `;
+                                commentsList.appendChild(commentElement);
+                            });
+                        } else {
+                             commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire approuvé pour le moment. Soyez le premier !</p>';
                         }
                     } else {
                         commentsList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun commentaire pour le moment. Soyez le premier !</p>';
@@ -531,7 +493,6 @@
 
         /**
          * Soumet un nouveau commentaire pour un article spécifique.
-         * @param {string} articleId - L'ID de l'article.
          */
         function submitComment(articleId) {
             const authorInput = document.getElementById('comment-author');
@@ -539,7 +500,6 @@
             const button = document.querySelector('#comment-form button');
 
             const commentData = {
-                // CORRECTION: Les noms de champs correspondent aux colonnes attendues dans Apps Script
                 articleId: articleId,
                 author: authorInput.value.trim(),
                 commentText: textInput.value.trim()
@@ -559,7 +519,6 @@
                         alert("Commentaire envoyé avec succès. Il apparaîtra après approbation.");
                         authorInput.value = '';
                         textInput.value = '';
-                        // Ne pas recharger les commentaires, car le nouveau commentaire n'est pas encore "Approuvé"
                     } else {
                         alert('Erreur lors de la soumission du commentaire : ' + response.error);
                     }
