@@ -65,6 +65,36 @@ function toggleMobileMenu() {
 }
 
 /**
+ * Génère et insère le contenu du menu mobile.
+ * Centralise la structure du menu pour une maintenance facile.
+ */
+function populateMobileMenu() {
+    const menuContainer = document.getElementById('mobile-menu');
+    if (!menuContainer) return;
+
+    const menuItems = [
+        { href: 'index.html', text: 'Accueil' },
+        { href: 'apropos.html', text: 'À Propos' },
+        { href: 'ministeres.html', text: 'Ministères' },
+        { href: 'evenements.html', text: 'Événements' },
+        { href: 'blog.html', text: 'Blog' },
+        { href: 'ressources.html', text: 'Ressources' },
+        { href: 'live.html', text: 'Live' },
+        { href: 'index.html#contact', text: 'Contact' },
+        { href: 'Boutique.html', text: 'Faire un Don' }
+    ];
+
+    let menuHTML = '';
+    menuItems.forEach(item => {
+        // Ajoute l'attribut onclick pour fermer le menu après un clic
+        menuHTML += `<a href="${item.href}" onclick="toggleMobileMenu()">${item.text}</a>`;
+    });
+
+    menuContainer.innerHTML = menuHTML;
+}
+
+
+/**
  * ==================================================================
  * Logique pour la page Ressources
  * ==================================================================

@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
     <style>
         :root {
             --neon-blue: #00BFFF;
@@ -22,58 +25,6 @@
             background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
             background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
         }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        header {
-            background-color: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 10px 0;
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;}
-        .logo img { transition: transform 0.3s ease; }
-        .logo:hover img { transform: scale(1.05); }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
-        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
-        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
-        nav ul a:hover::after { width: 100%; left: 0; }
-        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
-        .menu-burger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: background-color 0.3s, box-shadow 0.3s;
-            z-index: 1002;
-        }
-        .menu-burger:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
-        }
-        .menu-burger .bar { width: 100%; height: 2px; background-color: white; border-radius: 2px; }
-        .nav-links-mobile {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(10, 10, 35, 0.95); backdrop-filter: blur(10px);
-            display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-            transform: translateX(-100%); transition: transform 0.4s ease-in-out;
-            pointer-events: none; z-index: 1001;
-        }
-        .nav-links-mobile.active { transform: translateX(0); pointer-events: auto; }
-        .nav-links-mobile-content { display: flex; flex-direction: column; gap: 30px; width: 100%; padding: 0 40px; box-sizing: border-box; }
-        .nav-links-mobile a {
-            color: var(--luminous-white); font-size: 18px; text-decoration: none;
-            padding: 16px 10px; width: 100%; border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .nav-links-mobile a:hover { background-color: rgba(255, 255, 255, 0.1); }
         
         main { padding: 80px 0; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
@@ -149,6 +100,13 @@
             text-decoration: none;
             font-weight: bold;
             transition: opacity 0.3s;
+        }
+        .btn-secondary {
+            display: inline-block;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 5px;
         }
         .share-btn:hover { opacity: 0.85; }
         .share-btn.facebook { background-color: #1877F2; }
@@ -229,38 +187,27 @@
 <body>
     <header>
         <nav>
-            <div class="container">
-                <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" style="height: 50px; vertical-align: middle;"/></a>
-                <ul class="desktop-links">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="apropos.html">À Propos</a></li>
-                    <li><a href="ministeres.html">Ministères</a></li>
-                    <li><a href="evenements.html">Événements</a></li>
-                    <li><a href="carrieres.html">Ateliers</a></li>
-                    <li><a href="ressources.html">Ressources</a></li>
-                    <li><a href="live.html">Live</a></li>
-                    <li><a href="Boutique.html">Faire un Don</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <!-- Conteneur pour le QR Code, caché par défaut -->
-                    <div id="nav-qrcode-container" style="display: none;">
-                        <img src="r/qr-code-icon.svg" id="nav-qrcode-icon" alt="QR Code" style="height: 24px; cursor: pointer;" onclick="toggleQrPopup()">
-                        <div id="nav-qrcode-popup">
-                            <img id="nav-qrcode-img" src="" alt="Votre QR Code" style="width: 100%; height: auto;">
-                        </div>
-                    </div>
-                    <div class="menu-burger" onclick="toggleMobileMenu()"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                </div>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="ministeres.html">Ministères</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
             </div>
         </nav>
     </header>
 
-    <div class="nav-links-mobile" id="mobile-menu">
-        <div class="nav-links-mobile-content">
-            <!-- Liens injectés par JS -->
-        </div>
-    </div>
+    <div class="nav-links-mobile" id="mobile-menu"></div>
 
     <main class="container" id="article-container" style="padding-top: 100px;">
         <!-- Le contenu de l'article sera injecté ici -->
@@ -268,7 +215,7 @@
 
     <footer>
         <div class="container footer-grid">
-            <div class="footer-col">
+            <div class="footer-col"> 
                 <img src="r/LOGO.svg" alt="Logo Lumière du Futur" class="footer-logo">
                 <p>Annoncer l'Évangile, former des disciples et manifester l'amour de Christ à Dakar et au-delà.</p>
             </div>
@@ -299,15 +246,9 @@
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
             
-            // Charger le menu mobile
-            fetch('index.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const mobileMenuContent = doc.querySelector('.nav-links-mobile-content').innerHTML;
-                    document.querySelector('#mobile-menu .nav-links-mobile-content').innerHTML = mobileMenuContent;
-                });
+            // Peuple le menu mobile (logique déplacée dans main.js)
+            populateMobileMenu();
+
             // Afficher le skeleton loader
             container.innerHTML = `
                 <div class="skeleton-article">
@@ -340,6 +281,9 @@
 
                         container.innerHTML = `
                             <article>
+                                <div style="margin-bottom: 20px;">
+                                    <a href="blog.html" class="btn-secondary"><i class="fas fa-arrow-left"></i> Retour au blog</a>
+                                </div>
                                 <header class="article-header">
                                     <h1 class="article-title">${post.Titre}</h1>
                                     <p class="article-meta">Par ${post.Auteur} • ${postDate}</p>
@@ -362,7 +306,7 @@
                                     <div id="comments-list">
                                         <p style="text-align: center; color: var(--text-secondary);">Chargement des commentaires...</p>
                                     </div>
-                                    <form id="comment-form" class="comment-form">
+                                    <form id="comment-form" class="comment-form" style="margin-top: 40px;">
                                         <h3>Laisser un commentaire</h3>
                                         <label for="comment-author">Votre nom :</label>
                                         <input type="text" id="comment-author" name="author" required>
@@ -441,7 +385,7 @@
 
             const commentData = {
                 articleId: articleId,
-                author: authorInput.value,
+                author: authorInput.value || 'Anonyme',
                 commentText: textInput.value
             };
 
