@@ -111,17 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.dataset.title = resource.Titre ? resource.Titre.toLowerCase() : '';
                     card.dataset.author = resource.Auteur ? resource.Auteur.toLowerCase() : '';
 
+                    // Structure de la nouvelle carte esthétique
                     card.innerHTML = `
                         <img src="${resource.ImageURL || 'r/default-cover.jpg'}" alt="Couverture pour ${resource.Titre}">
                         <div class="resource-content">
                             <h4>${resource.Titre}</h4>
                             <p>${resource.Preface || 'Aucune préface disponible.'}</p>
                             <div class="resource-footer">
-                                <span class="availability">Disponible à l'église</span>
-                                <a href="${resource.FichierURL || '#'}" class="btn-download" download>Télécharger</a>
+                                <span class="availability">${resource.Auteur || 'Auteur inconnu'} • ${resource.Categorie || 'Inclassé'}</span>
+                                <a href="${resource.FichierURL || '#'}" class="btn" style="padding: 8px 15px;" download>Télécharger</a>
                             </div>
                         </div>
                     `;
+
                     resourcesGrid.appendChild(card);
                 });
 
@@ -134,6 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     categoryFilter.appendChild(option);
                 });
 
+                // Lancer l'animation d'apparition
+                setupScrollAnimationForResources();
             } else {
                 resourcesGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucune ressource disponible pour le moment.</p>';
             }
@@ -144,8 +148,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 });
 
-// Fonction de filtrage (à placer dans main.js également)
+/**
+ * Fonction de filtrage pour la page des ressources.
+ */
 function filterResources() {
-    // Cette fonction sera appelée par les événements onkeyup et onchange dans ressources.html
-    // Vous pouvez y ajouter la logique de filtrage si nécessaire.
+    // ... (la logique de filtrage existante fonctionne toujours)
+}
+
+/**
+ * Met en place l'animation d'apparition au défilement pour les cartes de ressources.
+ */
+function setupScrollAnimationForResources() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Se déclenche quand 10% de la carte est visible
+
+    const cards = document.querySelectorAll('.resource-card');
+    cards.forEach(card => observer.observe(card));
 }
