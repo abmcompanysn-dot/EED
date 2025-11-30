@@ -57,3 +57,89 @@ function toggleMobileMenu() {
         body.classList.toggle('no-scroll');
     }
 }
+
+/**
+ * ==================================================================
+ * Logique pour la page Ressources
+ * ==================================================================
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const resourcesGrid = document.getElementById('resources-grid');
+    if (!resourcesGrid) return; // Ne s'exécute que si la grille existe sur la page
+
+    // 1. Afficher le squelette de chargement
+    let skeletonHTML = '';
+    for (let i = 0; i < 6; i++) {
+        skeletonHTML += `
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-content">
+                    <div class="skeleton-line title"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>`;
+    }
+    resourcesGrid.innerHTML = skeletonHTML;
+
+    // 2. Appeler l'API pour obtenir les ressources
+    // NOTE : Pour l'instant, nous utilisons 'getBlogPosts'. Vous devrez créer une action 'getResources'
+    // et une feuille "Ressources" dans votre Google Sheet avec les colonnes :
+    // Titre, Auteur, Preface, ImageURL, Categorie, FichierURL
+    callApi('getResources', {}) // On utilise maintenant la nouvelle fonction
+        .then(data => {
+            // Les données arrivent maintenant dans data.resources
+            const resources = data.resources; 
+
+            if (data.success && resources && resources.length > 0) {
+                resourcesGrid.innerHTML = ''; // Vider le squelette
+                const categories = new Set();
+
+                resources.forEach(resource => {
+                    if (resource.Categorie) categories.add(resource.Categorie);
+
+                    const card = document.createElement('div');
+                    card.className = 'resource-card';
+                    // Ajout des data-attributes pour le filtrage
+                    card.dataset.category = resource.Categorie ? resource.Categorie.toLowerCase() : '';
+                    card.dataset.title = resource.Titre ? resource.Titre.toLowerCase() : '';
+                    card.dataset.author = resource.Auteur ? resource.Auteur.toLowerCase() : '';
+
+                    card.innerHTML = `
+                        <img src="${resource.ImageURL || 'r/default-cover.jpg'}" alt="Couverture pour ${resource.Titre}">
+                        <div class="resource-content">
+                            <h4>${resource.Titre}</h4>
+                            <p>${resource.Preface || 'Aucune préface disponible.'}</p>
+                            <div class="resource-footer">
+                                <span class="availability">Disponible à l'église</span>
+                                <a href="${resource.FichierURL || '#'}" class="btn-download" download>Télécharger</a>
+                            </div>
+                        </div>
+                    `;
+                    resourcesGrid.appendChild(card);
+                });
+
+                // Remplir le filtre des catégories
+                const categoryFilter = document.getElementById('category-filter');
+                categories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.toLowerCase();
+                    option.textContent = cat;
+                    categoryFilter.appendChild(option);
+                });
+
+            } else {
+                resourcesGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucune ressource disponible pour le moment.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erreur de chargement des ressources:', error);
+            resourcesGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Impossible de charger les ressources.</p>';
+        });
+});
+
+// Fonction de filtrage (à placer dans main.js également)
+function filterResources() {
+    // Cette fonction sera appelée par les événements onkeyup et onchange dans ressources.html
+    // Vous pouvez y ajouter la logique de filtrage si nécessaire.
+}

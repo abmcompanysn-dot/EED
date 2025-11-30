@@ -34,6 +34,12 @@ const CONFIG = {
  * @returns {ContentService.TextOutput} Une réponse JSON.
  */
 function doGet(e) {
+  // Si le paramètre 'page' est 'dashboard', on affiche le tableau de bord.
+  if (e && e.parameter && e.parameter.page === 'dashboard') {
+    return HtmlService.createHtmlOutputFromFile('dashboard')
+      .setTitle('Tableau de Bord EED')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
+  }
   // Renvoie une réponse simple pour les tests de connectivité.
   return ContentService
     .createTextOutput(JSON.stringify({ status: "success", message: "API en ligne." }))
@@ -72,6 +78,7 @@ function doPost(e) {
       case 'getUpcomingEvents': result = getUpcomingEvents(); break; // Nouvelle action pour les 3 prochains événements
       case 'getNeeds': result = getNeeds(); break;
       case 'getNeedById': result = getNeedById(payload.id); break;
+      case 'getResources': result = getResources(); break;
 
       // Actions interactives (Commentaires, Participations, Formulaires)
       case 'getComments': result = getComments(payload.articleId); break;
@@ -176,6 +183,7 @@ function onOpen() {
       .addItem('1. Vérifier/Réparer la Structure', 'verifyAndFixSheetStructure') // Pour réparer les feuilles existantes
       .addItem('2. Initialiser les feuilles (si vides)', 'setupSpreadsheet') // Pour une première installation
       .addItem('3. Remplir avec données de test', 'initializeWithSeedData') // Pour le développement
+      .addItem('Ouvrir le Tableau de Bord', 'openDashboard') // Nouveau menu pour le dashboard
       .addToUi();
 }
 
@@ -229,6 +237,13 @@ const seedData = {
     ['need03', 'Collecte du Dimanche', '', 1500000, new Date()],
     ['need04', 'Frère Jacques', 'j.m@email.com', 75000, new Date()]
   ]
+  ,
+  resources: [
+    ['res01', 'Les Fondements de la Foi', 'Pasteur Jean', 'Un guide essentiel pour tout nouveau croyant, explorant les doctrines de base de la foi chrétienne.', 'https://eed.abmcy.com/r/rs.svg', 'Livre', 'https://example.com/livre1.pdf', 'Publié'],
+    ['res02', 'Marcher par l\'Esprit', 'Soeur Marie', 'Découvrez comment vivre une vie remplie de l\'Esprit Saint au quotidien.', 'https://eed.abmcy.com/r/rs.svg', 'Étude Biblique', 'https://example.com/etude1.pdf', 'Publié'],
+    ['res03', 'L\'Histoire de l\'Église de Dakar', 'Équipe Pastorale', 'Un récit inspirant sur la naissance et la croissance de notre communauté.', 'https://eed.abmcy.com/r/LOGO.svg', 'Document', 'https://example.com/histoire.pdf', 'Publié'],
+    ['res04', 'Le Combat Spirituel', 'Pasteur Moussa', 'Équipez-vous pour faire face aux défis spirituels avec sagesse et autorité.', 'https://eed.abmcy.com/r/rs.svg', 'Livre', '#', 'Publié']
+  ]
 };
 
 /**
@@ -247,7 +262,8 @@ function initializeWithSeedData() {
       const sheetMapping = {
         blog: CONFIG.SHEETS.BLOG,
         blog_comments: CONFIG.SHEETS.COMMENTS,
-        events: CONFIG.SHEETS.EVENTS,
+      events: CONFIG.SHEETS.EVENTS, 
+      resources: CONFIG.SHEETS.RESOURCES,
         prayer_requests: CONFIG.SHEETS.PRAYER,
         contact_submissions: CONFIG.SHEETS.CONTACT,
         needs: CONFIG.SHEETS.NEEDS,
@@ -294,6 +310,7 @@ function setupSpreadsheet() {
     { name: CONFIG.SHEETS.CONTACT, headers: ['Timestamp', 'Nom', 'Email', 'Sujet', 'Message'] },
     { name: CONFIG.SHEETS.NEEDS, headers: ['ID', 'Titre', 'DescriptionCourte', 'Raison', 'Moyens', 'ImageURL', 'MontantObjectif', 'MontantActuel', 'Categorie', 'Statut'] },
     { name: CONFIG.SHEETS.PARTICIPATIONS, headers: ['ID_Besoin', 'Nom', 'Email', 'Montant', 'Date'] },
+    { name: CONFIG.SHEETS.RESOURCES, headers: ['ID', 'Titre', 'Auteur', 'Preface', 'ImageURL', 'Categorie', 'FichierURL', 'Statut'] }
   ];
 
   sheetsToCreate.forEach(sheetInfo => {
@@ -426,6 +443,27 @@ function getBlogPostById(id) {
   }
 }
 
+/**
+ * Récupère toutes les ressources publiées depuis la feuille 'Ressources'.
+ * @returns {Object} Un objet contenant les ressources ou une erreur.
+ */
+function getResources() {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.RESOURCES);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.RESOURCES}' est introuvable.`);
+    
+    const resources = sheetToObjects(sheet)
+      .filter(resource => resource.Statut === 'Publié'); // On ne récupère que les ressources publiées
+
+    // Trier par titre par défaut
+    resources.sort((a, b) => a.Titre.localeCompare(b.Titre));
+
+    return { success: true, resources: resources };
+  } catch (e) {
+    logAction('Back-End', 'getResources', 'ERROR', e.message, 'API', "Vérifiez que la feuille 'Ressources' existe et que sa structure est correcte.");
+    return { success: false, error: "Impossible de récupérer les ressources." };
+  }
+}
 /**
  * Récupère tous les événements à venir depuis la feuille 'Evenements'.
  * @returns {Object} Un objet contenant les événements ou une erreur.
@@ -668,4 +706,14 @@ function handleContactForm(payload) {
     logAction('Front-End', 'handleContactForm', 'ERROR', e.message, userEmail, "Vérifiez les données du formulaire et l'existence de la feuille 'Contact_Submissions'.");
     return { success: false, error: "Impossible d'envoyer le message." };
   }
+}
+
+/**
+ * Ouvre le tableau de bord dans une nouvelle fenêtre du navigateur.
+ * Cette fonction est appelée depuis le menu personnalisé de Google Sheets.
+ */
+function openDashboard() {
+  const url = ScriptApp.getService().getUrl() + '?page=dashboard';
+  const html = `<html><body><script>window.open("${url}", "_blank");</script></body></html>`;
+  SpreadsheetApp.getUi().showModalDialog(HtmlService.createHtmlOutput(html), 'Ouverture du Tableau de Bord');
 }
