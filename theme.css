@@ -1,50 +1,35 @@
 /* ========================================================================== 
-   THÈME GLOBAL & STYLES MODERNES 
+   CHARTE GRAPHIQUE BLEU - ROUGE - BLANC
    ========================================================================== */
 
-/* --- Variables de couleur et de police --- */
 :root {
-    --primary-blue: #2563eb;   /* Bleu moderne, lumineux */
-    --primary-red: #ef4444;    /* Rouge élégant, plus doux */
-    --light-bg: #f9fafb;       /* Fond gris très clair, moins agressif que blanc pur */
-    --card-bg: #ffffff;        /* Cartes blanches pour contraste net */
-    --text-dark: #111827;      /* Noir profond pour lisibilité */
-    --text-secondary: #6b7280; /* Gris neutre moderne */
-    --border-color: #e5e7eb;   /* Bordure douce */
-    --success-color: #10b981;  /* Vert moderne (emerald) */
-    --error-color: #f43f5e;    /* Rouge vif mais élégant */
-    --accent-gradient: linear-gradient(135deg, #2563eb, #9333ea); /* Dégradé bleu-violet */
+    --primary-blue: #005a9c;   /* Bleu institutionnel fort */
+    --primary-red: #e10600;    /* Rouge vif et impactant */
+    --primary-white: #ffffff;  /* Blanc pur */
+    --text-dark: #212529;      /* Noir/gris foncé pour lisibilité */
+    --border-light: #e5e5e5;   /* Bordure douce */
 }
 
-/* --- Styles généraux du corps de la page --- */
+/* --- Fond général --- */
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    background-color: var(--light-bg);
+    background-color: var(--primary-white);
     color: var(--text-dark);
     font-size: 16px;
     line-height: 1.7;
-}
-
-/* --- Conteneur principal --- */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 /* --- Titres --- */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
     line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: 700;
     color: var(--primary-blue);
 }
 
 /* --- Sections --- */
-main {
-    padding-top: 80px;
-}
-
 section {
     padding: 70px 0;
 }
@@ -53,7 +38,7 @@ section {
     text-align: center;
     font-size: 2.8em;
     margin-bottom: 15px;
-    background: var(--accent-gradient);
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -61,7 +46,7 @@ section {
 .section-subtitle {
     text-align: center;
     font-size: 1.2em;
-    color: var(--text-secondary);
+    color: var(--primary-blue);
     max-width: 700px;
     margin: 0 auto 60px auto;
 }
@@ -74,31 +59,42 @@ section {
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
-/* --- Cartes --- */
+/* --- Cartes colorées --- */
 .card {
-    background-color: var(--card-bg);
     padding: 30px;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-light);
+    color: var(--primary-white);
+    text-align: center;
+    font-weight: 600;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+/* Variantes de cartes */
+.card.blue {
+    background-color: var(--primary-blue);
+}
+.card.red {
+    background-color: var(--primary-red);
+}
+.card.white {
+    background-color: var(--primary-white);
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
 }
 
-.card h3 {
-    color: var(--primary-blue);
+/* Effet hover */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Boutons --- */
 .btn {
     display: inline-block;
-    text-align: center;
     padding: 14px 24px;
-    background: var(--accent-gradient);
-    color: #fff;
+    background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
+    color: var(--primary-white);
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
@@ -109,7 +105,7 @@ section {
 }
 
 .btn:hover {
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 20px rgba(0, 90, 156, 0.5);
     transform: scale(1.05);
 }
 
