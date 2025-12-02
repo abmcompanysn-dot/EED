@@ -178,6 +178,18 @@
             .hero-text-content h1 {
                 white-space: normal; /* Permet le retour à la ligne sur mobile */
             }
+            /* --- Amélioration : Boutons du héros en colonne sur mobile --- */
+            .hero-buttons {
+                display: flex;
+                flex-direction: column; /* Met les boutons en colonne */
+                align-items: center; /* Centre les boutons */
+                gap: 15px; /* Espace entre les boutons */
+            }
+            .btn-hero {
+                margin: 0; /* Retire les marges horizontales */
+                width: 80%; /* Donne une largeur cohérente */
+                max-width: 320px; /* Limite la largeur maximale */
+            }
         }
 
         /* Styles pour le défilement des logos */
