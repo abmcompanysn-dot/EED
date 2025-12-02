@@ -24,12 +24,12 @@ body {
     line-height: 1.6;
 
     /* Arrière-plan artistique avec des ellipses de couleur diffuses */
-    background-color: #f1f1f1; /* Couleur de base si les dégradés ne chargent pas */
+    background-color: #dcdcdc; /* Couleur de base plus foncée */
     background-image: 
         radial-gradient(ellipse 40% 50% at 20% 25%, rgba(0, 90, 156, 0.08), transparent), /* Ellipse bleue */
         radial-gradient(ellipse 30% 40% at 80% 75%, rgba(225, 6, 0, 0.06), transparent),  /* Ellipse rouge */
         radial-gradient(ellipse 50% 60% at 50% 100%, rgba(20, 20, 20, 0.05), transparent), /* Ellipse noire/grise */
-        linear-gradient(to bottom, #fdfdfd, #f1f1f1); /* Dégradé de base */
+        linear-gradient(to bottom, #e9e9e9, #dcdcdc); /* Dégradé de base assombri */
     background-attachment: fixed; /* L'arrière-plan reste fixe au défilement */
 }
 
