@@ -1,102 +1,103 @@
-/* ========================================================================== 
-   CHARTE GRAPHIQUE BLEU - ROUGE - BLANC
+/* ==========================================================================
+   THÈME GLOBAL & STYLES DE BASE
    ========================================================================== */
 
+/* --- Variables de couleur et de police --- */
 :root {
-    --primary-blue: #005a9c;   /* Bleu institutionnel fort */
-    --primary-red: #e10600;    /* Rouge vif et impactant */
-    --primary-white: #ffffff;  /* Blanc pur */
-    --text-dark: #212529;      /* Noir/gris foncé pour lisibilité */
-    --border-light: #e5e5e5;   /* Bordure douce */
+    --primary-blue: #005a9c; /* Un bleu institutionnel */
+    --primary-red: #e10600; /* Un rouge vif mais pas agressif */
+    --light-bg: #FFFFFF; /* Fond blanc */
+    --card-bg: #f8f9fa; /* Gris très clair pour les cartes */
+    --text-dark: #212529; /* Texte noir/gris foncé */
+    --text-secondary: #6c757d; /* Texte secondaire gris */
+    --border-color: #dee2e6; /* Couleur de bordure claire */
+    --success-color: #28a745;
+    --error-color: #dc3545;
 }
 
-/* --- Fond général --- */
+/* --- Styles généraux du corps de la page --- */
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    background-color: var(--primary-white);
+    background-color: var(--light-bg); /* Fond de page blanc */
     color: var(--text-dark);
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
-/* --- Titres --- */
+/* --- Conteneur principal --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Styles de base pour les titres --- */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
     line-height: 1.2;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: var(--primary-blue);
 }
 
-/* --- Sections --- */
+/* --- Styles pour les sections --- */
+main {
+    padding-top: 80px; /* Hauteur approx de la navbar */
+}
+
 section {
-    padding: 70px 0;
+    padding: 60px 0;
 }
 
 .section-title {
     text-align: center;
     font-size: 2.8em;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
 }
 
 .section-subtitle {
     text-align: center;
-    font-size: 1.2em;
-    color: var(--primary-blue);
+    font-size: 1.1em;
+    color: var(--text-secondary);
     max-width: 700px;
     margin: 0 auto 60px auto;
 }
 
-/* --- Grilles --- */
+/* --- Styles pour les grilles --- */
 .grid-2, .grid-3 {
     display: grid;
-    gap: 35px;
+    gap: 30px;
 }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 
-/* --- Cartes colorées --- */
+/* --- Styles pour les cartes (cards) --- */
 .card {
+    background-color: var(--card-bg); /* Cartes en gris clair */
     padding: 30px;
-    border-radius: 12px;
-    border: 2px solid var(--border-light);
-    color: var(--primary-white);
-    text-align: center;
-    font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+    border: 1px solid var(--border-color); /* Bordure générale légère */
+    border-top: 4px solid var(--primary-blue); /* Bordure supérieure colorée */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
-/* Variantes de cartes */
-.card.blue {
-    background-color: var(--primary-blue);
-}
-.card.red {
-    background-color: var(--primary-red);
-}
-.card.white {
-    background-color: var(--primary-white);
-    color: var(--primary-blue);
-    border: 2px solid var(--primary-blue);
-}
-
-/* Effet hover */
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
+    background-color: var(--light-bg); /* Devient blanc au survol */
 }
 
-/* --- Boutons --- */
+.card h3 {
+    color: var(--primary-blue);
+}
+
+/* --- Styles pour les boutons --- */
 .btn {
     display: inline-block;
-    padding: 14px 24px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--primary-red));
-    color: var(--primary-white);
+    text-align: center;
+    padding: 12px 20px;
+    background: var(--primary-blue);
+    color: var(--light-bg);
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 5px;
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.3s;
     border: none;
@@ -105,31 +106,12 @@ section {
 }
 
 .btn:hover {
-    box-shadow: 0 0 20px rgba(0, 90, 156, 0.5);
-    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 90, 156, 0.4);
+    transform: scale(1.03);
 }
 
-/* --- Responsive --- */
+/* --- Responsive général --- */
 @media (max-width: 992px) {
     .section-title { font-size: 2.2em; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
-}
-/* --- Cartes uniformes en bleu --- */
-.card {
-    background-color: var(--primary-blue); /* Bleu institutionnel */
-    padding: 30px;
-    border-radius: 12px;
-    border: 2px solid var(--primary-red); /* Bordure rouge pour contraste */
-    color: var(--primary-white);          /* Texte blanc pour lisibilité */
-    text-align: center;
-    font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-/* Effet hover premium */
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-    border-color: var(--primary-white);
 }
