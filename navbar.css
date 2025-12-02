@@ -4,15 +4,12 @@
 
 /* --- En-tête principal --- */
 header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: white; /* Fond blanc opaque par défaut */
     padding: 12px 0;
     position: fixed;
     top: 0; left: 0;
     width: 100%;
     z-index: 1000;
-    border-bottom: 1px solid var(--border-color);
     transition: background 0.3s ease;
 }
 
@@ -43,7 +40,7 @@ nav ul.desktop-links {
     margin: 0; padding: 0;
 }
 nav ul.desktop-links a, .nav-links-mobile a {
-    color: var(--text-dark);
+    color: var(--primary-blue); /* Liens en bleu par défaut */
     text-decoration: none;
     font-weight: 500;
     position: relative;
@@ -63,7 +60,7 @@ nav ul.desktop-links a:hover::after {
 }
 nav ul.desktop-links a:hover,
 nav ul.desktop-links a.active {
-    color: var(--primary-blue);
+    color: #003d6b; /* Un bleu légèrement plus foncé au survol/actif */
     font-weight: 600;
 }
 
