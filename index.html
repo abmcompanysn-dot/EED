@@ -18,6 +18,21 @@
     <link rel="stylesheet" href="navbar.css">
 
     <style>
+        /* --- Styles pour la navigation immersive --- */
+        @media (min-width: 993px) { /* Uniquement sur ordinateur */
+            header {
+                background: transparent; /* Fond initial transparent */
+                transition: background-color 0.4s ease;
+            }
+            header.scrolled {
+                background: rgba(10, 10, 35, 0.85); /* Fond sombre au défilement */
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+
         /* ==================== SECTION HÉROS (BANNIÈRE PRINCIPALE) ==================== */
         .hero {
             position: relative;
@@ -403,6 +418,7 @@
 
     <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
     <div class="nav-links-mobile" id="mobile-menu">
+        <!-- Le contenu est généré par main.js -->
     </div>
 
     <!-- ---------- Section Héros (Bannière) ---------- -->
@@ -520,12 +536,22 @@
         <section id="contact" class="container animated-card">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--card-bg); padding: 40px; border-radius: 15px;">
-                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none;">
-                    <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
-                    <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
-                    <div class="form-group"><label for="contact-subject">Sujet (optionnel)</label><input type="text" id="contact-subject" class="form-control"></div>
-                    <div class="form-group"><label for="contact-message">Votre Message</label><textarea id="contact-message" class="form-control" rows="5" required></textarea></div>
+            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--card-bg); padding: 40px; border-radius: 15px; overflow: hidden;">
+                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none; display: flex; flex-direction: column; gap: 25px;">
+                    <div class="form-group floating-label">
+                        <input type="text" id="contact-name" class="form-control" placeholder=" " required>
+                        <label for="contact-name">Votre Nom</label>
+                    </div>
+                    <div class="form-group floating-label">
+                        <input type="email" id="contact-email" class="form-control" placeholder=" " required>
+                        <label for="contact-email">Votre Email</label>
+                    </div>
+                    <div class="form-group floating-label">
+                        <textarea id="contact-message" class="form-control" rows="5" placeholder=" " required></textarea>
+                        <label for="contact-message">Votre Message</label>
+                    </div>
+                    <!-- Le champ sujet a été retiré pour simplifier, mais peut être rajouté sur le même modèle -->
+                    <!-- <div class="form-group floating-label"><input type="text" id="contact-subject" class="form-control" placeholder=" "><label for="contact-subject">Sujet</label></div> -->
                     <button type="submit" id="contact-submit-btn" class="btn-lux-rounded">Envoyer le Message</button>
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
@@ -792,6 +818,28 @@
             animation-name: fade-in;
         }
 
+        /* --- Styles pour le formulaire de contact moderne --- */
+        .form-group.floating-label {
+            position: relative;
+        }
+        .form-group.floating-label .form-control {
+            padding: 18px 15px; /* Plus d'espace vertical */
+        }
+        .form-group.floating-label label {
+            position: absolute;
+            top: 18px;
+            left: 15px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        .form-group.floating-label .form-control:focus + label,
+        .form-group.floating-label .form-control:not(:placeholder-shown) + label {
+            top: 5px;
+            left: 15px;
+            font-size: 0.8em;
+            color: var(--primary-blue);
+        }
     </style>
 
     <!-- ==================== SCRIPTS JAVASCRIPT ==================== -->
@@ -799,6 +847,18 @@
     <script src="main.js"></script>
     <script>
         // ... (votre fonction toggleMobileMenu existante)
+
+        // --- Logique pour la barre de navigation qui apparaît au défilement ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { // Apparaît après 50px de défilement
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
 
         // ==================== Logique pour la modale de prière ====================
         // --- Logique pour la modale de prière ---
