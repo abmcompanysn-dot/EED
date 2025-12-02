@@ -78,6 +78,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover; /* Assure que la vidéo couvre tout l'espace */
+            /* --- Amélioration : Effet de dézoom immersif --- */
+            transform: scale(1.1); /* Commence légèrement zoomé */
+            animation: zoomOut 1.5s ease-out forwards;
+            animation-delay: 0.2s; /* Léger délai pour un meilleur effet */
             z-index: -2;
         }
 
@@ -116,6 +120,15 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        /* --- Keyframes pour l'animation de la vidéo --- */
+        @keyframes zoomOut {
+            from {
+                transform: scale(1.1);
+            }
+            to {
+                transform: scale(1);
             }
         }
         .hero-buttons {
@@ -473,10 +486,12 @@
             border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .promo-card:hover {
+        /* --- Amélioration : Effet de survol plus engageant --- */
+        .promo-card:hover { 
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 90, 156, 0.1);
         }
+        .promo-card:hover .prayer-image-container img { transform: scale(1.05); }
         .promo-card .prayer-image-container img {
             width: 100%;
             height: auto;
@@ -484,6 +499,7 @@
             object-fit: cover;
         }
         @media (max-width: 992px) {
+            .promo-card .prayer-image-container { overflow: hidden; } /* Assure que l'image ne dépasse pas sur mobile */
             .promo-card {
                 grid-template-columns: 1fr;
             }
@@ -855,12 +871,16 @@
         .testimonial-slide.active {
             display: block;
         }
+        .testimonial-slide { min-width: 100%; box-sizing: border-box; }
         .testimonial-carousel-container .carousel-btn {
             display: block; /* Rend les boutons visibles */
             background: rgba(44, 62, 80, 0.5);
             padding: 10px 15px;
+            position: absolute; top: 50%; transform: translateY(-50%);
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .testimonial-carousel-container .carousel-btn.prev { left: 0; }
+        .testimonial-carousel-container .carousel-btn.next { right: 0; }
+        @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
 
         /* Styles responsives pour le carrousel de témoignages sur mobile */
         @media (max-width: 992px) {
@@ -1112,9 +1132,7 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                    } else {
-                        // Réinitialise l'animation lorsque l'élément n'est plus visible
-                        entry.target.classList.remove('is-visible');
+                        obs.unobserve(entry.target); // Ne joue l'animation qu'une seule fois
                     }
                 });
             }, { threshold: 0.15 }); // Se déclenche quand 15% de l'élément est visible
@@ -1229,29 +1247,32 @@
         // ==================== Logique pour le carrousel "Paroles de la Communauté" ====================
         let currentTestimonialSlide = 0;
         document.addEventListener('DOMContentLoaded', () => {
+            const innerCarousel = document.querySelector('.testimonial-carousel-inner');
             const testimonialSlides = document.querySelectorAll('.testimonial-slide');
             const dotsContainer = document.querySelector('.testimonial-dots');
-            const innerCarousel = document.querySelector('.testimonial-carousel-inner');
 
             if (testimonialSlides.length > 0) {
                 // Logique pour desktop (flèches)
                 function showTestimonialSlide(index) {
-                    testimonialSlides.forEach(slide => slide.classList.remove('active'));
-                    testimonialSlides[index].classList.add('active');
+                    const offset = -index * 100;
+                    innerCarousel.style.transform = `translateX(${offset}%)`;
+                    testimonialSlides.forEach((slide, i) => {
+                        slide.classList.toggle('active', i === index);
+                    });
                 }
 
                 window.moveTestimonialSlide = function(n) {
                     currentTestimonialSlide = (currentTestimonialSlide + n + testimonialSlides.length) % testimonialSlides.length;
                     showTestimonialSlide(currentTestimonialSlide);
                 }
-                showTestimonialSlide(0);
+                testimonialSlides.forEach(s => s.style.display = 'block'); // Rendre tous les slides visibles pour le flexbox
 
                 // Logique pour mobile (points et défilement)
                 if (dotsContainer) {
                     testimonialSlides.forEach((_, index) => {
                         const dot = document.createElement('div');
                         dot.classList.add('testimonial-dot');
-                        if (index === 0) dot.classList.add('active');
+                        if (index === 0) dot.classList.add('active'); // Le premier point est actif
                         dotsContainer.appendChild(dot);
                     });
 
