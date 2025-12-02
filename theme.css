@@ -87,6 +87,8 @@ video {
     height: auto; /* Garde les bonnes proportions */
     display: block; /* Évite les marges indésirables */
     border-radius: 8px; /* Coins arrondis pour un look cohérent */
+    opacity: 1; /* S'assure que la vidéo n'est pas transparente */
+    mix-blend-mode: normal; /* Empêche les modes de fusion de couleur */
 }
 
 /* --- Styles pour les cartes (cards) --- */
