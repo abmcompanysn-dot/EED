@@ -81,6 +81,14 @@ section {
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 
+/* --- Styles pour les médias (vidéos, images) --- */
+video {
+    max-width: 100%; /* S'assure que la vidéo ne dépasse pas son conteneur */
+    height: auto; /* Garde les bonnes proportions */
+    display: block; /* Évite les marges indésirables */
+    border-radius: 8px; /* Coins arrondis pour un look cohérent */
+}
+
 /* --- Styles pour les cartes (cards) --- */
 .card { 
     background-color: var(--card-bg); /* Cartes en gris clair */
