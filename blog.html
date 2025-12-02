@@ -9,38 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="theme.css">
     <style>
-        /* Styles copiés depuis index.html pour la cohérence */
-        :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a;
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            background-color: var(--night-blue);
-            background-image: 
-                radial-gradient(var(--border-color) 1px, transparent 1px),
-                radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            background-attachment: fixed;
-            color: var(--luminous-white);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        body.no-scroll { overflow: hidden; }
-        section { padding: 80px 0; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
-        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
-        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
-        
         /* Styles pour les articles de blog */
         .blog-layout {
             display: grid;
@@ -55,14 +25,10 @@
         .article-card {
             display: flex;
             gap: 25px;
-            background-color: var(--dark-card);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .article-card:hover {
-            transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 191, 255, 0.15);
         }
         .article-card img {
@@ -79,25 +45,10 @@
             transform: translateY(20px);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
-        .article-card.visible { opacity: 1; transform: translateY(0); }
-        .article-card-simple { /* Ancien style pour la grille */
-            background-color: var(--dark-card);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .article-card:hover {
-            transform: translateY(-5px);
-        }
+        .article-card.visible { opacity: 1; transform: translateY(0); } 
         .article-content {
             flex: 1;
             padding: 25px;
-        }
-        .article-content h3 {
-            color: var(--neon-blue);
-            margin-top: 0;
-            margin-bottom: 15px;
         }
         .article-content h3 a {
             color: var(--neon-blue);
@@ -111,35 +62,31 @@
         .article-excerpt {
             margin-bottom: 20px;
         }
-        .btn { display: inline-block; text-align: center; padding: 10px 20px; background: var(--neon-blue); color: var(--night-blue); text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, box-shadow 0.3s; border: none; cursor: pointer; }
-        .btn:hover { box-shadow: 0 0 15px var(--neon-blue); transform: scale(1.03); }
 
         /* Styles pour la barre latérale */
         .blog-sidebar .sidebar-widget {
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
         }
-        .blog-sidebar h3 {
-            margin-top: 0;
-            color: var(--neon-blue);
-            font-size: 1.2em;
-        }
         #search-input {
             width: 100%;
             padding: 10px;
-            background-color: rgba(0,0,0,0.2);
+            background-color: var(--light-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
-            color: var(--luminous-white);
+            color: var(--text-dark);
         }
         #category-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        #category-list li a {
+        #category-list li {
+            border-bottom: 1px solid var(--border-color);
+        }
+        #category-list li a { 
             display: block;
             padding: 8px 0;
             color: var(--text-secondary);
@@ -147,26 +94,27 @@
             cursor: pointer;
         }
         #category-list li a:hover { color: var(--luminous-white); }
+        #category-list li a:hover { color: var(--primary-blue); }
 
         /* --- Styles pour le squelette de chargement --- */
         .skeleton-card {
             display: flex;
             gap: 25px;
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             border-radius: 10px;
             border: 1px solid var(--border-color);
             overflow: hidden;
         }
         .skeleton-image {
             width: 220px;
-            background-color: #2c2c54;
+            background-color: #e0e0e0;
             animation: pulse 1.5s infinite ease-in-out;
         }
         .skeleton-content { flex: 1; padding: 25px; }
-        .skeleton-line { height: 1em; background-color: #2c2c54; border-radius: 4px; margin-bottom: 10px; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton-line { height: 1em; background-color: #e0e0e0; border-radius: 4px; margin-bottom: 10px; animation: pulse 1.5s infinite ease-in-out; }
         .skeleton-line.short { width: 60%; }
         .skeleton-line.title { height: 1.5em; width: 80%; margin-bottom: 15px; }
-        @keyframes pulse { 0% { background-color: #2c2c54; } 50% { background-color: #3a3a6a; } 100% { background-color: #2c2c54; } }
+        @keyframes pulse { 0% { background-color: #e0e0e0; } 50% { background-color: #f0f0f0; } 100% { background-color: #e0e0e0; } }
 
 
         @media (max-width: 992px) {
@@ -196,6 +144,7 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
                 <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
@@ -215,6 +164,7 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="demande-priere.html" onclick="toggleMobileMenu()">Demande de Prière</a>
         <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
@@ -347,7 +297,7 @@
             grid.innerHTML = '';
             if (posts.length > 0) {
                 posts.forEach(post => {
-                    const card = document.createElement('article');
+                    const card = document.createElement('div');
                     card.className = 'article-card';
                     card.dataset.category = post.Categorie || '';
                     card.dataset.title = post.Titre.toLowerCase();

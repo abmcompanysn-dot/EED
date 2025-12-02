@@ -10,34 +10,14 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="footer.css">
     <style>
-        :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a;
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
-            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
-        }
-
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 40px 0; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
-        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
-        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
-        
         .hero-section {
             padding: 100px 0; text-align: center; border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg);
         }
-        .hero-section .section-title { font-size: 3.5em; color: var(--luminous-white); text-shadow: 0 0 15px var(--neon-blue); }
+        .hero-section .section-title { font-size: 3.5em; color: var(--text-dark); }
         .hero-section .section-subtitle { margin-bottom: 0; }
 
         .content-section {
@@ -45,15 +25,10 @@
             font-size: 1.1em;
         }
         .content-section h2 {
-            color: var(--neon-blue);
+            color: var(--primary-blue);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
             margin-bottom: 20px;
-        }
-
-        @media (max-width: 992px) {
-            nav ul.desktop-links { display: none; }
-            .menu-burger { display: block; }
         }
     </style>
 </head>
@@ -66,7 +41,8 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html" class="active">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html">Ateliers</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
@@ -85,7 +61,8 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="demande-priere.html" onclick="toggleMobileMenu()">Demande de Prière</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>

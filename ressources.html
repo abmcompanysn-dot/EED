@@ -10,36 +10,10 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="footer.css">
     <style>
-        /* public-styles.css */
-        :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a; /* Un bleu très sombre pour les cartes */
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
-            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        section { padding: 80px 0; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
-        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
-        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 600px; margin: 0 auto 60px auto; }
         .grid-3 { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); transition: transform 0.3s, box-shadow 0.3s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .card h3 { color: var(--neon-blue); margin-top: 0; font-family: 'Orbitron', sans-serif; }
-        .btn { display: inline-block; width: 100%; text-align: center; padding: 12px; background: var(--blue); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: transform 0.2s, opacity 0.2s; border: none; cursor: pointer; font-size: 1em; }
-        .btn:hover { opacity: 0.9; transform: scale(1.02); }
         
         /* Section Héros */
         .hero-section {
@@ -53,12 +27,11 @@
             background-repeat: no-repeat, no-repeat, repeat;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
-            background-blend-mode: normal, overlay, normal;
+            background-color: var(--card-bg);
         }
         .hero-section .section-title {
             font-size: 3.5em;
-            color: var(--luminous-white);
-            text-shadow: 0 0 15px var(--neon-blue);
+            color: var(--text-dark);
         }
         .hero-section .section-subtitle {
             margin-bottom: 0;
@@ -76,13 +49,13 @@
         .search-bar input, .search-bar select {
             width: 100%;
             padding: 12px;
-            background-color: var(--dark-card);
+            background-color: var(--light-bg);
             border: 1px solid var(--border-color);
-            border-radius: 5px; color: var(--luminous-white);
+            border-radius: 5px; color: var(--text-dark);
             font-size: 1em;
         }
         .resource-card {
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             border-radius: 10px;
             border: 1px solid var(--border-color);
             overflow: hidden;
@@ -99,7 +72,7 @@
         }
         .resource-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 191, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
         .resource-card img {
             width: 100%;
@@ -114,7 +87,7 @@
         }
         .resource-content h4 {
             font-family: 'Orbitron', sans-serif;
-            color: var(--neon-blue);
+            color: var(--primary-blue);
             margin: 0 0 10px 0;
             font-size: 1.2em;
         }
@@ -135,11 +108,6 @@
             font-style: italic;
             color: var(--text-secondary);
         }
-
-        @media (max-width: 992px) {
-            nav ul.desktop-links { display: none; }
-            .menu-burger { display: block; }
-        }
     </style>
 </head>
 <body>
@@ -151,6 +119,7 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
                 <li><a href="blog.html" >Blog</a></li>
                 <li><a href="ressources.html" >Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
@@ -167,6 +136,10 @@
 
    <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
     <div class="nav-links-mobile" id="mobile-menu">
+        <a href="index.html" onclick="toggleMobileMenu()">Accueil</a>
+        <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
+        <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
+        <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
     </div>
     <main>
         <section class="hero-section">

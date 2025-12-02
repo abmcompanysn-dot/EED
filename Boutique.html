@@ -10,91 +10,9 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="footer.css">
     <style>
-        /* public-styles.css */
-        :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a;
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
-            --success-color: #28a745;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            background-color: var(--night-blue);
-            background-image: 
-                radial-gradient(var(--border-color) 1px, transparent 1px),
-                radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            background-attachment: fixed;
-            color: var(--luminous-white);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container, .container-fluid {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Barre de Navigation Améliorée */
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-        nav a:hover, .nav-actions a.primary, nav a[style*="var(--text-light)"] {
-            color: var(--luminous-white);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-actions a.primary {
-            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red));
-            padding: 8px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        /* Sections Générales */
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Orbitron', sans-serif;
-            line-height: 1.2;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8em;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.1em;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 60px auto;
-        }
-
         /* Styles pour la barre de recherche et filtres */
         .filters-bar {
             display: flex;
@@ -105,9 +23,9 @@
             margin-right: auto;
         }
         .filters-bar input, .filters-bar select {
-            width: 100%; padding: 12px; background-color: rgba(0,0,0,0.2);
+            width: 100%; padding: 12px; background-color: var(--light-bg);
             border: 1px solid var(--border-color); border-radius: 5px;
-            color: var(--luminous-white); font-size: 1em;
+            color: var(--text-dark); font-size: 1em;
         }
         .filters-bar select { flex-basis: 200px; flex-shrink: 0; }
 
@@ -115,7 +33,7 @@
         .need-card {
             display: flex;
             flex-direction: column;
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             border-radius: 10px;
             border: 1px solid var(--border-color);
             overflow: hidden;
@@ -123,7 +41,7 @@
         }
         .need-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
         .need-card img {
             width: 100%;
@@ -136,59 +54,21 @@
             display: flex;
             flex-direction: column;
         }
-        .need-content h4 { margin: 0 0 10px 0; color: var(--neon-blue); }
+        .need-content h4 { margin: 0 0 10px 0; color: var(--primary-blue); }
         .need-content p { margin: 0 0 15px 0; color: var(--text-secondary); font-size: 0.9em; flex-grow: 1; }
-        .progress-bar { background-color: #2c2c54; border-radius: 5px; overflow: hidden; height: 10px; margin-bottom: 10px; }
-        .progress-bar-inner { background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); height: 100%; border-radius: 5px; }
+        .progress-bar { background-color: #e9ecef; border-radius: 5px; overflow: hidden; height: 10px; margin-bottom: 10px; }
+        .progress-bar-inner { background: var(--primary-blue); height: 100%; border-radius: 5px; }
         .progress-text { display: flex; justify-content: space-between; font-size: 0.8em; color: var(--text-secondary); margin-bottom: 15px; }
         .btn-support {
             margin-top: auto; /* Pousse le bouton en bas */
-            background: var(--neon-blue);
-            color: var(--night-blue);
+            background: var(--primary-blue);
+            color: var(--light-bg);
             text-align: center;
         }
 
         /* Squelette de chargement pour les besoins */
         .skeleton-card {
-            background-color: var(--dark-card); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden;
-        }
-        .skeleton-image { height: 200px; background-color: #2c2c54; animation: pulse 1.5s infinite ease-in-out; }
-        .skeleton-content { padding: 20px; }
-        .skeleton-line { height: 1em; background-color: #2c2c54; border-radius: 4px; margin-bottom: 10px; animation: pulse 1.5s infinite ease-in-out; }
-        .skeleton-line.short { width: 60%; }
-        .skeleton-line.title { height: 1.2em; width: 80%; margin-bottom: 15px; }
-
-        @keyframes pulse {
-            0% { background-color: #2c2c54; }
-            50% { background-color: #3a3a6a; }
-            100% { background-color: #2c2c54; }
-        }
-
-        /* Grilles et Cartes */
-        .grid-2, .grid-3 {
-            display: grid;
-            gap: 30px;
-        }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-
-        .card {
-            background-color: var(--dark-card);
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.2);
-        }
-
-        .card h3 {
-            color: var(--neon-blue);
-            margin-top: 0;
-            font-size: 1.5em;
+            background-color: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden;
         }
 
         /* Boutons */
@@ -196,8 +76,8 @@
             display: inline-block;
             text-align: center;
             padding: 12px 20px;
-            background: var(--neon-blue);
-            color: var(--night-blue);
+            background: var(--primary-blue);
+            color: var(--light-bg);
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
@@ -207,13 +87,13 @@
             font-size: 1em;
         }
         .btn:hover {
-            box-shadow: 0 0 15px var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 90, 156, 0.4);
             transform: scale(1.03);
         }
         .btn-gradient {
-            background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)) !important;
-            color: var(--luminous-white);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red)) !important;
+            color: var(--light-bg);
+            box-shadow: 0 0 15px rgba(225, 6, 0, 0.5);
         }
 
         /* Bouton Retour en Haut */
@@ -221,7 +101,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: var(--neon-blue);
+            background-color: var(--primary-blue);
             color: white;
             width: 50px;
             height: 50px;
@@ -232,27 +112,6 @@
             cursor: pointer;
             display: none; /* Caché par défaut */
             z-index: 999;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav ul.desktop-links { display: none; }
-            .nav-actions a.primary { display: none; }
-            .menu-burger { display: block; }
-            .logo img { height: 50px !important; }
-        }
-        .menu-burger { display: none; cursor: pointer; font-size: 1.8em; }
-        .nav-links-mobile { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 35, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 40px; font-size: 1.5em; }
-        .nav-links-mobile.active { display: flex; }
-        body.no-scroll { overflow: hidden; }
-
-        @media (max-width: 992px) {
-            nav ul.desktop-links { display: none; }
-            .nav-actions a.primary { display: none; }
-            .menu-burger { display: block; }
-            .section-title {
-                font-size: 2.2em;
-            }
         }
 
         /* Styles spécifiques à la page de dons */
@@ -269,7 +128,7 @@
             margin-bottom: 20px;
         }
         .donation-card .account-info {
-            background-color: rgba(0,0,0,0.2);
+            background-color: #e9ecef;
             padding: 15px;
             border-radius: 8px;
             font-weight: bold;
@@ -278,7 +137,7 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        .donation-card .account-info:hover { background-color: rgba(0,0,0,0.4); }
+        .donation-card .account-info:hover { background-color: #dee2e6; }
     </style>
 </head>
 <body>
@@ -290,7 +149,6 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="carrieres.html">Ateliers</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html" class="active">Faire un Don</a></li>
@@ -309,7 +167,6 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
-        <a href="carrieres.html" onclick="toggleMobileMenu()">Ateliers</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>
         <a href="index.html#contact" onclick="toggleMobileMenu()">Contact</a>
@@ -435,19 +292,19 @@
             navigator.clipboard.writeText(text.replace(/\s/g, '')).then(function() {
                 const originalText = element.innerHTML;
                 element.innerHTML = 'Copié !';
-                element.style.backgroundColor = 'var(--success-color)';
+                element.style.backgroundColor = 'var(--success-color)'; element.style.color = 'white';
                 setTimeout(function() {
                     element.innerHTML = originalText;
-                    element.style.backgroundColor = 'rgba(0,0,0,0.2)';
+                    element.style.backgroundColor = '#e9ecef'; element.style.color = 'var(--text-dark)';
                 }, 2000);
             }, function(err) {
                 console.error('Erreur de copie: ', err);
                 const originalText = element.innerHTML;
                 element.innerHTML = 'Erreur';
-                element.style.backgroundColor = 'var(--fire-red)';
+                element.style.backgroundColor = 'var(--error-color)'; element.style.color = 'white';
                  setTimeout(function() {
                     element.innerHTML = originalText;
-                    element.style.backgroundColor = 'rgba(0,0,0,0.2)';
+                    element.style.backgroundColor = '#e9ecef'; element.style.color = 'var(--text-dark)';
                 }, 2000);
             });
         }
@@ -461,12 +318,12 @@
             for (let i = 0; i < 3; i++) {
                 skeletonHTML += `
                     <div class="skeleton-card">
-                        <div class="skeleton-image"></div>
-                        <div class="skeleton-content">
-                            <div class="skeleton-line title"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                        </div>
+                        <div class="skeleton-image" style="background-color: #e0e0e0; animation: pulse 1.5s infinite ease-in-out; height: 200px;"></div>
+                        <div class="skeleton-content" style="padding: 20px;">
+                            <div class="skeleton-line" style="height: 1.2em; width: 80%; margin-bottom: 15px; background-color: #e0e0e0; animation: pulse 1.5s infinite ease-in-out;"></div>
+                            <div class="skeleton-line" style="height: 1em; background-color: #e0e0e0; animation: pulse 1.5s infinite ease-in-out; margin-bottom: 10px;"></div>
+                            <div class="skeleton-line" style="height: 1em; width: 60%; background-color: #e0e0e0; animation: pulse 1.5s infinite ease-in-out; margin-bottom: 10px;"></div>
+                        </div> 
                     </div>`;
             }
             needsGrid.innerHTML = skeletonHTML;
@@ -494,7 +351,7 @@
                                         <span>${parseInt(need.MontantActuel).toLocaleString('fr-FR')} CFA</span>
                                         <span>Objectif : ${parseInt(need.MontantObjectif).toLocaleString('fr-FR')} CFA</span>
                                     </div>
-                                    <a href="participer.html?id=${need.ID}" class="btn btn-support">Soutenir ce projet</a>
+                                    <a href="participer.html?id=${need.ID}" class="btn">Soutenir ce projet</a>
                                 </div>
                             `;
                             needsGrid.appendChild(card);
@@ -571,51 +428,6 @@
         }
 
     </script>
-    <style>
-        /* Style pour les versets bibliques défilants */
-        .bible-verse-marquee {
-            background-color: #f9f9f9;
-            color: #333;
-            font-style: italic;
-            font-size: 1.1em;
-            padding: 10px 0;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-            overflow: hidden; /* Cache le contenu qui dépasse */
-            white-space: nowrap; /* Empêche le retour à la ligne */
-        }
-
-        .marquee-content {
-            display: inline-block;
-            padding-left: 100%; /* Commence en dehors de l'écran à droite */
-            animation: marquee-scroll 30s linear infinite;
-        }
-
-        .marquee-content p {
-            display: inline-block;
-            margin: 0 40px; /* Espace entre les versets */
-        }
-
-        @keyframes marquee-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* Style amélioré pour les boutons de section */
-        .section-button {
-            background: linear-gradient(to right, #2c3e50, #3498db);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
-        }
-        .section-button:hover {
-            transform: scale(1.05);
-            cursor: pointer;
-        }
-    </style>
 </body>
 </html>
 

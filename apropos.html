@@ -10,34 +10,9 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="navbar.css">
     <style>
-        :root {
-            --primary-blue: #005a9c;
-            --primary-red: #e10600;
-            --light-bg: #FFFFFF;
-            --card-bg: #f8f9fa;
-            --text-dark: #212529;
-            --text-secondary: #6c757d;
-            --border-color: #dee2e6;
-        }
-        body {
-            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
-        main { padding-top: 80px; }
-        section { padding: 40px 0; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
-        .section-title { text-align: center; font-size: 2.8em; margin-bottom: 10px; }
-        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 700px; margin: 0 auto 60px auto; }
-        
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .card { background-color: var(--card-bg); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .card h3 { color: var(--primary-blue); }
-
         /* --- Styles pour la section Dirigeants --- */
         .animated-card {
             opacity: 0;
@@ -102,9 +77,6 @@
         }
         .leader-card-back h4 { color: var(--primary-blue); }
 
-        @media (max-width: 992px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -116,7 +88,8 @@
                 <li><a href="apropos.html" class="active">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-               <li><a href="blog.html" class="active">Blog</a></li>
+               <li><a href="blog.html">Blog</a></li>
+               <li><a href="demande-priere.html">Demande de Prière</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
@@ -135,6 +108,7 @@
         <a href="apropos.html" onclick="toggleMobileMenu()">À Propos</a>
         <a href="ministeres.html" onclick="toggleMobileMenu()">Ministères</a>
         <a href="evenements.html" onclick="toggleMobileMenu()">Événements</a>
+        <a href="demande-priere.html" onclick="toggleMobileMenu()">Demande de Prière</a>
         <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
         <a href="ressources.html" onclick="toggleMobileMenu()">Ressources</a>
         <a href="live.html" onclick="toggleMobileMenu()">Live</a>

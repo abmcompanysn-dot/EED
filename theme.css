@@ -1,0 +1,115 @@
+/* ==========================================================================
+   THÈME GLOBAL & STYLES DE BASE
+   ========================================================================== */
+
+/* --- Variables de couleur et de police --- */
+:root {
+    --primary-blue: #005a9c; /* Un bleu institutionnel */
+    --primary-red: #e10600; /* Un rouge vif mais pas agressif */
+    --light-bg: #FFFFFF; /* Fond blanc */
+    --card-bg: #f8f9fa; /* Gris très clair pour les cartes */
+    --text-dark: #212529; /* Texte noir/gris foncé */
+    --text-secondary: #6c757d; /* Texte secondaire gris */
+    --border-color: #dee2e6; /* Couleur de bordure claire */
+    --success-color: #28a745;
+    --error-color: #dc3545;
+}
+
+/* --- Styles généraux du corps de la page --- */
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* --- Conteneur principal --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Styles de base pour les titres --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1.2;
+}
+
+/* --- Styles pour les sections --- */
+main {
+    padding-top: 80px; /* Hauteur approx de la navbar */
+}
+
+section {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+}
+
+/* --- Styles pour les grilles --- */
+.grid-2, .grid-3 {
+    display: grid;
+    gap: 30px;
+}
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+/* --- Styles pour les cartes (cards) --- */
+.card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    color: var(--primary-blue);
+}
+
+/* --- Styles pour les boutons --- */
+.btn {
+    display: inline-block;
+    text-align: center;
+    padding: 12px 20px;
+    background: var(--primary-blue);
+    color: var(--light-bg);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    box-shadow: 0 0 15px rgba(0, 90, 156, 0.4);
+    transform: scale(1.03);
+}
+
+/* --- Responsive général --- */
+@media (max-width: 992px) {
+    .section-title { font-size: 2.2em; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}

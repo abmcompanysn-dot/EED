@@ -14,56 +14,10 @@
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="navbar.css">
 
     <style>
-        /* public-styles.css */
-        :root {
-            --primary-blue: #005a9c; /* Un bleu institutionnel */
-            --primary-red: #e10600; /* Un rouge vif mais pas agressif */
-            --light-bg: #FFFFFF; /* Fond blanc */
-            --card-bg: #f8f9fa; /* Gris très clair pour les cartes */
-            --text-dark: #212529; /* Texte noir/gris foncé */
-            --text-secondary: #6c757d; /* Texte secondaire gris */
-            --border-color: #dee2e6; /* Couleur de bordure claire */
-        }
-
-        /* ==================== STYLES GÉNÉRAUX DU CORPS DE LA PAGE ==================== */
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            /* Application du dégradé sur tout l'arrière-plan */
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Orbitron', sans-serif;
-            line-height: 1.2;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8em;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.1em;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 60px auto;
-        }
-
         /* ==================== SECTION HÉROS (BANNIÈRE PRINCIPALE) ==================== */
         .hero {
             position: relative;
@@ -113,48 +67,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* ==================== GRILLES ET CARTES (STYLES COMMUNS) ==================== */
-        .grid-2, .grid-3 {
-            display: grid;
-            gap: 30px;
-        }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-
-        .card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        /* ==================== BOUTONS ==================== */
-        .btn {
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            padding: 12px;
-            background: var(--primary-blue);
-            color: var(--light-bg);
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: transform 0.2s, opacity 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
         }
 
         /* ==================== DESIGN RESPONSIVE (ADAPTATION MOBILE) ==================== */
@@ -416,11 +328,7 @@
         .prayer-content h3 { font-size: 1.8em; color: var(--primary-blue); }
         @media (max-width: 992px) { .prayer-section-layout { grid-template-columns: 1fr; padding: 30px; } }
 
-        /* ==================== STYLES DES SECTIONS GÉNÉRALES ==================== */
-        section {
-            padding: 100px 0;
-        }
-
+        
         /* --- Styles pour la section Promo --- */
         .promo-card {
             display: grid;
@@ -477,6 +385,7 @@
                 <li><a href="apropos.html">À Propos</a></li>
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
@@ -610,7 +519,7 @@
         <section id="contact" class="container animated-card">
             <h2 class="section-title">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--dark-card); padding: 40px; border-radius: 15px;">
+            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--card-bg); padding: 40px; border-radius: 15px;">
                 <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none;">
                     <div class="form-group"><label for="contact-name">Votre Nom</label><input type="text" id="contact-name" class="form-control" required></div>
                     <div class="form-group"><label for="contact-email">Votre Email</label><input type="email" id="contact-email" class="form-control" required></div>
@@ -622,8 +531,8 @@
                 <div>
                     <div style="background: none; padding: 0; border: none;">
                         <h3>Nos Coordonnées</h3>
-                        <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
-                        <p style="color: var(--text-secondary);"><strong style="color: var(--luminous-white);">Téléphone :</strong><br>33 824 52 94</p>
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--text-dark);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
+                        <p style="color: var(--text-secondary);"><strong style="color: var(--text-dark);">Téléphone :</strong><br>33 824 52 94</p>
                     </div>
                     <div style="padding: 0; border-radius: 12px; margin-top: 20px;">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

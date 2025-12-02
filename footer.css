@@ -1,10 +1,10 @@
 /* ==================== FOOTER ==================== */
 .footer-section {
-    background: linear-gradient(135deg, var(--dark-card), #0d1117);
-    color: var(--text-secondary);
+    background-color: var(--card-bg);
+    color: var(--text-dark);
     padding: 60px 20px 30px;
     margin-top: 80px;
-    border-top: 2px solid var(--neon-blue);
+    border-top: 1px solid var(--border-color);
     font-size: 0.95em;
 }
 
@@ -32,7 +32,7 @@
 
 /* Titre */
 .footer-title {
-    color: var(--luminous-white);
+    color: var(--text-dark);
     font-family: 'Orbitron', sans-serif;
     margin-bottom: 18px;
     font-size: 1.25em;
@@ -48,12 +48,12 @@
     margin-bottom: 12px;
 }
 .footer-links a, .footer-contact a {
-    color: var(--text-secondary);
+    color: var(--text-dark);
     text-decoration: none;
     transition: color 0.3s, transform 0.3s;
 }
 .footer-links a:hover, .footer-contact a:hover {
-    color: var(--luminous-white);
+    color: var(--primary-blue);
     transform: translateX(5px);
 }
 
@@ -65,11 +65,11 @@
 }
 .social-icons a {
     font-size: 1.6em;
-    color: var(--text-secondary);
+    color: var(--text-dark);
     transition: color 0.3s, transform 0.3s;
 }
 .social-icons a:hover {
-    color: var(--neon-blue);
+    color: var(--primary-blue);
     transform: scale(1.2);
 }
 
