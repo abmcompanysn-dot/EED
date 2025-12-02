@@ -33,18 +33,19 @@
             /* Styles pour la barre de navigation transparente */
             header:not(.scrolled) nav .desktop-links a {
                 color: white; /* Liens en blanc */
-                background-color: transparent; /* Fond transparent par défaut */
-                border: 2px solid transparent; /* Bordure transparente par défaut */
-                padding: 8px 15px; /* Ajout d'un padding pour l'effet de bouton */
-                border-radius: 999px; /* Bordure arrondie */
-                transition: all 0.3s ease; /* Transition douce pour tous les états */
+                background-color: transparent;
+                border: none;
+                padding: 0; /* On retire le padding de l'effet bouton */
+                padding-bottom: 4px; /* Espace pour le soulignement */
+                position: relative;
+                transition: color 0.3s ease;
             }
             header:not(.scrolled) nav .desktop-links a.active,
             header:not(.scrolled) nav .desktop-links a:hover {
                 color: white;
-                /* Le "bouton" apparaît au survol */
-                background-color: rgba(255, 255, 255, 0.15);
-                border-color: rgba(255, 255, 255, 0.5);
+                background-color: transparent; /* On s'assure que le fond reste transparent */
+                border: none;
+                border-bottom: 2px solid white; /* Soulignement blanc simple */
             }
             header:not(.scrolled) nav .desktop-links a.active {
                 border-bottom: none; /* On retire le soulignement pour le lien actif */
