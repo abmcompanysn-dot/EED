@@ -19,7 +19,7 @@
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    background-color: var(--light-bg);
+    background-color: var(--card-bg); /* Fond de page légèrement gris */
     color: var(--text-dark);
     font-size: 16px;
     line-height: 1.6;
@@ -71,7 +71,7 @@ section {
 
 /* --- Styles pour les cartes (cards) --- */
 .card {
-    background-color: var(--card-bg);
+    background-color: var(--light-bg); /* Cartes en blanc pur */
     padding: 30px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
@@ -80,8 +80,8 @@ section {
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-    background-color: var(--light-bg);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
+    /* La couleur de fond ne change plus au survol, car elle est déjà blanche */
 }
 
 .card h3 {
