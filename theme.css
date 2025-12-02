@@ -19,7 +19,7 @@
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    background-color: var(--card-bg); /* Fond de page légèrement gris */
+    background-color: var(--light-bg); /* Fond de page blanc */
     color: var(--text-dark);
     font-size: 16px;
     line-height: 1.6;
@@ -71,17 +71,18 @@ section {
 
 /* --- Styles pour les cartes (cards) --- */
 .card {
-    background-color: var(--light-bg); /* Cartes en blanc pur */
+    background-color: var(--card-bg); /* Cartes en gris clair */
     padding: 30px;
     border-radius: 10px;
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color); /* Bordure générale légère */
+    border-top: 4px solid var(--primary-blue); /* Bordure supérieure colorée */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
-    /* La couleur de fond ne change plus au survol, car elle est déjà blanche */
+    background-color: var(--light-bg); /* Devient blanc au survol */
 }
 
 .card h3 {
