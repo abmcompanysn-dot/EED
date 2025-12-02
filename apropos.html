@@ -13,18 +13,18 @@
     <link rel="stylesheet" href="navbar.css">
     <style>
         :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a;
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
+            --primary-blue: #005a9c;
+            --primary-red: #e10600;
+            --light-bg: #FFFFFF;
+            --card-bg: #f8f9fa;
+            --text-dark: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
         }
         body {
             font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
-            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+            background-color: var(--light-bg);
+            color: var(--text-dark);
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
@@ -35,8 +35,8 @@
         .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-secondary); max-width: 700px; margin: 0 auto 60px auto; }
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .card { background-color: var(--dark-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .card h3 { color: var(--neon-blue); }
+        .card { background-color: var(--card-bg); padding: 30px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .card h3 { color: var(--primary-blue); }
 
         /* --- Styles pour la section Dirigeants --- */
         .animated-card {
@@ -72,7 +72,7 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 15px;
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             box-sizing: border-box;
         }
@@ -88,7 +88,7 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--neon-blue);
+            border: 3px solid var(--primary-blue);
             margin-bottom: 20px;
         }
         .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; }
@@ -100,7 +100,7 @@
             justify-content: center;
             padding: 30px;
         }
-        .leader-card-back h4 { color: var(--neon-blue); }
+        .leader-card-back h4 { color: var(--primary-blue); }
 
         @media (max-width: 992px) {
             .grid-2 { grid-template-columns: 1fr; }

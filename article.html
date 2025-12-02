@@ -9,18 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-blue: #00BFFF;
-            --fire-red: #FF4500;
-            --night-blue: #0A0A23;
-            --dark-card: #1a1a3a;
-            --luminous-white: #FFFFFF;
-            --text-secondary: #A9A9D4;
-            --border-color: #2c2c54;
+            --primary-blue: #005a9c;
+            --primary-red: #e10600;
+            --light-bg: #FFFFFF;
+            --card-bg: #f8f9fa;
+            --text-dark: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
         }
         body {
             font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
-            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
-            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+            background-color: var(--light-bg);
+            color: var(--text-dark);
         }
         /* Conteneurs pour centrage */
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
@@ -28,7 +28,7 @@
 
         header {
             background-color: rgba(10, 10, 35, 0.85);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(10px);
             padding: 10px 0;
             position: fixed;
@@ -39,10 +39,10 @@
         .logo img { transition: transform 0.3s ease; }
         .logo:hover img { transform: scale(1.05); }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 30px; }
-        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
-        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--neon-blue), var(--fire-red)); transition: all 0.3s ease-in-out; }
+        nav a { color: var(--luminous-white); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 5px; }
+        nav ul a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 50%; background: linear-gradient(90deg, var(--primary-blue), var(--primary-red)); transition: all 0.3s ease-in-out; }
         nav ul a:hover::after { width: 100%; left: 0; }
-        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--luminous-white); }
+        nav a:hover, .nav-actions a.primary, nav a[style*="var(--luminous-white)"] { color: var(--light-bg); }
         .menu-burger {
             display: none;
             width: 40px;
@@ -86,7 +86,7 @@
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; line-height: 1.2; }
         
         .article-header { text-align: center; margin-bottom: 40px; }
-        .article-title { font-size: 3em; color: var(--neon-blue); margin-bottom: 15px; }
+        .article-title { font-size: 3em; color: var(--primary-blue); margin-bottom: 15px; }
         .article-meta { color: var(--text-secondary); }
         .article-image { width: 100%; height: auto; max-height: 450px; object-fit: cover; border-radius: 10px; margin-bottom: 40px; }
         .article-content { line-height: 1.8; font-size: 1.1em; }
@@ -98,9 +98,9 @@
         .article-content h3 { 
             margin-top: 2.5em;
             margin-bottom: 1em;
-            color: var(--neon-blue);
+            color: var(--primary-blue);
             font-size: 1.4em;
-            border-left: 3px solid var(--fire-red);
+            border-left: 3px solid var(--primary-red);
             padding-left: 15px;
         }
         .article-content blockquote { 
@@ -108,8 +108,8 @@
             font-style: italic;
             margin: 2em 20px;
             padding: 20px;
-            border-left: 5px solid var(--neon-blue);
-            background-color: var(--dark-card);
+            border-left: 5px solid var(--primary-blue);
+            background-color: var(--card-bg);
             border-radius: 0 8px 8px 0;
         }
         .article-content blockquote footer {
@@ -164,7 +164,7 @@
 
         /* --- Styles pour la section des commentaires --- */
         .comments-section {
-            background-color: var(--dark-card);
+            background-color: var(--card-bg);
             padding: 30px;
             border-radius: 10px;
             margin-top: 60px;
@@ -183,7 +183,7 @@
         }
         .comment-author {
             font-weight: bold;
-            color: var(--neon-blue);
+            color: var(--primary-blue);
             margin-bottom: 5px;
         }
         .comment-date {
@@ -204,33 +204,32 @@
         }
         .comment-form input[type="text"],
         .comment-form textarea {
-            background-color: #2c2c54;
+            background-color: var(--light-bg);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 10px 15px;
-            color: var(--luminous-white);
+            color: var(--text-dark);
             font-family: 'Open Sans', sans-serif;
             font-size: 1em;
         }
         .comment-form textarea { min-height: 100px; }
         /* Styles pour le skeleton loader de l'article */
         .skeleton-article .skeleton-line {
-            height: 1em;
-            background-color: #2c2c54;
+            height: 1em; background-color: #e0e0e0;
             border-radius: 4px;
             margin: 0 auto 15px auto;
             animation: pulse 1.5s infinite ease-in-out;
         }
         .skeleton-article .title { height: 2.5em; width: 70%; margin-bottom: 20px; }
         .skeleton-article .meta { height: 1em; width: 40%; margin-bottom: 40px; }
-        .skeleton-article .image { height: 400px; width: 100%; background-color: #2c2c54; border-radius: 10px; margin-bottom: 40px; animation: pulse 1.5s infinite ease-in-out; }
+        .skeleton-article .image { height: 400px; width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-bottom: 40px; animation: pulse 1.5s infinite ease-in-out; }
         .skeleton-article .text { width: 100%; }
         .skeleton-article .text.short { width: 80%; }
 
         @keyframes pulse {
-            0% { background-color: #2c2c54; }
-            50% { background-color: #3a3a6a; }
-            100% { background-color: #2c2c54; }
+            0% { background-color: #e0e0e0; }
+            50% { background-color: #f0f0f0; }
+            100% { background-color: #e0e0e0; }
         }
 
         /* MEDIA QUERIES pour le mobile */
@@ -368,7 +367,7 @@
                                         <input type="text" id="comment-author" name="author" required>
                                         <label for="comment-text">Votre commentaire :</label>
                                         <textarea id="comment-text" name="commentText" required></textarea>
-                                        <button type="submit" class="share-btn" style="background: var(--neon-blue); border: none;">Envoyer</button>
+                                        <button type="submit" class="share-btn" style="background: var(--primary-blue); border: none;">Envoyer</button>
                                     </form>
                                 </section>
                             </article>
