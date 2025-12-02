@@ -1,28 +1,29 @@
-/* ==========================================================================
-   THÈME GLOBAL & STYLES DE BASE
+/* ========================================================================== 
+   THÈME GLOBAL & STYLES MODERNES 
    ========================================================================== */
 
 /* --- Variables de couleur et de police --- */
 :root {
-    --primary-blue: #005a9c; /* Un bleu institutionnel */
-    --primary-red: #e10600; /* Un rouge vif mais pas agressif */
-    --light-bg: #FFFFFF; /* Fond blanc */
-    --card-bg: #f8f9fa; /* Gris très clair pour les cartes */
-    --text-dark: #212529; /* Texte noir/gris foncé */
-    --text-secondary: #6c757d; /* Texte secondaire gris */
-    --border-color: #dee2e6; /* Couleur de bordure claire */
-    --success-color: #28a745;
-    --error-color: #dc3545;
+    --primary-blue: #2563eb;   /* Bleu moderne, lumineux */
+    --primary-red: #ef4444;    /* Rouge élégant, plus doux */
+    --light-bg: #f9fafb;       /* Fond gris très clair, moins agressif que blanc pur */
+    --card-bg: #ffffff;        /* Cartes blanches pour contraste net */
+    --text-dark: #111827;      /* Noir profond pour lisibilité */
+    --text-secondary: #6b7280; /* Gris neutre moderne */
+    --border-color: #e5e7eb;   /* Bordure douce */
+    --success-color: #10b981;  /* Vert moderne (emerald) */
+    --error-color: #f43f5e;    /* Rouge vif mais élégant */
+    --accent-gradient: linear-gradient(135deg, #2563eb, #9333ea); /* Dégradé bleu-violet */
 }
 
 /* --- Styles généraux du corps de la page --- */
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    background-color: var(--light-bg); /* Fond de page blanc */
+    background-color: var(--light-bg);
     color: var(--text-dark);
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 /* --- Conteneur principal --- */
@@ -32,72 +33,74 @@ body {
     padding: 0 20px;
 }
 
-/* --- Styles de base pour les titres --- */
+/* --- Titres --- */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Orbitron', sans-serif;
     line-height: 1.2;
+    color: var(--primary-blue);
 }
 
-/* --- Styles pour les sections --- */
+/* --- Sections --- */
 main {
-    padding-top: 80px; /* Hauteur approx de la navbar */
+    padding-top: 80px;
 }
 
 section {
-    padding: 60px 0;
+    padding: 70px 0;
 }
 
 .section-title {
     text-align: center;
     font-size: 2.8em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .section-subtitle {
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: var(--text-secondary);
     max-width: 700px;
     margin: 0 auto 60px auto;
 }
 
-/* --- Styles pour les grilles --- */
+/* --- Grilles --- */
 .grid-2, .grid-3 {
     display: grid;
-    gap: 30px;
+    gap: 35px;
 }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
-/* --- Styles pour les cartes (cards) --- */
+/* --- Cartes --- */
 .card {
-    background-color: var(--card-bg); /* Cartes en gris clair */
+    background-color: var(--card-bg);
     padding: 30px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color); /* Bordure générale légère */
-    border-top: 4px solid var(--primary-blue); /* Bordure supérieure colorée */
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
-    background-color: var(--light-bg); /* Devient blanc au survol */
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
 }
 
 .card h3 {
     color: var(--primary-blue);
 }
 
-/* --- Styles pour les boutons --- */
+/* --- Boutons --- */
 .btn {
     display: inline-block;
     text-align: center;
-    padding: 12px 20px;
-    background: var(--primary-blue);
-    color: var(--light-bg);
+    padding: 14px 24px;
+    background: var(--accent-gradient);
+    color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.3s;
     border: none;
@@ -106,11 +109,11 @@ section {
 }
 
 .btn:hover {
-    box-shadow: 0 0 15px rgba(0, 90, 156, 0.4);
-    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+    transform: scale(1.05);
 }
 
-/* --- Responsive général --- */
+/* --- Responsive --- */
 @media (max-width: 992px) {
     .section-title { font-size: 2.2em; }
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
