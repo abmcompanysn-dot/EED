@@ -21,7 +21,7 @@
         /* ==================== SECTION HÉROS (BANNIÈRE PRINCIPALE) ==================== */
         .hero {
             position: relative;
-            height: 95vh; /* Prend 95% de la hauteur de l'écran pour une meilleure visibilité */
+            height: 100vh; /* Prend 100% de la hauteur de l'écran */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -46,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 10, 35, 0.6); /* Superposition pour la lisibilité du texte */
+            background-color: rgba(10, 10, 35, 0.7); /* Superposition plus sombre pour une meilleure lisibilité */
             z-index: -1;
         }
         .hero-text-content h1 {
@@ -405,8 +405,6 @@
     <div class="nav-links-mobile" id="mobile-menu">
     </div>
 
-    <main>
-
     <!-- ---------- Section Héros (Bannière) ---------- -->
     <section class="hero">
         <video autoplay loop muted playsinline class="hero-video">
@@ -418,6 +416,8 @@
             <h1>Église Évangélique de Dakar</h1>
         </div>
     </section>
+
+    <main>
 
     <!-- ==================== CONTENU PRINCIPAL DE LA PAGE ==================== -->
         <section id="next-event" class="container" style="display: none;">
