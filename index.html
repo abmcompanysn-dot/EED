@@ -30,13 +30,15 @@
         @media (min-width: 993px) { /* Uniquement sur ordinateur */
             header {
                 background: transparent; /* Fond initial transparent */
-                transition: background-color 0.4s ease;
-            } 
+                /* Animate both background-color and the blur effect for a smoother appearance */
+                transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+            }
             header.scrolled {
                 background: rgba(10, 10, 35, 0.85); /* Fond sombre au défilement */
                 backdrop-filter: blur(10px);
+                /* Add the -webkit- prefix for better browser compatibility (e.g., older Safari) */
                 -webkit-backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for separation */
             }
             /* Styles pour la barre de navigation transparente */
             header:not(.scrolled) nav .desktop-links a {
@@ -73,7 +75,7 @@
             height: 100vh; /* Prend 100% de la hauteur de l'écran */
             display: flex;
             align-items: center;
-            justify-content: center; 
+            justify-content: center;
             text-align: center;
             padding: 0 20px;
             background: none; /* Annule le fond blanc des sections pour laisser voir la vidéo */
@@ -104,7 +106,7 @@
         }
         .hero-text-content h1 {
             font-size: 3.8em; /* Taille légèrement augmentée */
-            margin-bottom: 0.3em; 
+            margin-bottom: 0.3em;
             /* --- Nouvelle animation subtile --- */
             opacity: 0; /* Commence invisible */
             transform: translateY(20px); /* Commence légèrement décalé vers le bas */
@@ -262,28 +264,6 @@
             transform: translateY(0);
         }
 
-        /* ==================== COMPTE À REBOURS ==================== */
-        #next-event {
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            background-color: transparent;
-            border: none;
-        }
-        #countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            text-align: center;
-            margin-top: 30px;
-            flex-wrap: wrap; /* Pour les petits écrans */
-        }
-        #countdown-timer > div {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            min-width: 90px;
-            border: 1px solid var(--border-color);
-        }
         #countdown-timer span {
             display: block;
         }
@@ -498,8 +478,7 @@
             <h1>Lumière du Futur</h1>
             <p class="tagline">Ancrés dans la foi, tournés vers l'avenir.</p>
             <div class="hero-buttons">
-                <a href="apropos.html" class="btn-hero secondary">En savoir plus</a>
-                <a href="evenements.html" class="btn-hero primary">Nos Événements</a>
+                <a href="apropos.html" class="btn-hero primary">En savoir plus</a>
             </div>
         </div>
     </section>
@@ -524,13 +503,13 @@
             <p class="section-subtitle">Laissez la parole de Dieu illuminer votre cœur et vous remplir de sa paix.</p>
             <div class="carousel-container">
                 <div class="carousel-slide active" style="background-image: url('r/a.jpg');">
-                    <div class="slide-content"> 
+                    <div class="slide-content">
                         <h3>"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux."</h3>
                         <p>Matthieu 18:20</p>
                     </div>
                 </div>
                 <!-- Les autres slides seront ajoutées par JavaScript -->
-                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button> 
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
                 <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
             </div>
         </section>
@@ -541,7 +520,7 @@
                     <img src="r/p.png" alt="Demande de prière">
                 </div> 
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2> 
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
                     <a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
@@ -603,12 +582,12 @@
 <section id="ressources-promo" class="container animated-card zoom-in" style="padding-top: 40px; padding-bottom: 0;">
             <div class="promo-card">
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2> 
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
                     <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
                 </div> 
-             <div class="prayer-image-container">
+                <div class="prayer-image-container">
                     <img src="r/rs.svg" alt="Bibliothèque de ressources">
                 </div>
             </div>
@@ -800,7 +779,7 @@
             border: 2px solid var(--border-color);
         }
         .testimonial-carousel-container .carousel-btn.prev { left: -15px; }
-        .testimonial-carousel-container .carousel-btn.next { right: -15px; } 
+        .testimonial-carousel-container .carousel-btn.next { right: -15px; }
 
         /* Styles responsives pour le carrousel de témoignages sur mobile */
         @media (max-width: 992px) {
