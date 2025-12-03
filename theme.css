@@ -7,7 +7,7 @@
     --primary-blue: #005a9c; /* Un bleu institutionnel */
     --primary-red: #e10600; /* Conservé pour les erreurs, mais non utilisé dans le thème principal */
     --light-bg: #FFFFFF; /* Texte et éléments clairs */
-    --card-bg: #1a202c; /* Fond des cartes (bleu très sombre) */
+    --card-bg: #1a202c; /* Conservé pour les cartes, mais pas pour les sections */
     --text-dark: #edf2f7; /* Texte principal (presque blanc) */
     --text-secondary: #a0aec0; /* Texte secondaire (gris clair) */
     --border-color: #2d3748; /* Couleur de bordure sombre */
@@ -25,7 +25,7 @@ body {
     line-height: 1.6;
 
     /* Nouvel arrière-plan sombre et épuré */
-    background-color: #1ea4f8; /* Bleu nuit très sombre */
+    background-color: #1ea4f8; 
     background-image: 
         radial-gradient(ellipse 50% 80% at 20% 25%, rgba(0, 90, 156, 0.1), transparent), /* Ellipse bleue diffuse */
         radial-gradient(ellipse 40% 60% at 80% 75%, rgba(0, 90, 156, 0.08), transparent); /* Seconde ellipse bleue */
@@ -53,9 +53,10 @@ main {
 section {
     padding: 80px 0;
     margin-bottom: 40px; /* Espace entre les sections */
-    background-color: var(--card-bg); /* Fond sombre pour faire ressortir la section */
+    background-color: var(--light-bg); /* Fond clair pour s'harmoniser avec le body bleu */
     box-shadow: 0 10px 60px rgba(0, 0, 0, 0.04); /* Ombre subtile pour l'effet de profondeur */
     border-radius: 12px; /* Coins légèrement arrondis */
+    color: #333; /* Texte sombre pour la lisibilité sur fond clair */
 }
 
 .section-title {
@@ -67,7 +68,7 @@ section {
 .section-subtitle {
     text-align: center;
     font-size: 1.1em;
-    color: var(--text-secondary);
+    color: #666; /* Gris moyen pour le sous-titre */
     max-width: 700px;
     margin: 0 auto 60px auto;
 }
@@ -92,18 +93,17 @@ video {
 
 /* --- Styles pour les cartes (cards) --- */
 .card {
-    background-color: transparent; /* Fond transparent pour se fondre dans la section */
+    background-color: var(--card-bg); /* Fond sombre pour contraster avec la section claire */
     padding: 30px;
     border-radius: 10px;
-    border: 1px solid var(--border-color); /* Bordure générale légère */
+    border: none; /* Plus besoin de bordure avec le contraste de fond */
     border-top: 4px solid var(--primary-blue); /* Bordure supérieure colorée */
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    background-color: var(--light-bg); /* Devient blanc au survol */
+    box-shadow: 0 20px 35px rgba(0, 90, 156, 0.2);
 }
 
 .card h3 {
