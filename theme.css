@@ -15,11 +15,6 @@
     --error-color: #dc3545;
 }
 
-/* --- Comportement de défilement --- */
-html {
-    scroll-behavior: smooth; /* Active le défilement fluide pour les ancres */
-}
-
 /* --- Styles généraux du corps de la page --- */
 body {
     font-family: 'Open Sans', sans-serif;
@@ -30,7 +25,7 @@ body {
     line-height: 1.6;
 
     /* Nouvel arrière-plan sombre et épuré */
-    background-color: #0f172a; /* Bleu nuit très sombre */
+    background-color: #1ea4f8; /* Bleu nuit très sombre */
     background-image: 
         radial-gradient(ellipse 50% 80% at 20% 25%, rgba(0, 90, 156, 0.1), transparent), /* Ellipse bleue diffuse */
         radial-gradient(ellipse 40% 60% at 80% 75%, rgba(0, 90, 156, 0.08), transparent); /* Seconde ellipse bleue */
@@ -201,15 +196,10 @@ video {
 }
 
 
-/* --- Animations au défilement --- */
-/* État initial des éléments à animer. Ils sont invisibles et décalés vers le bas. */
-.scroll-animate {
+/* Classe à ajouter (via JS) aux éléments pour les animer au défilement */
+.animate-on-scroll {
+    /* Initialement masqué et prêt pour l'animation */
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-/* Classe ajoutée par JS quand l'élément est visible pour lancer l'animation. */
-.scroll-animate.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(20px);
+    animation: fade-in-up 0.8s ease-out forwards;
 }
