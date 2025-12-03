@@ -2,11 +2,12 @@
   "name": "Lumière du Futur - Église Évangélique de Dakar",
   "short_name": "Lumière du Futur",
   "description": "Annoncer l'Évangile, former des disciples, et manifester l'amour de Christ à Dakar et au-delà.",
-  "start_url": "/index.html",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#005a9c",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "icons": [
     {
       "src": "r/icons/icon-192x192.png",
@@ -28,6 +29,36 @@
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Faire un Don",
+      "short_name": "Don",
+      "description": "Soutenir la mission de l'église",
+      "url": "/Boutique.html",
+      "icons": [{ "src": "r/icons/shortcut-don.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Événements à venir",
+      "short_name": "Événements",
+      "description": "Voir les prochains événements",
+      "url": "/evenements.html",
+      "icons": [{ "src": "r/icons/shortcut-event.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Culte en Direct",
+      "short_name": "Live",
+      "description": "Regarder le culte en direct",
+      "url": "/live.html",
+      "icons": [{ "src": "r/icons/shortcut-live.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "r/screenshots/screenshot1.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg"
     }
   ]
 }

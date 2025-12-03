@@ -1,5 +1,6 @@
-const CACHE_NAME = 'lumiere-du-futur-cache-v1';
-// Liste des fichiers à mettre en cache dès l'installation.
+const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2';
+const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2';
+
 const urlsToCache = [
   '/',
   'index.html',
@@ -27,58 +28,72 @@ const urlsToCache = [
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap'
 ];
 
-// Étape 1: Installation du Service Worker et mise en cache initiale
+// Installation du Service Worker : mise en cache des ressources statiques
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.open(STATIC_CACHE_NAME)
       .then(cache => {
-        console.log('Cache ouvert');
-        // addAll est atomique : si un fichier échoue, toute l'opération échoue.
+        console.log('Mise en cache des ressources statiques');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Étape 2: Stratégie de cache "Cache d'abord, puis réseau"
-// C'est ce qui rend l'application ultra-rapide et disponible hors ligne.
+// Interception des requêtes réseau
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Si la ressource est dans le cache, on la retourne directement.
-        if (response) {
-          return response;
-        }
-        // Sinon, on va la chercher sur le réseau.
-        return fetch(event.request).then(
-          networkResponse => {
-            // On ne met en cache que les requêtes GET valides.
-            if (!networkResponse || networkResponse.status !== 200 || event.request.method !== 'GET') {
-              return networkResponse;
-            }
-            // On clone la réponse car elle ne peut être lue qu'une fois.
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-            return networkResponse;
-          }
-        );
-      })
-  );
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Stratégie "Stale-While-Revalidate" pour les pages HTML et les assets locaux (CSS/JS)
+  if (url.origin === self.origin && (request.destination === 'document' || request.destination === 'script' || request.destination === 'style')) {
+    event.respondWith(staleWhileRevalidate(request));
+  } 
+  // Stratégie "Cache First" pour les autres ressources (images, vidéos, polices)
+  else {
+    event.respondWith(cacheFirst(request));
+  }
 });
 
-// Étape 3: Nettoyage des anciens caches
-// Cette étape est importante pour les mises à jour.
+// Stratégie : Cache d'abord, puis réseau (pour les images, polices, etc.)
+async function cacheFirst(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      const cache = await caches.open(DYNAMIC_CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    // Gérer l'échec de la requête réseau (ex: hors ligne)
+    console.error('Fetch failed; returning offline fallback.', error);
+    // Optionnel: retourner une image ou une page de fallback
+    return new Response(null, { status: 404 });
+  }
+}
+
+// Stratégie : Stale-While-Revalidate (pour HTML, CSS, JS)
+async function staleWhileRevalidate(request) {
+  const cache = await caches.open(DYNAMIC_CACHE_NAME);
+  const cachedResponse = await cache.match(request);
+  const fetchedResponsePromise = fetch(request).then(res => {
+    cache.put(request, res.clone());
+    return res;
+  });
+  return cachedResponse || fetchedResponsePromise;
+}
+
+// Nettoyage des anciens caches lors de l'activation
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
+  const cacheWhitelist = [STATIC_CACHE_NAME, DYNAMIC_CACHE_NAME];
+  event.respondWith(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // Si le cache n'est pas dans la liste blanche, on le supprime.
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
@@ -86,26 +101,22 @@ self.addEventListener('activate', event => {
     })
   );
 });
-
-// Étape 4: Écoute des notifications push
+// --- Logique pour les Notifications Push (inchangée) ---
 self.addEventListener('push', event => {
-  const data = event.data.json(); // Récupère les données envoyées (titre, corps, etc.)
+  const data = event.data.json();
   console.log('Notification push reçue:', data);
-
   const options = {
     body: data.body,
-    icon: 'r/icons/icon-192x192.png', // Icône de la notification
-    badge: 'r/icons/icon-192x192.png', // Icône pour la barre de statut (Android)
+    icon: 'r/icons/icon-192x192.png',
+    badge: 'r/icons/icon-192x192.png',
     data: {
-      url: data.url || '/' // URL à ouvrir au clic
+      url: data.url || '/'
     }
   };
-
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
-// Étape 5: Gestion du clic sur la notification
 self.addEventListener('notificationclick', event => {
-  event.notification.close(); // Ferme la notification
-  event.waitUntil(clients.openWindow(event.notification.data.url)); // Ouvre l'URL associée
+  event.notification.close();
+  event.waitUntil(clients.openWindow(event.notification.data.url));
 });
