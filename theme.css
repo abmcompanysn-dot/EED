@@ -14,7 +14,7 @@
 /* --- Styles généraux du corps de la page --- */
 body {
     font-family: 'Open Sans', sans-serif;
-    margin: 0;
+    margin: 0; 
     color: var(--text-dark);
     font-size: 16px;
     overflow-x: hidden; /* Empêche le décalage horizontal causé par les animations de glissement */
@@ -37,7 +37,7 @@ body {
 
 /* --- Styles de base pour les titres --- */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Open Sans', sans-serif; /* Police plus douce pour les titres */
     line-height: 1.2;
 }
 

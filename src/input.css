@@ -17,3 +17,16 @@
     --text-secondary: theme('colors.text-secondary');
   }
 }
+
+/* --- Styles pour le formulaire de contact moderne (Floating Labels) --- */
+@layer components {
+  .form-control {
+    @apply w-full p-4 bg-slate-900/50 border border-border-color rounded-lg text-white placeholder-transparent transition-all;
+    @apply focus:border-primary-blue focus:ring-1 focus:ring-primary-blue focus:outline-none;
+  }
+  .floating-label {
+    @apply absolute top-4 left-4 text-text-secondary pointer-events-none transition-all;
+    @apply peer-placeholder-shown:top-4 peer-placeholder-shown:text-base;
+    @apply peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-blue;
+  }
+}

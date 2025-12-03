@@ -15,7 +15,7 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['Open Sans', 'sans-serif'],
-        'orbitron': ['Orbitron', 'sans-serif']
+        'orbitron': ['Open Sans', 'sans-serif'] // Remplacé par Open Sans
       },
       // 1. Définir les keyframes de notre animation personnalisée
       keyframes: {

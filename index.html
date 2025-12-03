@@ -31,7 +31,7 @@
             header {
                 background: transparent; /* Fond initial transparent */
                 transition: background-color 0.4s ease;
-            }
+            } 
             header.scrolled {
                 background: rgba(10, 10, 35, 0.85); /* Fond sombre au défilement */
                 backdrop-filter: blur(10px);
@@ -73,7 +73,7 @@
             height: 100vh; /* Prend 100% de la hauteur de l'écran */
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; 
             text-align: center;
             padding: 0 20px;
             background: none; /* Annule le fond blanc des sections pour laisser voir la vidéo */
@@ -104,7 +104,7 @@
         }
         .hero-text-content h1 {
             font-size: 3.8em; /* Taille légèrement augmentée */
-            margin-bottom: 0.3em;
+            margin-bottom: 0.3em; 
             /* --- Nouvelle animation subtile --- */
             opacity: 0; /* Commence invisible */
             transform: translateY(20px); /* Commence légèrement décalé vers le bas */
@@ -248,46 +248,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-
-        /* --- Styles pour la section Témoignages --- */
-        .testimonial-card {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .testimonial-author img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-blue);
-        }
-        .testimonial-author h4 {
-            margin: 0;
-            color: var(--text-dark);
-        }
-        .testimonial-author p {
-            margin: 0;
-            font-size: 0.9em;
-            color: var(--text-secondary);
-        }
-        .testimonial-card blockquote {
-            margin: 0;
-            font-style: italic;
-            color: var(--text-secondary);
-            border-left: 3px solid var(--primary-red);
-            padding-left: 15px;
-        }
-        .testimonial-card .card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
         }
 
         /* --- Nouveaux styles pour les animations au défilement --- */
@@ -548,13 +508,13 @@
 
     <!-- ==================== CONTENU PRINCIPAL DE LA PAGE ==================== -->
         <section id="next-event" class="container" style="display: none;">
-            <h2 class="section-title text-4xl font-orbitron">Prochain Événement</h2>
+            <h2 class="section-title text-4xl font-sans">Prochain Événement</h2>
             <p id="event-title" class="section-subtitle text-xl mt-2">Chargement de l'événement...</p>
             <div id="countdown-timer" class="mt-8 flex justify-center gap-5 text-center flex-wrap">
-                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="days" class="block font-orbitron text-4xl text-primary-blue">00</span><span class="text-text-secondary">Jours</span></div>
-                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="hours" class="block font-orbitron text-4xl text-primary-blue">00</span><span class="text-text-secondary">Heures</span></div>
-                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="minutes" class="block font-orbitron text-4xl text-primary-blue">00</span><span class="text-text-secondary">Minutes</span></div>
-                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="seconds" class="block font-orbitron text-4xl text-primary-blue">00</span><span class="text-text-secondary">Secondes</span></div>
+                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="days" class="block font-sans text-4xl text-primary-blue">00</span><span class="text-text-secondary">Jours</span></div>
+                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="hours" class="block font-sans text-4xl text-primary-blue">00</span><span class="text-text-secondary">Heures</span></div>
+                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="minutes" class="block font-sans text-4xl text-primary-blue">00</span><span class="text-text-secondary">Minutes</span></div>
+                <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="seconds" class="block font-sans text-4xl text-primary-blue">00</span><span class="text-text-secondary">Secondes</span></div>
             </div>
         </section>
 
@@ -564,13 +524,13 @@
             <p class="section-subtitle">Laissez la parole de Dieu illuminer votre cœur et vous remplir de sa paix.</p>
             <div class="carousel-container">
                 <div class="carousel-slide active" style="background-image: url('r/a.jpg');">
-                    <div class="slide-content">
+                    <div class="slide-content"> 
                         <h3>"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d'eux."</h3>
                         <p>Matthieu 18:20</p>
                     </div>
                 </div>
                 <!-- Les autres slides seront ajoutées par JavaScript -->
-                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button> 
                 <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
             </div>
         </section>
@@ -581,7 +541,7 @@
                     <img src="r/p.png" alt="Demande de prière">
                 </div> 
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2> 
                     <h3>Demander une Prière</h3>
                     <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
                     <a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
@@ -589,44 +549,53 @@
             </div>
         </section>
 
-        <section id="temoignages" class="container animated-card">
+        <section id="temoignages" class="container animated-card text-center">
             <h2 class="section-title">Paroles de la Communauté</h2>
             <p class="section-subtitle">Découvrez comment Dieu agit dans la vie de nos membres.</p>
-            <div class="testimonial-carousel-container">
-                <div class="testimonial-carousel-inner">
-                    <div class="testimonial-slide active">
-                        <div class="card testimonial-card">
-                            <div class="testimonial-author">
-                                <img src="r/LOGO.svg" alt="Photo de Marie Ndiaye">
+            
+            <div class="relative max-w-3xl mx-auto">
+                <!-- Conteneur pour le défilement -->
+                <div id="testimonial-carousel-inner" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide transition-transform duration-500 ease-in-out md:overflow-hidden">
+                    
+                    <!-- Témoignage 1 -->
+                    <div class="testimonial-slide min-w-full snap-center p-4">
+                        <div class="bg-card-bg p-8 rounded-xl border border-border-color flex flex-col gap-5 text-left">
+                            <div class="flex items-center gap-4">
+                                <img src="r/LOGO.svg" alt="Photo de Marie Ndiaye" class="w-16 h-16 rounded-full object-cover border-2 border-primary-blue">
                                 <div>
-                                    <h4>Marie Ndiaye</h4>
-                                    <p>Membre depuis 5 ans</p>
+                                    <h4 class="font-bold text-lg text-white">Marie Ndiaye</h4>
+                                    <p class="text-sm text-text-secondary">Membre depuis 5 ans</p>
                                 </div>
                             </div>
-                            <blockquote>
+                            <blockquote class="italic text-text-secondary border-l-4 border-primary-red pl-4">
                                 "Depuis que j'ai rejoint cette église, ma vie a été transformée. J'ai trouvé une vraie famille spirituelle et un soutien constant dans la prière. C'est une bénédiction."
                             </blockquote>
                         </div>
                     </div>
-                    <div class="testimonial-slide">
-                        <div class="card testimonial-card">
-                            <div class="testimonial-author">
-                                <img src="r/LOGO.svg" alt="Photo de David Faye">
+
+                    <!-- Témoignage 2 -->
+                    <div class="testimonial-slide min-w-full snap-center p-4">
+                        <div class="bg-card-bg p-8 rounded-xl border border-border-color flex flex-col gap-5 text-left">
+                            <div class="flex items-center gap-4">
+                                <img src="r/LOGO.svg" alt="Photo de David Faye" class="w-16 h-16 rounded-full object-cover border-2 border-primary-blue">
                                 <div>
-                                    <h4>David Faye</h4>
-                                    <p>Visiteur régulier</p>
+                                    <h4 class="font-bold text-lg text-white">David Faye</h4>
+                                    <p class="text-sm text-text-secondary">Visiteur régulier</p>
                                 </div>
                             </div>
-                            <blockquote>
+                            <blockquote class="italic text-text-secondary border-l-4 border-primary-red pl-4">
                                 "L'accueil chaleureux et la profondeur des enseignements m'ont tout de suite marqué. Chaque culte est une source d'inspiration et de renouvellement pour ma semaine."
                             </blockquote>
                         </div>
                     </div>
-                    <!-- Ajoutez d'autres <div class="testimonial-slide">...</div> ici pour plus de témoignages -->
                 </div>
-                <button class="carousel-btn prev" onclick="moveTestimonialSlide(-1)">&#10094;</button>
-                <button class="carousel-btn next" onclick="moveTestimonialSlide(1)">&#10095;</button>
-                <div class="testimonial-dots"></div>
+
+                <!-- Boutons de navigation (Desktop) -->
+                <button onclick="moveTestimonialSlide(-1)" class="hidden md:block absolute top-1/2 left-[-20px] -translate-y-1/2 bg-transparent border-2 border-border-color text-text-secondary w-11 h-11 rounded-full hover:bg-primary-blue hover:border-primary-blue hover:text-white transition-all">&#10094;</button>
+                <button onclick="moveTestimonialSlide(1)" class="hidden md:block absolute top-1/2 right-[-20px] -translate-y-1/2 bg-transparent border-2 border-border-color text-text-secondary w-11 h-11 rounded-full hover:bg-primary-blue hover:border-primary-blue hover:text-white transition-all">&#10095;</button>
+
+                <!-- Indicateurs (Mobile) -->
+                <div id="testimonial-dots" class="md:hidden flex justify-center gap-2 mt-4"></div>
             </div>
         </section>
 
@@ -634,7 +603,7 @@
 <section id="ressources-promo" class="container animated-card zoom-in" style="padding-top: 40px; padding-bottom: 0;">
             <div class="promo-card">
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2> 
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
                     <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
@@ -648,37 +617,28 @@
         <section id="contact" class="container animated-card">
             <h2 class="section-title hover:animate-shake cursor-pointer">Nous Contacter</h2>
             <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--card-bg); padding: 40px; border-radius: 15px; overflow: hidden;">
-                <form id="main-conta hover:animate-shake cursor-pointer">Nous Contacter</h2>
-            <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid-2" style="gap: 40px; align-items: flex-start; background-color: var(--card-bg); padding: 40px; border-radius: 15px; overflow: hidden;">
-                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" style="background: none; padding: 0; border: none; display: flex; flex-direction: column; gap: 25px;">
-                    <div class="form-group floating-label">
-                        <input type="text" id="contact-name" class="form-control" placeholder=" " required>
-                        <label for="contact-name">Votre Nom</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start bg-card-bg p-10 rounded-2xl overflow-hidden">
+                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6">
+                    <div class="relative">
+                        <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
+                        <label for="contact-name" class="floating-label">Votre Nom</label>
                     </div>
-                    <div class="form-group floating-label">
-                        <input type="email" id="contact-email" class="form-control" placeholder=" " required>
-                        <label for="contact-email">Votre Email</label>
+                    <div class="relative">
+                        <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
+                        <label for="contact-email" class="floating-label">Votre Email</label>
                     </div>
-                    <div class="form-group floating-label">
-                        <textarea id="contact-message" class="form-control" rows="5" placeholder=" " required></textarea>
-                        <label for="contact-message">Votre Message</label>
+                    <div class="relative">
+                        <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+                        <label for="contact-message" class="floating-label">Votre Message</label>
                     </div>
-                    <!-- Le champ sujet a été retiré pour simplifier, mais peut être rajouté sur le même modèle -->
-                    <!-- <div class="form-group floating-label"><input type="text" id="contact-subject" class="form-control" placeholder=" "><label for="contact-subject">Sujet</label></div> -->
                     <button type="submit" id="contact-submit-btn" class="btn-lux-rounded">Envoyer le Message</button>
                     <div id="contact-form-message" class="form-message"></div>
                 </form>
                 <div>
-                    <div style="background: none; padding: 0; border: none;">
-                        <h3>Nos Coordonnées</h3>
-                        <p style="color: var(--text-secondary);"><strong style="color: var(--text-dark);">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
-                        <p style="color: var(--text-secondary);"><strong style="color: var(--text-dark);">Téléphone :</strong><br>33 824 52 94</p>
-                    </div>
-                    <div style="padding: 0; border-radius: 12px; margin-top: 20px;">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+                    <h3 class="text-2xl font-sans mb-4">Nos Coordonnées</h3>
+                    <p class="text-text-secondary mb-2"><strong class="text-white">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
+                    <p class="text-text-secondary"><strong class="text-white">Téléphone :</strong><br>33 824 52 94</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" class="border-0 rounded-lg mt-5" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </section>
@@ -838,23 +798,9 @@
             display: block; /* Rend les boutons visibles */
             background: transparent;
             border: 2px solid var(--border-color);
-            color: var(--text-secondary);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .testimonial-carousel-container .carousel-btn:hover {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
-            color: white;
         }
         .testimonial-carousel-container .carousel-btn.prev { left: -15px; }
-        .testimonial-carousel-container .carousel-btn.next { right: -15px; }
+        .testimonial-carousel-container .carousel-btn.next { right: -15px; } 
 
         /* Styles responsives pour le carrousel de témoignages sur mobile */
         @media (max-width: 992px) {
@@ -878,9 +824,6 @@
                 scroll-snap-align: center;
             }
             .testimonial-carousel-container .carousel-btn { display: none; } /* Cache les flèches */
-            .testimonial-dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-            .testimonial-dot { width: 10px; height: 10px; background-color: var(--border-color); border-radius: 50%; transition: background-color 0.3s; }
-            .testimonial-dot.active { background-color: var(--primary-blue); }
         }
 
         @media (max-width: 768px) {
@@ -954,29 +897,6 @@
         .animated-card.is-visible {
             opacity: 1;
             transform: translateY(0) translateX(0) scale(1);
-        }
-
-        /* --- Styles pour le formulaire de contact moderne --- */
-        .form-group.floating-label {
-            position: relative;
-        }
-        .form-group.floating-label .form-control {
-            padding: 18px 15px; /* Plus d'espace vertical */
-        }
-        .form-group.floating-label label {
-            position: absolute;
-            top: 18px;
-            left: 15px;
-            color: var(--text-secondary);
-            pointer-events: none;
-            transition: all 0.2s ease;
-        }
-        .form-group.floating-label .form-control:focus + label,
-        .form-group.floating-label .form-control:not(:placeholder-shown) + label {
-            top: 5px;
-            left: 15px;
-            font-size: 0.8em;
-            color: var(--primary-blue);
         }
 
         /* Rendre le fond des sections transparent */
@@ -1306,7 +1226,7 @@
                         document.getElementById('event-link').href = "evenements.html";
                     }
                     eventSection.style.display = 'block';
-
+ 
                     const countdownInterval = setInterval(() => {
                         const currentTime = new Date().getTime();
                         const distance = nextEvent.dateObj.getTime() - currentTime;
