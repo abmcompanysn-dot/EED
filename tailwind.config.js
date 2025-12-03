@@ -16,6 +16,18 @@ module.exports = {
       fontFamily: {
         'sans': ['Open Sans', 'sans-serif'],
         'orbitron': ['Orbitron', 'sans-serif']
+      },
+      // 1. Définir les keyframes de notre animation personnalisée
+      keyframes: {
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
+        }
+      },
+      // 2. Créer la classe utilitaire pour utiliser cette animation
+      animation: {
+        shake: 'shake 0.5s ease-in-out',
       }
     },
   },
