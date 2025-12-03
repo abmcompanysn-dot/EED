@@ -153,6 +153,7 @@ video {
         opacity: 1;
         transform: translateY(0);
     }
+}
 
 /* ==================== BANNIÈRE D'INSTALLATION PWA (TOAST) ==================== */
 .pwa-toast {
