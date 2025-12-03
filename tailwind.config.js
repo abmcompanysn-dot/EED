@@ -10,13 +10,17 @@ module.exports = {
       colors: {
         'primary-blue': '#005a9c',
         'primary-red': '#e53935',
-        'card-bg': '#1e293b', // --card-bg
-        'border-color': '#334155', // --border-color
-        'text-secondary': '#94a3b8' // --text-secondary
+        'card-bg': '#1e293b',
+        'border-color': '#334155',
+        'text-dark': '#edf2f7',
+        'text-secondary': '#94a3b8',
+        'light-bg': '#FFFFFF',
+        'success': '#28a745',
+        'error': '#dc3545',
       },
       fontFamily: {
         'sans': ['Open Sans', 'sans-serif'],
-        'orbitron': ['Open Sans', 'sans-serif'] // Remplacé par Open Sans
+        'orbitron': ['Orbitron', 'sans-serif']
       },
       // 1. Définir les keyframes de notre animation personnalisée
       keyframes: {

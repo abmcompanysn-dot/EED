@@ -14,12 +14,60 @@
     --primary-red: theme('colors.primary-red');
     --card-bg: theme('colors.card-bg');
     --border-color: theme('colors.border-color');
+    --text-dark: theme('colors.text-dark');
     --text-secondary: theme('colors.text-secondary');
+    --light-bg: theme('colors.light-bg');
+    --success-color: theme('colors.success');
+    --error-color: theme('colors.error');
+  }
+
+  body {
+    @apply font-sans m-0 text-text-dark text-base overflow-x-hidden leading-relaxed;
+    background-color: #1ea4f8; 
+    background-image: 
+        radial-gradient(ellipse 50% 80% at 20% 25%, rgba(0, 90, 156, 0.1), transparent),
+        radial-gradient(ellipse 40% 60% at 80% 75%, rgba(0, 90, 156, 0.08), transparent);
+    background-attachment: fixed;
+  }
+
+  main {
+    padding-top: 80px; /* Hauteur approx de la navbar, peut rester ici */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans leading-tight;
   }
 }
 
 /* --- Styles pour le formulaire de contact moderne (Floating Labels) --- */
 @layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-5; /* max-w-7xl est 1280px, proche de 1200px */
+  }
+
+  .section-title {
+    @apply text-center text-5xl mb-2.5;
+  }
+
+  .section-subtitle {
+    @apply text-center text-lg text-gray-500 max-w-3xl mx-auto mb-14;
+  }
+
+  .card {
+    @apply bg-card-bg p-8 rounded-lg border-t-4 border-primary-blue transition-all duration-300;
+  }
+  .card:hover {
+    @apply -translate-y-2 shadow-2xl shadow-primary-blue/20;
+  }
+
+  .btn {
+    @apply inline-block text-center py-3 px-5 bg-primary-blue text-light-bg no-underline rounded font-bold transition-all duration-200 cursor-pointer text-base;
+  }
+  .btn:hover {
+    @apply shadow-lg shadow-primary-blue/40 scale-105;
+  }
+
+  /* --- Formulaires de contact et prière --- */
   .form-control {
     @apply w-full p-4 bg-slate-900/50 border border-border-color rounded-lg text-white placeholder-transparent transition-all;
     @apply focus:border-primary-blue focus:ring-1 focus:ring-primary-blue focus:outline-none;
@@ -28,5 +76,26 @@
     @apply absolute top-4 left-4 text-text-secondary pointer-events-none transition-all;
     @apply peer-placeholder-shown:top-4 peer-placeholder-shown:text-base;
     @apply peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary-blue;
+  }
+
+  .form-message {
+    @apply hidden p-4 rounded-md mt-5 font-bold;
+  }
+  .form-message.success {
+    @apply bg-success text-light-bg;
+  }
+  .form-message.error {
+    @apply bg-error text-light-bg;
+  }
+
+  /* --- Bannière PWA --- */
+  .pwa-toast {
+    @apply fixed bottom-5 left-1/2 w-[95%] max-w-lg bg-slate-700 text-light-bg p-4 rounded-lg shadow-2xl flex items-center justify-between z-[1002];
+    /* État initial pour l'animation */
+    @apply invisible opacity-0 -translate-x-1/2 translate-y-[150%];
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0.5s;
+  }
+  .pwa-toast.show {
+    @apply visible opacity-100 translate-y-0;
   }
 }
