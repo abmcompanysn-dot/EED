@@ -21,6 +21,7 @@ body {
     margin: 0;
     color: var(--text-dark);
     font-size: 16px;
+    overflow-x: hidden; /* Empêche le décalage horizontal causé par les animations de glissement */
     line-height: 1.6;
 
     /* Arrière-plan artistique avec des ellipses de couleur diffuses */
