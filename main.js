@@ -251,7 +251,8 @@ async function subscribeToPushNotifications() {
  * Initialise la demande de permission pour les notifications.
  */
 function initializePushNotifications() {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    // Vérification plus robuste pour la compatibilité des notifications push
+    if (!('serviceWorker' in navigator && 'PushManager' in window)) {
         console.warn('Les notifications push ne sont pas supportées par ce navigateur.');
         return;
     }
