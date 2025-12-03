@@ -1,6 +1,6 @@
 /* ==================== FOOTER ==================== */
 .footer-section {
-    background-color: var(--card-bg);
+    background-color: #0f172a; /* Fond bleu nuit comme le body */
     color: var(--text-dark);
     padding: 40px 20px 20px; /* Padding réduit */
     margin-top: 60px; /* Marge supérieure réduite */

@@ -5,12 +5,12 @@
 /* --- Variables de couleur et de police --- */
 :root {
     --primary-blue: #005a9c; /* Un bleu institutionnel */
-    --primary-red: #e10600; /* Un rouge vif mais pas agressif */
-    --light-bg: #FFFFFF; /* Fond blanc */
-    --card-bg: #f8f9fa; /* Gris très clair pour les cartes */
-    --text-dark: #212529; /* Texte noir/gris foncé */
-    --text-secondary: #6c757d; /* Texte secondaire gris */
-    --border-color: #dee2e6; /* Couleur de bordure claire */
+    --primary-red: #e10600; /* Conservé pour les erreurs, mais non utilisé dans le thème principal */
+    --light-bg: #FFFFFF; /* Texte et éléments clairs */
+    --card-bg: #1a202c; /* Fond des cartes (bleu très sombre) */
+    --text-dark: #edf2f7; /* Texte principal (presque blanc) */
+    --text-secondary: #a0aec0; /* Texte secondaire (gris clair) */
+    --border-color: #2d3748; /* Couleur de bordure sombre */
     --success-color: #28a745;
     --error-color: #dc3545;
 }
@@ -24,13 +24,11 @@ body {
     overflow-x: hidden; /* Empêche le décalage horizontal causé par les animations de glissement */
     line-height: 1.6;
 
-    /* Arrière-plan artistique avec des ellipses de couleur diffuses */
-    background-color: #dcdcdc; /* Couleur de base plus foncée */
+    /* Nouvel arrière-plan sombre et épuré */
+    background-color: #0f172a; /* Bleu nuit très sombre */
     background-image: 
-        radial-gradient(ellipse 40% 50% at 20% 25%, rgba(0, 90, 156, 0.08), transparent), /* Ellipse bleue */
-        radial-gradient(ellipse 30% 40% at 80% 75%, rgba(225, 6, 0, 0.06), transparent),  /* Ellipse rouge */
-        radial-gradient(ellipse 50% 60% at 50% 100%, rgba(20, 20, 20, 0.05), transparent), /* Ellipse noire/grise */
-        linear-gradient(to bottom, #e9e9e9, #dcdcdc); /* Dégradé de base assombri */
+        radial-gradient(ellipse 50% 80% at 20% 25%, rgba(0, 90, 156, 0.1), transparent), /* Ellipse bleue diffuse */
+        radial-gradient(ellipse 40% 60% at 80% 75%, rgba(0, 90, 156, 0.08), transparent); /* Seconde ellipse bleue */
     background-attachment: fixed; /* L'arrière-plan reste fixe au défilement */
 }
 
@@ -55,7 +53,7 @@ main {
 section {
     padding: 80px 0;
     margin-bottom: 40px; /* Espace entre les sections */
-    background-color: var(--light-bg); /* Fond blanc pour faire ressortir la section */
+    background-color: var(--card-bg); /* Fond sombre pour faire ressortir la section */
     box-shadow: 0 10px 60px rgba(0, 0, 0, 0.04); /* Ombre subtile pour l'effet de profondeur */
     border-radius: 12px; /* Coins légèrement arrondis */
 }
@@ -93,13 +91,13 @@ video {
 }
 
 /* --- Styles pour les cartes (cards) --- */
-.card { 
-    background-color: var(--card-bg); /* Cartes en gris clair */
+.card {
+    background-color: transparent; /* Fond transparent pour se fondre dans la section */
     padding: 30px;
     border-radius: 10px;
     border: 1px solid var(--border-color); /* Bordure générale légère */
     border-top: 4px solid var(--primary-blue); /* Bordure supérieure colorée */
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
 .card:hover {
@@ -163,7 +161,7 @@ video {
     transform: translateX(-50%);
     width: 95%;
     max-width: 500px;
-    background-color: var(--text-dark);
+    background-color: #2d3748; /* Fond gris-bleu sombre */
     color: var(--light-bg);
     padding: 15px 20px;
     border-radius: 8px;
