@@ -510,16 +510,18 @@
         let currentTestimonialSlide = 0;
         document.addEventListener('DOMContentLoaded', () => {
             const innerCarousel = document.getElementById('testimonial-carousel-inner');
-            const testimonialSlides = document.querySelectorAll('#testimonial-carousel-inner .testimonial-slide');
-            const dotsContainer = document.querySelector('.testimonial-dots');
 
-            if (testimonialSlides.length > 0) {
+            // S'assurer que le carrousel existe sur la page actuelle
+            if (innerCarousel) {
+                const testimonialSlides = document.querySelectorAll('#testimonial-carousel-inner .testimonial-slide');
+                const dotsContainer = document.querySelector('.testimonial-dots');
+
                 // Logique pour desktop (flèches)
                 const showTestimonialSlide = (index) => {
                     currentTestimonialSlide = index;
                     const offset = -index * 100;
                     if (window.innerWidth > 992) { // Applique la transformation seulement sur desktop
-                        innerCarousel.style.transform = `translateX(${offset}%)`;
+                        innerCarousel.style.transform = `translateX(${offset}%)`; // Cette ligne causait l'erreur
                     }
                     testimonialSlides.forEach((slide, i) => {
                         slide.classList.toggle('active', i === index);
@@ -565,7 +567,6 @@
                     }
                     updateDots(0);
                 }
-
                 showTestimonialSlide(0); // Affiche le premier slide au chargement
             }
         });
