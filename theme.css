@@ -196,10 +196,15 @@ video {
 }
 
 
-/* Classe à ajouter (via JS) aux éléments pour les animer au défilement */
-.animate-on-scroll {
-    /* Initialement masqué et prêt pour l'animation */
+/* --- Animations au défilement --- */
+/* État initial des éléments à animer. Ils sont invisibles et décalés vers le bas. */
+.scroll-animate {
     opacity: 0;
-    transform: translateY(20px);
-    animation: fade-in-up 0.8s ease-out forwards;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+/* Classe ajoutée par JS quand l'élément est visible pour lancer l'animation. */
+.scroll-animate.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
