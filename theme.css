@@ -4,13 +4,9 @@
 
 /* --- Variables de couleur et de police --- */
 :root {
-    --primary-blue: #005a9c; /* Un bleu institutionnel */
-    --primary-red: #e10600; /* Conservé pour les erreurs, mais non utilisé dans le thème principal */
-    --light-bg: #FFFFFF; /* Texte et éléments clairs */
-    --card-bg: #1a202c; /* Conservé pour les cartes, mais pas pour les sections */
-    --text-dark: #edf2f7; /* Texte principal (presque blanc) */
-    --text-secondary: #a0aec0; /* Texte secondaire (gris clair) */
-    --border-color: #2d3748; /* Couleur de bordure sombre */
+    /* Les variables de couleur sont maintenant définies dans src/input.css via Tailwind */
+    --light-bg: #FFFFFF;
+    --text-dark: #edf2f7;
     --success-color: #28a745;
     --error-color: #dc3545;
 }

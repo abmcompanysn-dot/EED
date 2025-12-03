@@ -2,3 +2,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 
+  Définition des variables CSS globales (Custom Properties) 
+  en utilisant les valeurs du thème Tailwind.
+  Ceci devient la source de vérité pour les couleurs de tout le site.
+*/
+@layer base {
+  :root {
+    --primary-blue: theme('colors.primary-blue');
+    --primary-red: theme('colors.primary-red');
+    --card-bg: theme('colors.card-bg');
+    --border-color: theme('colors.border-color');
+    --text-secondary: theme('colors.text-secondary');
+  }
+}
