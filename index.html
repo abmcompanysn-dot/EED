@@ -276,6 +276,11 @@
             border-left: 3px solid var(--primary-red);
             padding-left: 15px;
         }
+        .testimonial-card .card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+        }
 
         /* --- Nouveaux styles pour les animations au défilement --- */
         .animated-card {
@@ -857,29 +862,50 @@
         .carousel-btn.next { right: 15px; }
 
         /* --- Styles pour le carrousel de témoignages --- */
+        #temoignages {
+            text-align: center; /* Centre le titre et le sous-titre */
+        }
         .testimonial-carousel-container {
             position: relative;
             max-width: 750px; /* Largeur maximale pour le contenu du témoignage */
             margin: 0 auto;
-            padding: 0 60px; /* Espace pour les boutons de navigation */
+            overflow: hidden; /* Cache les slides qui ne sont pas actifs */
+        }
+        .testimonial-carousel-inner {
+            display: flex; /* Utilise flexbox pour aligner les slides */
+            transition: transform 0.5s ease-in-out; /* Animation de glissement */
         }
         .testimonial-slide {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 0 15px; /* Léger espacement pour ne pas coller les bords */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
         .testimonial-slide.active {
-            display: block;
+            opacity: 1;
         }
-        .testimonial-slide { min-width: 100%; box-sizing: border-box; }
         .testimonial-carousel-container .carousel-btn {
             display: block; /* Rend les boutons visibles */
-            background: rgba(44, 62, 80, 0.5);
-            padding: 10px 15px;
-            position: absolute; top: 50%; transform: translateY(-50%);
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .testimonial-carousel-container .carousel-btn.prev { left: 0; }
-        .testimonial-carousel-container .carousel-btn.next { right: 0; }
-        @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
+        .testimonial-carousel-container .carousel-btn:hover {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+        }
+        .testimonial-carousel-container .carousel-btn.prev { left: -15px; }
+        .testimonial-carousel-container .carousel-btn.next { right: -15px; }
 
         /* Styles responsives pour le carrousel de témoignages sur mobile */
         @media (max-width: 992px) {
@@ -892,12 +918,13 @@
                 scroll-snap-type: x mandatory;
                 gap: 20px;
                 padding: 0 20px 20px 20px; /* Espace pour ne pas coller les bords et pour la barre de défilement */
+                transform: none !important; /* Annule la transformation pour le défilement natif */
                 -ms-overflow-style: none;  /* IE and Edge */
                 scrollbar-width: none;  /* Firefox */
             }
             .testimonial-carousel-inner::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
             .testimonial-slide {
-                display: block; /* Remplacer display:none */
+                opacity: 1; /* Toujours visible sur mobile */
                 flex: 0 0 90%; /* Chaque slide prend 90% de la largeur */
                 scroll-snap-align: center;
             }
@@ -905,6 +932,15 @@
             .testimonial-dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
             .testimonial-dot { width: 10px; height: 10px; background-color: var(--border-color); border-radius: 50%; transition: background-color 0.3s; }
             .testimonial-dot.active { background-color: var(--primary-blue); }
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-carousel-container .carousel-btn {
+                display: none; /* Cache les flèches sur les très petits écrans */
+            }
+            .testimonial-carousel-container {
+                padding: 0; /* Retire le padding pour laisser le défilement prendre toute la place */
+            }
         }
 
         #blog-promo .card {
@@ -1236,14 +1272,18 @@
 
             if (testimonialSlides.length > 0) {
                 // Logique pour desktop (flèches)
-                function showTestimonialSlide(index) {
+                const showTestimonialSlide = (index) => {
+                    currentTestimonialSlide = index;
                     const offset = -index * 100;
-                    innerCarousel.style.transform = `translateX(${offset}%)`;
+                    if (window.innerWidth > 992) { // Applique la transformation seulement sur desktop
+                        innerCarousel.style.transform = `translateX(${offset}%)`;
+                    }
                     testimonialSlides.forEach((slide, i) => {
                         slide.classList.toggle('active', i === index);
                     });
                 }
 
+                // La fonction est attachée à window pour être accessible depuis le HTML
                 window.moveTestimonialSlide = function(n) {
                     currentTestimonialSlide = (currentTestimonialSlide + n + testimonialSlides.length) % testimonialSlides.length;
                     showTestimonialSlide(currentTestimonialSlide);
@@ -1251,7 +1291,7 @@
                 testimonialSlides.forEach(s => s.style.display = 'block'); // Rendre tous les slides visibles pour le flexbox
 
                 // Logique pour mobile (points et défilement)
-                if (dotsContainer) {
+                if (dotsContainer && window.innerWidth <= 992) {
                     testimonialSlides.forEach((_, index) => {
                         const dot = document.createElement('div');
                         dot.classList.add('testimonial-dot');
@@ -1282,6 +1322,8 @@
                         });
                     }
                 }
+
+                showTestimonialSlide(0); // Affiche le premier slide au chargement
             }
         });
 
