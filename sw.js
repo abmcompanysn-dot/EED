@@ -86,3 +86,26 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
+// Étape 4: Écoute des notifications push
+self.addEventListener('push', event => {
+  const data = event.data.json(); // Récupère les données envoyées (titre, corps, etc.)
+  console.log('Notification push reçue:', data);
+
+  const options = {
+    body: data.body,
+    icon: 'r/icons/icon-192x192.png', // Icône de la notification
+    badge: 'r/icons/icon-192x192.png', // Icône pour la barre de statut (Android)
+    data: {
+      url: data.url || '/' // URL à ouvrir au clic
+    }
+  };
+
+  event.waitUntil(self.registration.showNotification(data.title, options));
+});
+
+// Étape 5: Gestion du clic sur la notification
+self.addEventListener('notificationclick', event => {
+  event.notification.close(); // Ferme la notification
+  event.waitUntil(clients.openWindow(event.notification.data.url)); // Ouvre l'URL associée
+});

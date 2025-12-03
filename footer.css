@@ -81,6 +81,14 @@
     font-size: 0.9em;
 }
 
+/* --- Colonne Notifications --- */
+.footer-col .btn-notify {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
     /* Supprimer centrage forcé */

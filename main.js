@@ -201,3 +201,72 @@ function setupScrollAnimationForResources() {
     const cards = document.querySelectorAll('.resource-card');
     cards.forEach(card => observer.observe(card));
 }
+
+/**
+ * ==================================================================
+ * Logique pour les Notifications Push
+ * ==================================================================
+ */
+
+const VAPID_PUBLIC_KEY = 'BEl-P_g_2G323oXgS3Y-s8g3Vz3a3_wX3g3Vz3a3_wX3g3Vz3a3_wX3g3Vz3a3_wX3g3Vz3a3_w=';
+
+/**
+ * Convertit une clé VAPID base64 en Uint8Array.
+ */
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
+
+/**
+ * Demande la permission pour les notifications et abonne l'utilisateur.
+ */
+async function subscribeToPushNotifications() {
+    try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+
+        console.log('Abonnement Push réussi:', subscription);
+
+        // Envoyer l'abonnement au serveur
+        await callApi('saveSubscription', { subscription: subscription });
+        alert('Vous êtes maintenant abonné aux notifications !');
+
+    } catch (error) {
+        console.error('Échec de l\'abonnement aux notifications push:', error);
+        alert('Impossible de vous abonner aux notifications. Avez-vous bien donné la permission ?');
+    }
+}
+
+/**
+ * Initialise la demande de permission pour les notifications.
+ */
+function initializePushNotifications() {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        console.warn('Les notifications push ne sont pas supportées par ce navigateur.');
+        return;
+    }
+
+    const notificationButton = document.getElementById('subscribe-notifications-btn');
+    if (notificationButton) {
+        notificationButton.addEventListener('click', () => {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    subscribeToPushNotifications();
+                }
+            });
+        });
+    }
+}
+
+// Appeler la fonction d'initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', initializePushNotifications);
