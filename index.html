@@ -332,9 +332,11 @@
 
         /* --- Styles pour la section Statistiques --- */
         #stats {
-            background-color: var(--card-bg); /* Fond gris clair pour contraster */
+            background-color: #0f172a; /* Fond bleu nuit, identique au body */
             padding-top: 60px;
             padding-bottom: 60px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
         }
         .stats-grid {
             display: grid;
@@ -342,47 +344,38 @@
             gap: 30px;
             text-align: center;
         }
+        .stat-item {
+            background-color: var(--card-bg); /* Fond des cartes sombre */
+            padding: 30px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .stat-item:hover {
+            background-color: #2d3748; /* S'éclaircit légèrement au survol */
+            border-color: var(--primary-blue);
+        }
         .stat-item i {
             font-size: 2.5em;
             color: var(--primary-blue);
             margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .stat-item:hover i {
+            transform: scale(1.1);
         }
         .stat-number {
             display: block;
             font-family: 'Orbitron', sans-serif;
             font-size: 3em;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--light-bg); /* Texte en blanc */
         }
         .stat-label {
             font-size: 1.1em;
             color: var(--text-secondary);
             margin-top: 5px;
         }
-        .stat-item {
-            background-color: var(--light-bg);
-            padding: 30px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        /* --- Nouvelles animations au survol --- */
-        .stat-item {
-            position: relative; /* Nécessaire pour le pseudo-élément de bordure */
-            overflow: hidden; /* Cache la bordure au repos */
-        }
-        .stat-item::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 4px; background: var(--primary-blue);
-            transform: translateX(-100%); transition: transform 0.4s ease-out;
-        }
-        .stat-item:hover { /* Effet d'élévation existant */
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 90, 156, 0.1);
-        }
-        .stat-item:hover::after { transform: translateX(0); } /* Fait apparaître la bordure */
-        .stat-item:hover i { transform: scale(1.1); color: var(--primary-red); } /* Anime l'icône */
-        .stat-item:hover .stat-number { color: var(--primary-blue); } /* Colore le nombre */
         .btn-lux-rounded {
             display: inline-block;
             padding: 14px 32px;
