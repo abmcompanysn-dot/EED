@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // Ajout pour la gestion des thèmes si besoin futur
   content: [
     "./*.html", // Scanne tous les fichiers .html à la racine
     "./js/**/*.js" // Scanne tous les fichiers .js dans un dossier js (si vous en avez un)
@@ -31,5 +32,10 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      // Ajoute une variante "scrolled:" pour styliser les éléments enfants quand le header a la classe .scrolled
+      addVariant('scrolled', 'header.scrolled &');
+    }
+  ],
 }
