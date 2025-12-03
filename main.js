@@ -278,33 +278,41 @@ document.addEventListener('DOMContentLoaded', initializePushNotifications);
  */
 
 let deferredInstallPrompt = null;
-const installButton = document.getElementById('install-pwa-btn');
+const installToast = document.getElementById('pwa-install-toast');
+const installButton = document.getElementById('pwa-install-btn-toast');
+const dismissButton = document.getElementById('pwa-dismiss-btn-toast');
 
 window.addEventListener('beforeinstallprompt', (event) => {
     // Empêche le navigateur d'afficher sa propre bannière d'installation
     event.preventDefault();
-    
     // Stocke l'événement pour pouvoir le déclencher plus tard
     deferredInstallPrompt = event;
-    
-    // Affiche notre bouton d'installation personnalisé
-    if (installButton) {
-        installButton.style.display = 'inline-block';
+    // Affiche notre bannière d'installation personnalisée
+    if (installToast) {
+        installToast.classList.add('show');
     }
 });
 
 if (installButton) {
     installButton.addEventListener('click', async () => {
         if (!deferredInstallPrompt) {
-            // Si l'événement n'est pas disponible, on ne fait rien
             return;
         }
-        
         // Affiche la boîte de dialogue d'installation du navigateur
-        deferredInstallPrompt.prompt();
-        
-        // On ne peut utiliser l'événement qu'une seule fois
-        deferredInstallPrompt = null;
-        installButton.style.display = 'none';
+        await deferredInstallPrompt.prompt();
+
+        // Cache la bannière après la tentative d'installation
+        if (installToast) {
+            installToast.classList.remove('show');
+        }
+        deferredInstallPrompt = null; // L'événement ne peut être utilisé qu'une fois
+    });
+}
+
+if (dismissButton) {
+    dismissButton.addEventListener('click', () => {
+        if (installToast) {
+            installToast.classList.remove('show');
+        }
     });
 }
