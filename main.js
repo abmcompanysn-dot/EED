@@ -270,3 +270,41 @@ function initializePushNotifications() {
 
 // Appeler la fonction d'initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', initializePushNotifications);
+
+/**
+ * ==================================================================
+ * Logique pour l'installation de la PWA
+ * ==================================================================
+ */
+
+let deferredInstallPrompt = null;
+const installButton = document.getElementById('install-pwa-btn');
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    // Empêche le navigateur d'afficher sa propre bannière d'installation
+    event.preventDefault();
+    
+    // Stocke l'événement pour pouvoir le déclencher plus tard
+    deferredInstallPrompt = event;
+    
+    // Affiche notre bouton d'installation personnalisé
+    if (installButton) {
+        installButton.style.display = 'inline-block';
+    }
+});
+
+if (installButton) {
+    installButton.addEventListener('click', async () => {
+        if (!deferredInstallPrompt) {
+            // Si l'événement n'est pas disponible, on ne fait rien
+            return;
+        }
+        
+        // Affiche la boîte de dialogue d'installation du navigateur
+        deferredInstallPrompt.prompt();
+        
+        // On ne peut utiliser l'événement qu'une seule fois
+        deferredInstallPrompt = null;
+        installButton.style.display = 'none';
+    });
+}
