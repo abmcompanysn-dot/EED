@@ -1,14 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Sélectionner tous les éléments à animer
-    // On cible les titres de section, les sous-titres et les cartes.
+    // --- 1. GESTION DES ANIMATIONS DÉCALÉES (STAGGER) ---
+    // On sélectionne les conteneurs (grilles) dont les enfants doivent apparaître en décalé.
+    const staggeredContainers = document.querySelectorAll('.grid-2, .grid-3');
+
+    staggeredContainers.forEach(container => {
+        const items = container.querySelectorAll('.card'); // On cible les cartes à l'intérieur
+        items.forEach((item, index) => {
+            // On applique un délai de transition qui augmente pour chaque carte (0ms, 100ms, 200ms, etc.)
+            item.style.transitionDelay = `${index * 100}ms`;
+        });
+    });
+
+    // --- 2. OBSERVATEUR D'INTERSECTION POUR TOUTES LES ANIMATIONS ---
+    // On cible tous les éléments qui doivent être animés au défilement.
     const elementsToAnimate = document.querySelectorAll('.section-title, .section-subtitle, .card');
 
-    // 2. Ajouter la classe d'état initial à tous ces éléments
+    // On ajoute la classe d'état initial à tous ces éléments pour les préparer.
     elementsToAnimate.forEach(element => {
         element.classList.add('scroll-animate');
     });
 
-    // 3. Créer l'observateur d'intersection
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             // Si l'élément est dans le viewport (la fenêtre visible)
@@ -27,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0.1 // Déclenche l'animation quand 10% de l'élément est visible
     });
 
-    // 4. Lancer l'observation sur chaque élément
+    // On lance l'observation sur chaque élément à animer.
     elementsToAnimate.forEach(element => {
         observer.observe(element);
     });
