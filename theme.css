@@ -196,8 +196,7 @@ video {
     color: white;
     padding: 8px 16px;
 }
-.btn-toast-dismiss { background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; }
-}
+
 
 /* Classe à ajouter (via JS) aux éléments pour les animer au défilement */
 .animate-on-scroll {
