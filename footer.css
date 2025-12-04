@@ -33,7 +33,7 @@
 /* Titre */
 .footer-title {
     color: var(--text-dark);
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Playfair Display', serif;
     margin-bottom: 18px;
     font-size: 1.25em;
 }
