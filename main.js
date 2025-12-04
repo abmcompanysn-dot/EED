@@ -80,7 +80,7 @@ function populateMobileMenu() {
         { href: 'blog.html', text: 'Blog' },
         { href: 'ressources.html', text: 'Ressources' },
         { href: 'live.html', text: 'Live' },
-        { href: 'index.html#contact', text: 'Contact' },
+        { href: 'apropos.html#contact', text: 'Contact' },
         { href: 'Boutique.html', text: 'Faire un Don' }
     ];
 
