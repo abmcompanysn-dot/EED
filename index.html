@@ -537,6 +537,57 @@
                 <div class="bg-card-bg p-5 rounded-xl min-w-[100px] border border-border-color shadow-lg"><span id="seconds" class="block font-sans text-4xl text-primary-blue">00</span><span class="text-text-secondary">Secondes</span></div>
             </div>
         </section>
+
+        <!-- ==================== NOUVELLE SECTION : LIENS RAPIDES (GIFs) ==================== -->
+        <section id="liens-rapides" class="container">
+            <h2 class="section-title animated-title">Découvrez notre Église</h2>
+            <p class="section-subtitle animated-title" data-delay="100">Explorez les différentes facettes de notre communauté.</p>
+            <div class="gif-grid">
+                <!-- GIF 1: Ministères -->
+                <a href="ministeres.html" class="gif-card animated-element zoom-in-rotate" data-delay="200">
+                    <img src="r/I1.svg" alt="GIF illustrant les ministères de l'église">
+                    <div class="gif-overlay">
+                        <h3>Nos Ministères</h3>
+                    </div>
+                </a>
+                <!-- GIF 2: Événements -->
+                <a href="evenements.html" class="gif-card animated-element zoom-in-rotate" data-delay="300">
+                    <img src="r/rs.svg" alt="GIF pour les événements à venir">
+                    <div class="gif-overlay">
+                        <h3>Événements</h3>
+                    </div>
+                </a>
+                <!-- GIF 3: Blog -->
+                <a href="blog.html" class="gif-card animated-element zoom-in-rotate" data-delay="400">
+                    <img src="r/I1.svg" alt="GIF pour le blog de l'église">
+                    <div class="gif-overlay">
+                        <h3>Notre Blog</h3>
+                    </div>
+                </a>
+                <!-- GIF 4: Ressources -->
+                <a href="ressources.html" class="gif-card animated-element zoom-in-rotate" data-delay="500">
+                    <img src="r/rs.svg" alt="GIF pour les ressources spirituelles">
+                    <div class="gif-overlay">
+                        <h3>Ressources</h3>
+                    </div>
+                </a>
+            </div>
+            <style>
+                .gif-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-top: 40px; }
+                .gif-card { display: block; position: relative; overflow: hidden; border-radius: 15px; aspect-ratio: 1 / 1; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+                .gif-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+                .gif-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 90, 156, 0.85), rgba(200, 50, 50, 0.85)); color: white; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
+                .gif-overlay h3 { font-family: 'Montserrat', sans-serif; font-size: 1.5em; font-weight: 700; text-align: center; padding: 10px; transform: translateY(10px); transition: transform 0.4s ease; }
+                .gif-card:hover img { transform: scale(1.1); }
+                .gif-card:hover .gif-overlay { opacity: 1; }
+                .gif-card:hover .gif-overlay h3 { transform: translateY(0); }
+                @media (max-width: 992px) { .gif-grid { grid-template-columns: repeat(2, 1fr); } }
+                @media (max-width: 576px) { 
+                    .gif-grid { gap: 15px; }
+                    .gif-overlay h3 { font-size: 1.2em; }
+                }
+            </style>
+        </section>
          <!-- AMÉLIORATION : Section "Rejoignez la Communauté" avec image à côté -->
         <section id="communaute" class="container" style="padding-top: 0; padding-bottom: 0;">
             <h2 class="section-title animated-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
