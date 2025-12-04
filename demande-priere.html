@@ -44,12 +44,28 @@
         }
         /* Fin des styles pour les animations */
 
+        /* --- Section Héros --- */
+        .hero-section {
+            padding: 120px 20px;
+            text-align: center;
+            background-image: linear-gradient(rgba(10, 10, 35, 0.7), rgba(10, 10, 35, 0.7)), url('r/p.png');
+            background-size: cover;
+            background-position: center;
+            color: var(--light-bg);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        .hero-section .section-title {
+            color: var(--light-bg);
+            font-size: 3.5em;
+        }
+
         /* --- Styles du formulaire --- */
         .form-card {
-            background-color: #f8fafc; /* Fond légèrement grisé pour un look doux */
+            background-color: #edf2f7; /* Fond encore un peu plus assombri */
             padding: 40px;
             border-radius: 12px;
-            border: 1px solid #e2e8f0; /* Bordure subtile */
+            border: 1px solid #e2e8f0;
         }
         .form-grid {
             display: grid;
@@ -63,7 +79,7 @@
             display: block; 
             font-weight: 600; 
             margin-bottom: 10px; 
-            color: var(--primary-blue); /* Couleur bleue pour les étiquettes */
+            color: #4a5568; /* Couleur gris-bleu foncé pour une meilleure lisibilité */
             font-size: 0.95em;
         }
         .form-control {
@@ -139,11 +155,15 @@
         <a href="Boutique.html" onclick="toggleMobileMenu()">Faire un Don</a>
     </div>
 
-    <main class="container">
-        <section>
-            <h1 class="section-title animated-title">Demande de Prière</h1>
-            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">"Ne vous inquiétez de rien; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec des actions de grâces." - Philippiens 4:6</p>
+    <main>
+        <section class="container">
+            <div class="hero-section animated-element fade-in-up">
+                <h1 class="section-title">Un Cœur qui Écoute</h1>
+                <p class="section-subtitle" style="color: #cbd5e1;">"Ne vous inquiétez de rien; mais en toute chose faites connaître vos besoins à Dieu par des prières et des supplications, avec des actions de grâces." - Philippiens 4:6</p>
+            </div>
+        </section>
 
+        <section class="container">
             <div class="form-card animated-element fade-in-up">
                 <form id="prayer-request-form" onsubmit="handlePrayerSubmit(event)">
                     <div class="form-grid">
