@@ -548,35 +548,74 @@
 
         
 
-        <section id="contact" class="container animated-card">
-            <h2 class="section-title hover:animate-shake cursor-pointer">Nous Contacter</h2>
-            <p class="section-subtitle">Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start bg-card-bg p-10 rounded-2xl overflow-hidden">
-                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6">
-                    <div class="relative">
-                        <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
-                        <label for="contact-name" class="floating-label">Votre Nom</label>
-                    </div>
-                    <div class="relative">
-                        <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
-                        <label for="contact-email" class="floating-label">Votre Email</label>
-                    </div>
-                    <div class="relative">
-                        <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
-                        <label for="contact-message" class="floating-label">Votre Message</label>
-                    </div>
-                    <button type="submit" id="contact-submit-btn" class="btn-lux-rounded">Envoyer le Message</button>
-                    <div id="contact-form-message" class="form-message"></div>
-                </form>
-                <div>
-                    <h3 class="text-2xl font-sans mb-4">Nos Coordonnées</h3>
-                    <p class="text-text-secondary mb-2"><strong class="text-white">Adresse :</strong><br>Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
-                    <p class="text-text-secondary"><strong class="text-white">Téléphone :</strong><br>33 824 52 94</p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="350" class="border-0 rounded-lg mt-5" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </section>
+        <<section id="contact" class="container animated-card py-16">
+  <!-- Titre principal -->
+  <h2 class="section-title text-center text-4xl font-extrabold tracking-tight mb-4 hover:animate-shake cursor-pointer">
+    ✨ Nous Contacter
+  </h2>
+  <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
+    Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
+  </p>
 
+  <!-- Grille principale -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-card-bg p-10 rounded-3xl shadow-xl overflow-hidden">
+    
+    <!-- Formulaire -->
+    <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
+          class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm">
+      
+      <!-- Champ Nom -->
+      <div class="relative">
+        <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
+        <label for="contact-name" class="floating-label">Votre Nom</label>
+      </div>
+      
+      <!-- Champ Email -->
+      <div class="relative">
+        <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
+        <label for="contact-email" class="floating-label">Votre Email</label>
+      </div>
+      
+      <!-- Champ Message -->
+      <div class="relative">
+        <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+        <label for="contact-message" class="floating-label">Votre Message</label>
+      </div>
+      
+      <!-- Bouton -->
+      <button type="submit" id="contact-submit-btn" 
+              class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        🚀 Envoyer le Message
+      </button>
+      
+      <!-- Message retour -->
+      <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
+    </form>
+
+    <!-- Coordonnées -->
+    <div class="flex flex-col gap-6">
+      <h3 class="text-2xl font-bold mb-2 text-white">📍 Nos Coordonnées</h3>
+      
+      <div class="space-y-4 text-text-secondary">
+        <p>
+          <strong class="text-white">Adresse :</strong><br>
+          Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
+        </p>
+        <p>
+          <strong class="text-white">Téléphone :</strong><br>
+          <a href="tel:+221338245294" class="hover:text-indigo-400 transition-colors">33 824 52 94</a>
+        </p>
+      </div>
+
+      <!-- Carte Google Maps -->
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" 
+              width="100%" height="350" 
+              class="border-0 rounded-2xl shadow-lg mt-4" 
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
     </main>
     <!-- ==================== PIED DE PAGE (FOOTER) ==================== -->
     <footer class="footer-section">
