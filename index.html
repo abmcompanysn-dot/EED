@@ -1139,6 +1139,7 @@
 
         // ==================== Logique pour le carrousel "Paroles de la Communauté" ====================
         let currentTestimonialSlide = 0;
+        let testimonialInterval;
         document.addEventListener('DOMContentLoaded', () => {
             const innerCarousel = document.querySelector('.testimonial-carousel-inner');
             const testimonialSlides = document.querySelectorAll('.testimonial-slide');
@@ -1166,6 +1167,12 @@
 
                 // Logique pour mobile (points et défilement)
                 if (dotsContainer && window.innerWidth <= 992) {
+                    // --- AMÉLIORATION : Défilement automatique sur mobile ---
+                    const startTestimonialAutoplay = () => {
+                        testimonialInterval = setInterval(() => {
+                            innerCarousel.scrollBy({ left: innerCarousel.clientWidth, behavior: 'smooth' });
+                        }, 7000); // Change toutes les 7 secondes
+                    };
                     testimonialSlides.forEach((_, index) => {
                         const dot = document.createElement('div');
                         dot.classList.add('testimonial-dot');
@@ -1183,6 +1190,12 @@
 
                     if (innerCarousel) {
                         innerCarousel.addEventListener('scroll', () => {
+                            // Si l'utilisateur fait défiler manuellement, on arrête l'autoplay
+                            clearInterval(testimonialInterval);
+                            // Si le défilement atteint la fin, il repart au début
+                            if (innerCarousel.scrollLeft + innerCarousel.clientWidth >= innerCarousel.scrollWidth -1) { // -1 pour la précision
+                                innerCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+                            }
                             // Trouve l'index du slide le plus proche du centre
                             const scrollLeft = innerCarousel.scrollLeft;
                             const slideWidth = testimonialSlides[0].offsetWidth;
@@ -1195,6 +1208,8 @@
                             }
                         });
                     }
+
+                    startTestimonialAutoplay(); // Démarrer le défilement automatique
                 }
 
                 showTestimonialSlide(0); // Affiche le premier slide au chargement
