@@ -189,17 +189,24 @@ function filterResources() {
  * Met en place l'animation d'apparition au défilement pour les cartes de ressources.
  */
 function setupScrollAnimationForResources() {
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
+                const delay = parseInt(entry.target.style.transitionDelay) || 0;
+                setTimeout(() => {
+                    entry.target.classList.add('is-visible');
+                }, delay);
+                obs.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 }); // Se déclenche quand 10% de la carte est visible
 
     const cards = document.querySelectorAll('.resource-card');
-    cards.forEach(card => observer.observe(card));
+    cards.forEach((card, index) => {
+        card.classList.add('animated-element'); // Ajoute la classe de base pour l'animation
+        card.style.transitionDelay = `${index * 100}ms`; // Applique un délai en cascade
+        observer.observe(card);
+    });
 }
 
 /**

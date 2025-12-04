@@ -6,17 +6,35 @@
     <title>Ministère des Enfants - Église Évangélique de Dakar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="navbar.css">
     <style>
+        /* --- Styles pour les animations (cohérence avec l'accueil) --- */
+        .animated-title, .animated-element {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-title {
+            transform: translateY(20px);
+        }
+        .animated-element {
+            transform: translateY(30px);
+        }
+        .animated-title.is-visible,
+        .animated-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Fin des styles pour les animations */
+
         .hero-section {
             padding: 120px 0; text-align: center; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg);
         }
-        .hero-section .section-title { font-size: 3.5em; color: var(--text-dark); }
+        .hero-section .section-title { font-family: 'Playfair Display', serif; font-size: 3.5em; color: var(--text-dark); }
         .hero-section .section-subtitle { margin-bottom: 0; }
 
         .content-grid {
@@ -82,16 +100,16 @@
 
     <main>
         <section class="hero-section">
-            <h1 class="section-title">Ministère des Enfants</h1>
-            <p class="section-subtitle">Former la prochaine génération dans la foi, l'amour et la joie.</p>
+            <h1 class="section-title animated-title">Ministère des Enfants</h1>
+            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Former la prochaine génération dans la foi, l'amour et la joie.</p>
         </section>
 
         <section class="container">
             <div class="content-grid">
-                <div class="main-content">
+                <div class="main-content animated-element">
                     <h2>Bienvenue à Ecodim !</h2>
                     <p>Ecodim (École du Dimanche) est le lieu où les enfants, de la naissance à la 6e année, découvrent l'amour de Dieu d'une manière créative et pertinente. Notre mission est de créer un environnement sûr et amusant où les enfants peuvent grandir dans leur relation avec Jésus.</p>
-                    
+
                     <h3>Nos Programmes</h3>
                     <p>Nous proposons des programmes adaptés à chaque tranche d'âge, avec des leçons bibliques interactives, des chants, des jeux et des activités manuelles qui renforcent les enseignements.</p>
                     <ul>
@@ -104,7 +122,7 @@
                     <p>Le ministère des enfants est une œuvre collective ! Si vous avez à cœur de servir la prochaine génération, nous serions ravis de vous accueillir dans notre équipe de volontaires. Aucune expérience n'est requise, juste un cœur disposé à aimer et à servir.</p>
                     <a href="index.html#contact" class="btn">Rejoindre l'équipe</a>
                 </div>
-                <aside class="sidebar">
+                <aside class="sidebar animated-element" style="transition-delay: 150ms;">
                     <div class="card">
                         <h4>Informations Pratiques</h4>
                         <ul>
@@ -125,7 +143,26 @@
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
-    </script> 
+        document.addEventListener('DOMContentLoaded', () => {
+            populateMobileMenu();
+
+            // --- Logique pour l'animation au défilement ---
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.style.transitionDelay) || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, delay);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.animated-title, .animated-element').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>

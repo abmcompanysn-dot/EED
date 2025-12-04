@@ -15,15 +15,28 @@
     <link href="dist/output.css" rel="stylesheet">
     <style>
         /* --- Styles pour la section Dirigeants --- */
-        .animated-card {
+        .animated-title, .animated-card {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .animated-card.is-visible {
+        .animated-title.is-visible, .animated-card.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* --- Amélioration : Animation plus sophistiquée pour les cartes --- */
+        .animated-card.zoom-in-rotate {
+            transform: translateY(40px) scale(0.95) rotateX(-20deg);
+            transform-origin: bottom;
+        }
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotateX(0);
+        }
+        /* Fin des styles d'animation */
+
+
         .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .leader-card {
             background-color: transparent;
@@ -119,15 +132,15 @@
 
     <main>
         <section class="container">
-            <h1 class="section-title">Notre Foi, Notre Histoire</h1>
-            <p class="section-subtitle">Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
+            <h1 class="section-title animated-title">Notre Foi, Notre Histoire</h1>
+            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
 
             <div class="grid-2">
-                <div class="card">
+                <div class="card animated-card zoom-in-rotate">
                     <h3>Histoire de l'Église</h3>
                     <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
                 </div>
-                <div class="card">
+                <div class="card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
                     <h3>Mission et Vision</h3>
                     <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
                 </div>
@@ -135,10 +148,10 @@
         </section>
 
         <section class="container">
-            <h2 class="section-title" style="font-size: 2.2em;">Notre Équipe Dirigeante</h2>
-            <p class="section-subtitle">Une équipe dévouée au service de la vision de l'église et de sa communauté.</p>
+            <h2 class="section-title animated-title" style="font-size: 2.2em;">Notre Équipe Dirigeante</h2>
+            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Une équipe dévouée au service de la vision de l'église et de sa communauté.</p>
             <div class="leader-grid">
-                <div class="leader-card">
+                <div class="leader-card animated-card zoom-in-rotate">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
                             <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Pasteur Principal">
@@ -151,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="leader-card">
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
                             <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Responsable des Ministères">
@@ -164,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="leader-card">
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 300ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
                             <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Ancien de l'église">
@@ -224,16 +237,28 @@
     <script>
         // Animation au défilement pour les cartes
         document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        const delay = entry.target.dataset.delay || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, delay);
+                        obs.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.animated-card').forEach(card => observer.observe(card));
+            document.querySelectorAll('.animated-title').forEach(el => observer.observe(el));
+
+            const elements = document.querySelectorAll('.animated-card');
+            elements.forEach((el, index) => {
+                const parentSection = el.closest('section');
+                if (parentSection && parentSection.querySelector('.animated-title')) {
+                    el.dataset.delay = 200 + (index * 100); // Délai en cascade
+                }
+                observer.observe(el);
+            });
         });
     </script>
 </body>
