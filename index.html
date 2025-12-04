@@ -521,20 +521,14 @@
             </div>
         </section>
 
-        <section id="communaute" class="container animated-card zoom-in" style="padding-top: 0; padding-bottom: 0;">
-            <div class="promo-card">
-                <div class="prayer-image-container">
-                    <img src="r/p.png" alt="Demande de prière">
-                </div> 
-                <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
-                    <h3>Demander une Prière</h3>
-                    <p>Notre équipe est là pour vous soutenir dans la prière. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
-                    <a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
-                </div>
+        <!-- AMÉLIORATION : Nouvelle section "Rejoignez la Communauté" -->
+        <section id="communaute-section" class="animated-card zoom-in">
+            <div class="container">
+                <h2 class="section-title">Rejoignez la Communauté de Prière</h2>
+                <p>Notre équipe est là pour vous soutenir. Partagez votre sujet en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
+                <a href="demande-priere.html" class="btn-lux-rounded btn-outline-white">Soumettre une demande de prière</a>
             </div>
         </section>
-
     
 <section id="ressources-promo" class="container animated-card zoom-in" style="padding-top: 40px; padding-bottom: 0;">
             <div class="promo-card">
@@ -852,6 +846,49 @@
                 padding-top: 40px;
                 padding-bottom: 40px;
             }
+        }
+
+        /* --- AMÉLIORATION : Nouveau style pour la section Communauté --- */
+        #communaute-section {
+            position: relative;
+            padding: 100px 20px;
+            background-image: linear-gradient(rgba(10, 10, 35, 0.8), rgba(10, 10, 35, 0.8)), url('r/p.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Effet parallaxe */
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: center;
+            color: white;
+        }
+
+        #communaute-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #communaute-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+
+        #communaute-section p {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            font-size: 1.1em;
+            color: var(--text-secondary);
+        }
+
+        /* --- AMÉLIORATION : Style pour le bouton transparent --- */
+        .btn-outline-white {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline-white:hover {
+            background-color: white;
+            color: var(--primary-blue);
         }
     </style>
 
