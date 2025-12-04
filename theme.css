@@ -56,6 +56,8 @@ section {
 }
 
 .section-title {
+    font-family: 'Playfair Display', serif; /* Police élégante pour les titres */
+    font-weight: 700;
     text-align: center;
     font-size: 2.8em;
     margin-bottom: 10px;
