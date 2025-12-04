@@ -14,6 +14,7 @@
     <!-- ==================== POLICES D'ÉCRITURE (GOOGLE FONTS) ==================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -250,10 +251,12 @@
         }
 
         .section-title {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Playfair Display', serif; /* Police élégante pour les titres */
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em; /* Ajustement pour la nouvelle police */
             color: var(--text-dark);
+            font-size: 3em; /* Taille de base augmentée pour les ordinateurs */
+            line-height: 1.2;
         }
         #trusted-by {
             background-color: var(--card-bg);
@@ -270,16 +273,37 @@
         }
 
         /* --- Nouveaux styles pour les animations au défilement --- */
-        .animated-card {
+        .animated-element {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
-        .animated-card.is-visible {
+        .animated-element.fade-in-up {
+            transform: translateY(30px);
+        }
+
+        /* --- Amélioration : Animation plus sophistiquée pour les cartes --- */
+        .animated-element.zoom-in-rotate {
+            transform: translateY(40px) scale(0.95) rotateX(-20deg);
+            transform-origin: bottom;
+        }
+
+        .animated-element.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1) rotateX(0);
+        }
+
+        /* --- Amélioration : Animation pour les titres de section --- */
+        .animated-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-title.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
+
 
         #countdown-timer span {
             display: block;
@@ -514,22 +538,22 @@
             </div>
         </section>
          <!-- AMÉLIORATION : Section "Rejoignez la Communauté" avec image à côté -->
-        <section id="communaute" class="container animated-card zoom-in" style="padding-top: 0; padding-bottom: 0;">
-            <div class="promo-card">
+        <section id="communaute" class="container" style="padding-top: 0; padding-bottom: 0;">
+            <h2 class="section-title animated-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
+            <div class="promo-card animated-element zoom-in-rotate">
                 <div class="prayer-image-container">
                     <img src="r/p.png" alt="Demande de prière">
                 </div> 
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
                     <p>Notre équipe est là pour vous soutenir. Partagez votre sujet de prière en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
                     <a href="demande-priere.html" class="btn-lux-rounded">Soumettre une demande</a>
                 </div>
             </div>
         </section>
-<section id="ressources-promo" class="container animated-card zoom-in" style="padding-top: 40px; padding-bottom: 0;">
-            <div class="promo-card">
+<section id="ressources-promo" class="container" style="padding-top: 40px; padding-bottom: 0;">
+            <div class="promo-card animated-element zoom-in-rotate">
                 <div class="prayer-content">
-                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
+                    <h2 class="section-title animated-title" style="text-align: left; margin-bottom: 20px;">Une Mine de Savoir</h2>
                     <h3>Explorez nos Ressources</h3>
                     <p>Plongez dans notre bibliothèque de ressources pour nourrir votre foi. Vous y trouverez des sermons inspirants, des études bibliques approfondies et des articles pour vous accompagner dans votre marche spirituelle quotidienne.</p>
                     <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
@@ -541,7 +565,7 @@
         </section>
         <!-- ==================== Section Joie avec Jésus (Carrousel) ==================== -->
         <section id="joie-jesus">
-            <h2 class="section-title">La Joie avec Jésus</h2>
+            <h2 class="section-title animated-title">La Joie avec Jésus</h2>
             <p class="section-subtitle">Laissez la parole de Dieu illuminer votre cœur et vous remplir de sa paix.</p>
             <div class="carousel-container">
                 <div class="carousel-slide active" style="background-image: url('r/a.jpg');">
@@ -558,17 +582,17 @@
 
         
 
-        <<section id="contact" class="container animated-card py-16">
+        <section id="contact" class="container py-16">
   <!-- Titre principal -->
-  <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer">
-    ✨ Nous Contacter
+  <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
+     Nous Contacter
   </h2>
   <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
     Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
   </p>
 
   <!-- Grille principale -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-card-bg p-10 rounded-3xl shadow-xl overflow-hidden">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-card-bg p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up">
     
     <!-- Formulaire -->
     <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
@@ -595,7 +619,7 @@
       <!-- Bouton -->
       <button type="submit" id="contact-submit-btn" 
               class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-        🚀 Envoyer le Message
+         Envoyer le Message
       </button>
       
       <!-- Message retour -->
@@ -867,17 +891,17 @@
 
 
         /* ==================== Animations au défilement (classes d'animation) ==================== */
-        .animated-card {
+        .animated-element {
             opacity: 0;
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .animated-card.fade-in {
+        .animated-element.fade-in {
             transform: translateY(20px);
         }
-        .animated-card.zoom-in {
+        .animated-element.zoom-in {
             transform: scale(0.95);
         }
-        .animated-card.is-visible {
+        .animated-element.is-visible {
             opacity: 1;
             transform: translateY(0) translateX(0) scale(1);
         }
@@ -1026,23 +1050,33 @@
         // ==================== Logique pour l'animation au défilement ====================
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
+                entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+                        // Appliquer un délai en cascade pour un effet plus fluide
+                        const delay = entry.target.dataset.delay || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, delay);
                         obs.unobserve(entry.target); // Ne joue l'animation qu'une seule fois
                     }
                 });
             }, { threshold: 0.15 }); // Se déclenche quand 15% de l'élément est visible
 
-            const cards = document.querySelectorAll('.animated-card');
-            cards.forEach(card => {
-                // Appliquer le type d'animation de base
-                if (card.classList.contains('slide-in-left') || card.classList.contains('slide-in-right') || card.classList.contains('zoom-in')) {
-                    // Ces classes ont déjà leur transform initial
-                } else {
-                    card.classList.add('fade-in'); // Animation par défaut
+            // Observer les titres
+            const titles = document.querySelectorAll('.animated-title');
+            titles.forEach(title => {
+                observer.observe(title);
+            });
+
+            // Observer les autres éléments animés et leur appliquer un délai
+            const elements = document.querySelectorAll('.animated-element');
+            elements.forEach((el, index) => {
+                // Si l'élément est dans la même section qu'un titre, on lui met un délai
+                const parentSection = el.closest('section');
+                if (parentSection && parentSection.querySelector('.animated-title')) {
+                    el.dataset.delay = 200; // Délai de 200ms après le titre
                 }
-                observer.observe(card);
+                observer.observe(el);
             });
         });
 
