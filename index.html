@@ -14,8 +14,7 @@
     <!-- ==================== POLICES D'ÉCRITURE (GOOGLE FONTS) ==================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    
+
     <!-- Ajout de Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="footer.css">
@@ -113,6 +112,7 @@
         }
         .hero-text-content h1 {
             font-size: 3.8em; /* Taille légèrement augmentée */
+            font-family: 'Montserrat', sans-serif; /* Nouvelle police pour le titre principal */
             margin-bottom: 0.3em;
             /* --- Nouvelle animation subtile --- */
             opacity: 0; /* Commence invisible */
@@ -178,6 +178,10 @@
         /* ==================== DESIGN RESPONSIVE (ADAPTATION MOBILE) ==================== */
         @media (max-width: 992px) { /* Point de rupture ajusté pour une meilleure transition */
             .section-title {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                color: var(--text-dark);
                 font-size: 2.2em;
             }
             .grid-2, .grid-3 {
@@ -245,6 +249,12 @@
             }
         }
 
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-dark);
+        }
         #trusted-by {
             background-color: var(--card-bg);
             padding-top: 40px; /* Réduction du padding pour un look plus intégré */
@@ -550,7 +560,7 @@
 
         <<section id="contact" class="container animated-card py-16">
   <!-- Titre principal -->
-  <h2 class="section-title text-center text-4xl font-extrabold tracking-tight mb-4 hover:animate-shake cursor-pointer">
+  <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer">
     ✨ Nous Contacter
   </h2>
   <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
@@ -987,7 +997,7 @@
             const contactData = {
                 name: document.getElementById('contact-name').value,
                 email: document.getElementById('contact-email').value,
-                subject: document.getElementById('contact-subject').value,
+                subject: "Nouveau message depuis le site", // Sujet par défaut
                 message: document.getElementById('contact-message').value
             };
 
