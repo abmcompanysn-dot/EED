@@ -26,6 +26,11 @@
     <link href="/dist/output.css" rel="stylesheet">
 
     <style>
+        /* --- Amélioration : Défilement fluide --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* --- Styles pour la navigation immersive --- */
         @media (min-width: 993px) { /* Uniquement sur ordinateur */
             header {
@@ -883,6 +888,20 @@
         /* Rendre le fond des sections transparent */
         main > section {
             background-color: transparent !important;
+        }
+
+        /* --- Amélioration : Espacement des sections --- */
+        main > section:not(.hero) {
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        /* --- Amélioration : Responsive pour petits écrans --- */
+        @media (max-width: 768px) {
+            main > section:not(.hero) {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
         }
     </style>
 
