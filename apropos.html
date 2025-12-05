@@ -239,41 +239,9 @@
             </p>
           
             <!-- Grille principale -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up" style="background-color: transparent;">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-card" style="background-color: transparent;">
               
-              <!-- Formulaire -->
-              <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
-                    class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm">
-                
-                <!-- Champ Nom -->
-                <div class="relative">
-                  <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
-                  <label for="contact-name" class="floating-label">Votre Nom</label>
-                </div>
-                
-                <!-- Champ Email -->
-                <div class="relative">
-                  <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
-                  <label for="contact-email" class="floating-label">Votre Email</label>
-                </div>
-                
-                <!-- Champ Message -->
-                <div class="relative">
-                  <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
-                  <label for="contact-message" class="floating-label">Votre Message</label>
-                </div>
-                
-                <!-- Bouton -->
-                <button type="submit" id="contact-submit-btn" 
-                        class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-                   Envoyer le Message
-                </button>
-                
-                <!-- Message retour -->
-                <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
-              </form>
-          
-              <!-- Coordonnées -->
+              <!-- Coordonnées et Carte (colonne de gauche sur ordinateur) -->
               <div class="flex flex-col gap-6">
                 <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
                 
@@ -295,6 +263,34 @@
                         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
               </div>
+              
+              <!-- Formulaire -->
+              <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
+                    class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm md:order-first">
+                
+                <!-- Champ Nom -->
+                <div class="relative">
+                  <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
+                  <label for="contact-name" class="floating-label">Votre Nom</label>
+                </div>
+                <!-- Champ Email -->
+                <div class="relative">
+                  <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
+                  <label for="contact-email" class="floating-label">Votre Email</label>
+                </div>
+                <!-- Champ Message -->
+                <div class="relative">
+                  <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+                  <label for="contact-message" class="floating-label">Votre Message</label>
+                </div>
+                <!-- Bouton -->
+                <button type="submit" id="contact-submit-btn" 
+                        class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                   Envoyer le Message
+                </button>
+                <!-- Message retour -->
+                <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
+              </form>
             </div>
           </section>
     </main>
