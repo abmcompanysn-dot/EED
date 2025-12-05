@@ -100,20 +100,21 @@
         }
         .btn-lux-rounded {
             display: inline-block;
-            padding: 12px 28px;
-            border: 2px solid var(--primary-blue);
-            background-color: var(--primary-blue);
-            color: var(--light-bg);
+            padding: 10px 26px; /* Ajustement pour compenser la bordure */
+            border: 2px solid var(--light-bg); /* Bordure blanche */
+            background-color: transparent; /* Fond transparent */
+            color: var(--light-bg); /* Texte blanc */
             text-decoration: none;
             font-weight: 600;
             font-size: 1em;
             border-radius: 999px;
             transition: all 0.4s ease;
-            margin-top: 20px;
+            margin-top: 20px; 
         }
         .btn-lux-rounded:hover {
-            background-color: var(--light-bg);
-            color: var(--primary-blue);
+            background-color: var(--primary-blue); /* Fond bleu au survol */
+            border-color: var(--primary-blue); /* Bordure bleue pour un effet lisse */
+            color: var(--light-bg); /* Texte blanc au survol */
         }
 
         @media (max-width: 992px) {
