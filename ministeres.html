@@ -73,15 +73,9 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             align-items: center;
-            background-color: transparent;
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .department-card:hover { 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 90, 156, 0.1);
+        .department-card:hover img {
+            transform: scale(1.05);
         }
         /* Alterner l'ordre des colonnes */
         .department-section:nth-child(odd) .department-card .department-image-container {
@@ -96,9 +90,6 @@
             height: 350px;
             object-fit: cover;
             transition: transform 0.4s ease;
-        }
-        .department-card:hover img {
-            transform: scale(1.05);
         }
         .department-content h3 {
             font-family: 'Playfair Display', serif;
