@@ -98,7 +98,7 @@
             justify-content: center;
             padding: 20px;
         }
-        .leader-card-front img {
+        .leader-card-front img { /* Styles existants pour l'image */
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -106,18 +106,18 @@
             border: 3px solid var(--primary-blue);
             margin-bottom: 20px;
         }
-        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; color: #111; } /* Texte noir */
-        .leader-card-front p { margin: 0; color: #555; } /* Texte gris foncé */
+        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; color: var(--text-color-dark); } /* Ajusté pour le contraste */
+        .leader-card-front p { margin: 0; color: var(--text-color-secondary); } /* Ajusté pour le contraste */
         .leader-card-back {
             transform: rotateY(180deg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 30px;
-            color: #000; /* Texte noir pour le dos de la carte */
+            color: var(--text-color-dark); /* Ajusté pour le contraste */
         }
         .leader-card-back h4 { color: var(--primary-blue); }
-        .leader-card-back p { color: #333; }
+        .leader-card-back p { color: var(--text-color-primary); } /* Ajusté pour le contraste */
 
         /* --- Styles pour le texte des sections Histoire et Mission --- */
         .text-content-section {
