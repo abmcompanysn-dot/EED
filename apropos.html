@@ -75,8 +75,8 @@
             height: 100%;
             transition: transform 0.7s;
             transform-style: preserve-3d;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+            /* box-shadow: 0 5px 20px rgba(0,0,0,0.25); */ /* Ombre retirée */
+            border-radius: 15px; /* Gardé pour les coins arrondis */
         }
         .leader-card:hover .leader-card-inner { transform: rotateY(180deg); }
         .leader-card-front, .leader-card-back {
@@ -86,8 +86,8 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 15px;
-            background-color: transparent; /* Fond des cartes dirigeants transparent */
-            border: 1px solid var(--border-color);
+            background-color: transparent;
+            /* border: 1px solid var(--border-color); */ /* Bordure retirée */
             box-sizing: border-box;
         }
         .leader-card-front {
@@ -190,39 +190,39 @@
                 <div class="leader-card animated-card zoom-in-rotate">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Pasteur Principal">
-                            <h4>Pasteur....</h4>
+                            <img src="r/team/pasteur-jean-dubois.jpg" alt="Photo de Jean Dubois, Pasteur Principal">
+                            <h4>Jean Dubois</h4>
                             <p>Pasteur Principal</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>Pasteur ......../h4>
-                            <p>Avec plus de 20 ans de ministère, Pasteur Jean guide notre communauté avec sagesse, passion et une profonde connaissance des Écritures.</p>
+                            <h4>Pasteur Jean Dubois</h4>
+                            <p>Avec plus de 20 ans de ministère, le Pasteur Jean guide notre communauté avec sagesse, passion et une profonde connaissance des Écritures.</p>
                         </div>
                     </div>
                 </div>
                 <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Responsable des Ministères">
-                            <h4>......</h4>
+                            <img src="r/team/marie-diop.jpg" alt="Photo de Marie Diop, Responsable des Ministères">
+                            <h4>Marie Diop</h4>
                             <p>Responsable des Ministères</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>.......</h4>
-                            <p>.... coordonne avec énergie et dévouement les différents départements de l'église, s'assurant que chaque membre puisse trouver sa place et servir efficacement.</p>
+                            <h4>Marie Diop</h4>
+                            <p>Marie coordonne avec énergie et dévouement les différents départements de l'église, s'assurant que chaque membre puisse trouver sa place et servir efficacement.</p>
                         </div>
                     </div>
                 </div>
                 <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 300ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Ancien de l'église">
-                            <h4>......</h4>
+                            <img src="r/team/moussa-fall.jpg" alt="Photo de Moussa Fall, Ancien de l'église">
+                            <h4>Moussa Fall</h4>
                             <p>Ancien de l'église</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>.......</h4>
-                            <p>En tant qu'ancien, ...... apporte une perspective précieuse et un soutien pastoral essentiel à la vie de notre communauté.</p>
+                            <h4>Moussa Fall</h4>
+                            <p>En tant qu'ancien, Moussa apporte une perspective précieuse et un soutien pastoral essentiel à la vie de notre communauté.</p>
                         </div>
                     </div>
                 </div>
@@ -238,43 +238,11 @@
               Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
             </p>
           
-            <!-- Grille principale avec max-width et centrage -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up max-w-6xl mx-auto" style="background-color: transparent;">
+            <!-- Grille principale améliorée -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 items-start max-w-6xl mx-auto">
               
-              <!-- Formulaire -->
-              <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
-                    class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm">
-                
-                <!-- Champ Nom -->
-                <div class="relative">
-                  <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
-                  <label for="contact-name" class="floating-label">Votre Nom</label>
-                </div>
-                
-                <!-- Champ Email -->
-                <div class="relative">
-                  <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
-                  <label for="contact-email" class="floating-label">Votre Email</label>
-                </div>
-                
-                <!-- Champ Message -->
-                <div class="relative">
-                  <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
-                  <label for="contact-message" class="floating-label">Votre Message</label>
-                </div>
-                
-                <!-- Bouton -->
-                <button type="submit" id="contact-submit-btn" 
-                        class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-                   Envoyer le Message
-                </button>
-                
-                <!-- Message retour -->
-                <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
-              </form>
-          
-              <!-- Coordonnées -->
-              <div class="flex flex-col gap-6">
+              <!-- Coordonnées (maintenant à gauche sur grand écran) -->
+              <div class="flex flex-col gap-6 md:order-1 order-2">
                 <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
                 
                 <div class="space-y-4 text-black">
@@ -295,6 +263,41 @@
                         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
               </div>
+              
+              <!-- Formulaire -->
+              <div class="md:order-2 order-1 bg-gradient-to-br from-blue-700 to-blue-900 p-8 rounded-2xl shadow-2xl text-white">
+                <h3 class="text-2xl font-bold mb-6">Écrivez-nous</h3>
+                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6">
+                  
+                  <!-- Champ Nom -->
+                  <div class="relative">
+                    <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
+                    <label for="contact-name" class="floating-label">Votre Nom</label>
+                  </div>
+                  
+                  <!-- Champ Email -->
+                  <div class="relative">
+                    <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
+                    <label for="contact-email" class="floating-label">Votre Email</label>
+                  </div>
+                  
+                  <!-- Champ Message -->
+                  <div class="relative">
+                    <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+                    <label for="contact-message" class="floating-label">Votre Message</label>
+                  </div>
+                  
+                  <!-- Bouton -->
+                  <button type="submit" id="contact-submit-btn" 
+                          class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                     Envoyer le Message
+                  </button>
+                  
+                  <!-- Message retour -->
+                  <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
+                </form>
+              </div>
+
             </div>
           </section>
     </main>
