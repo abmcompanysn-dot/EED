@@ -171,95 +171,94 @@
             <p>Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
         </section>
 
-        <section id="contact" class="py-16 px-4 md:px-8 lg:px-16">
-            <!-- Titre principal -->
-            <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
-               Nous Contacter
-            </h2>
-            <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
-              Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
-            </p>
-          
-            <!-- Grille principale améliorée -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 items-start max-w-6xl mx-auto">
-              
-              <!-- Coordonnées (maintenant à gauche sur grand écran) -->
-              <div class="flex flex-col gap-6 md:order-1 order-2">
-                <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
-                
-                <div class="space-y-4 text-black">
-                  <p>
-                    <strong>Adresse :</strong><br>
-                    Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
-                  </p>
-                  <p>
-                    <strong>Téléphone :</strong><br>
-                    <a href="tel:+221338245294" class="hover:text-indigo-400 transition-colors">33 824 52 94</a>
-                  </p>
-                </div>
-          
-              </div>
-              
-              <!-- Formulaire -->
-              <div class="md:order-2 order-1 bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-100">
-                <h3 class="text-2xl font-bold mb-6 text-black">Écrivez-nous</h3>
-                <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6 text-black">
-                  
-                  <!-- Conteneur pour les champs Nom et Email côte à côte -->
-                  <div class="flex flex-col md:flex-row gap-6">
-                    <!-- Champ Nom -->
-                    <div class="relative flex-1">
-                      <input type="text" id="contact-name" name="contact-name" placeholder=" " required 
-                             class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
-                      <label for="contact-name" 
-                             class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                                    peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                                    peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-3.5 peer-[:not(:placeholder-shown)]:text-blue-600 peer-[:not(:placeholder-shown)]:bg-slate-100 peer-[:not(:placeholder-shown)]:px-1">
-                        Votre Nom
-                      </label>
-                    </div>
-                    
-                    <!-- Champ Email -->
-                    <div class="relative flex-1">
-                      <input type="email" id="contact-email" name="contact-email" placeholder=" " required
-                             class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
-                      <label for="contact-email"
-                             class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                                    peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                                    peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-3.5 peer-[:not(:placeholder-shown)]:text-blue-600 peer-[:not(:placeholder-shown)]:bg-slate-100 peer-[:not(:placeholder-shown)]:px-1">
-                        Votre Email
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <!-- Champ Message -->
-                  <div class="relative">
-                    <textarea id="contact-message" name="contact-message" rows="5" placeholder=" " required
-                              class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30"></textarea>
-                    <label for="contact-message"
-                           class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                                  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                                  peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                                  peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-3.5 peer-[:not(:placeholder-shown)]:text-blue-600 peer-[:not(:placeholder-shown)]:bg-slate-100 peer-[:not(:placeholder-shown)]:px-1">
-                      Votre Message
-                    </label>
-                  </div>
-                  
-                  <!-- Bouton -->
-                  <button type="submit" id="contact-submit-btn" 
-                          class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105">
-                     Envoyer le Message
-                  </button>
-                  
-                  <!-- Message retour -->
-                  <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
-                </form>
-              </div>
+        <!-- Section Contact -->
+<section class="py-16">
+  <!-- Titre principal -->
+  <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
+    Nous Contacter
+  </h2>
+  <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
+    Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
+  </p>
 
-            </div>
-          </section>
+  <!-- Grille principale -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 items-start max-w-6xl mx-auto">
+    
+    <!-- Coordonnées -->
+    <div class="flex flex-col gap-6 md:order-1 order-2">
+      <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
+      <div class="space-y-4 text-black">
+        <p>
+          <strong>Adresse :</strong><br>
+          Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
+        </p>
+        <p>
+          <strong>Téléphone :</strong><br>
+          <a href="tel:+221338245294" class="hover:text-indigo-500 transition-colors">33 824 52 94</a>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Formulaire -->
+    <div class="md:order-2 order-1 bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200">
+      <h3 class="text-2xl font-bold mb-6 text-black">Écrivez-nous</h3>
+      <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6 text-black">
+        
+        <!-- Nom et Email -->
+        <div class="flex flex-col md:flex-row gap-6">
+          <!-- Champ Nom -->
+          <div class="relative flex-1">
+            <input type="text" id="contact-name" name="contact-name" placeholder=" " required
+                   class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
+            <label for="contact-name"
+                   class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
+                          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                          peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
+                          peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
+              Votre Nom
+            </label>
+          </div>
+          
+          <!-- Champ Email -->
+          <div class="relative flex-1">
+            <input type="email" id="contact-email" name="contact-email" placeholder=" " required
+                   class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
+            <label for="contact-email"
+                   class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
+                          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                          peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
+                          peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
+              Votre Email
+            </label>
+          </div>
+        </div>
+        
+        <!-- Champ Message -->
+        <div class="relative">
+          <textarea id="contact-message" name="contact-message" rows="5" placeholder=" " required
+                    class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30"></textarea>
+          <label for="contact-message"
+                 class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
+                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                        peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
+                        peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
+            Votre Message
+          </label>
+        </div>
+        
+        <!-- Bouton -->
+        <button type="submit" id="contact-submit-btn"
+                class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105">
+          Envoyer le Message
+        </button>
+        
+        <!-- Message retour -->
+        <div id="contact-form-message" class="form-message text-sm text-green-500 mt-2"></div>
+      </form>
+    </div>
+
+  </div>
+</section>
     </main>
 
     <footer class="footer-section">
