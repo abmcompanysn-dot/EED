@@ -14,6 +14,29 @@
     <link rel="stylesheet" href="navbar.css">
     <link href="dist/output.css" rel="stylesheet">
     <style>
+        /* --- Nouveaux styles pour la section bannière (Hero) --- */
+        .hero-about {
+            position: relative;
+            padding: 120px 20px;
+            text-align: center;
+            color: white;
+            background-image: linear-gradient(rgba(10, 10, 35, 0.75), rgba(10, 10, 35, 0.75)), url('r/I1.svg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 60px;
+        }
+        .hero-about h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+        .hero-about p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
         /* --- Styles pour la section Dirigeants --- */
         .animated-title, .animated-card {
             opacity: 0;
@@ -131,18 +154,21 @@
     </div>
 
     <main>
-        <section class="container">
-            <h1 class="section-title animated-title">Notre Foi, Notre Histoire</h1>
-            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
+        <!-- ==================== NOUVELLE SECTION BANNIÈRE ==================== -->
+        <section class="hero-about animated-title">
+            <h1>Notre Foi, Notre Histoire</h1>
+            <p>Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
+        </section>
 
-            <div class="grid-2">
-                <div class="card animated-card zoom-in-rotate">
-                    <h3>Histoire de l'Église</h3>
-                    <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
+        <section class="container">
+            <div class="grid-2 text-center">
+                <div class="animated-card zoom-in-rotate">
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4">Histoire de l'Église</h3>
+                    <p class="text-text-secondary">Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
                 </div>
-                <div class="card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
-                    <h3>Mission et Vision</h3>
-                    <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
+                <div class="animated-card zoom-in-rotate" style="transition-delay: 150ms;">
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4">Mission et Vision</h3>
+                    <p class="text-text-secondary">Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
                 </div>
             </div>
         </section>
