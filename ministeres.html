@@ -31,6 +31,13 @@
             opacity: 1;
             transform: translateY(0) scale(1);
         }
+        /* --- Correction pour supprimer le fond blanc des sections --- */
+        .hero-section-ministeres,
+        .department-section {
+            background-color: transparent;
+            box-shadow: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Ligne de séparation subtile */
+        }
         /* Fin des styles pour les animations */
 
         /* --- Nouveaux styles pour la section Héro --- */
@@ -39,8 +46,6 @@
             grid-template-columns: 1.2fr 1fr;
             gap: 50px;
             align-items: center;
-            padding: 100px 0;
-            border-bottom: 1px solid var(--border-color);
         }
         .hero-content .section-title {
             font-family: 'Playfair Display', serif;
@@ -61,11 +66,6 @@
 
         /* --- Styles pour les sections des départements --- */
         .department-section {
-            padding-top: 60px;
-            padding-bottom: 60px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .department-section:last-of-type {
             border-bottom: none;
         }
         .department-card {
