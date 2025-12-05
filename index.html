@@ -541,10 +541,10 @@
         <!-- ==================== NOUVELLE SECTION : LIENS RAPIDES (GIFs) ==================== -->
         <section id="liens-rapides" class="container">
             <h2 class="section-title animated-title">Découvrez notre Église</h2>
-            <p class="section-subtitle animated-title" data-delay="100">Explorez les différentes facettes de notre communauté.</p>
+            <p class="section-subtitle animated-title" data-delay="100">Explorez les différentes facettes de notre communauté. </p>
             <div class="gif-grid">
                 <!-- GIF 1: Famille -->
-                <a href="ministeres.html#famille" class="gif-card animated-element zoom-in-rotate" data-delay="200">
+                <a href="ministeres.html#famille" class="gif-card animated-element animated-from-bottom" data-delay="200">
                     <img src="r/f.gif" alt="Département Famille">
                     <div class="gif-overlay">
                         <h3>Famille</h3>
@@ -552,47 +552,126 @@
                 </a>
                 
                 <!-- GIF 3: Mission -->
-                <a href="ministeres.html#mission" class="gif-card animated-element zoom-in-rotate" data-delay="400">
+                <a href="ministeres.html#mission" class="gif-card animated-element animated-from-top" data-delay="400">
                     <img src="r/c.jpg" alt="Département Mission">
                     <div class="gif-overlay">
                         <h3>Mission</h3>
                     </div>
                 </a>
                 <!-- GIF 2: Louange & Hymnologie -->
-                <a href="ministeres.html#louange" class="gif-card animated-element zoom-in-rotate" data-delay="300">
+                <a href="ministeres.html#louange" class="gif-card animated-element animated-from-bottom" data-delay="300">
                     <img src="r/h.gif" alt="Département Louange et Hymnologie">
                     <div class="gif-overlay">
                         <h3>Louange & Hymnologie</h3>
                     </div>
                 </a>
                 <!-- GIF 4: Enseignement -->
-                <a href="ministeres.html#enseignement" class="gif-card animated-element zoom-in-rotate" data-delay="500">
+                <a href="ministeres.html#enseignement" class="gif-card animated-element animated-from-top" data-delay="500">
                     <img src="r/rs.svg" alt="Département Enseignement">
                     <div class="gif-overlay">
                         <h3>Enseignement</h3>
                     </div>
                 </a>
                 <!-- GIF 5: Conseil Administratif -->
-                <a href="apropos.html#gouvernance" class="gif-card animated-element zoom-in-rotate" data-delay="600">
+                <a href="apropos.html#gouvernance" class="gif-card animated-element animated-from-bottom" data-delay="600">
                     <img src="r/ca.svg" alt="Conseil Administratif">
                     <div class="gif-overlay">
                         <h3>Conseil Administratif</h3>
                     </div>
                 </a>
             </div>
-            <style>
-                .gif-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 40px; }
-                .gif-card { display: block; position: relative; overflow: hidden; border-radius: 15px; aspect-ratio: 1 / 1; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-                .gif-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-                .gif-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 90, 156, 0.85), rgba(200, 50, 50, 0.85)); color: white; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
-                .gif-overlay h3 { font-family: 'Montserrat', sans-serif; font-size: 1.4em; font-weight: 700; text-align: center; padding: 10px; transform: translateY(10px); transition: transform 0.4s ease; }
+            <style> /* Styles pour la section Liens Rapides */
+                .gif-grid { 
+                    display: grid; 
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                    gap: 25px; 
+                    margin-top: 40px; 
+                }
+                .gif-card { 
+                    display: block; 
+                    position: relative; 
+                    overflow: hidden; 
+                    border-radius: 15px; 
+                    aspect-ratio: 1 / 1; 
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+                }
+                .gif-card img { 
+                    width: 100%; 
+                    height: 100%; 
+                    object-fit: cover; 
+                    transition: transform 0.4s ease; 
+                }
+                .gif-overlay { 
+                    position: absolute; 
+                    top: 0; 
+                    left: 0; 
+                    width: 100%; 
+                    height: 100%; 
+                    background: linear-gradient(135deg, rgba(0, 90, 156, 0.85), rgba(200, 50, 50, 0.85)); 
+                    color: white; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center; 
+                    opacity: 0; 
+                    transition: opacity 0.4s ease; 
+                }
+                .gif-overlay h3 { 
+                    font-family: 'Montserrat', sans-serif; 
+                    font-size: 1.4em; 
+                    font-weight: 700; 
+                    text-align: center; 
+                    padding: 10px; 
+                    transform: translateY(10px); 
+                    transition: transform 0.4s ease; 
+                }
                 .gif-card:hover img { transform: scale(1.1); }
                 .gif-card:hover .gif-overlay { opacity: 1; }
                 .gif-card:hover .gif-overlay h3 { transform: translateY(0); }
-                @media (max-width: 992px) { .gif-grid { grid-template-columns: repeat(2, 1fr); } }
-                @media (max-width: 576px) { 
-                    .gif-grid { gap: 15px; }
-                    .gif-overlay h3 { font-size: 1.2em; }
+
+                /* Styles pour le défilement sur mobile */
+                @media (max-width: 992px) { 
+                    .gif-grid { 
+                        display: flex; /* Active le flexbox pour le défilement */
+                        overflow-x: auto; /* Permet le défilement horizontal */
+                        scroll-snap-type: x mandatory; /* Facilite le "snap" sur les éléments */
+                        white-space: nowrap; /* Empêche les éléments de passer à la ligne */
+                        gap: 20px; /* Espace entre les cartes */
+                        padding-bottom: 15px; /* Pour la barre de défilement */
+                        -ms-overflow-style: none;  /* Cache la barre de défilement pour IE/Edge */
+                        scrollbar-width: none;  /* Cache la barre de défilement pour Firefox */
+                    }
+                    .gif-grid::-webkit-scrollbar { 
+                        display: none; /* Cache la barre de défilement pour Chrome/Safari/Opera */
+                    }
+                    .gif-card { 
+                        flex-shrink: 0; /* Empêche les cartes de rétrécir */
+                        width: 80%; /* Chaque carte prend 80% de la largeur du conteneur */
+                        scroll-snap-align: center; /* Centre la carte lors du défilement */
+                        opacity: 1; /* Toujours visible sur mobile, pas d'animation au scroll */
+                        transform: none; /* Annule les transformations desktop */
+                    }
+                    .gif-card.animated-element { /* S'assure que les animations desktop sont désactivées sur mobile */
+                        opacity: 1;
+                        transform: none;
+                    }
+                }
+
+                /* Animations spécifiques pour le desktop */
+                @media (min-width: 993px) {
+                    .animated-element.animated-from-top {
+                        opacity: 0;
+                        transform: translateY(-50px) scale(0.9) rotateX(10deg);
+                        transform-origin: top;
+                    }
+                    .animated-element.animated-from-bottom {
+                        opacity: 0;
+                        transform: translateY(50px) scale(0.9) rotateX(-10deg);
+                        transform-origin: bottom;
+                    }
+                    .animated-element.is-visible {
+                        opacity: 1;
+                        transform: translateY(0) scale(1) rotateX(0);
+                    }
                 }
             </style>
         </section>
