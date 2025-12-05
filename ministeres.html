@@ -23,7 +23,7 @@
             transform: translateY(20px);
         }
         .animated-card {
-            transform: translateY(40px) scale(0.98);
+            transform: translateY(50px) scale(0.95);
             transform-origin: bottom;
         }
         .animated-title.is-visible,
@@ -190,8 +190,10 @@
         <!-- ==================== SECTION FAMILLE ==================== -->
         <section id="famille" class="department-section">
             <div class="department-card animated-card container">
-                <img src="r/f.svg" alt="Département Famille" class="department-image-container">
-                <div class="department-content">
+                <div class="department-image-container">
+                    <img src="r/f.svg" alt="Département Famille">
+                </div>
+                <div class="department-content animated-card">
                     <h3>Famille</h3>
                     <p>Ce département se concentre sur le renforcement des liens familiaux à travers des enseignements bibliques, des activités et un soutien mutuel. Nous croyons qu'une église forte est bâtie sur des familles fortes.</p>
                     <a href="ministere-enfants.html" class="btn-lux-rounded">En savoir plus</a>
@@ -202,8 +204,10 @@
         <!-- ==================== SECTION LOUANGE & HYMNOLOGIE ==================== -->
         <section id="louange" class="department-section">
             <div class="department-card animated-card container">
-                <img src="r/h.svg" alt="Département Louange & Hymnologie" class="department-image-container">
-                <div class="department-content">
+                <div class="department-image-container">
+                    <img src="r/h.svg" alt="Département Louange & Hymnologie">
+                </div>
+                <div class="department-content animated-card">
                     <h3>Louange & Hymnologie</h3>
                     <p>Notre groupe de louange conduit la congrégation dans l'adoration chaque semaine. Ce département vise à créer une atmosphère où Dieu est glorifié par la musique, le chant et la prière.</p>
                     <a href="#" class="btn-lux-rounded">Rejoindre l'équipe</a>
@@ -214,8 +218,10 @@
         <!-- ==================== SECTION MISSION ==================== -->
         <section id="mission" class="department-section">
             <div class="department-card animated-card container">
-                <img src="r/c.jpg" alt="Département Mission" class="department-image-container">
-                <div class="department-content">
+                <div class="department-image-container">
+                    <img src="r/c.jpg" alt="Département Mission">
+                </div>
+                <div class="department-content animated-card">
                     <h3>Mission</h3>
                     <p>Engagés à répondre au grand commandement, nous soutenons et organisons des missions locales et internationales pour partager l'Évangile et servir les communautés dans le besoin.</p>
                     <a href="#" class="btn-lux-rounded">Participer</a>
@@ -226,8 +232,10 @@
         <!-- ==================== SECTION ENSEIGNEMENT ==================== -->
         <section id="enseignement" class="department-section">
             <div class="department-card animated-card container">
-                <img src="r/rs.svg" alt="Département Enseignement" class="department-image-container">
-                <div class="department-content">
+                <div class="department-image-container">
+                    <img src="r/rs.svg" alt="Département Enseignement">
+                </div>
+                <div class="department-content animated-card">
                     <h3>Enseignement</h3>
                     <p>De l'école du dimanche aux études bibliques pour adultes, ce département est dédié à l'enseignement de la Parole de Dieu pour équiper chaque croyant dans sa marche de foi.</p>
                     <a href="ressources.html" class="btn-lux-rounded">Voir les ressources</a>
@@ -238,8 +246,10 @@
         <!-- ==================== SECTION CONSEIL ADMINISTRATIF ==================== -->
         <section id="administratif" class="department-section">
             <div class="department-card animated-card container">
-                <img src="r/ca.svg" alt="Conseil Administratif" class="department-image-container">
-                <div class="department-content">
+                <div class="department-image-container">
+                    <img src="r/ca.svg" alt="Conseil Administratif">
+                </div>
+                <div class="department-content animated-card">
                     <h3>Conseil Administratif</h3>
                     <p>Le conseil administratif veille à la bonne gestion et à l'organisation de l'église. Il assure que toutes les activités se déroulent dans l'ordre et la transparence, conformément à notre vision.</p>
                     <a href="apropos.html#gouvernance" class="btn-lux-rounded">Découvrir la gouvernance</a>
@@ -304,7 +314,9 @@
 
             document.querySelectorAll('.animated-title').forEach(el => observer.observe(el));
 
-            document.querySelectorAll('.animated-card').forEach((card, index) => {
+            // On anime les cartes et les contenus de manière décalée
+            document.querySelectorAll('.animated-card').forEach((card, index) => { 
+                // Appliquer un délai progressif pour un effet "cascade"
                 card.style.transitionDelay = `${index * 100}ms`;
                 observer.observe(card);
             });
