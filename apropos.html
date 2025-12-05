@@ -23,7 +23,6 @@
             background-image: linear-gradient(rgba(10, 10, 35, 0.75), rgba(10, 10, 35, 0.75)), url('r/I1.svg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Ajout pour l'effet de parallaxe */
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 60px;
         }
@@ -76,8 +75,8 @@
             height: 100%;
             transition: transform 0.7s;
             transform-style: preserve-3d;
-            /* box-shadow: 0 5px 20px rgba(0,0,0,0.25); */ /* Ombre retirée */
-            border-radius: 15px; /* Gardé pour les coins arrondis */
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
         }
         .leader-card:hover .leader-card-inner { transform: rotateY(180deg); }
         .leader-card-front, .leader-card-back {
@@ -87,8 +86,8 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 15px;
-            background-color: transparent;
-            /* border: 1px solid var(--border-color); */ /* Bordure retirée */
+            background-color: transparent; /* Fond des cartes dirigeants transparent */
+            border: 1px solid var(--border-color);
             box-sizing: border-box;
         }
         .leader-card-front {
@@ -98,7 +97,7 @@
             justify-content: center;
             padding: 20px;
         }
-        .leader-card-front img { /* Styles existants pour l'image */
+        .leader-card-front img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -106,18 +105,18 @@
             border: 3px solid var(--primary-blue);
             margin-bottom: 20px;
         }
-        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; color: var(--text-color-dark); } /* Ajusté pour le contraste */
-        .leader-card-front p { margin: 0; color: var(--text-color-secondary); } /* Ajusté pour le contraste */
+        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; color: #111; } /* Texte noir */
+        .leader-card-front p { margin: 0; color: #555; } /* Texte gris foncé */
         .leader-card-back {
             transform: rotateY(180deg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 30px;
-            color: var(--text-color-dark); /* Ajusté pour le contraste */
+            color: #000; /* Texte noir pour le dos de la carte */
         }
         .leader-card-back h4 { color: var(--primary-blue); }
-        .leader-card-back p { color: var(--text-color-primary); } /* Ajusté pour le contraste */
+        .leader-card-back p { color: #333; }
 
         /* --- Styles pour le texte des sections Histoire et Mission --- */
         .text-content-section {
@@ -171,94 +170,133 @@
             <p>Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
         </section>
 
-        <!-- Section Contact -->
-<section class="py-16">
-  <!-- Titre principal -->
-  <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
-    Nous Contacter
-  </h2>
-  <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
-    Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
-  </p>
+        <section class="container">
+            <div class="grid-2 text-center text-content-section">
+                <div class="animated-card zoom-in-rotate">
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Histoire de l'Église</h3>
+                    <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
+                </div>
+                <div class="animated-card zoom-in-rotate" style="transition-delay: 150ms;">
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Mission et Vision</h3>
+                    <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
+                </div>
+            </div>
+        </section>
 
-  <!-- Grille principale -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 items-start max-w-6xl mx-auto">
-    
-    <!-- Coordonnées -->
-    <div class="flex flex-col gap-6 md:order-1 order-2">
-      <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
-      <div class="space-y-4 text-black">
-        <p>
-          <strong>Adresse :</strong><br>
-          Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
-        </p>
-        <p>
-          <strong>Téléphone :</strong><br>
-          <a href="tel:+221338245294" class="hover:text-indigo-500 transition-colors">33 824 52 94</a>
-        </p>
-      </div>
-    </div>
-    
-    <!-- Formulaire -->
-    <div class="md:order-2 order-1 bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200">
-      <h3 class="text-2xl font-bold mb-6 text-black">Écrivez-nous</h3>
-      <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6 text-black">
-        
-        <!-- Nom et Email -->
-        <div class="flex flex-col md:flex-row gap-6">
-          <!-- Champ Nom -->
-          <div class="relative flex-1">
-            <input type="text" id="contact-name" name="contact-name" placeholder=" " required
-                   class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
-            <label for="contact-name"
-                   class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                          peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                          peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
-              Votre Nom
-            </label>
-          </div>
+        <section class="container">
+            <h2 class="section-title animated-title" style="font-size: 2.2em;">Notre Équipe Dirigeante</h2>
+            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Une équipe dévouée au service de la vision de l'église et de sa communauté.</p>
+            <div class="leader-grid">
+                <div class="leader-card animated-card zoom-in-rotate">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Pasteur Principal">
+                            <h4>Pasteur....</h4>
+                            <p>Pasteur Principal</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Pasteur ......../h4>
+                            <p>Avec plus de 20 ans de ministère, Pasteur Jean guide notre communauté avec sagesse, passion et une profonde connaissance des Écritures.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Responsable des Ministères">
+                            <h4>......</h4>
+                            <p>Responsable des Ministères</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>.......</h4>
+                            <p>.... coordonne avec énergie et dévouement les différents départements de l'église, s'assurant que chaque membre puisse trouver sa place et servir efficacement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 300ms;">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="https://eed.abmcy.com/r/LOGO.svg" alt="Ancien de l'église">
+                            <h4>......</h4>
+                            <p>Ancien de l'église</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>.......</h4>
+                            <p>En tant qu'ancien, ...... apporte une perspective précieuse et un soutien pastoral essentiel à la vie de notre communauté.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container py-16">
+            <!-- Titre principal -->
+            <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
+               Nous Contacter
+            </h2>
+            <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
+              Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
+            </p>
           
-          <!-- Champ Email -->
-          <div class="relative flex-1">
-            <input type="email" id="contact-email" name="contact-email" placeholder=" " required
-                   class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30" />
-            <label for="contact-email"
-                   class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                          peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                          peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                          peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
-              Votre Email
-            </label>
-          </div>
-        </div>
-        
-        <!-- Champ Message -->
-        <div class="relative">
-          <textarea id="contact-message" name="contact-message" rows="5" placeholder=" " required
-                    class="peer w-full pt-6 pb-2 px-3 bg-slate-100 text-slate-900 border border-slate-300 rounded-lg transition-colors duration-200 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/30"></textarea>
-          <label for="contact-message"
-                 class="absolute top-4 left-3 text-slate-500 pointer-events-none transition-all duration-200 origin-left
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                        peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-focus:text-blue-600 peer-focus:bg-slate-100 peer-focus:px-1
-                        peer-not-placeholder-shown:scale-75 peer-not-placeholder-shown:-translate-y-3.5 peer-not-placeholder-shown:text-blue-600 peer-not-placeholder-shown:bg-slate-100 peer-not-placeholder-shown:px-1">
-            Votre Message
-          </label>
-        </div>
-        
-        <!-- Bouton -->
-        <button type="submit" id="contact-submit-btn"
-                class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105">
-          Envoyer le Message
-        </button>
-        
-        <!-- Message retour -->
-        <div id="contact-form-message" class="form-message text-sm text-green-500 mt-2"></div>
-      </form>
-    </div>
-
-  </div>
-</section>
+            <!-- Grille principale -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up" style="background-color: transparent;">
+              
+              <!-- Formulaire -->
+              <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
+                    class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm">
+                
+                <!-- Champ Nom -->
+                <div class="relative">
+                  <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
+                  <label for="contact-name" class="floating-label">Votre Nom</label>
+                </div>
+                
+                <!-- Champ Email -->
+                <div class="relative">
+                  <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
+                  <label for="contact-email" class="floating-label">Votre Email</label>
+                </div>
+                
+                <!-- Champ Message -->
+                <div class="relative">
+                  <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+                  <label for="contact-message" class="floating-label">Votre Message</label>
+                </div>
+                
+                <!-- Bouton -->
+                <button type="submit" id="contact-submit-btn" 
+                        class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                   Envoyer le Message
+                </button>
+                
+                <!-- Message retour -->
+                <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
+              </form>
+          
+              <!-- Coordonnées -->
+              <div class="flex flex-col gap-6">
+                <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
+                
+                <div class="space-y-4 text-black">
+                  <p>
+                    <strong>Adresse :</strong><br>
+                    Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
+                  </p>
+                  <p>
+                    <strong>Téléphone :</strong><br>
+                    <a href="tel:+221338245294" class="hover:text-indigo-400 transition-colors">33 824 52 94</a>
+                  </p>
+                </div>
+          
+                <!-- Carte Google Maps -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" 
+                        width="100%" height="350" 
+                        class="border-0 rounded-2xl shadow-lg mt-4" 
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+            </div>
+          </section>
     </main>
 
     <footer class="footer-section">
