@@ -31,13 +31,15 @@
             margin-bottom: 10px;
         }
         .hero-about p {
-            font-size: 1.2em;
+            font-size: 1.2em; /* Taille de police du sous-titre */
             max-width: 700px;
             margin: 0 auto;
-            color: var(--text-secondary);
+            color: #f1f1f1; /* Couleur plus claire pour le sous-titre */
         }
 
-        /* --- Styles pour la section Dirigeants --- */
+        /* --- Styles pour les animations et la lisibilité --- */
+        body { font-family: 'Open Sans', sans-serif; } /* Police par défaut pour une meilleure lisibilité */
+
         .animated-title, .animated-card {
             opacity: 0;
             transform: translateY(20px);
@@ -84,7 +86,7 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 15px;
-            background-color: var(--card-bg);
+            background-color: transparent; /* Fond des cartes dirigeants transparent */
             border: 1px solid var(--border-color);
             box-sizing: border-box;
         }
@@ -103,16 +105,24 @@
             border: 3px solid var(--primary-blue);
             margin-bottom: 20px;
         }
-        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; }
-        .leader-card-front p { margin: 0; color: var(--text-secondary); }
+        .leader-card-front h4 { margin: 10px 0 5px 0; font-size: 1.3em; color: #111; } /* Texte noir */
+        .leader-card-front p { margin: 0; color: #555; } /* Texte gris foncé */
         .leader-card-back {
             transform: rotateY(180deg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 30px;
+            color: #000; /* Texte noir pour le dos de la carte */
         }
         .leader-card-back h4 { color: var(--primary-blue); }
+        .leader-card-back p { color: #333; }
+
+        /* --- Styles pour le texte des sections Histoire et Mission --- */
+        .text-content-section {
+            color: #000; /* Texte principal en noir */
+            font-family: 'Open Sans', sans-serif;
+        }
 
     </style>
 </head>
@@ -161,14 +171,14 @@
         </section>
 
         <section class="container">
-            <div class="grid-2 text-center">
+            <div class="grid-2 text-center text-content-section">
                 <div class="animated-card zoom-in-rotate">
-                    <h3 class="text-2xl font-bold text-primary-blue mb-4">Histoire de l'Église</h3>
-                    <p class="text-text-secondary">Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Histoire de l'Église</h3>
+                    <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
                 </div>
                 <div class="animated-card zoom-in-rotate" style="transition-delay: 150ms;">
-                    <h3 class="text-2xl font-bold text-primary-blue mb-4">Mission et Vision</h3>
-                    <p class="text-text-secondary">Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
+                    <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Mission et Vision</h3>
+                    <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
                 </div>
             </div>
         </section>
@@ -229,7 +239,7 @@
             </p>
           
             <!-- Grille principale -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-card-bg p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-element fade-in-up" style="background-color: transparent;">
               
               <!-- Formulaire -->
               <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
@@ -265,15 +275,15 @@
           
               <!-- Coordonnées -->
               <div class="flex flex-col gap-6">
-                <h3 class="text-2xl font-bold mb-2 text-white">📍 Nos Coordonnées</h3>
+                <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
                 
-                <div class="space-y-4 text-text-secondary">
+                <div class="space-y-4 text-black">
                   <p>
-                    <strong class="text-white">Adresse :</strong><br>
+                    <strong>Adresse :</strong><br>
                     Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
                   </p>
                   <p>
-                    <strong class="text-white">Téléphone :</strong><br>
+                    <strong>Téléphone :</strong><br>
                     <a href="tel:+221338245294" class="hover:text-indigo-400 transition-colors">33 824 52 94</a>
                   </p>
                 </div>
