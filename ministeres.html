@@ -33,28 +33,112 @@
         }
         /* Fin des styles pour les animations */
 
-        .hero-section {
-            padding: 120px 0; text-align: center; border-bottom: 1px solid var(--border-color); background-color: var(--card-bg);
-        }
-        .hero-section .section-title { font-family: 'Playfair Display', serif; font-size: 3.5em; color: var(--text-dark); }
-        .hero-section .section-subtitle { margin-bottom: 0; }
-
-        .ministry-grid {
+        /* --- Nouveaux styles pour la section Héro --- */
+        .hero-section-ministeres {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
         }
-        a.ministry-card-link {
+        .hero-content .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero-content .section-subtitle {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        .hero-gif-container img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        /* --- Styles pour les sections des départements --- */
+        .department-section {
+            padding-top: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .department-section:last-of-type {
+            border-bottom: none;
+        }
+        .department-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .department-card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 90, 156, 0.1);
+        }
+        /* Alterner l'ordre des colonnes */
+        .department-section:nth-child(odd) .department-card .department-image-container {
+            order: 2;
+        }
+        .department-image-container {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .department-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .department-card:hover img {
+            transform: scale(1.05);
+        }
+        .department-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            color: var(--primary-blue);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .btn-lux-rounded {
+            display: inline-block;
+            padding: 12px 28px;
+            border: 2px solid var(--primary-blue);
+            background-color: var(--primary-blue);
+            color: var(--light-bg);
             text-decoration: none;
-            color: inherit;
-            display: block;
+            font-weight: 600;
+            font-size: 1em;
+            border-radius: 999px;
+            transition: all 0.4s ease;
+            margin-top: 20px;
         }
-        .ministry-card {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Pour que les coins arrondis de l'image fonctionnent */
+        .btn-lux-rounded:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-blue);
         }
-        .ministry-card img {
+
+        @media (max-width: 992px) {
+            .department-card {
+                grid-template-columns: 1fr;
+            }
+            .department-section:nth-child(odd) .department-card .department-image-container {
+                order: -1; /* Image en haut sur mobile */
+            }
+            .hero-section-ministeres {
+                grid-template-columns: 1fr;
+                padding: 60px 0;
+                text-align: center;
+            }
+        }
+        .ministry-card img { /* Conserver pour compatibilité avec ministere-enfants.html si besoin */
             width: 100%;
             height: 200px;
             object-fit: cover;
@@ -102,83 +186,90 @@
     </div>
 
     <main>
+        <!-- ==================== NOUVELLE SECTION HÉRO ==================== -->
+        <section class="hero-section-ministeres container">
+            <div class="hero-content animated-title">
+                <h1 class="section-title">Nos Ministères</h1>
+                <p class="section-subtitle">"Car Dieu n'est pas un Dieu de désordre, mais de paix." (1 Corinthiens 14:33). Chaque ministère est une expression de notre foi, organisé pour servir Dieu et notre communauté avec ordre et amour.</p>
+            </div>
+            <div class="hero-gif-container animated-card">
+                <img src="r/2.gif" alt="GIF illustrant les ministères de l'église">
+            </div>
+        </section>
         <section class="hero-section">
             <h1 class="section-title animated-title">Nos Ministères</h1>
             <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Trouvez votre place et grandissez avec nous. Il y a un ministère pour chacun.</p>
         </section>
-
-        <section class="container">
-            <div class="ministry-grid">
-                <a href="ministere-enfants.html" class="ministry-card-link card animated-card">
-                    <div class="ministry-card">
-                        <img src="r/c.jpg" alt="Enfants de l'église">
-                        <div class="ministry-card-content">
-                            <h3>Enfants</h3>
-                            <p>Découvrez tout ce qui se passe à ecodim, notre programme pour les enfants de la naissance à la 6e année.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="ministry-card-link card animated-card">
-                    <div class="ministry-card ">
-                        <img src="r/LOGO.svg" alt="Groupe de jeunes">
-                        <div class="ministry-card-content">
-                            <h3>Jeunesse</h3>
-                            <p>Découvrez comment vous pouvez vous impliquer dans Switch, notre groupe d'étudiants pour les élèves de la 6e à la terminale.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="ministry-card-link card animated-card">
-                    <div class="ministry-card ">
-                        <img src="r/LOGO.svg" alt="Groupes de vie">
-                        <div class="ministry-card-content">
-                            <h3>Groupes de vie</h3>
-                            <p>Découvrez comment vous pouvez grandir, rire et servir avec d'autres croyants au sein d'un groupe de vie.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="ministry-card-link card animated-card">
-                    <div class="ministry-card ">
-                        <img src="r/a.jpg" alt="Missions internationales">
-                        <div class="ministry-card-content">
-                            <h3>Missions</h3>
-                            <p>Témoignez de l'amour de Dieu dans votre ville et dans le monde entier grâce à des partenaires missionnaires internationaux et locaux.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="ministry-card-link card animated-card">
-                    <div class="ministry-card ">
-                        <img src="r/b.jpg" alt="Nouvelle foi en Jésus">
-                        <div class="ministry-card-content">
-                            <h3>Vous avez dit oui</h3>
-                            <p>Si vous avez récemment dit oui à la foi en Jésus, nous avons des ressources gratuites spécialement pour vous.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="ministry-card-link card animated-card">
-                    <div class="ministry-card ">
-                        <img src="r/LOGO.svg" alt="Servir dans l'église">
-                        <div class="ministry-card-content">
-                            <h3>Commencez à servir</h3>
-                            <p>Dieu peut utiliser vos dons et vos compétences pour faire une différence dans la vie des autres à eed.</p>
-                        </div>
-                    </div>
-                </a>
-                 <a href="#" class="ministry-card-link card animated-card"><div class="ministry-card">
-                    <img src="r/rs.svg" alt="Développer sa foi">
-                    <div class="ministry-card-content">
-                        <h3>Développez votre foi</h3>
-                        <p>Trouvez des outils, du contenu et des parcours guidés pour approfondir votre vie de disciple en suivant Jésus.</p>
-                    </div>
-                </div></a>
-                 <a href="#" class="ministry-card-link card animated-card"><div class="ministry-card">
-                    <img src="r/LOGO.svg" alt="Ressources pour les églises">
-                    <div class="ministry-card-content">
-                        <h3>Pour les églises</h3>
-                        <p>Découvrez des outils et des ressources gratuits créés par Life.Church pour les églises du monde entier.</p>
-                    </div>
-                </div></a>
+        <!-- ==================== SECTION FAMILLE ==================== -->
+        <section id="famille" class="container department-section">
+            <div class="department-card animated-card">
+                <div class="department-image-container">
+                    <img src="r/1.gif" alt="Département Famille">
+                </div>
+                <div class="department-content">
+                    <h3>Famille</h3>
+                    <p>Ce département se concentre sur le renforcement des liens familiaux à travers des enseignements bibliques, des activités et un soutien mutuel. Nous croyons qu'une église forte est bâtie sur des familles fortes.</p>
+                    <a href="ministere-enfants.html" class="btn-lux-rounded">En savoir plus</a>
+                </div>
             </div>
         </section>
+
+        <!-- ==================== SECTION LOUANGE & HYMNOLOGIE ==================== -->
+        <section id="louange" class="container department-section">
+            <div class="department-card animated-card">
+                <div class="department-image-container">
+                    <img src="r/b.jpg" alt="Département Louange & Hymnologie">
+                </div>
+                <div class="department-content">
+                    <h3>Louange & Hymnologie</h3>
+                    <p>Notre groupe de louange conduit la congrégation dans l'adoration chaque semaine. Ce département vise à créer une atmosphère où Dieu est glorifié par la musique, le chant et la prière.</p>
+                    <a href="#" class="btn-lux-rounded">Rejoindre l'équipe</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION MISSION ==================== -->
+        <section id="mission" class="container department-section">
+            <div class="department-card animated-card">
+                <div class="department-image-container">
+                    <img src="r/c.jpg" alt="Département Mission">
+                </div>
+                <div class="department-content">
+                    <h3>Mission</h3>
+                    <p>Engagés à répondre au grand commandement, nous soutenons et organisons des missions locales et internationales pour partager l'Évangile et servir les communautés dans le besoin.</p>
+                    <a href="#" class="btn-lux-rounded">Participer</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION ENSEIGNEMENT ==================== -->
+        <section id="enseignement" class="container department-section">
+            <div class="department-card animated-card">
+                <div class="department-image-container">
+                    <img src="r/rs.svg" alt="Département Enseignement">
+                </div>
+                <div class="department-content">
+                    <h3>Enseignement</h3>
+                    <p>De l'école du dimanche aux études bibliques pour adultes, ce département est dédié à l'enseignement de la Parole de Dieu pour équiper chaque croyant dans sa marche de foi.</p>
+                    <a href="ressources.html" class="btn-lux-rounded">Voir les ressources</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION CONSEIL ADMINISTRATIF ==================== -->
+        <section id="administratif" class="container department-section">
+            <div class="department-card animated-card">
+                <div class="department-image-container">
+                    <img src="r/I1.svg" alt="Conseil Administratif">
+                </div>
+                <div class="department-content">
+                    <h3>Conseil Administratif</h3>
+                    <p>Le conseil administratif veille à la bonne gestion et à l'organisation de l'église. Il assure que toutes les activités se déroulent dans l'ordre et la transparence, conformément à notre vision.</p>
+                    <a href="apropos.html#gouvernance" class="btn-lux-rounded">Découvrir la gouvernance</a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="footer-section">
