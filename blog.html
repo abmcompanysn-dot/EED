@@ -36,7 +36,7 @@
         .blog-grid {
             display: grid;
             grid-template-columns: 1fr; /* Une seule colonne pour la liste principale */
-            gap: 60px; /* Espacement vertical entre les cartes augmenté */
+            gap: 80px; /* Espacement vertical entre les cartes encore augmenté */
         }
         .article-card {
             display: flex;
@@ -110,11 +110,18 @@
         }
 
         /* Styles pour la barre latérale */
+        .blog-sidebar {
+            position: -webkit-sticky; /* Pour la compatibilité avec Safari */
+            position: sticky;
+            top: 20px; /* Espace depuis le haut de la fenêtre */
+            align-self: start; /* Empêche l'étirement vertical dans la grille */
+        }
         .blog-sidebar .sidebar-widget {
-            background-color: var(--card-bg);
+            background-color: rgba(42, 42, 72, 0.8); /* Fond gris/bleu semi-transparent */
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 30px;
+            backdrop-filter: blur(5px); /* Effet de flou pour le fond (optionnel, mais moderne) */
         }
         #search-input {
             width: 100%;
