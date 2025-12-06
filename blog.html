@@ -80,7 +80,7 @@
         .article-card.visible { opacity: 1; transform: translateY(0); } 
         .article-content {
             flex: 1;
-            padding: 25px;
+            padding: 20px 25px; /* Padding vertical réduit */
         }
         .article-content h3 a {
             color: var(--neon-blue);
@@ -337,7 +337,7 @@
                     card.dataset.title = post.Titre.toLowerCase();
                     card.dataset.content = post.Contenu.toLowerCase();
 
-                    const excerpt = post.Contenu.substring(0, 150) + '...';
+                    const excerpt = post.Contenu.substring(0, 120) + '...';
                     const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
                         day: 'numeric', month: 'long', year: 'numeric'
                     });
