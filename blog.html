@@ -36,7 +36,7 @@
         .blog-grid {
             display: grid;
             grid-template-columns: 1fr; /* Une seule colonne pour la liste principale */
-            gap: 30px;
+            gap: 40px; /* Espacement entre les cartes augmenté */
         }
         .article-card {
             display: flex;
@@ -52,7 +52,7 @@
             box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
         }
         .article-card img {
-            width: 220px;
+            width: 200px; /* Largeur de l'image réduite */
             height: 100%;
             object-fit: cover;
         }
@@ -150,7 +150,7 @@
             overflow: hidden;
         }
         .skeleton-image {
-            width: 220px;
+            width: 200px; /* Largeur du squelette d'image réduite */
             background-color: #e0e0e0;
             animation: pulse 1.5s infinite ease-in-out;
         }
@@ -337,7 +337,7 @@
                     card.dataset.title = post.Titre.toLowerCase();
                     card.dataset.content = post.Contenu.toLowerCase();
 
-                    const excerpt = post.Contenu.substring(0, 120) + '...';
+                    const excerpt = post.Contenu.substring(0, 180) + '...'; /* Longueur de l'extrait augmentée */
                     const postDate = new Date(post.Date).toLocaleDateString('fr-FR', {
                         day: 'numeric', month: 'long', year: 'numeric'
                     });
