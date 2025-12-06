@@ -41,7 +41,27 @@
         .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 191, 255, 0.1); }
         .event-content { padding: 25px; }
         .event-meta { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px; }
-        .event-description { margin-bottom: 20px; }
+        .event-meta {
+            display: flex;
+            flex-direction: column; /* Empile les éléments verticalement */
+            gap: 8px; /* Espace entre la date, l'heure et le lieu */
+            align-items: flex-start; /* Aligne les éléments à gauche */
+        }
+        .event-meta span { display: flex; align-items: center; gap: 8px; } /* Espace entre l'icône et le texte */
+        .event-description { margin-top: 20px; margin-bottom: 20px; }
+
+        /* --- Style des boutons sur les cartes --- */
+        .event-card .btn {
+            background-color: transparent;
+            border: 2px solid var(--luminous-white);
+            color: var(--luminous-white);
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .event-card .btn:hover {
+            background-color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+        }
 
         /* Squelette de chargement */
         .skeleton-card {
@@ -107,7 +127,7 @@
             <h1>Nos Événements</h1>
             <p class="section-subtitle">Ne manquez pas nos prochains rassemblements, conférences et activités spéciales.</p>
         </section>
-        <section class="container">
+        <section class="container" style="background: none; box-shadow: none;">
             <div class="grid-3" id="events-grid">
                 <!-- Le squelette de chargement sera injecté ici -->
             </div>
@@ -188,7 +208,11 @@
                             card.innerHTML = `
                                 <img src="${event.ImageURL}" alt="Image pour ${event.Titre}">
                                 <div class="event-content">
-                                    <p class="event-meta">${eventDate} à ${event.Heure} • ${event.Lieu}</p>
+                                    <div class="event-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> ${eventDate}</span>
+                                        <span><i class="fas fa-clock"></i> ${event.Heure}</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> ${event.Lieu}</span>
+                                    </div>
                                     <h3>${event.Titre}</h3>
                                     <p class="event-description">${event.Description}</p>
                                     ${event.LienInscription ? `<a href="${event.LienInscription}" target="_blank" class="btn">S'inscrire</a>` : ''}
