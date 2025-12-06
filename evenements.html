@@ -222,12 +222,21 @@
                                 weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
                             });
 
+                            // Correction pour formater l'heure correctement
+                            let eventTime = event.Heure;
+                            // Vérifie si la donnée est une chaîne de date/heure complète
+                            if (eventTime && eventTime.includes('T')) {
+                                eventTime = new Date(eventTime).toLocaleTimeString('fr-FR', {
+                                    hour: '2-digit', minute: '2-digit', hour12: false
+                                });
+                            }
+
                             card.innerHTML = `
                                 <img src="${event.ImageURL}" alt="Image pour ${event.Titre}">
                                 <div class="event-content">
                                     <div class="event-meta">
                                         <span><i class="fas fa-calendar-alt"></i> ${eventDate}</span>
-                                        <span><i class="fas fa-clock"></i> ${event.Heure}</span>
+                                        <span><i class="fas fa-clock"></i> ${eventTime}</span>
                                         <span><i class="fas fa-map-marker-alt"></i> ${event.Lieu}</span>
                                     </div>
                                     <h3>${event.Titre}</h3>
