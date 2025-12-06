@@ -75,7 +75,11 @@
 
         /* Squelette de chargement */
         .skeleton-card {
-            background-color: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden;
+            background-color: var(--dark-card); /* Utilise le même fond que la carte finale */
+            border: 10px solid var(--luminous-white); /* Applique la même bordure que la carte finale */
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0.5; /* Légère transparence pour indiquer le chargement */
         }
         .skeleton-image {
             height: 200px; background-color: #e0e0e0; animation: pulse 1.5s infinite ease-in-out;
