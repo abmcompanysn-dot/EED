@@ -11,18 +11,34 @@
     <link rel="stylesheet" href="footer.css">
     <link rel="stylesheet" href="theme.css">
     <style>
-        /* Styles pour les articles de blog */
+        /* --- Nouveaux styles pour la section Héros --- */
         .hero-section-blog {
-            padding: 100px 0;
-            text-align: center;
-            background: transparent; /* Fond transparent pour la section héros */
-            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+            padding: 80px 0; /* Un peu moins de padding vertical */
         }
-        .hero-section-blog h1 {
+        .hero-content .section-title {
+            font-family: 'Playfair Display', serif;
             font-size: 3.5em;
-            color: var(--luminous-white);
-            text-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-align: left; /* Aligner le texte à gauche */
         }
+        .hero-content .section-subtitle {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 0;
+            text-align: left; /* Aligner le texte à gauche */
+        }
+        .hero-image-container img {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        /* Styles pour les articles de blog */
         main > section {
             background: transparent; /* Fond transparent pour la section des articles */
             box-shadow: none;
@@ -232,9 +248,14 @@
 
     <main>
         <!-- Nouvelle Section Héros -->
-        <section class="hero-section-blog">
-            <h1 class="section-title">Notre Blog</h1>
-            <p class="section-subtitle">Réflexions, méditations et nouvelles de la communauté pour nourrir votre esprit chaque jour.</p>
+        <section class="hero-section-blog container">
+            <div class="hero-content">
+                <h1 class="section-title">Notre Blog</h1>
+                <p class="section-subtitle">Réflexions, méditations et nouvelles de la communauté pour nourrir votre esprit chaque jour.</p>
+            </div>
+            <div class="hero-image-container">
+                <img src="r/b.svg" alt="Illustration pour le blog">
+            </div>
         </section>
 
         <section class="container">

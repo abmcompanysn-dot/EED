@@ -168,36 +168,51 @@
     </style>
 </head>
 <body>
-    <!-- La navbar et le menu mobile sont maintenant gérés par main.js et les fichiers CSS externes -->
-    <header></header>
-    <div class="nav-links-mobile" id="mobile-menu"></div>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <ul class="desktop-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="ministeres.html">Ministères</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
+                <li><a href="apropos.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-burger" onclick="toggleMobileMenu()">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-links-mobile" id="mobile-menu">
+        <!-- Le contenu est généré par main.js -->
+    </div>
 
     <main class="container" id="article-container">
-        </main>
+    </main>
+
+    <footer class="footer-section">
+        <!-- Le contenu du pied de page sera généré ici -->
+    </footer>
 
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
-        // --- DONNÉES DE NAVIGATION CENTRALISÉES (Footer retiré) ---
-        const NAV_LINKS = [
-            { href: "index.html", text: "Accueil" },
-            { href: "apropos.html", text: "À Propos" },
-            { href: "ministeres.html", text: "Ministères" },
-            { href: "evenements.html", text: "Événements" },
-            { href: "carrieres.html", text: "Ateliers" }, 
-            { href: "ressources.html", text: "Ressources" },
-            { href: "live.html", text: "Live" },
-            { href: "Boutique.html", text: "Faire un Don" }, 
-            { href: "apropos.html#contact", text: "Contact" }
-        ];
-
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('article-container');
             const urlParams = new URLSearchParams(window.location.search);
             const articleId = urlParams.get('id');
 
-            // --- Chargement et génération des menus ---
-            generateNavLinks();
+            // Peuple le menu mobile et le footer
+            populateMobileMenu();
+            populateFooter();
             
             // Afficher le skeleton loader
             container.innerHTML = `
@@ -323,33 +338,6 @@
 
             if (inParagraph) { html += '</p>'; }
             return html;
-        }
-
-        // --- FONCTION: Génération centralisée des liens de navigation ---
-        function generateNavLinks() {
-            const desktopNav = document.getElementById('desktop-nav-links');
-            const mobileContent = document.querySelector('#mobile-menu .nav-links-mobile-content');
-            
-            // Générer pour le desktop
-            NAV_LINKS.forEach(link => {
-                const desktopItem = document.createElement('li');
-                desktopItem.innerHTML = `<a href="${link.href}">${link.text}</a>`;
-                desktopNav.appendChild(desktopItem);
-            });
-
-            // Générer pour le mobile
-            NAV_LINKS.forEach(link => {
-                const mobileLink = document.createElement('a');
-                mobileLink.href = link.href;
-                mobileLink.textContent = link.text;
-                mobileLink.onclick = toggleMobileMenu; 
-                mobileContent.appendChild(mobileLink);
-            });
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('active');
         }
 
         /**
