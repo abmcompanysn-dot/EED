@@ -24,21 +24,27 @@
             border-bottom: 1px solid var(--border-color);
         }
         .hero-section h1 {
-            font-size: 3.5em;
-            margin-bottom: 10px;
+            font-size: 3.5em; margin-bottom: 10px;
+        }
+
+        /* --- Perspective pour l'effet 3D --- */
+        .grid-3 {
+            perspective: 1500px; /* Crée un espace 3D pour les cartes */
         }
 
         /* --- Styles des cartes d'événements --- */
         .event-card { 
-            background-color: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease-out, transform 0.5s ease-out;
+            background-color: var(--dark-card); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;
+            /* Transition plus douce pour l'effet 3D */
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.5s ease-out;
             opacity: 0; transform: translateY(20px);
         }
         .event-card.is-visible { opacity: 1; transform: translateY(0); }
         .event-card img { width: 100%; height: 200px; object-fit: cover; }
-        .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 191, 255, 0.1); }
+        .event-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.05); /* Effet 3D au survol */
+            box-shadow: 0 25px 40px rgba(0, 191, 255, 0.2); /* Ombre plus prononcée */
+        }
         .event-content { padding: 25px; }
         .event-meta { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px; }
         .event-meta {
