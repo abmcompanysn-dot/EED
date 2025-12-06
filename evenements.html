@@ -38,14 +38,17 @@
 
         /* --- Styles des cartes d'événements --- */
         .event-card { 
-            background-color: var(--dark-card); border: 10px solid var(--luminous-white); border-radius: 10px; overflow: hidden;
+            background-color: #ffffff; /* Fond blanc pour la carte */
+            border: 1px solid #e0e0e0; /* Bordure légère pour la délimitation */
+            border-radius: 10px; 
+            overflow: hidden;
             /* Transition plus douce pour l'effet 3D */
             transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.5s ease-out;
             opacity: 0; transform: translateY(20px);
         }
         .event-card.is-visible { opacity: 1; transform: translateY(0); }
         .event-card img { width: 100%; height: 200px; object-fit: cover; }
-        .event-content { padding: 25px; }
+        .event-content { padding: 25px; color: #333; /* Texte sombre pour la lisibilité sur fond blanc */ }
         .event-meta { font-size: 0.9em; color: var(--text-secondary); margin-bottom: 15px; }
         .event-meta {
             display: flex;
@@ -63,20 +66,20 @@
         /* --- Style des boutons sur les cartes --- */
         .event-card .btn {
             background-color: transparent;
-            border: 2px solid var(--luminous-white);
-            color: var(--luminous-white);
+            border: 2px solid var(--primary-color); /* Bordure avec la couleur primaire */
+            color: var(--primary-color); /* Texte avec la couleur primaire */
             transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
         .event-card .btn:hover {
-            background-color: var(--neon-blue);
+            background-color: var(--neon-blue); color: white;
             border-color: var(--neon-blue);
             box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
         }
 
         /* Squelette de chargement */
         .skeleton-card {
-            background-color: var(--dark-card); /* Utilise le même fond que la carte finale */
-            border: 10px solid var(--luminous-white); /* Applique la même bordure que la carte finale */
+            background-color: #ffffff; /* Fond blanc pour le squelette */
+            border: 1px solid #e0e0e0; /* Bordure identique à la carte finale */
             border-radius: 10px;
             overflow: hidden;
             opacity: 0.5; /* Légère transparence pour indiquer le chargement */
