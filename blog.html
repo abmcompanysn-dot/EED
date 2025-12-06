@@ -42,9 +42,9 @@
             display: flex;
             gap: 25px;
             overflow: hidden;
-            background-color: var(--dark-card);
+            background-color: #1a1a3a; /* Fond bleu marine */
             border-radius: 10px;
-            border: 1px solid var(--border-color);
+            border: 1px solid white; /* Bordure blanche */
             transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition plus douce */
         }
         .article-card:hover {
@@ -91,6 +91,18 @@
             color: var(--text-secondary);
             margin-bottom: 15px;
         }
+        /* --- Style des boutons sur les cartes d'article --- */
+        .article-card .btn {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .article-card .btn:hover {
+            background-color: white;
+            color: #1a1a3a; /* Le texte devient bleu marine au survol */
+        }
+
         .article-excerpt {
             margin-bottom: 20px;
         }
