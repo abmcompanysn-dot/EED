@@ -36,7 +36,7 @@
         .blog-grid {
             display: grid;
             grid-template-columns: 1fr; /* Une seule colonne pour la liste principale */
-            gap: 80px; /* Espacement vertical entre les cartes encore augmenté */
+            gap: 100px; /* Espacement vertical entre les cartes augmenté pour plus de clarté */
         }
         .article-card {
             display: flex;
@@ -123,6 +123,11 @@
             margin-bottom: 30px;
             backdrop-filter: blur(5px); /* Effet de flou pour le fond (optionnel, mais moderne) */
         }
+        .sidebar-widget h3 {
+            color: var(--luminous-white);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
         #search-input {
             width: 100%;
             padding: 10px;
@@ -142,11 +147,11 @@
         #category-list li a { 
             display: block;
             padding: 8px 0;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.9); /* Texte des catégories en blanc */
             text-decoration: none;
             cursor: pointer;
+            transition: color 0.3s;
         }
-        #category-list li a:hover { color: var(--luminous-white); }
         #category-list li a:hover { color: var(--primary-blue); }
 
         /* --- Styles pour le squelette de chargement --- */
