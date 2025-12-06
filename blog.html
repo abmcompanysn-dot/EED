@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="theme.css">
     <style>
         /* Styles pour les articles de blog */
+        .hero-section-blog {
+            padding: 100px 0;
+            text-align: center;
+            background: transparent; /* Fond transparent pour la section héros */
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero-section-blog h1 {
+            font-size: 3.5em;
+            color: var(--luminous-white);
+            text-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+        }
+        main > section {
+            background: transparent; /* Fond transparent pour la section des articles */
+            box-shadow: none;
+        }
+
         .blog-layout {
             display: grid;
             grid-template-columns: 3fr 1fr;
@@ -26,10 +42,14 @@
             display: flex;
             gap: 25px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transition plus douce */
         }
         .article-card:hover {
-            box-shadow: 0 8px 16px rgba(0, 191, 255, 0.15);
+            transform: translateY(-5px); /* Effet de survol subtil */
+            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
         }
         .article-card img {
             width: 220px;
@@ -39,11 +59,23 @@
         .article-card.no-image .article-content { padding-left: 25px; }
         .article-card.no-image img { display: none; }
 
-        /* Animation au défilement */
+        /* --- Animations d'apparition --- */
         .article-card {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        /* Animation alternée pour desktop */
+        @media (min-width: 769px) {
+            .article-card:nth-child(odd) {
+                transform: translateX(-30px);
+            }
+            .article-card:nth-child(even) {
+                transform: translateX(30px);
+            }
+            .article-card.visible {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         .article-card.visible { opacity: 1; transform: translateY(0); } 
         .article-content {
@@ -173,10 +205,13 @@
     </div>
 
     <main>
-        <section class="container">
+        <!-- Nouvelle Section Héros -->
+        <section class="hero-section-blog">
             <h1 class="section-title">Notre Blog</h1>
             <p class="section-subtitle">Réflexions, méditations et nouvelles de la communauté pour nourrir votre esprit chaque jour.</p>
+        </section>
 
+        <section class="container">
             <div class="blog-layout">
                 <div class="blog-main" id="blog-grid">
                     <!-- Les articles seront injectés ici -->
