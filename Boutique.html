@@ -13,6 +13,32 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="footer.css">
     <style>
+        /* --- Section Héros --- */
+        .hero-section {
+            padding: 120px 20px;
+            text-align: center;
+            color: white;
+            background-image: linear-gradient(rgba(10, 10, 35, 0.7), rgba(10, 10, 35, 0.7)), url('r/p.png');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero-section h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+
+        /* --- Animations d'apparition --- */
+        .animated-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Styles pour la barre de recherche et filtres */
         .filters-bar {
             display: flex;
@@ -138,6 +164,32 @@
             transition: background-color 0.3s;
         }
         .donation-card .account-info:hover { background-color: #dee2e6; }
+
+        /* --- Bannière de versets défilants --- */
+        .bible-verse-marquee {
+            background-color: var(--card-bg);
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 1.1em;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden; 
+            white-space: nowrap; 
+        }
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%; 
+            animation: marquee-scroll 45s linear infinite;
+        }
+        .marquee-content p {
+            display: inline-block;
+            margin: 0 40px; 
+        }
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
@@ -174,9 +226,15 @@
     </div>
 
     <main>
-        <section class="container">
-            <h1 class="section-title">Pour vos Offrandes</h1>
-            <p class="section-subtitle">Soutenez la mission par vos Dîmes, Dons et contributions pour la Construction. Votre générosité nous permet de poursuivre notre mission et d'étendre l'œuvre de Dieu. Que Dieu vous bénisse.</p>
+        <!-- Nouvelle Section Héros -->
+        <section class="hero-section">
+            <h1>Soutenez la Mission</h1>
+            <p class="section-subtitle" style="color: #e0e0e0;">Votre générosité nous permet de poursuivre notre mission et d'étendre l'œuvre de Dieu. Que Dieu vous bénisse.</p>
+        </section>
+
+        <!-- Section des moyens de dons (fond transparent) -->
+        <section class="container" style="background: none; box-shadow: none;">
+            <h2 class="section-title">Comment faire un don ?</h2>
 
             <div class="grid-3">
                 <!-- Carte Virement Bancaire -->
@@ -219,12 +277,15 @@
             <h2 class="section-title">Besoins de la communauté</h2>
             <div class="grid-3" id="needs-grid"></div>
         </section>
-        <!-- Section Versets Bibliques -->
+
+        <!-- Nouvelle bannière de versets défilants -->
         <section class="bible-verse-marquee">
             <div class="marquee-content">
-                <p>“L'Éternel est mon berger : je ne manquerai de rien.” – Psaume 23:1</p>
-                <p>“Je puis tout par celui qui me fortifie.” – Philippiens 4:13</p>
-                <p>“Car je connais les projets que j’ai formés sur vous.” – Jérémie 29:11</p>
+                <p>“Donnez, et il vous sera donné : on versera dans votre sein une bonne mesure, serrée, secouée et qui déborde.” – Luc 6:38</p>
+                <p>“Que chacun donne comme il l'a résolu en son cœur, sans tristesse ni contrainte ; car Dieu aime celui qui donne avec joie.” – 2 Corinthiens 9:7</p>
+                <p>“Honore l'Éternel avec tes biens, et avec les prémices de tout ton revenu.” – Proverbes 3:9</p>
+                <!-- Répétition pour un défilement fluide -->
+                <p>“Donnez, et il vous sera donné : on versera dans votre sein une bonne mesure, serrée, secouée et qui déborde.” – Luc 6:38</p>
             </div>
         </section>
     </main>
@@ -298,6 +359,19 @@
 
         // Logique pour charger les besoins de la communauté
         document.addEventListener('DOMContentLoaded', function() {
+            // Logique pour les animations à l'apparition
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Appliquer l'observateur à toutes les cartes
+            document.querySelectorAll('.card, .need-card').forEach(card => observer.observe(card));
+
             const needsGrid = document.getElementById('needs-grid');
 
             // Afficher le squelette de chargement
@@ -321,7 +395,7 @@
                         needsGrid.innerHTML = '';
                         data.needs.forEach(need => {
                             const card = document.createElement('div');
-                            card.className = 'need-card';
+                            card.className = 'need-card animated-card'; // Ajout de la classe d'animation
                             card.dataset.category = need.Categorie;
 
                             const percentage = Math.min((need.MontantActuel / need.MontantObjectif) * 100, 100);
@@ -342,6 +416,7 @@
                                 </div>
                             `;
                             needsGrid.appendChild(card);
+                            observer.observe(card); // Observer les nouvelles cartes
                         });
                     } else {
                         needsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Aucun besoin spécifique à soutenir pour le moment. Vos dons généraux sont toujours appréciés !</p>';
@@ -414,58 +489,6 @@
                 });
         }
 
-    </script>
-</body>
-</html>
-
-<!--
-        .bible-verse-marquee {
-            background-color: #f9f9f9;
-            color: #333;
-            font-style: italic;
-            font-size: 1.1em;
-            padding: 10px 0;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-            overflow: hidden; 
-            white-space: nowrap; 
-        }
-
-        .marquee-content {
-            display: inline-block;
-            padding-left: 100%; 
-            animation: marquee-scroll 30s linear infinite;
-        }
-
-        .marquee-content p {
-            display: inline-block;
-            margin: 0 40px; 
-        }
-
-        @keyframes marquee-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .section-button {
-            background: linear-gradient(to right, #2c3e50, #3498db);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.2s ease;
-        }
-        .section-button:hover {
-            transform: scale(1.05);
-            cursor: pointer;
-        }
-    -->
-        
-    </script>
-</body>
-</html>
-        
     </script>
 </body>
 </html>
