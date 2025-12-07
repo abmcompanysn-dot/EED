@@ -165,6 +165,12 @@
         }
         .donation-card .account-info:hover { background-color: #dee2e6; }
 
+        /* Nouveau style pour les cartes de don (fond gris) */
+        .donation-card {
+            background-color: #f0f0f0; /* Fond gris clair */
+            color: #333; /* Texte noir pour la lisibilité */
+        }
+
         /* --- Bannière de versets défilants --- */
         .bible-verse-marquee {
             background-color: var(--card-bg);
@@ -232,50 +238,47 @@
             <p class="section-subtitle" style="color: #e0e0e0;">Votre générosité nous permet de poursuivre notre mission et d'étendre l'œuvre de Dieu. Que Dieu vous bénisse.</p>
         </section>
 
+        <!-- NOUVEL ORDRE : Section des besoins de la communauté en premier -->
+        <section class="container">
+            <h2 class="section-title">Besoins de la communauté</h2>
+            <div class="grid-3" id="needs-grid">
+                <!-- Le squelette de chargement et les cartes des besoins seront injectés ici par le JS -->
+            </div>
+        </section>
+
         <!-- Section des moyens de dons (fond transparent) -->
         <section class="container" style="background: none; box-shadow: none;">
             <h2 class="section-title">Comment faire un don ?</h2>
 
             <div class="grid-3">
                 <!-- Carte Virement Bancaire -->
-                <div class="card donation-card">
-                    <div class="card-content">
-                        <img src="r/ecobank.svg" alt="Ecobank" class="payment-logo">
-                        <h3>Virement Bancaire</h3>
-                        <p>Compte Général (Ecobank):</p>
-                        <div class="account-info" onclick="copyToClipboard('SN0940100410002753900165', this)">SN094 01004 100027539001 65</div>
-                        <p style="margin-top: 20px;">Compte Construction (Ecobank):</p>
-                        <div class="account-info" onclick="copyToClipboard('SN0940100410002753900216', this)">SN094 01004 100027539002 16</div>
-                    </div>
+                <div class="card donation-card animated-card">
+                    <img src="r/ecobank.svg" alt="Ecobank" class="payment-logo">
+                    <h3>Virement Bancaire</h3>
+                    <p>Compte Général (Ecobank):</p>
+                    <div class="account-info" onclick="copyToClipboard('SN0940100410002753900165', this)">SN094 01004 100027539001 65</div>
+                    <p style="margin-top: 20px;">Compte Construction (Ecobank):</p>
+                    <div class="account-info" onclick="copyToClipboard('SN0940100410002753900216', this)">SN094 01004 100027539002 16</div>
                 </div>
 
                 <!-- Carte Orange Money -->
-                <div class="card donation-card">
-                    <div class="card-content">
-                        <img src="r/orange.svg" alt="Orange Money" class="payment-logo">
-                        <h3>Paiement Mobile</h3>
-                        <p>Suivez les instructions sur votre téléphone :</p>
-                        <div class="account-info" onclick="copyToClipboard('#144#633#', this)">#144#633#</div>
-                        <p style="margin-top: 20px;">Ou envoyez directement au numéro :</p>
-                        <div class="account-info" onclick="copyToClipboard('221766246565', this)">221 76 624 65 65</div>
-                    </div>
+                <div class="card donation-card animated-card">
+                    <img src="r/orange.svg" alt="Orange Money" class="payment-logo">
+                    <h3>Paiement Mobile</h3>
+                    <p>Suivez les instructions sur votre téléphone :</p>
+                    <div class="account-info" onclick="copyToClipboard('#144#633#', this)">#144#633#</div>
+                    <p style="margin-top: 20px;">Ou envoyez directement au numéro :</p>
+                    <div class="account-info" onclick="copyToClipboard('221766246565', this)">221 76 624 65 65</div>
                 </div>
 
                 <!-- Carte Wave -->
-                <div class="card donation-card">
-                    <div class="card-content">
-                        <img src="r/wave.png" alt="Wave" class="payment-logo">
-                        <h3>Wave</h3>
-                        <p>Faites votre don ou offrande sans frais via l'application.</p>
-                        <p>1. Ouvrez Wave et sélectionnez "Paiements".<br>2. Recherchez 'EGLISE EVANGELIQUE DE DAKAR'.</p>
-                    </div>
+                <div class="card donation-card animated-card">
+                    <img src="r/wave.png" alt="Wave" class="payment-logo">
+                    <h3>Wave</h3>
+                    <p>Faites votre don ou offrande sans frais via l'application.</p>
+                    <p>1. Ouvrez Wave et sélectionnez "Paiements".<br>2. Recherchez 'EGLISE EVANGELIQUE DE DAKAR'.</p>
                 </div>
             </div>
-        </section>
-
-        <section class="container">
-            <h2 class="section-title">Besoins de la communauté</h2>
-            <div class="grid-3" id="needs-grid"></div>
         </section>
 
         <!-- Nouvelle bannière de versets défilants -->
