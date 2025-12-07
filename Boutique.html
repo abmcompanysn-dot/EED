@@ -163,7 +163,8 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        .donation-card .account-info:hover { background-color: #dee2e6; }
+        .donation-card .account-info:hover { background-color: #d1d5db; } /* Gris un peu plus foncé au survol */
+        .donation-card .account-info { color: #1f2937; } /* Assure que le texte est sombre et lisible */
 
         /* Nouveau style pour les cartes de don (fond gris) */
         .donation-card {
@@ -345,8 +346,9 @@
                 element.innerHTML = 'Copié !';
                 element.style.backgroundColor = 'var(--success-color)'; element.style.color = 'white';
                 setTimeout(function() {
-                    element.innerHTML = originalText;
-                    element.style.backgroundColor = '#e9ecef'; element.style.color = 'var(--text-dark)';
+                    element.innerHTML = originalText; // Remettre le texte original
+                    element.style.backgroundColor = ''; // Retirer le style pour revenir à la feuille de style
+                    element.style.color = ''; // Retirer le style pour revenir à la feuille de style
                 }, 2000);
             }, function(err) {
                 console.error('Erreur de copie: ', err);
@@ -354,8 +356,9 @@
                 element.innerHTML = 'Erreur';
                 element.style.backgroundColor = 'var(--error-color)'; element.style.color = 'white';
                  setTimeout(function() {
-                    element.innerHTML = originalText;
-                    element.style.backgroundColor = '#e9ecef'; element.style.color = 'var(--text-dark)';
+                    element.innerHTML = originalText; // Remettre le texte original
+                    element.style.backgroundColor = ''; // Retirer le style pour revenir à la feuille de style
+                    element.style.color = ''; // Retirer le style pour revenir à la feuille de style
                 }, 2000);
             });
         }
