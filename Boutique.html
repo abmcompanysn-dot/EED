@@ -155,34 +155,66 @@
 
         /* Styles spécifiques à la page de dons */
         .donation-card {
+            background-color: var(--dark-card); /* Utilisation de la variable du thème */
+            color: var(--luminous-white);
             display: flex;
             flex-direction: column;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s; /* Ajout d'une transition */
         }
-        .donation-card .card-content {
-            flex-grow: 1;
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.1);
         }
         .donation-card img.payment-logo {
-            height: 50px;
+            height: 45px; /* Légère réduction pour un meilleur équilibre */
             margin-bottom: 20px;
+            filter: grayscale(50%) brightness(1.5); /* Effet pour mieux intégrer les logos */
+            transition: filter 0.3s;
+        }
+        .donation-card:hover img.payment-logo {
+            filter: grayscale(0%) brightness(1);
+        }
+        .donation-card h3 {
+            color: var(--luminous-white);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 15px;
+        }
+        .donation-card p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
         }
         .donation-card .account-info {
-            background-color: #e9ecef;
+            background-color: rgba(10, 10, 35, 0.8); /* Fond plus sombre et cohérent */
+            color: var(--luminous-white);
             padding: 15px;
             border-radius: 8px;
             font-weight: bold;
             word-break: break-all;
             margin-top: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative; /* Pour l'icône */
         }
-        .donation-card .account-info:hover { background-color: #d1d5db; } /* Gris un peu plus foncé au survol */
-        .donation-card .account-info { color: #1f2937; } /* Assure que le texte est sombre et lisible */
-
-        /* Nouveau style pour les cartes de don (fond gris) */
-        .donation-card {
-            background-color: #4a5568; /* Fond gris foncé pour un meilleur contraste */
-            color: #FFFFFF; /* Texte blanc pour la lisibilité */
+        .donation-card .account-info:hover {
+            background-color: var(--night-blue);
+            border-color: var(--primary-blue);
+        }
+        .donation-card .account-info::after {
+            content: '\f0c5'; /* Icône "copy" de Font Awesome */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .donation-card .account-info:hover::after {
+            opacity: 1;
         }
 
         /* --- Bannière de versets défilants --- */
