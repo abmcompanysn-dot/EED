@@ -1393,7 +1393,8 @@
                 installBtnInNav.style.display = 'inline-block';
             });
 
-            function handleInstall() {
+            function handleInstall(e) {
+                e.preventDefault(); // CORRECTION : Empêche le lien de remonter la page
                 if (!deferredPrompt) return;
                 // Cache notre UI
                 installToast.classList.remove('show');
