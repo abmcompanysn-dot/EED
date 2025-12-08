@@ -10,23 +10,23 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "r/icons/icon-192x192.png",
+      "src": "/r/icons/icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "r/icons/icon-512x512.png",
+      "src": "/r/icons/icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "r/icons/maskable-icon-512x512.png",
+      "src": "/r/icons/maskable-icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     },
     {
-      "src": "favicon.ico",
+      "src": "/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
@@ -37,26 +37,26 @@
       "short_name": "Don",
       "description": "Soutenir la mission de l'église",
       "url": "/Boutique.html",
-      "icons": [{ "src": "r/icons/shortcut-don.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/r/icons/shortcut-don.png", "sizes": "192x192" }]
     },
     {
       "name": "Événements à venir",
       "short_name": "Événements",
       "description": "Voir les prochains événements",
       "url": "/evenements.html",
-      "icons": [{ "src": "r/icons/shortcut-event.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/r/icons/shortcut-event.png", "sizes": "192x192" }]
     },
     {
       "name": "Culte en Direct",
       "short_name": "Live",
       "description": "Regarder le culte en direct",
       "url": "/live.html",
-      "icons": [{ "src": "r/icons/shortcut-live.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/r/icons/shortcut-live.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": [
     {
-      "src": "r/screenshots/screenshot1.jpg",
+      "src": "/r/screenshots/screenshot1.jpg",
       "sizes": "1080x1920",
       "type": "image/jpeg"
     }

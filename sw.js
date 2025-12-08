@@ -62,6 +62,12 @@ self.addEventListener('fetch', event => {
 
 // Stratégie : Cache d'abord, puis réseau (pour les images, polices, etc.)
 async function cacheFirst(request) {
+  // AJOUT : Vérification pour ignorer les requêtes non-GET dans cette stratégie également.
+  // C'est la correction principale pour l'erreur "Request method 'POST' is unsupported".
+  if (request.method !== 'GET') {
+    return fetch(request); // Laisse passer la requête POST vers le réseau.
+  }
+
   const cachedResponse = await caches.match(request);
   if (cachedResponse) {
     return cachedResponse;
