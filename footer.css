@@ -91,24 +91,13 @@
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-    /* Supprimer centrage forcé */
     .footer-grid {
-        text-align: left; /* garder alignement gauche */
+        text-align: center; /* Centrer le texte dans les colonnes */
     }
-
-    /* Cacher logo et liens sur mobile */
-    .footer-logo,
-    .footer-links {
-        display: none;
+    .footer-logo {
+        align-self: center; /* Centrer le logo */
     }
-
-    /* Garder uniquement contact + icônes alignés à gauche */
     .social-icons {
-        justify-content: flex-start;
-    }
-
-    /* Optionnel : cacher tagline aussi */
-    .footer-tagline {
-        display: none;
+        justify-content: center; /* Centrer les icônes sociales */
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pour vos Offrandes - Église Évangélique de Dakar</title>
+    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -424,7 +425,6 @@
     </main>
 
     <div id="back-to-top" onclick="scrollToTop()">&#8679;</div>
-
     <footer class="footer-section">
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
@@ -445,6 +445,23 @@
                      <li><i class="fas fa-envelope"></i> BP : 3816, Dakar 18523</li>
                  </ul>
              </div>
+ 
+            <!-- Colonne Notifications -->
+            <div class="footer-col">
+                <h4 class="footer-title">Restez Informé</h4>
+                <p>Abonnez-vous pour recevoir une notification lors de nos prochains événements.</p>
+                <button id="subscribe-notifications-btn" class="btn btn-notify"><i class="fas fa-bell"></i> M'abonner aux notifications</button>
+            </div>
+
+             <!-- Colonne Réseaux Sociaux -->
+             <div class="footer-col">
+                 <h4 class="footer-title">Suivez-nous</h4>
+                 <div class="social-icons">
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+                     <a href="#" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+                 </div>
+             </div>
          </div>
        
          <!-- Bas de page -->
@@ -455,6 +472,7 @@
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
         // Logique pour le bouton "Retour en Haut"
         const backToTopButton = document.getElementById('back-to-top');
         window.onscroll = function() {
