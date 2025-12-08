@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="footer.css">
     <style>
+        /* --- Application du thème sombre --- */
+        body {
+            font-family: 'Open Sans', sans-serif; margin: 0; background-color: var(--night-blue);
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px), radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px; background-position: 0 0, 20px 20px; background-attachment: fixed; color: var(--luminous-white);
+        }
+
+        /* --- Styles de la page --- */
         .container { max-width: 900px; }
         .article-header { text-align: center; margin-bottom: 40px; }
         .article-title { font-size: 3em; color: var(--primary-blue); margin-bottom: 15px; }
