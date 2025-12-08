@@ -44,6 +44,12 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // AJOUT : Ignorer les requêtes qui ne sont pas de type GET (ex: POST pour l'API)
+  // Cela résout l'erreur "Request method 'POST' is unsupported".
+  if (request.method !== 'GET') {
+    return; // Laisse la requête passer au réseau sans essayer de la mettre en cache.
+  }
+
   // Stratégie "Stale-While-Revalidate" pour les pages HTML et les assets locaux (CSS/JS)
   if (url.origin === self.origin && (request.destination === 'document' || request.destination === 'script' || request.destination === 'style')) {
     event.respondWith(staleWhileRevalidate(request));
