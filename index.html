@@ -488,6 +488,41 @@
 
 <body>
 
+    <!-- ==================== ÉCRAN DE LANCEMENT (SPLASH SCREEN) ==================== -->
+    <div id="splash-screen">
+        <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="splash-logo">
+        <p class="splash-verse">"Ta parole est une lampe à mes pieds, et une lumière sur mon sentier."<br><span>Psaume 119:105</span></p>
+    </div>
+    <style>
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1A237E; /* Bleu marine foncé */
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s ease-out;
+        }
+        .splash-logo {
+            width: 180px;
+            margin-bottom: 25px;
+        }
+        .splash-verse {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1em;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        .splash-verse span { font-style: italic; opacity: 0.8; display: block; margin-top: 8px; }
+    </style>
+
     <!-- ==================== EN-TÊTE ET BARRE DE NAVIGATION ==================== -->
     <header>
         <nav>
@@ -1273,6 +1308,14 @@
 
     <script>
         // La fonction toggleMobileMenu est maintenant dans main.js
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fait disparaître le splash screen après 2.5 secondes
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                setTimeout(() => { splash.style.opacity = '0'; setTimeout(() => splash.style.display = 'none', 500); }, 2500);
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
 
         // --- Enregistrement du Service Worker pour la PWA ---
@@ -1287,6 +1330,16 @@
                     });
             });
         }
+
+        // --- Masquer le bouton d'installation après l'installation ---
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA a été installée.');
+            const installBtnHeader = document.getElementById('install-pwa-btn');
+            const installBtnToast = document.getElementById('pwa-install-toast');
+            
+            if (installBtnHeader) installBtnHeader.style.display = 'none';
+            if (installBtnToast) installBtnToast.style.display = 'none';
+        });
     </script>
 </body>
 </html>  
