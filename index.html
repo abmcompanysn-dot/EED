@@ -772,7 +772,10 @@
        
          <!-- Bas de page -->
          <div class="footer-bottom">
-           <p>&copy; 2024 Église Évangélique de Dakar. Tous droits réservés.</p>
+           <p>
+               &copy; 2024 Église Évangélique de Dakar. Tous droits réservés. | 
+               <a href="#" id="reinstall-pwa-link" class="footer-link">Installer l'application</a>
+           </p>
          </div>
        </footer>
 
@@ -1009,6 +1012,77 @@
             background-color: transparent;
             border: 2px solid white;
             color: white;
+        }
+
+        /* --- AMÉLIORATION : Styles pour la bannière d'installation PWA --- */
+        .pwa-toast {
+            position: fixed;
+            bottom: 20px; /* Position en bas par défaut (pour ordinateur) */
+            left: 20px; /* Position à gauche par défaut (pour ordinateur) */
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            max-width: 90%;
+            width: 400px;
+            border: 1px solid var(--border-color);
+        }
+        .pwa-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast-content { display: flex; align-items: center; gap: 15px; }
+        .toast-icon { width: 40px; height: 40px; }
+        .toast-actions { display: flex; align-items: center; gap: 10px; }
+        .btn-toast-install {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-toast-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Positionnement pour les téléphones */
+        @media (max-width: 768px) {
+            .pwa-toast {
+                top: 20px; /* En haut sur mobile */
+                bottom: auto;
+                left: 50%;
+                transform: translateX(-50%) translateY(-150%); /* Position initiale hors écran */
+            }
+            .pwa-toast.show {
+                transform: translateX(-50%) translateY(0); /* Animation d'arrivée */
+            }
+        }
+
+        /* --- AMÉLIORATION : Lien pour réafficher la bannière PWA --- */
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--text-secondary);
+            transition: color 0.3s, border-color 0.3s;
+        }
+        .footer-link:hover {
+            color: white;
+            border-bottom-color: white;
+            cursor: pointer;
         }
     </style>
 
@@ -1287,6 +1361,74 @@
                     });
             });
         }
+
+        // ==================== LOGIQUE D'INSTALLATION PWA ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            let deferredPrompt;
+            const installToast = document.getElementById('pwa-install-toast');
+            const installBtnInToast = document.getElementById('pwa-install-btn-toast');
+            const dismissBtn = document.getElementById('pwa-dismiss-btn-toast');
+            const installBtnInNav = document.getElementById('install-pwa-btn'); // Bouton dans la nav
+            const reinstallLink = document.getElementById('reinstall-pwa-link'); // Lien dans le footer
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Vérifie si l'utilisateur a déjà fermé la bannière
+                if (localStorage.getItem('pwaInstallDismissed') === 'true') {
+                    console.log('Bannière PWA non affichée car déjà fermée par l\'utilisateur.');
+                    return;
+                }
+
+                // Empêche Chrome 67 et versions antérieures d'afficher automatiquement la bannière
+                e.preventDefault();
+                // Stocke l'événement pour qu'il puisse être déclenché plus tard.
+                deferredPrompt = e;
+
+                // Affiche notre bannière personnalisée après un court délai si elle n'a pas été fermée
+                setTimeout(() => {
+                    installToast.classList.add('show');
+                }, 1500);
+
+
+                // Affiche aussi le bouton dans la barre de navigation
+                installBtnInNav.style.display = 'inline-block';
+            });
+
+            function handleInstall() {
+                if (!deferredPrompt) return;
+                // Cache notre UI
+                installToast.classList.remove('show');
+                // Affiche la boîte de dialogue d'installation
+                deferredPrompt.prompt();
+                // Attend le choix de l'utilisateur
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('L\'utilisateur a accepté l\'installation');
+                        installBtnInNav.style.display = 'none'; // Cache le bouton de la nav
+                    } else {
+                        console.log('L\'utilisateur a refusé l\'installation');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+
+            installBtnInToast.addEventListener('click', handleInstall);
+            installBtnInNav.addEventListener('click', handleInstall);
+            dismissBtn.addEventListener('click', () => {
+                installToast.classList.remove('show');
+                // Enregistre le fait que l'utilisateur a fermé la bannière
+                localStorage.setItem('pwaInstallDismissed', 'true');
+            });
+
+            reinstallLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Supprime la préférence de masquage
+                localStorage.removeItem('pwaInstallDismissed');
+                // Si l'événement d'installation est toujours disponible, affiche la bannière
+                if (deferredPrompt) {
+                    installToast.classList.add('show');
+                }
+            });
+        });
     </script>
 </body>
 </html>  
