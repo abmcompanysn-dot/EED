@@ -1412,21 +1412,13 @@
             }
 
             installBtnInToast.addEventListener('click', handleInstall);
-            installBtnInNav.addEventListener('click', handleInstall);
+            installBtnInNav.addEventListener('click', handleInstall); // Bouton dans la navigation
+            reinstallLink.addEventListener('click', handleInstall); // Lien dans le footer
+
             dismissBtn.addEventListener('click', () => {
                 installToast.classList.remove('show');
                 // Enregistre le fait que l'utilisateur a fermé la bannière
                 localStorage.setItem('pwaInstallDismissed', 'true');
-            });
-
-            reinstallLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Supprime la préférence de masquage
-                localStorage.removeItem('pwaInstallDismissed');
-                // Si l'événement d'installation est toujours disponible, affiche la bannière
-                if (deferredPrompt) {
-                    installToast.classList.add('show');
-                }
             });
         });
     </script>
