@@ -44,10 +44,11 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // AJOUT : Ignorer les requêtes qui ne sont pas de type GET (ex: POST pour l'API)
-  // Cela résout l'erreur "Request method 'POST' is unsupported".
+  // CORRECTION : Si la requête n'est pas GET, on la laisse passer au réseau sans l'intercepter.
+  // C'est la seule vérification nécessaire pour les requêtes POST.
   if (request.method !== 'GET') {
-    return; // Laisse la requête passer au réseau sans essayer de la mettre en cache.
+    event.respondWith(fetch(request));
+    return;
   }
 
   // Stratégie "Stale-While-Revalidate" pour les pages HTML et les assets locaux (CSS/JS)
@@ -62,12 +63,6 @@ self.addEventListener('fetch', event => {
 
 // Stratégie : Cache d'abord, puis réseau (pour les images, polices, etc.)
 async function cacheFirst(request) {
-  // AJOUT : Vérification pour ignorer les requêtes non-GET dans cette stratégie également.
-  // C'est la correction principale pour l'erreur "Request method 'POST' is unsupported".
-  if (request.method !== 'GET') {
-    return fetch(request); // Laisse passer la requête POST vers le réseau.
-  }
-
   const cachedResponse = await caches.match(request);
   if (cachedResponse) {
     return cachedResponse;
