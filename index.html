@@ -1371,10 +1371,22 @@
             const installBtnInNav = document.getElementById('install-pwa-btn'); // Bouton dans la nav
             const reinstallLink = document.getElementById('reinstall-pwa-link'); // Lien dans le footer
 
+            // Fonction pour cacher tous les déclencheurs d'installation
+            function hideInstallPromotion() {
+                installBtnInNav.style.display = 'none';
+                installToast.classList.remove('show');
+            }
+
             window.addEventListener('beforeinstallprompt', (e) => {
                 // Vérifie si l'utilisateur a déjà fermé la bannière
                 if (localStorage.getItem('pwaInstallDismissed') === 'true') {
                     console.log('Bannière PWA non affichée car déjà fermée par l\'utilisateur.');
+                    return;
+                }
+
+                // Si l'application est déjà installée, ne rien faire.
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    console.log('Application déjà installée (standalone).');
                     return;
                 }
 
@@ -1396,15 +1408,14 @@
             function handleInstall(e) {
                 e.preventDefault(); // CORRECTION : Empêche le lien de remonter la page
                 if (!deferredPrompt) return;
-                // Cache notre UI
-                installToast.classList.remove('show');
+                
                 // Affiche la boîte de dialogue d'installation
                 deferredPrompt.prompt();
                 // Attend le choix de l'utilisateur
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         console.log('L\'utilisateur a accepté l\'installation');
-                        installBtnInNav.style.display = 'none'; // Cache le bouton de la nav
+                        hideInstallPromotion(); // Cache tous les éléments de promotion
                     } else {
                         console.log('L\'utilisateur a refusé l\'installation');
                     }
@@ -1420,6 +1431,12 @@
                 installToast.classList.remove('show');
                 // Enregistre le fait que l'utilisateur a fermé la bannière
                 localStorage.setItem('pwaInstallDismissed', 'true');
+            });
+
+            // Écoute l'événement 'appinstalled' pour cacher la promotion si l'installation réussit
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA installée avec succès.');
+                hideInstallPromotion();
             });
         });
     </script>
