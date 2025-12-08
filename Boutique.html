@@ -205,6 +205,64 @@
             0%   { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
+
+        /* --- Styles pour la section FAQ (Accordéon) --- */
+        .faq-section {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            max-width: 900px;
+            margin: 60px auto;
+        }
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        .accordion-button {
+            background-color: transparent;
+            color: var(--luminous-white);
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-button:hover, .accordion-button.active {
+            background-color: rgba(44, 44, 84, 0.5);
+        }
+        .accordion-button::after {
+            content: '+';
+            font-size: 1.5em;
+            color: var(--primary-blue);
+            transition: transform 0.3s;
+        }
+        .accordion-button.active::after {
+            content: '−';
+            transform: rotate(180deg);
+        }
+        .accordion-panel {
+            padding: 0 20px;
+            background-color: transparent;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .accordion-panel p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -300,6 +358,32 @@
                 <p>“Donnez, et il vous sera donné : on versera dans votre sein une bonne mesure, serrée, secouée et qui déborde.” – Luc 6:38</p>
             </div>
         </section>
+
+        <!-- Nouvelle Section FAQ -->
+        <section class="container">
+            <div class="faq-section">
+                <h2 class="section-title" style="margin-bottom: 40px;">Questions Fréquentes</h2>
+                <div class="accordion-item">
+                    <button class="accordion-button">Comment les fonds sont-ils gérés ?</button>
+                    <div class="accordion-panel">
+                        <p>Tous les dons sont gérés avec la plus grande transparence par le conseil administratif de l'église. Des rapports financiers sont disponibles pour les membres sur demande pour assurer une responsabilité totale.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">Mon don est-il sécurisé ?</button>
+                    <div class="accordion-panel">
+                        <p>Oui. Les paiements mobiles via Orange Money et Wave sont des plateformes sécurisées. Pour les virements bancaires, nous utilisons les services d'Ecobank, une institution financière réputée, garantissant la sécurité de vos transactions.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-button">Puis-je dédier mon don à un projet spécifique ?</button>
+                    <div class="accordion-panel">
+                        <p>Absolument. Vous pouvez soutenir un besoin spécifique listé en haut de cette page en cliquant sur "Soutenir ce projet". Si vous faites un don par virement, vous pouvez préciser l'objet de votre don (ex: "Construction", "Mission", etc.) dans le libellé de la transaction.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <div id="back-to-top" onclick="scrollToTop()">&#8679;</div>
@@ -503,6 +587,23 @@
                 });
         }
 
+        // --- Logique pour l'accordéon FAQ ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const panel = button.nextElementSibling;
+                    button.classList.toggle('active');
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                        panel.style.padding = "0 20px";
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        panel.style.padding = "20px";
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
