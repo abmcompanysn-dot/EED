@@ -772,10 +772,7 @@
        
          <!-- Bas de page -->
          <div class="footer-bottom">
-           <p>
-               &copy; 2024 Église Évangélique de Dakar. Tous droits réservés. | 
-               <a href="#" id="reinstall-pwa-link" class="footer-link">Installer l'application</a>
-           </p>
+           <p>&copy; 2025 Église Évangélique de Dakar. Tous droits réservés.</p>
          </div>
        </footer>
 
@@ -1373,16 +1370,11 @@
 
             // Fonction pour cacher tous les déclencheurs d'installation
             function hideInstallPromotion() {
-                installBtnInNav.style.display = 'none';
                 installToast.classList.remove('show');
             }
 
             window.addEventListener('beforeinstallprompt', (e) => {
                 // Vérifie si l'utilisateur a déjà fermé la bannière
-                if (localStorage.getItem('pwaInstallDismissed') === 'true') {
-                    console.log('Bannière PWA non affichée car déjà fermée par l\'utilisateur.');
-                    return;
-                }
 
                 // Si l'application est déjà installée, ne rien faire.
                 if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -1399,10 +1391,6 @@
                 setTimeout(() => {
                     installToast.classList.add('show');
                 }, 1500);
-
-
-                // Affiche aussi le bouton dans la barre de navigation
-                installBtnInNav.style.display = 'inline-block';
             });
 
             function handleInstall(e) {
@@ -1424,8 +1412,6 @@
             }
 
             installBtnInToast.addEventListener('click', handleInstall);
-            installBtnInNav.addEventListener('click', handleInstall); // Bouton dans la navigation
-            reinstallLink.addEventListener('click', handleInstall); // Lien dans le footer
 
             dismissBtn.addEventListener('click', () => {
                 installToast.classList.remove('show');
