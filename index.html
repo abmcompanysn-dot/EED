@@ -591,7 +591,7 @@
             <div class="gif-grid">
                 <!-- GIF 1: Famille -->
                 <a href="ministeres.html#famille" class="gif-card animated-element animated-from-bottom" data-delay="200">
-                    <img src="r/f.gif" alt="Département Famille">
+                    <video src="r/f.mp4" autoplay loop muted playsinline alt="Département Famille"></video>
                     <div class="gif-overlay">
                         <h3>Famille</h3>
                     </div>
@@ -599,28 +599,34 @@
                 
                 <!-- GIF 3: Mission -->
                 <a href="ministeres.html#mission" class="gif-card animated-element animated-from-top" data-delay="400">
-                    <img src="r/c.jpg" alt="Département Mission">
+                    <picture>
+                        <source srcset="r/c.webp" type="image/webp">
+                        <img src="r/c.jpg" alt="Département Mission" loading="lazy">
+                    </picture>
                     <div class="gif-overlay">
                         <h3>Mission</h3>
                     </div>
                 </a>
                 <!-- GIF 2: Louange & Hymnologie -->
                 <a href="ministeres.html#louange" class="gif-card animated-element animated-from-bottom" data-delay="300">
-                    <img src="r/h.gif" alt="Département Louange et Hymnologie">
+                    <video src="r/h.mp4" autoplay loop muted playsinline alt="Département Louange et Hymnologie"></video>
                     <div class="gif-overlay">
                         <h3>Louange & Hymnologie</h3>
                     </div>
                 </a>
                 <!-- GIF 4: Enseignement -->
                 <a href="ministeres.html#enseignement" class="gif-card animated-element animated-from-top" data-delay="500">
-                    <img src="r/rs.svg" alt="Département Enseignement">
+                    <picture>
+                        <source srcset="r/rs.webp" type="image/webp">
+                        <img src="r/rs.svg" alt="Département Enseignement" loading="lazy">
+                    </picture>
                     <div class="gif-overlay">
                         <h3>Enseignement</h3>
                     </div>
                 </a>
                 <!-- GIF 5: Conseil Administratif -->
                 <a href="apropos.html#gouvernance" class="gif-card animated-element animated-from-bottom" data-delay="600">
-                    <img src="r/ca.svg" alt="Conseil Administratif">
+                    <img src="r/ca.svg" alt="Conseil Administratif" loading="lazy">
                     <div class="gif-overlay">
                         <h3>Conseil Administratif</h3>
                     </div>
@@ -633,7 +639,7 @@
                     gap: 25px; 
                     margin-top: 40px; 
                 }
-                .gif-card { 
+                .gif-card, .gif-card video { 
                     display: block; 
                     position: relative; 
                     overflow: hidden; 
@@ -641,7 +647,7 @@
                     aspect-ratio: 1 / 1; 
                     box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
                 }
-                .gif-card img { 
+                .gif-card img, .gif-card video { 
                     width: 100%; 
                     height: 100%; 
                     object-fit: cover; 
@@ -670,7 +676,7 @@
                     transform: translateY(10px); 
                     transition: transform 0.4s ease; 
                 }
-                .gif-card:hover img { transform: scale(1.1); }
+                .gif-card:hover img, .gif-card:hover video { transform: scale(1.1); }
                 .gif-card:hover .gif-overlay { opacity: 1; }
                 .gif-card:hover .gif-overlay h3 { transform: translateY(0); }
 
@@ -726,7 +732,10 @@
             <h2 class="section-title animated-title" style="text-align: left; margin-bottom: 20px;">Rejoignez la Communauté</h2>
             <div class="promo-card animated-element zoom-in-rotate">
                 <div class="prayer-image-container">
-                    <img src="r/I1.svg" alt="Demande de prière">
+                    <picture>
+                        <source srcset="r/I1.webp" type="image/webp">
+                        <img src="r/I1.svg" alt="Demande de prière" loading="lazy">
+                    </picture>
                 </div> 
                 <div class="prayer-content">
                     <p>Notre équipe est là pour vous soutenir. Partagez votre sujet de prière en toute confidentialité. Que vous traversiez une épreuve ou que vous ayez un sujet de reconnaissance, nous sommes là pour intercéder avec vous et pour vous.</p>
@@ -760,7 +769,10 @@
                     <a href="ressources.html" class="btn-lux-rounded">Visiter la Bibliothèque</a>
                 </div> 
                 <div class="prayer-image-container">
-                    <img src="r/rs.svg" alt="Bibliothèque de ressources">
+                    <picture>
+                        <source srcset="r/rs.webp" type="image/webp">
+                        <img src="r/rs.svg" alt="Bibliothèque de ressources" loading="lazy">
+                    </picture>
                 </div>
             </div>
         </section>
@@ -769,7 +781,7 @@
     <footer class="footer-section">
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
-             <div class="footer-col">
+             <div class="footer-col" loading="lazy">
                  <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
                  <p class="footer-tagline">
                      Annoncer l'Évangile, former des disciples,<br />
@@ -812,18 +824,77 @@
        </footer>
 
     <!-- ==================== BANNIÈRE D'INSTALLATION PWA ==================== -->
-    <div id="pwa-install-toast" class="pwa-toast">
-        <div class="toast-content">
-            <img src="r/icons/icon-192x192.png" alt="Logo" class="toast-icon">
-            <span>Installer l'application pour une meilleure expérience !</span>
+    <div id="pwa-install-banner" class="pwa-banner">
+        <div class="banner-content">
+            <img src="r/icons/icon-192x192.png" alt="Logo" class="banner-icon">
+            <div class="banner-text">
+                <strong>Lumière du Futur</strong>
+                <span>Installez l'application pour un accès rapide.</span>
+            </div>
         </div>
-        <div class="toast-actions">
-            <button id="pwa-install-btn-toast" class="btn-toast-install">Installer</button>
-            <button id="pwa-dismiss-btn-toast" class="btn-toast-dismiss">&times;</button>
+        <div class="banner-actions">
+            <button id="pwa-install-btn-banner" class="btn-banner-install">Installer</button>
+            <button id="pwa-dismiss-btn-banner" class="btn-banner-dismiss">&times;</button>
         </div>
     </div>
+
     <!-- ==================== STYLES SPÉCIFIQUES (NON CRITIQUES) ==================== -->
     <style>
+        /* Styles de base pour la bannière PWA */
+        .pwa-banner {
+            position: fixed;
+            background-color: var(--card-bg); /* Utilise une variable de thème pour le fond */
+            color: var(--text-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+
+        /* Styles spécifiques pour le desktop (flottant en bas à droite) */
+        @media (min-width: 769px) { /* Point de rupture pour desktop */
+            .pwa-banner {
+                bottom: 20px;
+                right: 20px;
+                max-width: 350px;
+                transform: translateY(100%); /* Commence caché sous l'écran */
+            }
+            .pwa-banner.visible {
+                transform: translateY(0); /* Glisse vers le haut */
+                opacity: 1;
+            }
+        }
+
+        /* Styles spécifiques pour le mobile (bannière en haut) */
+        @media (max-width: 768px) { /* Point de rupture pour mobile */
+            .pwa-banner {
+                top: 0;
+                left: 0;
+                width: 100%;
+                border-radius: 0;
+                box-shadow: none; /* Pas d'ombre pour la bannière du haut */
+                transform: translateY(-100%); /* Commence caché au-dessus de l'écran */
+            }
+            .pwa-banner.visible {
+                transform: translateY(0); /* Glisse vers le bas */
+                opacity: 1;
+            }
+        }
+
+        .pwa-banner .banner-content { display: flex; align-items: center; gap: 10px; flex-grow: 1; }
+        .pwa-banner .banner-icon { width: 40px; height: 40px; flex-shrink: 0; }
+        .pwa-banner .banner-text strong { display: block; font-weight: bold; }
+        .pwa-banner .banner-text span { font-size: 0.9em; color: var(--text-secondary); }
+        .pwa-banner .banner-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .pwa-banner .btn-banner-install { background-color: var(--primary-blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: background-color 0.3s ease; }
+        .pwa-banner .btn-banner-install:hover { background-color: var(--primary-red); }
+        .pwa-banner .btn-banner-dismiss { background: none; border: none; color: var(--text-secondary); font-size: 1.2em; cursor: pointer; transition: color 0.3s ease; }
+        .pwa-banner .btn-banner-dismiss:hover { color: var(--text-dark); }
         .carousel-container {
             position: relative;
             width: 100%; /* Utiliser 100% pour éviter le débordement horizontal */
@@ -1136,7 +1207,7 @@
                         obs.unobserve(entry.target); // Ne joue l'animation qu'une seule fois
                     }
                 });
-            }, { threshold: 0.15 }); // Se déclenche quand 15% de l'élément est visible
+            }, { threshold: 0.1 }); // Se déclenche quand 10% de l'élément est visible pour plus de fluidité
 
             // Observer les titres
             const titles = document.querySelectorAll('.animated-title');
@@ -1319,27 +1390,6 @@
         document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
 
         // --- Enregistrement du Service Worker pour la PWA ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker enregistré avec succès:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Échec de l\'enregistrement du ServiceWorker:', error);
-                    });
-            });
-        }
-
-        // --- Masquer le bouton d'installation après l'installation ---
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA a été installée.');
-            const installBtnHeader = document.getElementById('install-pwa-btn');
-            const installBtnToast = document.getElementById('pwa-install-toast');
-            
-            if (installBtnHeader) installBtnHeader.style.display = 'none';
-            if (installBtnToast) installBtnToast.style.display = 'none';
-        });
     </script>
 </body>
 </html>  
