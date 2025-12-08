@@ -122,6 +122,14 @@
             box-shadow: 0 0 15px rgba(225, 6, 0, 0.5);
         }
 
+        /* Nouveau style pour les boutons transparents */
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: black;
+            font-weight: bold;
+        }
+
         /* Bouton Retour en Haut */
         #back-to-top {
             position: fixed;
@@ -418,7 +426,7 @@
                                         <span>${parseInt(need.MontantActuel).toLocaleString('fr-FR')} CFA</span>
                                         <span>Objectif : ${parseInt(need.MontantObjectif).toLocaleString('fr-FR')} CFA</span>
                                     </div>
-                                    <a href="participer.html?id=${need.ID}" class="btn">Soutenir ce projet</a>
+                                    <a href="demande.html?id=${need.ID}" class="btn btn-outline">Soutenir ce projet</a>
                                 </div>
                             `;
                             needsGrid.appendChild(card);
