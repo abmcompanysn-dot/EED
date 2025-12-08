@@ -3,11 +3,19 @@
   "short_name": "Lumière du Futur",
   "description": "Annoncer l'Évangile, former des disciples, et manifester l'amour de Christ à Dakar et au-delà.",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#1A237E",
   "theme_color": "#005a9c",
   "orientation": "any",
+  "scope": "/",
+  "id": "/",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "protocol_handlers": [
+    { "protocol": "web+lumiere", "url": "/?q=%s" }
+  ],
   "icons": [
     {
       "src": "/r/icons/icon-192x192.png",
