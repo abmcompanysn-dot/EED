@@ -114,8 +114,8 @@ self.addEventListener('push', event => {
   console.log('Notification push reçue:', data);
   const options = {
     body: data.body,
-    icon: 'r/icons/icon-192x192.png',
-    badge: 'r/icons/icon-192x192.png',
+    icon: 'r/LOGO.svg', // CORRECTION : Utilisation du logo principal
+    badge: 'r/LOGO.svg', // CORRECTION : Utilisation du logo pour le badge également
     data: {
       url: data.url || '/'
     }
