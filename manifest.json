@@ -16,6 +16,9 @@
   "protocol_handlers": [
     { "protocol": "web+lumiere", "url": "/?q=%s" }
   ],
+  "categories": [
+    "business"
+  ],
   "icons": [
     {
       "src": "/r/icons/icon-192x192.png",
