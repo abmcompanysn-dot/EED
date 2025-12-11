@@ -447,7 +447,7 @@
             padding: 40px;
             border-radius: 15px;
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.5s ease-out, box-shadow 0.5s ease-out; /* Transition plus douce et plus longue */
         }
         /* --- Amélioration : Effet de survol plus engageant --- */
         .promo-card:hover { 
@@ -461,6 +461,7 @@
             border-radius: 10px;
             height: 350px; /* Ajout d'une hauteur fixe */
             object-fit: cover;
+            transition: transform 0.5s ease-out; /* Ajout de la transition pour l'image */
         }
         @media (max-width: 992px) {
             .promo-card .prayer-image-container { overflow: hidden; } /* Assure que l'image ne dépasse pas sur mobile */
@@ -1016,10 +1017,10 @@
             position: fixed;
             bottom: 20px; /* Position en bas par défaut (pour ordinateur) */
             left: 20px; /* Position à gauche par défaut (pour ordinateur) */
-            background-color: var(--card-bg);
-            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--primary-blue), #2c3e50); /* Dégradé opaque et visible */
+            color: white; /* Texte en blanc pour un meilleur contraste */
             border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 90, 156, 0.4); /* Ombre plus prononcée */
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -1030,7 +1031,7 @@
             transition: opacity 0.5s ease, transform 0.5s ease;
             max-width: 90%;
             width: 400px;
-            border: 1px solid var(--border-color);
+            border: none; /* On retire la bordure, le fond est assez distinct */
         }
         .pwa-toast.show {
             opacity: 1;
@@ -1051,7 +1052,7 @@
         .btn-toast-dismiss {
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8); /* Couleur plus claire pour la croix */
             font-size: 24px;
             cursor: pointer;
         }
