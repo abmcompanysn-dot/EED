@@ -85,16 +85,6 @@ nav ul.desktop-links a.active {
 .bar2 { top: 50%; transform: translateY(-50%); width: 75%; }
 .bar3 { bottom: 0; width: 50%; }
 
-.menu-burger.active .bar1 {
-    top: 50%; transform: translateY(-50%) rotate(45deg);
-    width: 100%; /* La barre reprend sa taille complète pour former la croix */
-}
-.menu-burger.active .bar2 { opacity: 0; }
-.menu-burger.active .bar3 {
-    bottom: 50%; transform: translateY(50%) rotate(-45deg);
-    width: 100%; /* La barre reprend sa taille complète pour former la croix */
-}
-
 /* --- Menu mobile --- */
 .nav-links-mobile {
     position: fixed;
@@ -141,15 +131,59 @@ body.no-scroll { overflow: hidden; }
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Styles pour le QR Code dans la nav (si nécessaire) */
-#nav-qrcode-container {
-    position: relative;
+/* ==================================================================
+   AMÉLIORATION DU MENU MOBILE LATÉRAL (SIDENAV)
+   ================================================================== */
+
+/* --- Le panneau latéral (Sidenav) --- */
+.mobile-sidenav {
+    height: 100%;
+    width: 0; /* Commence fermé */
+    position: fixed;
+    z-index: 1002; /* Au-dessus de l'overlay */
+    top: 0;
+    right: 0; /* Positionné à droite */
+    background-color: var(--night-blue); /* Fond bleu nuit, cohérent avec le thème */
+    overflow-x: hidden;
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation de glissement plus douce */
+    padding-top: 60px;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3); /* Ombre pour donner de la profondeur */
 }
-#nav-qrcode-popup {
-    display: none;
+
+/* --- Liens dans le Sidenav --- */
+.mobile-sidenav a {
+    padding: 12px 15px 12px 32px;
+    text-decoration: none;
+    font-size: 1.1em; /* Taille de police légèrement augmentée */
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: block;
+    transition: background-color 0.3s, color 0.3s, padding-left 0.3s;
+    border-bottom: 1px solid var(--border-color); /* Ligne de séparation subtile */
+}
+
+/* --- Effet au survol/focus des liens --- */
+.mobile-sidenav a:hover, .mobile-sidenav a:focus {
+    background-color: var(--primary-blue);
+    color: var(--luminous-white);
+    padding-left: 40px; /* Léger décalage pour l'effet */
+}
+
+/* --- Bouton de fermeture (la croix) --- */
+.mobile-sidenav .close-btn-mobile {
     position: absolute;
-    right: 0; top: 120%;
-    width: 150px; padding: 10px;
-    background: var(--luminous-white); border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    top: 15px;
+    right: 25px;
+    font-size: 36px;
+    color: var(--text-secondary);
+    border-bottom: none; /* Pas de bordure pour le bouton de fermeture */
+    padding: 0;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.mobile-sidenav .close-btn-mobile:hover {
+    color: var(--luminous-white);
+    transform: rotate(90deg) scale(1.1);
+    background-color: transparent; /* Annule l'effet de survol des autres liens */
+    padding-left: 15px; /* Annule le décalage */
 }

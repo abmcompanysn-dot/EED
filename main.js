@@ -53,16 +53,35 @@ function callApi(action, data) {
  * Gère l'ouverture et la fermeture du menu de navigation mobile.
  */
 function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const burgerIcon = document.querySelector('.menu-burger');
+    const menu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('mobile-menu-overlay');
     const body = document.body;
+    const burger = document.querySelector('.menu-burger');
 
-    if (mobileMenu && burgerIcon && body) {
-        mobileMenu.classList.toggle('active');
-        burgerIcon.classList.toggle('active');
-        body.classList.toggle('no-scroll');
+    // Si les éléments n'existent pas, on ne fait rien.
+    if (!menu || !overlay || !body || !burger) return;
+
+    const isOpen = menu.style.width === '280px';
+
+    if (isOpen) {
+        menu.style.width = '0';
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        body.style.overflow = 'auto'; // Rétablit le défilement
+        burger.classList.remove('open');
+    } else {
+        menu.style.width = '280px';
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        body.style.overflow = 'hidden'; // Bloque le défilement de la page
+        burger.classList.add('open');
     }
 }
+
+// Ajout d'un écouteur d'événement pour fermer le menu en cliquant sur l'overlay
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('mobile-menu-overlay')?.addEventListener('click', toggleMobileMenu);
+});
 
 /**
  * Génère et insère le contenu du menu mobile.
@@ -70,21 +89,25 @@ function toggleMobileMenu() {
  */
 function populateMobileMenu() {
     const menuContainer = document.getElementById('mobile-menu');
-    if (!menuContainer) return;
+    // Le conteneur peut ne pas exister sur toutes les pages, donc on vérifie.
+    if (!menuContainer) {
+        return;
+    }
 
     const menuItems = [
         { href: 'index.html', text: 'Accueil' },
         { href: 'apropos.html', text: 'À Propos' },
         { href: 'ministeres.html', text: 'Ministères' },
         { href: 'evenements.html', text: 'Événements' },
-        { href: 'blog.html', text: 'Blog' },
+        { href: 'demande-priere.html', text: 'Demande de Prière' },
         { href: 'ressources.html', text: 'Ressources' },
         { href: 'live.html', text: 'Live' },
-        { href: 'apropos.html#contact', text: 'Contact' },
-        { href: 'Boutique.html', text: 'Faire un Don' }
+        { href: 'Boutique.html', text: 'Faire un Don' },
+        { href: 'apropos.html#contact', text: 'Contact' }
     ];
 
-    let menuHTML = '';
+    // Ajout du bouton de fermeture pour le menu latéral
+    let menuHTML = '<a href="javascript:void(0)" class="close-btn-mobile" onclick="toggleMobileMenu()">&times;</a>';
     menuItems.forEach(item => {
         // Ajoute l'attribut onclick pour fermer le menu après un clic
         menuHTML += `<a href="${item.href}" onclick="toggleMobileMenu()">${item.text}</a>`;

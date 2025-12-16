@@ -499,7 +499,6 @@
                 <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
                 <li><a href="demande-priere.html">Demande de Prière</a></li>
-                <li><a href="blog.html">Blog</a></li>
                 <li><a href="ressources.html">Ressources</a></li>
                 <li><a href="live.html">Live</a></li>
                 <li><a href="Boutique.html">Faire un Don</a></li>
@@ -516,8 +515,10 @@
     </header>
 
     <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
-    <div class="nav-links-mobile" id="mobile-menu">
-        <!-- Le contenu est généré par main.js -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+    <div id="mobile-menu" class="mobile-sidenav">
+        <a href="javascript:void(0)" class="close-btn-mobile" onclick="toggleMobileMenu()">&times;</a>
+        <!-- Le contenu des liens est généré par main.js -->
     </div>
 
     <!-- ---------- Section Héros (Bannière) ---------- -->
@@ -1088,8 +1089,6 @@
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
-        // ... (votre fonction toggleMobileMenu existante)
-
         // --- Logique pour la barre de navigation qui apparaît au défilement ---
         document.addEventListener('DOMContentLoaded', () => {
             const header = document.querySelector('header');
@@ -1344,7 +1343,6 @@
 
 
     <script>
-        // La fonction toggleMobileMenu est maintenant dans main.js
         document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
 
         // --- Enregistrement du Service Worker pour la PWA ---
