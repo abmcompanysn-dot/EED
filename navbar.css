@@ -139,11 +139,11 @@ body.no-scroll { overflow: hidden; }
 .mobile-sidenav {
     height: 100%;
     width: 0; /* Commence fermé */
-    position: fixed;
+    position: fixed; 
     z-index: 1002; /* Au-dessus de l'overlay */
     top: 0;
     right: 0; /* Positionné à droite */
-    background-color: var(--night-blue); /* Fond bleu nuit, cohérent avec le thème */
+    background-color: #0f172a; /* Fond bleu nuit, cohérent avec le thème */
     overflow-x: hidden;
     transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation de glissement plus douce */
     padding-top: 60px;

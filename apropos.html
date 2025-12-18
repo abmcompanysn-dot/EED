@@ -66,12 +66,10 @@
             transform: translateY(40px) scale(0.95) rotateX(-20deg);
             transform-origin: bottom;
         }
-        .animated-card.is-visible {
+        .animated-card.is-visible.zoom-in-rotate {
             opacity: 1;
             transform: translateY(0) scale(1) rotateX(0);
         }
-        /* Fin des styles d'animation */
-
 
         .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .leader-card {
@@ -143,12 +141,127 @@
             margin-bottom: 60px; /* Espace entre les sections */
             border-radius: 16px; /* Bords arrondis pour un look moderne */
         }
+
+        /* --- Nouveaux styles pour la section Départements --- */
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .department-card-new {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-blue);
+        }
+        .department-card-new h4 {
+            color: var(--primary-blue);
+            margin-top: 0;
+        }
+        .department-card-new .coordinator {
+            font-style: italic;
+        }
+
+        /* --- Styles pour le formulaire de contact (avec label flottant) --- */
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.2);
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            color: #6b7280;
+            pointer-events: none;
+            transition: all 0.2s ease-out;
+            background-color: #fff;
+            padding: 0 0.25rem;
+        }
+
+        .peer:focus ~ .floating-label,
+        .peer:not(:placeholder-shown) ~ .floating-label {
+            transform: translateY(-1.5rem) scale(0.85);
+            color: var(--primary-blue);
+        }
+
+        /* --- Nouveaux styles pour la section Contact améliorée --- */
+        .contact-section-wrapper {
+            position: relative;
+            background-image: linear-gradient(rgba(10, 10, 35, 0.8), rgba(10, 10, 35, 0.8)), url('r/I1.svg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 80px 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .contact-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            background-color: var(--light-bg);
+            color: #333;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .contact-info-panel {
+            background-color: #f4f7f9;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .contact-info-item i {
+            font-size: 1.2em;
+            color: var(--primary-blue);
+            margin-top: 4px;
+        }
+
+        .contact-form-panel {
+            padding: 40px;
+        }
+
+        /* Responsive pour la carte de contact */
+        @media (max-width: 992px) {
+            .contact-card-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-info-panel {
+                order: 2; /* Met les infos de contact après le formulaire sur mobile */
+            }
+        }
+        /* --- Style pour l'effet de lueur sur le bouton --- */
+        .btn-glow:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="/r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html" class="active">À Propos</a></li>
@@ -182,136 +295,195 @@
             <p>Découvrez qui nous sommes, notre parcours et les fondements de notre foi en Jésus-Christ.</p>
         </section>
 
-        <section class="container content-section">
+        <section class="container content-section" style="margin-top: 60px;">
             <div class="grid-2 text-center text-content-section">
                 <div class="animated-card zoom-in-rotate">
                     <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Histoire de l'Église</h3>
-                    <p>Fondée en 1985, l'Église Évangélique de Dakar a commencé avec une poignée de croyants passionnés, réunis dans un salon. Guidés par une vision claire de répandre l'amour de Christ, nous avons grandi pour devenir une communauté dynamique et accueillante au cœur de la ville.</p>
+                    <p>Fondée en 2010, l'Église Évangélique de Dakar est née d'une vision divine : créer un lieu où chacun peut rencontrer Dieu, grandir spirituellement et servir sa communauté. Ce qui a commencé comme un petit groupe de prière de 15 personnes dans un salon s'est transformé en une communauté florissante de plus de 500 membres actifs. Aujourd'hui, nous continuons à grandir, non seulement en nombre, mais aussi en impact, touchant des vies à travers nos prédications, nos programmes communautaires et nos actions sociales.</p>
                 </div>
                 <div class="animated-card zoom-in-rotate" style="transition-delay: 150ms;">
                     <h3 class="text-2xl font-bold text-primary-blue mb-4" style="color: var(--primary-blue);">Mission et Vision</h3>
-                    <p>Notre mission est d'annoncer l'Évangile, de former des disciples et de manifester l'amour de Christ à Dakar et au-delà. Nous aspirons à être une église où chaque personne peut trouver une famille spirituelle, grandir dans sa relation avec Dieu et découvrir son appel.</p>
+                    <p><strong>Vision :</strong> Être une église qui transforme des vies et impacte notre ville par l'Évangile de Jésus-Christ, en formant des disciples passionnés et engagés.<br><br>
+                       <strong>Mission :</strong> Proclamer l'Évangile, édifier les croyants dans la foi, et servir notre communauté avec amour et compassion, reflétant ainsi le cœur du Christ.<br><br>
+                       <strong>Valeurs :</strong> Foi authentique, amour inconditionnel, excellence dans le service, unité dans la diversité, et engagement envers la Parole de Dieu.</p>
                 </div>
             </div>
         </section>
 
         <section class="container content-section">
-            <h2 class="section-title animated-title" style="font-size: 2.2em;">Notre Équipe Dirigeante</h2>
+            <h2 class="section-title animated-title" style="font-size: 2.2em;">Notre équipe de serviteurs</h2>
             <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Une équipe dévouée au service de la vision de l'église et de sa communauté.</p>
             <div class="leader-grid">
                 <div class="leader-card animated-card zoom-in-rotate">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://beed.abmcy.com/r/LOGO.svg" alt="Pasteur Principal">
-                            <h4>Pasteur....</h4>
+                            <img src="r/LOGO.svg" alt="Pasteur Jean-Marie Diop">
+                            <h4>Pasteur Jean-Marie Diop</h4>
                             <p>Pasteur Principal</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>Pasteur ......../h4>
-                            <p>Avec plus de 20 ans de ministère, Pasteur Jean guide notre communauté avec sagesse, passion et une profonde connaissance des Écritures.</p>
+                            <h4>Pasteur Jean-Marie Diop</h4>
+                            <p>Guide notre communauté avec sagesse et une profonde connaissance des Écritures.</p>
                         </div>
                     </div>
                 </div>
                 <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 150ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://beed.abmcy.com/r/LOGO.svg" alt="Responsable des Ministères">
-                            <h4>......</h4>
-                            <p>Responsable des Ministères</p>
+                            <img src="r/LOGO.svg" alt="Pasteure Aminata Seck">
+                            <h4>Pasteure Aminata Seck</h4>
+                            <p>Pasteure Associée</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>.......</h4>
-                            <p>.... coordonne avec énergie et dévouement les différents départements de l'église, s'assurant que chaque membre puisse trouver sa place et servir efficacement.</p>
+                            <h4>Pasteure Aminata Seck</h4>
+                            <p>Apporte un soutien pastoral essentiel et supervise les programmes d'enseignement.</p>
                         </div>
                     </div>
                 </div>
                 <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 300ms;">
                     <div class="leader-card-inner">
                         <div class="leader-card-front">
-                            <img src="https://beed.abmcy.com/r/LOGO.svg" alt="Ancien de l'église">
-                            <h4>......</h4>
-                            <p>Ancien de l'église</p>
+                            <img src="r/LOGO.svg" alt="Moussa Kane">
+                            <h4>Moussa Kane</h4>
+                            <p>Responsable Jeunesse</p>
                         </div>
                         <div class="leader-card-back">
-                            <h4>.......</h4>
-                            <p>En tant qu'ancien, ...... apporte une perspective précieuse et un soutien pastoral essentiel à la vie de notre communauté.</p>
+                            <h4>Moussa Kane</h4>
+                            <p>Inspire et encadre la nouvelle génération avec dynamisme et créativité.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 450ms;">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="r/LOGO.svg" alt="Fatou Ndiaye">
+                            <h4>Fatou Ndiaye</h4>
+                            <p>Responsable Louange</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Fatou Ndiaye</h4>
+                            <p>Dirige nos moments d'adoration pour nous conduire dans la présence de Dieu.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 600ms;">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="r/LOGO.svg" alt="Ibrahima Sarr">
+                            <h4>Ibrahima Sarr</h4>
+                            <p>Responsable Actions Sociales</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Ibrahima Sarr</h4>
+                            <p>Coordonne nos initiatives pour servir et impacter notre communauté locale.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="leader-card animated-card zoom-in-rotate" style="transition-delay: 750ms;">
+                    <div class="leader-card-inner">
+                        <div class="leader-card-front">
+                            <img src="r/LOGO.svg" alt="Marie Cissé">
+                            <h4>Marie Cissé</h4>
+                            <p>Responsable Femmes</p>
+                        </div>
+                        <div class="leader-card-back">
+                            <h4>Marie Cissé</h4>
+                            <p>Encourage et édifie les femmes de notre église à travers des rencontres et des enseignements.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="container py-16">
-            <!-- Titre principal -->
-            <h2 class="section-title text-center text-4xl tracking-tight mb-4 hover:animate-shake cursor-pointer animated-title">
-               Nous Contacter
-            </h2>
-            <p class="section-subtitle text-center text-lg text-text-secondary max-w-2xl mx-auto mb-12">
-              Une question, une demande de prière ou simplement envie de discuter ? Remplissez le formulaire ci-dessous.
-            </p>
-          
-            <!-- Grille principale -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start p-10 rounded-3xl shadow-xl overflow-hidden animated-card" style="background-color: transparent;">
-              
-              <!-- Coordonnées et Carte (colonne de gauche sur ordinateur) -->
-              <div class="flex flex-col gap-6">
-                <h3 class="text-2xl font-bold mb-2 text-black">📍 Nos Coordonnées</h3>
-                
-                <div class="space-y-4 text-black">
-                  <p>
-                    <strong>Adresse :</strong><br>
-                    Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523
-                  </p>
-                  <p>
-                    <strong>Téléphone :</strong><br>
-                    <a href="tel:+221338245294" class="hover:text-indigo-400 transition-colors">33 824 52 94</a>
-                  </p>
+        <section class="container content-section">
+            <h2 class="section-title animated-title" style="font-size: 2.2em;">Nos départements</h2>
+            <p class="section-subtitle animated-title" style="transition-delay: 100ms;">Une organisation structurée au service de la mission de l'église.</p>
+            <div class="department-grid">
+                <div class="department-card-new animated-card zoom-in-rotate">
+                    <h4>Hymnologie</h4>
+                    <p><strong>Mission :</strong> Conduire l'adoration et la louange, gérer la chorale et l'équipement audiovisuel pour enrichir l'expérience de culte.</p>
+                    <p class="coordinator">Coordonnatrice : Fatou Ndiaye - <a href="tel:+221771234567">+221 77 123 45 67</a></p>
                 </div>
-          
-                <!-- Carte Google Maps -->
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" 
-                        width="100%" height="350" 
-                        class="border-0 rounded-2xl shadow-lg mt-4" 
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-              </div>
-              
-              <!-- Formulaire -->
-              <form id="main-contact-form" onsubmit="handleContactSubmit(event)" 
-                    class="flex flex-col gap-6 bg-gradient-to-br from-gray-900/40 to-gray-800/30 p-6 rounded-2xl backdrop-blur-sm md:order-first">
-                
-                <!-- Champ Nom -->
-                <div class="relative">
-                  <input type="text" id="contact-name" class="form-control peer" placeholder=" " required>
-                  <label for="contact-name" class="floating-label">Votre Nom</label>
+                <div class="department-card-new animated-card zoom-in-rotate" style="transition-delay: 150ms;">
+                    <h4>Enseignement et Prière</h4>
+                    <p><strong>Mission :</strong> Former les disciples à travers l'enseignement biblique et coordonner les moments d'intercession et de prière collective.</p>
+                    <p class="coordinator">Coordinateur : Pasteure Aminata Seck - <a href="tel:+221772345678">+221 77 234 56 78</a></p>
                 </div>
-                <!-- Champ Email -->
-                <div class="relative">
-                  <input type="email" id="contact-email" class="form-control peer" placeholder=" " required>
-                  <label for="contact-email" class="floating-label">Votre Email</label>
+                <div class="department-card-new animated-card zoom-in-rotate" style="transition-delay: 300ms;">
+                    <h4>Mission</h4>
+                    <p><strong>Mission :</strong> Évangéliser et atteindre les âmes perdues à Dakar et au-delà, organisateur des sorties d'évangélisation et des campagnes.</p>
+                    <p class="coordinator">Coordinateur : Ibrahima Sarr - <a href="tel:+221773456789">+221 77 345 67 89</a></p>
                 </div>
-                <!-- Champ Message -->
-                <div class="relative">
-                  <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
-                  <label for="contact-message" class="floating-label">Votre Message</label>
+                <div class="department-card-new animated-card zoom-in-rotate" style="transition-delay: 450ms;">
+                    <h4>Famille et Jeunesse</h4>
+                    <p><strong>Mission :</strong> Accompagner les familles, les jeunes et les enfants dans leur croissance spirituelle et leur développement personnel.</p>
+                    <p class="coordinator">Coordonnatrice : Marie Cissé - <a href="tel:+221774567890">+221 77 456 78 90</a></p>
                 </div>
-                <!-- Bouton -->
-                <button type="submit" id="contact-submit-btn" 
-                        class="btn-lux-rounded bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-                   Envoyer le Message
-                </button>
-                <!-- Message retour -->
-                <div id="contact-form-message" class="form-message text-sm text-green-400 mt-2"></div>
-              </form>
+                <div class="department-card-new animated-card zoom-in-rotate" style="transition-delay: 600ms;">
+                    <h4>Patrimoine et Finance</h4>
+                    <p><strong>Mission :</strong> Gérer les ressources financières, le patrimoine de l'église et assurer une administration transparente et efficace.</p>
+                    <p class="coordinator">Coordinateur : Cheikh Diallo - <a href="tel:+221775678901">+221 77 567 89 01</a></p>
+                </div>
             </div>
-          </section>
+        </section>
+
+        <!-- ==================== SECTION CONTACT AMÉLIORÉE ==================== -->
+        <section id="contact" class="container contact-section-wrapper animated-card zoom-in-rotate">
+            <h2 class="section-title animated-title" style="color: white;">Entrons en contact</h2>
+            <p class="section-subtitle animated-title" style="color: #e0e0e0; transition-delay: 100ms;">Une question, une demande ou simplement envie de discuter ? Nous sommes là pour vous.</p>
+
+            <div class="contact-card-grid">
+                <!-- Panneau d'informations (gauche) -->
+                <div class="contact-info-panel">
+                    <h3 class="text-2xl font-bold text-gray-800">Nos Coordonnées</h3>
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Adresse</strong>
+                            <p class="text-gray-600">Rue 11, Villa 4237 Amitié II, BP : 3816, Dakar 18523</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <strong>Téléphone</strong>
+                            <p><a href="tel:+221338245294" class="text-gray-600 hover:text-primary-blue transition-colors">33 824 52 94</a></p>
+                        </div>
+                    </div>
+                    <div class="mt-auto">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.350312935175!2d-17.4711580240188!3d14.70711917466826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec173b354b33535%3A0x47941cc55d57596c!2sEglise%20Evang%C3%A9lique%20de%20Dakar!5e0!3m2!1sfr!2ssn!4v1716482132338!5m2!1sfr!2ssn" width="100%" height="250" class="border-0 rounded-lg shadow-md" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <!-- Panneau du formulaire (droite) -->
+                <div class="contact-form-panel">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Envoyez-nous un message</h3>
+                    <form id="main-contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-6">
+                        <div class="relative">
+                            <input type="text" id="contact-name" class="form-control peer" placeholder=" " required />
+                            <label for="contact-name" class="floating-label">Votre Nom</label>
+                        </div>
+                        <div class="relative">
+                            <input type="email" id="contact-email" class="form-control peer" placeholder=" " required />
+                            <label for="contact-email" class="floating-label">Votre Email</label>
+                        </div>
+                        <div class="relative">
+                            <textarea id="contact-message" class="form-control peer" rows="5" placeholder=" " required></textarea>
+                            <label for="contact-message" class="floating-label">Votre Message</label>
+                        </div>
+                        <button type="submit" id="contact-submit-btn" class="btn-glow w-full bg-primary-blue text-white font-bold py-3 px-6 rounded-lg border-2 border-white transition-all duration-300 transform hover:scale-105">Envoyer le Message</button>
+                        <div id="contact-form-message" class="text-sm mt-2"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer-section">
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
              <div class="footer-col">
-                 <img src="/r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                 <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
                  <p class="footer-tagline">
                      Annoncer l'Évangile, former des disciples,<br />
                      manifester l'amour de Christ à Dakar et au-delà.
@@ -382,6 +554,39 @@
                 button.disabled = true;
                 button.textContent = 'Envoi en cours...';
                 messageDiv.style.display = 'none';
+
+                const contactData = {
+                    name: document.getElementById('contact-name').value,
+                    email: document.getElementById('contact-email').value,
+                    subject: "Nouveau message depuis le site", // Sujet par défaut
+                    message: document.getElementById('contact-message').value
+                };
+
+                callApi('handleContactForm', { payload: contactData })
+                    .then(response => {
+                        if (response.success) {
+                            messageDiv.textContent = response.message;
+                            messageDiv.className = 'form-message success';
+                            messageDiv.style.display = 'block';
+                            document.getElementById('main-contact-form').reset();
+                        } else {
+                            throw new Error(response.error || 'Une erreur inconnue est survenue.');
+                        }
+                    })
+                    .catch(error => {
+                        messageDiv.textContent = 'Erreur : ' + error.message;
+                        messageDiv.className = 'form-message error';
+                        messageDiv.style.display = 'block';
+                    })
+                    .finally(() => {
+                        button.disabled = false;
+                        button.textContent = 'Envoyer le Message';
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
 
                 const contactData = {
                     name: document.getElementById('contact-name').value,

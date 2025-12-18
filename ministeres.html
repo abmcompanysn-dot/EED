@@ -28,7 +28,7 @@
         /* --- Styles pour les animations (cohérence avec l'accueil) --- */
         .animated-title, .animated-card {
             opacity: 0;
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Durée réduite pour plus de rapidité */
         }
         .animated-title {
             transform: translateY(20px);
@@ -323,7 +323,7 @@
             // On anime les cartes et les contenus de manière décalée
             document.querySelectorAll('.animated-card').forEach((card, index) => { 
                 // Appliquer un délai progressif pour un effet "cascade"
-                card.style.transitionDelay = `${index * 100}ms`;
+                card.style.transitionDelay = `${index * 50}ms`; /* Délai réduit pour une cascade plus rapide */
                 observer.observe(card);
             });
         });
