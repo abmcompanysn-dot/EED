@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="footer.css">
     
     <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
 
     <style>
         /* Styles spécifiques pour cette page pour une meilleure lisibilité */
@@ -68,31 +68,25 @@
     <header id="main-header">
         <nav>
             <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"></a>
-            <ul class="desktop-links">
+            <ul class="desktop-links"> 
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
+                <li><a href="ministeres.html">Ministères</a></li>
                 <li><a href="evenements.html">Événements</a></li>
-                <li><a href="sermons.html">Sermons</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="confession-de-foi.html" class="active">Confession de Foi</a></li>
+                <li><a href="demande-priere.html">Demande de Prière</a></li>
+                <li><a href="ressources.html">Ressources</a></li>
+                <li><a href="live.html">Live</a></li>
+                <li><a href="Boutique.html">Faire un Don</a></li>
+                <li><a href="apropos.html#contact">Contact</a></li>
             </ul>
-            <div class="menu-burger" id="menu-burger">
+            <div class="menu-burger" onclick="toggleMobileMenu()">
                 <div class="bar bar1"></div>
                 <div class="bar bar2"></div>
                 <div class="bar bar3"></div>
             </div>
         </nav>
     </header>
-
-    <!-- ==================== MENU MOBILE ==================== -->
-    <div class="nav-links-mobile" id="nav-links-mobile">
-        <a href="index.html">Accueil</a>
-        <a href="apropos.html">À Propos</a>
-        <a href="evenements.html">Événements</a>
-        <a href="sermons.html">Sermons</a>
-        <a href="contact.html">Contact</a>
-        <a href="confession-de-foi.html">Confession de Foi</a>
-    </div>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div><div id="mobile-menu" class="mobile-sidenav"><a href="javascript:void(0)" class="close-btn-mobile" onclick="toggleMobileMenu()">×</a></div>
 
     <!-- ==================== CONTENU PRINCIPAL ==================== -->
     <main>
@@ -199,8 +193,10 @@
     <!-- ==================== FOOTER (à insérer ici) ==================== -->
     <!-- Vous pouvez copier/coller le contenu de votre footer ici -->
 
-    <!-- Script pour le menu mobile -->
-    <script src="app.js"></script>
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
+    </script>
 </body>
 </html>
-
