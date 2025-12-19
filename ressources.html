@@ -79,23 +79,27 @@
 
         /* Styles spécifiques à la page ressources */
         .search-bar {
+            background-color: var(--card-bg); /* Fond de carte pour la barre */
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
             display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 15px;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto; margin-right: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Ombre subtile */
         }
         .search-bar input, .search-bar select {
             width: 100%;
             padding: 12px;
-            background-color: var(--light-bg);
+            background-color: #1a1a3a; /* Fond sombre pour les champs */
             border: 1px solid var(--border-color);
-            border-radius: 5px; color: var(--text-dark);
+            border-radius: 5px; color: white; /* Texte en blanc */
             font-size: 1em;
         }
         .resource-card {
-            background-color: var(--card-bg);
+            background-color: #1a1a3a; /* Fond bleu nuit, comme sur le blog */
             border-radius: 10px;
             border: 1px solid var(--border-color);
             overflow: hidden;
@@ -121,13 +125,13 @@
         }
         .resource-content h4 {
             font-family: 'Orbitron', sans-serif;
-            color: var(--primary-blue);
+            color: white; /* Titre en blanc */
             margin: 0 0 10px 0;
             font-size: 1.2em;
         }
         .resource-content p {
             font-size: 0.95em;
-            color: var(--text-secondary);
+            color: #e0e0e0; /* Texte du paragraphe en blanc cassé */
             flex-grow: 1; /* Permet au paragraphe de prendre l'espace disponible */
             margin-bottom: 20px;
         }

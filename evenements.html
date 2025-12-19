@@ -41,6 +41,28 @@
         .hero-section h1 {
             font-size: 3.5em; margin-bottom: 10px;
         }
+        /* --- Nouveaux styles pour les boutons du héros (inspiré de l'accueil) --- */
+        .hero-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        .btn-hero {
+            display: inline-block;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+        }
+        .btn-hero.primary {
+            background-color: var(--primary-blue); border: 2px solid var(--primary-blue); color: white;
+        }
+        .btn-hero.secondary {
+            background-color: transparent; border: 2px solid white; color: white;
+        }
+        .btn-hero:hover { transform: translateY(-3px); }
 
         /* --- Perspective pour l'effet 3D --- */
         .grid-3 {
@@ -111,6 +133,13 @@
             50% { background-color: #f0f0f0; }
             100% { background-color: #e0e0e0; }
         }
+
+        /* --- Nouveau style pour la section des programmes réguliers --- */
+        .regular-programs-section {
+            background-color: var(--light-bg); /* Fond gris léger */
+            padding: 60px 0;
+            border-radius: 15px;
+        }
     </style>
 </head>
 <body>
@@ -147,10 +176,80 @@
         <section class="hero-section">
             <h1>Nos Événements</h1>
             <p class="section-subtitle">Ne manquez pas nos prochains rassemblements, conférences et activités spéciales.</p>
+            <div class="hero-buttons">
+                <a href="#programmes-avenir" class="btn-hero secondary">Programmes à venir</a>
+                <a href="#programmes-reguliers" class="btn-hero secondary">Programmes Réguliers</a>
+            </div>
         </section>
-        <section class="container" style="background: none; box-shadow: none;">
+        <!-- ID ajouté pour le lien du bouton -->
+        <!-- Ajout d'un margin-bottom pour l'espacement -->
+        <section id="programmes-avenir" class="container" style="background: none; box-shadow: none; margin-bottom: 60px;">
             <div class="grid-3" id="events-grid">
                 <!-- Le squelette de chargement sera injecté ici -->
+            </div>
+        </section>
+
+        <!-- ==================== SECTION PROGRAMMES RÉGULIERS ==================== -->
+        <!-- ID et classe ajoutés pour le style et le lien -->
+        <section id="programmes-reguliers" class="regular-programs-section">
+            <div class="container">
+            <h2 class="section-title">Programmes de l'Église</h2>
+            <p class="section-subtitle">Découvrez tous nos événements et programmes réguliers.</p>
+            <div class="grid-3" id="regular-programs-grid">
+                <!-- Carte Culte Dominical -->
+                <div class="event-card">
+                    <img src="r/a.jpg" alt="Culte Dominical"> <!-- Remplacez par une image pertinente -->
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Chaque Dimanche</span>
+                            <span><i class="fas fa-clock"></i> 9h00 - 12h00</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Église Évangélique Dakar</span>
+                        </div>
+                        <h3>Culte Dominical</h3>
+                        <p class="event-description">Notre rassemblement principal avec louange, prédication et communion fraternelle.</p>
+                    </div>
+                </div>
+                <!-- Carte Prière du Mercredi -->
+                <div class="event-card">
+                    <img src="r/p.png" alt="Prière du Mercredi"> <!-- Remplacez par une image pertinente -->
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Chaque Mercredi</span>
+                            <span><i class="fas fa-clock"></i> 18h00 - 20h00</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Église Évangélique Dakar</span>
+                        </div>
+                        <h3>Prière du Mercredi</h3>
+                        <p class="event-description">Soirée de prière et d'intercession pour nos besoins et ceux de notre nation.</p>
+                    </div>
+                </div>
+                <!-- Carte Rencontre des Jeunes -->
+                <div class="event-card">
+                    <img src="r/f.svg" alt="Rencontre des Jeunes"> <!-- Remplacez par une image pertinente -->
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Chaque Vendredi</span>
+                            <span><i class="fas fa-clock"></i> 19h00 - 21h00</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Salle des jeunes</span>
+                        </div>
+                        <h3>Rencontre des Jeunes</h3>
+                        <p class="event-description">Un temps pour les jeunes de se retrouver, louer Dieu et étudier la Bible ensemble.</p>
+                    </div>
+                </div>
+                <!-- Carte École du Dimanche -->
+                <div class="event-card">
+                    <img src="r/h.svg" alt="École du Dimanche"> <!-- Remplacez par une image pertinente -->
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Chaque Dimanche</span>
+                            <span><i class="fas fa-clock"></i> 9h00 - 10h30</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Salle des enfants</span>
+                        </div>
+                        <h3>École du Dimanche</h3>
+                        <p class="event-description">Enseignement biblique adapté aux enfants avec activités ludiques et éducatives.</p>
+                    </div>
+                </div>
+                <!-- Vous pouvez ajouter les autres cartes (Groupes de Maison, Réunion des Femmes) ici sur le même modèle -->
+            </div>
             </div>
         </section>
     </main>
@@ -275,6 +374,11 @@
             const cards = document.querySelectorAll('.event-card');
             cards.forEach(card => observer.observe(card));
         }
+
+        // Animer aussi les cartes des programmes réguliers
+        document.addEventListener('DOMContentLoaded', () => {
+            setupScrollAnimation();
+        });
     </script>    
 </body>
 </html>
