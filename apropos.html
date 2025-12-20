@@ -587,36 +587,3 @@
     </script>
 </body>
 </html>
-
-                const contactData = {
-                    name: document.getElementById('contact-name').value,
-                    email: document.getElementById('contact-email').value,
-                    subject: "Nouveau message depuis le site", // Sujet par défaut
-                    message: document.getElementById('contact-message').value
-                };
-
-                callApi('handleContactForm', { payload: contactData })
-                    .then(response => {
-                        if (response.success) {
-                            messageDiv.textContent = response.message;
-                            messageDiv.className = 'form-message success';
-                            messageDiv.style.display = 'block';
-                            document.getElementById('main-contact-form').reset();
-                        } else {
-                            throw new Error(response.error || 'Une erreur inconnue est survenue.');
-                        }
-                    })
-                    .catch(error => {
-                        messageDiv.textContent = 'Erreur : ' + error.message;
-                        messageDiv.className = 'form-message error';
-                        messageDiv.style.display = 'block';
-                    })
-                    .finally(() => {
-                        button.disabled = false;
-                        button.textContent = 'Envoyer le Message';
-                    });
-            }
-        });
-    </script>
-</body>
-</html>
