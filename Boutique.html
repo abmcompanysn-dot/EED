@@ -172,6 +172,9 @@
             flex-direction: column;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s; /* Ajout d'une transition */
+            border: 1px solid white; /* Bordure blanche demandée */
+            border-radius: 10px; /* Pour des coins arrondis cohérents */
+            padding: 30px; /* Espace intérieur pour le contenu */
         }
         .donation-card:hover {
             transform: translateY(-5px);
@@ -311,6 +314,15 @@
             margin-bottom: 20px;
         }
 
+        @media (max-width: 768px) {
+            h1, h2, h3, h4, .section-title {
+                text-align: center;
+            }
+            p, .need-content p, .donation-card p, .accordion-panel p {
+                text-align: justify;
+            }
+            .hero-section p, .section-subtitle, .account-info { text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -376,7 +388,7 @@
 
                 <!-- Carte Wave -->
                 <div class="card donation-card animated-card">
-                    <img src="r/wave.png" alt="Wave" class="payment-logo">
+                    <img src="r/wave.webp" alt="Wave" class="payment-logo">
                     <h3>Wave</h3>
                     <p>Faites votre don ou offrande sans frais via l'application.</p>
                     <p>1. Ouvrez Wave et sélectionnez "Paiements".<br>2. Recherchez 'EGLISE EVANGELIQUE DE DAKAR'.</p>

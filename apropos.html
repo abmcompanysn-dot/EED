@@ -251,6 +251,26 @@
             .contact-info-panel {
                 order: 2; /* Met les infos de contact après le formulaire sur mobile */
             }
+            /* Centrage des titres et justification du texte sur mobile */
+            h1, h2, h3, .section-title {
+                text-align: center;
+            }
+            p, .text-content-section p, .department-card-new p {
+                text-align: justify;
+            }
+            .hero-about p, .section-subtitle { text-align: center; }
+
+            /* --- Optimisation Performance Mobile (Fluidité) --- */
+            .contact-section-wrapper {
+                background-attachment: scroll; /* Désactive le 'fixed' qui cause des saccades */
+            }
+            /* Simplification des animations complexes sur mobile */
+            .animated-card.zoom-in-rotate {
+                transform: translateY(20px);
+            }
+            .animated-card.is-visible.zoom-in-rotate {
+                transform: translateY(0);
+            }
         }
         /* --- Style pour l'effet de lueur sur le bouton --- */
         .btn-glow:hover {
