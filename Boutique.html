@@ -175,6 +175,7 @@
             border: 1px solid white; /* Bordure blanche demandée */
             border-radius: 10px; /* Pour des coins arrondis cohérents */
             padding: 30px; /* Espace intérieur pour le contenu */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Ombre pour effet 3D */
         }
         .donation-card:hover {
             transform: translateY(-5px);
@@ -182,6 +183,10 @@
         }
         .donation-card img.payment-logo {
             height: 45px; /* Légère réduction pour un meilleur équilibre */
+            width: auto; /* Garde les proportions naturelles du logo */
+            max-width: 100%; /* Empêche le logo de dépasser de la carte */
+            object-fit: contain; /* Assure que l'image ne soit pas coupée ou déformée */
+            align-self: center; /* Centre l'image et empêche l'étirement (stretch) */
             margin-bottom: 20px;
             filter: grayscale(50%) brightness(1.5); /* Effet pour mieux intégrer les logos */
             transition: filter 0.3s;
@@ -199,7 +204,7 @@
             font-size: 0.95em;
         }
         .donation-card .account-info {
-            background-color: rgba(10, 10, 35, 0.8); /* Fond plus sombre et cohérent */
+            background-color: transparent; /* Fond transparent */
             color: var(--luminous-white);
             padding: 15px;
             border-radius: 8px;
@@ -322,6 +327,9 @@
                 text-align: justify;
             }
             .hero-section p, .section-subtitle, .account-info { text-align: center; }
+            
+            /* Footer simplifié sur mobile */
+            .footer-grid { display: none; }
         }
     </style>
 </head>
@@ -348,7 +356,14 @@
         </nav>
     </header>
 
-    <   <section class="hero-section">
+    <!-- ==================== MENU MOBILE (CONTENU) ==================== -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+    <div id="mobile-menu" class="mobile-sidenav">
+        <a href="javascript:void(0)" class="close-btn-mobile" onclick="toggleMobileMenu()">&times;</a>
+        <!-- Le contenu des liens est généré par main.js -->
+    </div>
+
+    <section class="hero-section">
             <h1>Soutenez la Mission</h1>
             <p class="section-subtitle" style="color: #e0e0e0;">Votre générosité nous permet de poursuivre notre mission et d'étendre l'œuvre de Dieu. Que Dieu vous bénisse.</p>
         </section>

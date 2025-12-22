@@ -224,13 +224,15 @@
                 width: 80%; /* Donne une largeur cohérente */
                 max-width: 320px; /* Limite la largeur maximale */
             }
-            /* Centrage des titres et justification du texte sur mobile */
+            /* Centrage des titres et style du texte sur mobile */
             h1, h2, h3 {
                 text-align: center;
             }
             p, .prayer-content p, .promo-card p {
-                text-align: justify;
+                font-size: 1.05em; /* Police légèrement agrandie pour la lisibilité */
             }
+            /* Footer simplifié sur mobile */
+            .footer-grid { display: none; }
         }
 
         /* Styles pour le défilement des logos */
