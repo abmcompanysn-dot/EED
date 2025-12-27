@@ -1058,6 +1058,22 @@
                 navigator.serviceWorker.register('/sw.js')
                     .then(registration => {
                         console.log('ServiceWorker enregistré avec succès:', registration.scope);
+                        
+                        // Force la vérification d'une mise à jour immédiatement
+                        registration.update();
+
+                        // Écoute les nouvelles versions du Service Worker
+                        registration.onupdatefound = () => {
+                            const newWorker = registration.installing;
+                            newWorker.onstatechange = () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Une nouvelle version est disponible
+                                    if (confirm("Une nouvelle version du site est disponible. Voulez-vous la charger maintenant ?")) {
+                                        window.location.reload();
+                                    }
+                                }
+                            };
+                        };
                     })
                     .catch(error => {
                         console.log('Échec de l\'enregistrement du ServiceWorker:', error);
