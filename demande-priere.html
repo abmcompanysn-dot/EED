@@ -38,17 +38,13 @@
         }
 
         /* --- Styles pour les animations (cohérence avec l'accueil) --- */
-        .animated-title, .animated-element {
+        .animated-element {
             opacity: 0;
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .animated-title {
-            transform: translateY(20px);
         }
         .animated-element.fade-in-up {
             transform: translateY(30px);
         }
-        .animated-title.is-visible,
         .animated-element.is-visible {
             opacity: 1;
             transform: translateY(0);
@@ -126,9 +122,6 @@
             .form-grid { grid-template-columns: 1fr; }
             p { text-align: justify; }
             .section-subtitle { text-align: center; }
-            
-            /* Footer simplifié sur mobile */
-            .footer-grid { display: none; }
         }
     </style>
 </head>
