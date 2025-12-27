@@ -49,8 +49,6 @@
         }
 
         /* --- Styles pour les animations et la lisibilité --- */
-        body { font-family: 'Open Sans', sans-serif; } /* Police par défaut pour une meilleure lisibilité */
-
         .animated-title, .animated-card {
             opacity: 0;
             transform: translateY(20px);
@@ -162,41 +160,6 @@
             font-style: italic;
         }
 
-        /* --- Styles pour le formulaire de contact (avec label flottant) --- */
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            font-size: 1rem;
-            color: #333;
-            background-color: #fff;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.5rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.2);
-        }
-
-        .floating-label {
-            position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
-            color: #6b7280;
-            pointer-events: none;
-            transition: all 0.2s ease-out;
-            background-color: #fff;
-            padding: 0 0.25rem;
-        }
-
-        .peer:focus ~ .floating-label,
-        .peer:not(:placeholder-shown) ~ .floating-label {
-            transform: translateY(-1.5rem) scale(0.85);
-            color: var(--primary-blue);
-        }
-
         /* --- Nouveaux styles pour la section Contact améliorée --- */
         .contact-section-wrapper {
             position: relative;
@@ -271,9 +234,6 @@
             .animated-card.is-visible.zoom-in-rotate {
                 transform: translateY(0);
             }
-            
-            /* Footer simplifié sur mobile */
-            .footer-grid { display: none; }
         }
         /* --- Style pour l'effet de lueur sur le bouton --- */
         .btn-glow:hover {
@@ -283,6 +243,7 @@
 </head>
 <body>
     <header>
+                
         <nav>
             <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
