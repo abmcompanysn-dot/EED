@@ -995,10 +995,10 @@
         });
 
         // ==================== Logique pour le compte à rebours du prochain événement ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            callApi('getUpcomingEvents', {})
-                .then(data => {
-                    if (!data.success || data.events.length === 0) return;
+        let eventCountdownInterval;
+
+        function displayEventData(data) {
+            if (!data || !data.success || !data.events || data.events.length === 0) return;
 
                     const now = new Date();
                     const upcomingEvents = data.events
@@ -1020,12 +1020,14 @@
                     }
                     eventSection.style.display = 'block';
  
-                    const countdownInterval = setInterval(() => {
+                    if (eventCountdownInterval) clearInterval(eventCountdownInterval);
+
+                    eventCountdownInterval = setInterval(() => {
                         const currentTime = new Date().getTime();
                         const distance = nextEvent.dateObj.getTime() - currentTime;
 
                         if (distance < 0) {
-                            clearInterval(countdownInterval);
+                            clearInterval(eventCountdownInterval);
                             eventSection.style.display = 'none'; // Cache la section si l'événement est passé
                             return;
                         }
@@ -1041,15 +1043,33 @@
                         document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 
                     }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. CHARGEMENT INSTANTANÉ (CACHE LOCAL)
+            // On vérifie si on a déjà des données sauvegardées
+            const cachedEvents = localStorage.getItem('cached_events_data');
+            if (cachedEvents) {
+                displayEventData(JSON.parse(cachedEvents));
+            }
+
+            // 2. CHARGEMENT RÉSEAU (MISE À JOUR)
+            // On appelle l'API pour avoir les dernières infos
+            callApi('getUpcomingEvents', {})
+                .then(data => {
+                    if (data.success) {
+                        // On sauvegarde les nouvelles données pour la prochaine fois
+                        localStorage.setItem('cached_events_data', JSON.stringify(data));
+                        // On met à jour l'affichage
+                        displayEventData(data);
+                    }
                 })
-                .catch(error => console.error("Impossible de charger les événements pour le compte à rebours:", error));
+                .catch(error => console.error("Impossible de charger les événements:", error));
         });
 
 
-    </script>
 
 
-    <script>
         document.addEventListener('DOMContentLoaded', () => populateMobileMenu());
 
         // --- Enregistrement du Service Worker pour la PWA ---

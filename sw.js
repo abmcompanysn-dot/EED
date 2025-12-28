@@ -1,5 +1,5 @@
-const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.1';
-const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.1';
+const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.2';
+const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.2';
 
 const urlsToCache = [
   '/',
@@ -54,11 +54,18 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Stratégie "Stale-While-Revalidate" pour les pages HTML et les assets locaux (CSS/JS)
+  // 1. Stratégie "Cache First" (Priorité Cache) pour les IMAGES et les POLICES
+  // Cela assure un chargement instantané des visuels
+  if (request.destination === 'image' || request.destination === 'font') {
+    event.respondWith(cacheFirst(request));
+    return;
+  }
+
+  // 2. Stratégie "Stale-While-Revalidate" pour le HTML (Navigation), CSS et JS
+  // Affiche la version en cache TOUT DE SUITE, puis met à jour le cache en arrière-plan
   if (url.origin === self.origin && (request.destination === 'document' || request.destination === 'script' || request.destination === 'style')) {
     event.respondWith(staleWhileRevalidate(request));
   } 
-  // Stratégie "Cache First" pour les autres ressources (images, vidéos, polices)
   else {
     event.respondWith(cacheFirst(request));
   }
