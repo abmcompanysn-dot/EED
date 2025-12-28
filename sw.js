@@ -1,5 +1,5 @@
-const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.2';
-const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.2';
+const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.3';
+const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.3';
 
 const urlsToCache = [
   '/',
