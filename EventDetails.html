@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Détails de l'Événement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+      .event-header { position: relative; height: 300px; background-color: #1A237E; overflow: hidden; }
+      .event-header img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+      .event-title-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; }
+      .card { border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: -50px; }
+      .loader { display: flex; justify-content: center; align-items: center; height: 100vh; }
+    </style>
+  </head>
+  <body>
+
+    <!-- Loader -->
+    <div id="loader" class="loader">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+
+    <!-- Contenu (caché par défaut) -->
+    <div id="content" style="display: none;">
+      <div class="event-header">
+        <img id="eventImage" src="" alt="Image de l'événement">
+        <div class="event-title-overlay container">
+          <h1 id="eventTitle" class="display-4 fw-bold">Titre de l'événement</h1>
+        </div>
+      </div>
+
+      <div class="container mb-5">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge bg-primary fs-6" id="eventDate">Date</span>
+                <span class="text-muted" id="eventTime">Heure</span>
+              </div>
+              
+              <h4 class="mb-3"><i class="bi bi-geo-alt-fill text-danger"></i> <span id="eventLocation">Lieu</span></h4>
+              
+              <hr>
+              
+              <div class="event-description mt-4">
+                <h5>À propos de cet événement</h5>
+                <p id="eventDescription" class="lead text-secondary">Description...</p>
+              </div>
+
+              <div class="mt-5 d-grid gap-2">
+                <a id="registerBtn" href="#" target="_blank" class="btn btn-success btn-lg">S'inscrire maintenant</a>
+                <button onclick="window.history.back()" class="btn btn-outline-secondary">Retour</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gestion des erreurs -->
+    <div id="error" class="container mt-5 text-center" style="display: none;">
+      <div class="alert alert-danger">
+        <h4>Événement introuvable</h4>
+        <p>L'événement que vous cherchez n'existe pas ou a été supprimé.</p>
+        <a href="?page=home" class="btn btn-primary">Retour à l'accueil</a>
+      </div>
+    </div>
+
+    <script>
+      // Au chargement de la page
+      window.onload = function() {
+        // Récupère l'ID depuis l'URL via l'API Google Script
+        google.script.url.getLocation(function(location) {
+          const id = location.parameter.id;
+          if (id) {
+            loadEvent(id);
+          } else {
+            showError();
+          }
+        });
+      };
+
+      function loadEvent(id) {
+        google.script.run
+          .withSuccessHandler(displayEvent)
+          .withFailureHandler(showError)
+          .getEventById(id);
+      }
+
+      function displayEvent(response) {
+        if (!response.success) {
+          showError();
+          return;
+        }
+
+        const evt = response.event;
+        
+        // Remplissage des données
+        document.getElementById('eventTitle').textContent = evt.Titre;
+        document.getElementById('eventDate').textContent = new Date(evt.Date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('eventTime').textContent = evt.Heure;
+        document.getElementById('eventLocation').textContent = evt.Lieu;
+        document.getElementById('eventDescription').textContent = evt.Description;
+        document.getElementById('eventImage').src = evt.ImageURL || 'https://via.placeholder.com/800x400?text=Pas+d+image';
+        document.getElementById('registerBtn').href = evt.LienInscription || '#';
+
+        // Affichage
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      }
+
+      function showError() {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+      }
+    </script>
+  </body>
+</html>

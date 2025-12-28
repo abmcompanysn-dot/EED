@@ -2,216 +2,432 @@
 <html>
   <head>
     <base target="_top">
-    <title>Tableau de Bord - Admin Église</title>
+    <meta charset="utf-8">
+    <title>Tableau de Bord Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f4f7f9; color: #333; margin: 0; padding: 20px; }
-      h1 { color: #2c3e50; text-align: center; }
-      #dashboard-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-      .card { background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px; }
-      .card h2 { margin-top: 0; color: #3498db; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-      .stat-item { display: flex; justify-content: space-between; align-items: center; font-size: 1.1em; padding: 8px 0; border-bottom: 1px solid #eee; }
-      .stat-item:last-child { border-bottom: none; }
-      .stat-item span:first-child { font-weight: bold; color: #555; }
-      .stat-item span:last-child { font-weight: bold; font-size: 1.2em; }
-      .stat-success { color: #2ecc71; }
-      .stat-error { color: #e74c3c; }
-      .chart-container { width: 100%; height: 350px; }
-      .loader { text-align: center; padding: 50px; font-size: 1.5em; color: #7f8c8d; }
+      body { display: flex; min-height: 100vh; background-color: #f0f2f5; }
+      .sidebar { width: 250px; background-color: #1A237E; color: white; padding: 20px; flex-shrink: 0; }
+      .sidebar h3 { font-size: 1.2rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+      .nav-link { color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; border-radius: 5px; cursor: pointer; }
+      .nav-link:hover, .nav-link.active { background-color: rgba(255,255,255,0.1); color: white; }
+      .nav-link i { margin-right: 10px; }
+      .content { flex-grow: 1; padding: 30px; overflow-y: auto; }
+      .stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: 100%; }
+      .stat-value { font-size: 2rem; font-weight: bold; color: #1A237E; }
+      .section-content { display: none; }
+      .section-content.active { display: block; }
     </style>
-    <!--Chargement de l'API Google Charts-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
 
-    <h1>Tableau de Bord de Performance</h1>
-
-    <div id="loader" class="loader">
-      Chargement des données...
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3><i class="bi bi-shield-lock"></i> Admin Église</h3>
+      <nav class="nav flex-column">
+        <a class="nav-link active" onclick="showSection('overview')"><i class="bi bi-speedometer2"></i> Vue d'ensemble</a>
+        <a class="nav-link" onclick="showSection('events-mgr')"><i class="bi bi-calendar-event"></i> Événements</a>
+        <a class="nav-link" onclick="showSection('resources-mgr')"><i class="bi bi-book"></i> Ressources</a>
+        <a class="nav-link" onclick="showSection('images')"><i class="bi bi-images"></i> Gestion Images</a>
+        <a class="nav-link" onclick="showSection('email')"><i class="bi bi-envelope"></i> Envoyer Email</a>
+      </nav>
     </div>
 
-    <div id="dashboard-container" style="display: none;">
+    <!-- Main Content -->
+    <div class="content">
       
-      <!-- Carte des Statistiques d'Appels API -->
-      <div class="card">
-        <h2>Statistiques de l'API</h2>
-        <div class="stat-item">
-          <span>Appels Totaux</span>
-          <span id="total-calls">0</span>
+      <!-- Section: Vue d'ensemble -->
+      <div id="overview" class="section-content active">
+        <h2 class="mb-4">Suivi du Système</h2>
+        <div class="row g-4 mb-4">
+          <!-- Stats API -->
+          <div class="col-md-4">
+            <div class="stat-card border-start border-4 border-primary">
+              <h6 class="text-muted">Appels API Totaux</h6>
+              <div class="stat-value" id="totalCalls">-</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card border-start border-4 border-success">
+              <h6 class="text-muted">Succès</h6>
+              <div class="stat-value text-success" id="successCalls">-</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card border-start border-4 border-danger">
+              <h6 class="text-muted">Erreurs</h6>
+              <div class="stat-value text-danger" id="errorCalls">-</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-item">
-          <span>Appels Réussis</span>
-          <span id="success-calls" class="stat-success">0</span>
+
+        <h4 class="mb-3">Contenu en Base</h4>
+        <div class="row g-4">
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="bi bi-calendar-event fs-1 text-primary mb-2"></i>
+              <h5>Événements</h5>
+              <div class="stat-value" id="totalEvents">-</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="bi bi-heart fs-1 text-danger mb-2"></i>
+              <h5>Besoins</h5>
+              <div class="stat-value" id="totalNeeds">-</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stat-card">
+              <i class="bi bi-book fs-1 text-info mb-2"></i>
+              <h5>Ressources</h5>
+              <div class="stat-value" id="totalResources">-</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-item">
-          <span>Appels en Erreur</span>
-          <span id="error-calls" class="stat-error">0</span>
+        
+        <div class="mt-4 text-end">
+          <button class="btn btn-sm btn-outline-secondary" onclick="loadDashboardData()"><i class="bi bi-arrow-clockwise"></i> Actualiser</button>
         </div>
       </div>
 
-      <!-- Carte du Résumé du Contenu -->
-      <div class="card">
-        <h2>Résumé du Contenu</h2>
-        <div class="stat-item">
-          <span>Articles de Blog</span>
-          <span id="total-posts">0</span>
+      <!-- Section: Gestion Événements -->
+      <div id="events-mgr" class="section-content">
+        <h2 class="mb-4">Gestion des Événements</h2>
+        
+        <!-- Formulaire Ajout -->
+        <div class="card p-4 mb-4">
+          <h4>Ajouter un événement</h4>
+          <form id="eventForm" onsubmit="createEvent(event)">
+            <div class="row">
+              <div class="col-md-6 mb-3"><label>Titre</label><input type="text" class="form-control" id="evtTitle" required></div>
+              <div class="col-md-3 mb-3"><label>Date</label><input type="date" class="form-control" id="evtDate" required></div>
+              <div class="col-md-3 mb-3"><label>Heure</label><input type="time" class="form-control" id="evtTime" required></div>
+            </div>
+            <div class="mb-3"><label>Lieu</label><input type="text" class="form-control" id="evtPlace" required></div>
+            <div class="mb-3"><label>Description</label><textarea class="form-control" id="evtDesc" rows="3"></textarea></div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label>Image URL</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="evtImage" placeholder="Lien de l'image">
+                  <button class="btn btn-outline-secondary" type="button" onclick="triggerUpload('evtImage')">Upload</button>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3"><label>Lien Inscription (Optionnel)</label><input type="text" class="form-control" id="evtLink"></div>
+            </div>
+            <button type="submit" class="btn btn-success">Créer l'événement</button>
+          </form>
         </div>
-        <div class="stat-item">
-          <span>Événements</span>
-          <span id="total-events">0</span>
-        </div>
-        <div class="stat-item">
-          <span>Besoins</span>
-          <span id="total-needs">0</span>
-        </div>
-        <div class="stat-item">
-          <span>Ressources</span>
-          <span id="total-resources">0</span>
+
+        <!-- Liste Événements -->
+        <div class="card p-4">
+          <h4>Liste des événements</h4>
+          <button class="btn btn-sm btn-primary mb-3" onclick="loadEventsList()">Actualiser la liste</button>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead><tr><th>Date</th><th>Titre</th><th>Lieu</th><th>Action</th></tr></thead>
+              <tbody id="eventsTableBody">
+                <tr><td colspan="4" class="text-center">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <!-- Graphique des appels API (Succès vs Erreur) -->
-      <div class="card">
-        <h2>Répartition des Appels API</h2>
-        <div id="api-status-chart" class="chart-container"></div>
+      <!-- Section: Gestion Ressources -->
+      <div id="resources-mgr" class="section-content">
+        <h2 class="mb-4">Gestion des Ressources (Articles)</h2>
+        
+        <!-- Formulaire Ajout -->
+        <div class="card p-4 mb-4">
+          <h4>Ajouter une ressource</h4>
+          <form id="resourceForm" onsubmit="createResource(event)">
+            <div class="row">
+              <div class="col-md-6 mb-3"><label>Titre</label><input type="text" class="form-control" id="resTitle" required></div>
+              <div class="col-md-6 mb-3"><label>Auteur</label><input type="text" class="form-control" id="resAuthor" required></div>
+            </div>
+            <div class="mb-3"><label>Description / Préface</label><textarea class="form-control" id="resDesc" rows="3"></textarea></div>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label>Catégorie</label>
+                <select class="form-select" id="resCat">
+                  <option>Sermon</option>
+                  <option>Étude Biblique</option>
+                  <option>Livre</option>
+                  <option>Article</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label>Image URL</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="resImage" placeholder="Lien image">
+                  <button class="btn btn-outline-secondary" type="button" onclick="triggerUpload('resImage')">Upload</button>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label>Fichier/Lien URL</label>
+                <input type="text" class="form-control" id="resFile" placeholder="Lien PDF ou autre">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success">Ajouter la ressource</button>
+          </form>
+        </div>
+
+        <!-- Liste Ressources -->
+        <div class="card p-4">
+          <h4>Liste des ressources</h4>
+          <button class="btn btn-sm btn-primary mb-3" onclick="loadResourcesList()">Actualiser la liste</button>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead><tr><th>Titre</th><th>Catégorie</th><th>Auteur</th><th>Action</th></tr></thead>
+              <tbody id="resourcesTableBody">
+                <tr><td colspan="4" class="text-center">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
-      <!-- Graphique des appels par action -->
-      <div class="card">
-        <h2>Appels par Action</h2>
-        <div id="actions-chart" class="chart-container"></div>
+      <!-- Section: Images (ImgBB) -->
+      <div id="images" class="section-content">
+        <h2 class="mb-4">Importer une Photo (ImgBB)</h2>
+        <div class="card p-4">
+          <div class="mb-3">
+            <label for="imageInput" class="form-label">Sélectionner une image</label>
+            <input class="form-control" type="file" id="imageInput" accept="image/*">
+          </div>
+          <button class="btn btn-primary" onclick="uploadImage()" id="uploadBtn">
+            <i class="bi bi-cloud-upload"></i> Uploader
+          </button>
+          
+          <div id="uploadResult" class="mt-4 p-3 bg-light border rounded" style="display:none;">
+            <p class="text-success fw-bold">Image uploadée avec succès !</p>
+            <div class="input-group mb-3">
+              <span class="input-group-text">URL</span>
+              <input type="text" class="form-control" id="imageUrl" readonly>
+              <button class="btn btn-outline-secondary" onclick="copyUrl()">Copier</button>
+            </div>
+            <img id="previewImage" src="" class="img-thumbnail" style="max-height: 200px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Email -->
+      <div id="email" class="section-content">
+        <h2 class="mb-4">Envoyer un Message Complet</h2>
+        <div class="card p-4">
+          <form id="emailForm" onsubmit="sendEmail(event)">
+            <div class="mb-3">
+              <label class="form-label">Destinataire</label>
+              <input type="email" class="form-control" id="emailTo" placeholder="exemple@email.com" required>
+              <div class="form-text">Laissez vide pour envoyer à l'admin par défaut.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sujet</label>
+              <input type="text" class="form-control" id="emailSubject" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Message (HTML accepté)</label>
+              <textarea class="form-control" id="emailBody" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success" id="sendBtn">
+              <i class="bi bi-send"></i> Envoyer le message
+            </button>
+          </form>
+        </div>
       </div>
 
     </div>
 
     <script>
-      // Charge l'API de visualisation et le package 'corechart'
-      google.charts.load('current', {'packages':['corechart', 'bar']});
-      // Définit une fonction de rappel à exécuter lorsque l'API est chargée
-      google.charts.setOnLoadCallback(fetchAndDrawDashboard);
+      // Navigation
+      function showSection(id) {
+        document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+        event.target.closest('.nav-link').classList.add('active');
+        if(id === 'events-mgr') loadEventsList();
+        if(id === 'resources-mgr') loadResourcesList();
+      }
 
-      function fetchAndDrawDashboard() {
-        // Affiche le loader et cache le contenu
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('dashboard-container').style.display = 'none';
+      // Chargement des données Dashboard
+      function loadDashboardData() {
+        google.script.run.withSuccessHandler(function(response) {
+          if (response.success) {
+            const data = response.data;
+            document.getElementById('totalCalls').textContent = data.stats.totalCalls;
+            document.getElementById('successCalls').textContent = data.stats.successCalls;
+            document.getElementById('errorCalls').textContent = data.stats.errorCalls;
+            
+            document.getElementById('totalEvents').textContent = data.content.totalEvents;
+            document.getElementById('totalNeeds').textContent = data.content.totalNeeds;
+            document.getElementById('totalResources').textContent = data.content.totalResources;
+          }
+        }).getDashboardData();
+      }
 
-        google.script.run
-          .withSuccessHandler(response => {
-            if (response.success) {
-              const data = response.data;
-              
-              // Mettre à jour les cartes de statistiques
-              document.getElementById('total-calls').textContent = data.stats.totalCalls;
-              document.getElementById('success-calls').textContent = data.stats.successCalls;
-              document.getElementById('error-calls').textContent = data.stats.errorCalls;
+      // Upload Image
+      function uploadImage() {
+        const fileInput = document.getElementById('imageInput');
+        const btn = document.getElementById('uploadBtn');
 
-              // Mettre à jour le résumé du contenu
-              document.getElementById('total-posts').textContent = data.content.totalPosts;
-              document.getElementById('total-events').textContent = data.content.totalEvents;
-              document.getElementById('total-needs').textContent = data.content.totalNeeds;
-              document.getElementById('total-resources').textContent = data.content.totalResources;
-
-              // Dessiner les graphiques
-              drawApiStatusChart(data.stats.successCalls, data.stats.errorCalls);
-              drawActionsChart(data.stats.callsByAction);
-
-              // Cacher le loader et afficher le tableau de bord
-              document.getElementById('loader').style.display = 'none';
-              document.getElementById('dashboard-container').style.display = 'grid';
-
+        if (fileInput.files.length === 0) return alert("Veuillez choisir une image.");
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Envoi...';
+        
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          google.script.run.withSuccessHandler(function(res) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-cloud-upload"></i> Uploader';
+            if (res.success) {
+              document.getElementById('imageUrl').value = res.url;
+              document.getElementById('previewImage').src = res.url;
+              document.getElementById('uploadResult').style.display = 'block';
+              alert("Image uploadée !");
             } else {
-              document.getElementById('loader').textContent = 'Erreur: ' + response.error;
+              alert("Erreur: " + res.error);
             }
-          })
-          .withFailureHandler(error => {
-            document.getElementById('loader').textContent = 'Erreur de communication avec le serveur: ' + error.message;
-          })
-          .getDashboardData(); // Appel de la fonction côté serveur
-      }
-
-      /**
-       * Dessine le graphique circulaire (camembert) pour le statut des appels API.
-       */
-      function drawApiStatusChart(success, errors) {
-        const data = google.visualization.arrayToDataTable([
-          ['Statut', 'Nombre'],
-          ['Réussis', success],
-          ['Erreurs', errors]
-        ]);
-
-        const options = {
-          title: 'Statut des Appels API',
-          pieHole: 0.4,
-          colors: ['#2ecc71', '#e74c3c'],
-          legend: { position: 'bottom' }
+          }).uploadImage({ image: base64 });
         };
-
-        const chart = new google.visualization.PieChart(document.getElementById('api-status-chart'));
-        chart.draw(data, options);
+        reader.readAsDataURL(file);
       }
-
-      /**
-       * Dessine le graphique en barres pour le nombre d'appels par action.
-       */
-      function drawActionsChart(callsByAction) {
-        let chartData = [['Action', 'Nombre d\'appels']];
-        for (const action in callsByAction) {
-          chartData.push([action, callsByAction[action]]);
+      
+      // Helper pour déclencher l'upload depuis les formulaires
+      function triggerUpload(targetInputId) {
+        // On utilise l'input file caché ou on en crée un temporaire
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = e => {
+           // On simule l'objet fileInput pour la fonction uploadImage existante ou on adapte
+           const file = e.target.files[0];
+           const reader = new FileReader();
+           reader.onload = function(evt) {
+             const base64 = evt.target.result;
+             google.script.run.withSuccessHandler(res => {
+               if(res.success) document.getElementById(targetInputId).value = res.url;
+               else alert("Erreur upload: " + res.error);
+             }).uploadImage({ image: base64 });
+           };
+           reader.readAsDataURL(file);
         }
-
-        const data = google.visualization.arrayToDataTable(chartData);
-
-        const options = {
-          title: 'Nombre d\'appels par type d\'action',
-          chartArea: {width: '60%'},
-          hAxis: {
-            title: 'Nombre d\'appels',
-            minValue: 0
-          },
-          vAxis: {
-            title: 'Action'
-          },
-          legend: { position: 'none' }
-        };
-
-        const chart = new google.visualization.BarChart(document.getElementById('actions-chart'));
-        chart.draw(data, options);
+        input.click();
       }
 
-      // Redessiner les graphiques si la fenêtre est redimensionnée
-      window.onresize = function() {
-        fetchAndDrawDashboard();
-      };
-
-    </script>
-  </body>
-</html> for (const action in callsByAction) {
-          chartData.push([action, callsByAction[action]]);
-        }
-
-        const data = google.visualization.arrayToDataTable(chartData);
-
-        const options = {
-          title: 'Nombre d\'appels par type d\'action',
-          chartArea: {width: '60%'},
-          hAxis: {
-            title: 'Nombre d\'appels',
-            minValue: 0
-          },
-          vAxis: {
-            title: 'Action'
-          },
-          legend: { position: 'none' }
-        };
-
-        const chart = new google.visualization.BarChart(document.getElementById('actions-chart'));
-        chart.draw(data, options);
+      function copyUrl() {
+        const copyText = document.getElementById("imageUrl");
+        copyText.select();
+        document.execCommand("copy");
+        alert("URL copiée !");
       }
 
-      // Redessiner les graphiques si la fenêtre est redimensionnée
-      window.onresize = function() {
-        fetchAndDrawDashboard();
-      };
+      // Envoi Email
+      function sendEmail(e) {
+        e.preventDefault();
+        const btn = document.getElementById('sendBtn');
+        btn.disabled = true;
+        btn.textContent = 'Envoi en cours...';
 
+        const payload = {
+          to: document.getElementById('emailTo').value,
+          subject: document.getElementById('emailSubject').value,
+          body: document.getElementById('emailBody').value
+        };
+
+        google.script.run.withSuccessHandler(function(res) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="bi bi-send"></i> Envoyer le message';
+          alert(res.success ? "Email envoyé avec succès !" : "Erreur: " + res.error);
+          if(res.success) document.getElementById('emailForm').reset();
+        }).sendCustomEmail(payload);
+      }
+
+      // --- GESTION EVENEMENTS ---
+      function createEvent(e) {
+        e.preventDefault();
+        const payload = {
+          titre: document.getElementById('evtTitle').value,
+          date: document.getElementById('evtDate').value,
+          heure: document.getElementById('evtTime').value,
+          lieu: document.getElementById('evtPlace').value,
+          description: document.getElementById('evtDesc').value,
+          image: document.getElementById('evtImage').value,
+          lien: document.getElementById('evtLink').value
+        };
+        google.script.run.withSuccessHandler(res => {
+          alert(res.message || res.error);
+          if(res.success) { document.getElementById('eventForm').reset(); loadEventsList(); }
+        }).createEvent(payload);
+      }
+
+      function loadEventsList() {
+        google.script.run.withSuccessHandler(res => {
+          const tbody = document.getElementById('eventsTableBody');
+          tbody.innerHTML = '';
+          if(res.success && res.events.length > 0) {
+            res.events.forEach(evt => {
+              const dateStr = new Date(evt.Date).toLocaleDateString();
+              tbody.innerHTML += `<tr>
+                <td>${dateStr}</td>
+                <td>${evt.Titre}</td>
+                <td>${evt.Lieu}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteItem('deleteEvent', '${evt.ID}', loadEventsList)">Supprimer</button></td>
+              </tr>`;
+            });
+          } else { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aucun événement.</td></tr>'; }
+        }).getEvents();
+      }
+
+      // --- GESTION RESSOURCES ---
+      function createResource(e) {
+        e.preventDefault();
+        const payload = {
+          titre: document.getElementById('resTitle').value,
+          auteur: document.getElementById('resAuthor').value,
+          description: document.getElementById('resDesc').value,
+          categorie: document.getElementById('resCat').value,
+          image: document.getElementById('resImage').value,
+          fichier: document.getElementById('resFile').value
+        };
+        google.script.run.withSuccessHandler(res => {
+          alert(res.message || res.error);
+          if(res.success) { document.getElementById('resourceForm').reset(); loadResourcesList(); }
+        }).createResource(payload);
+      }
+
+      function loadResourcesList() {
+        google.script.run.withSuccessHandler(res => {
+          const tbody = document.getElementById('resourcesTableBody');
+          tbody.innerHTML = '';
+          if(res.success && res.resources.length > 0) {
+            res.resources.forEach(resItem => {
+              tbody.innerHTML += `<tr>
+                <td>${resItem.Titre}</td>
+                <td>${resItem.Categorie}</td>
+                <td>${resItem.Auteur}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteItem('deleteResource', '${resItem.ID}', loadResourcesList)">Supprimer</button></td>
+              </tr>`;
+            });
+          } else { tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aucune ressource.</td></tr>'; }
+        }).getResources();
+      }
+
+      function deleteItem(action, id, callback) {
+        if(!confirm("Êtes-vous sûr de vouloir supprimer cet élément ?")) return;
+        google.script.run.withSuccessHandler(res => {
+          if(res.success) callback();
+          else alert("Erreur: " + res.error);
+        })[action](id); // Appel dynamique de la fonction serveur (deleteEvent ou deleteResource)
+      }
+
+      // Init
+      window.onload = loadDashboardData;
     </script>
   </body>
 </html>

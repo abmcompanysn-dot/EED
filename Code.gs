@@ -6,8 +6,6 @@
 const CONFIG = {
   SHEETS: {
     LOGS: 'Historique_Actions',
-    BLOG: 'Blog',
-    COMMENTS: 'Blog_Commentaires',
     EVENTS: 'Evenements',
     PRAYER: 'Demandes_Priere',
     CONTACT: 'Contact_Submissions',
@@ -16,6 +14,8 @@ const CONFIG = {
     RESOURCES: 'Ressources',
     DASHBOARD_LOGS: 'Dashboard_Logs'
   },
+  ADMIN_EMAIL: 'abmcompanysn@gmail.com', // A REMPLACER PAR VOTRE EMAIL
+  IMGBB_API_KEY: '96ff1e4e9603661db4d410f53df99454', // A REMPLACER PAR VOTRE CLE API IMGBB
   ALLOWED_ORIGINS: [
     'https://eed.abmcy.com',
     'https://eed1.abmcy.com',
@@ -41,6 +41,12 @@ function doGet(e) {
     return HtmlService.createTemplateFromFile('Dashboard').evaluate()
       .setTitle('Tableau de Bord - Admin Église')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
+  }
+  
+  // Route pour la page d'inscription/détails d'un événement
+  if (e && e.parameter && e.parameter.page === 'event' && e.parameter.id) {
+    // Charge une page qui utilisera getEventById pour afficher les infos
+    return HtmlService.createTemplateFromFile('EventDetails').evaluate();
   }
   
   // Comportement par défaut : test de connectivité de l'API
@@ -81,21 +87,25 @@ function doPost(e) {
 
     // Aiguillage (switch) pour appeler la fonction correspondante à l'action demandée.
     switch (action) {
-      // Actions liées au contenu (Blog, Événements, Besoins)
-      case 'getBlogPosts': result = getBlogPosts(); break;
-      case 'getBlogPostById': result = getBlogPostById(payload.id); break;
-      case 'getEvents': result = getEvents(); break; // Conserve getEvents pour la page événements
+      // Actions liées au contenu (Événements, Besoins)
+      case 'getEvents': result = getEvents(); break;
       case 'getUpcomingEvents': result = getUpcomingEvents(); break; // Nouvelle action pour les 3 prochains événements
+      case 'getEventById': result = getEventById(payload.id); break; // Pour la page d'inscription
       case 'getNeeds': result = getNeeds(); break;
       case 'getNeedById': result = getNeedById(payload.id); break;
       case 'getResources': result = getResources(); break;
 
-      // Actions interactives (Commentaires, Participations, Formulaires)
-      case 'getComments': result = getComments(payload.articleId); break;
-      case 'postComment': result = postComment(payload); break;
+      // Actions interactives (Participations, Formulaires, Système)
       case 'participateToNeed': result = participateToNeed(payload, ss); break;
       case 'handlePrayerRequest': result = handlePrayerRequest(payload); break;
       case 'handleContactForm': result = handleContactForm(payload); break;
+      case 'sendEmail': result = sendCustomEmail(payload); break; // Envoi d'email complet
+      case 'uploadImage': result = uploadImage(payload); break; // Import photo via ImgBB
+      case 'createEvent': result = createEvent(payload); break;
+      case 'updateEvent': result = updateEvent(payload); break;
+      case 'deleteEvent': result = deleteEvent(payload.id); break;
+      case 'createResource': result = createResource(payload); break;
+      case 'deleteResource': result = deleteResource(payload.id); break;
 
       // Action pour le tableau de bord
       case 'getDashboardData': result = getDashboardData(); break;
@@ -200,24 +210,6 @@ function onOpen() {
 }
 
 const seedData = {
-  blog: [
-    ['1', 'La Joie de Servir', 'Pasteur Jean', new Date('2024-05-28'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Découvrez le bonheur profond et la satisfaction que procure le service désintéressé au sein de notre communauté et pour l\'œuvre de Dieu. Cet article explore les bénédictions cachées du don de soi.', 'Réflexions', 'Publié'],
-    ['2', 'L\'Importance de la Prière Quotidienne', 'Soeur Marie', new Date('2024-05-25'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Un guide pratique pour développer une vie de prière plus riche et plus constante. Apprenez à faire de la prière une conversation quotidienne avec Dieu, une source de force et de paix.', 'Enseignements', 'Publié'],
-    ['3', 'La Foi en Action : Témoignage de Frère David', 'Frère David', new Date('2024-05-20'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Lisez le témoignage touchant de Frère David, qui partage comment sa foi a été mise à l\'épreuve et renforcée à travers les défis de la vie. Une histoire d\'espérance et de persévérance.', 'Témoignages', 'Publié'],
-    ['4', 'Comprendre la Grâce : Un Don Immérité', 'Équipe Pastorale', new Date('2024-05-15'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Qu\'est-ce que la grâce ? Cet enseignement approfondi explore la nature du don gratuit de Dieu, son impact sur notre salut et notre vie de tous les jours. Un concept fondamental de notre foi.', 'Enseignements', 'Publié'],
-    ['5', 'La Communauté : Notre Ancre dans la Tempête', 'Pasteur Moussa', new Date('2024-05-10'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Dans les moments difficiles, la communauté de l\'église est un refuge. Cet article met en lumière l\'importance des liens fraternels, du soutien mutuel et de l\'amour partagé.', 'Vie d\'Église', 'Publié'],
-    ['6', 'Vivre le Pardon au Quotidien', 'Soeur Hélène', new Date('2024-05-05'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Le pardon est un chemin de libération. Découvrez des clés pratiques pour pardonner aux autres comme nous avons été pardonnés, et pour vivre libéré du poids du ressentiment.', 'Spiritualité', 'Publié'],
-    ['7', 'Annonce : Prochaine Retraite des Jeunes', 'Comité des Jeunes', new Date('2024-06-01'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Ne manquez pas notre retraite annuelle pour les jeunes ! Un week-end de partage, de louange et d\'activités pour grandir ensemble dans la foi. Inscriptions ouvertes !', 'Annonces', 'Publié'],
-    ['8', 'Étude Biblique : Les Paraboles de Jésus', 'Dr. Alain Dubois', new Date('2024-04-28'), 'https://i.postimg.cc/nc96NVts/LOGO.png', 'Plongez au cœur des enseignements de Jésus à travers ses paraboles. Cette étude révèle les trésors de sagesse cachés dans ces histoires intemporelles.', 'Études Bibliques', 'Publié']
-  ],
-  blog_comments: [
-    ['1', 'Visiteur Anonyme', 'Merci pour cet article édifiant !', new Date(), 'Approuvé'],
-    ['2', 'Lecteur Fidèle', 'Amen ! La prière est vraiment notre force.', new Date(), 'Approuvé'],
-    ['1', 'Sophie B.', 'Très inspirant, cela me motive à m\'engager davantage.', new Date(), 'Approuvé'],
-    ['3', 'Marc T.', 'Quel témoignage puissant ! Merci pour ce partage.', new Date(), 'Approuvé'],
-    ['5', 'Anonyme', 'J\'ai vraiment ressenti le soutien de la communauté récemment. Cet article est si vrai.', new Date(), 'Approuvé'],
-    ['2', 'Jeanne D.', 'De très bons conseils pratiques, je vais les appliquer dès aujourd\'hui.', new Date(), 'Approuvé']
-  ],
   events: [
     ['evt01', 'Conférence sur la Famille Chrétienne', new Date('2024-06-15'), '10:00', 'Salle des Fêtes', 'Une journée pour renforcer les liens familiaux et découvrir des outils bibliques pour une vie de famille harmonieuse.', 'https://i.postimg.cc/nc96NVts/LOGO.png', 'https://example.com/conference'],
     ['evt02', 'Soirée d\'Adoration et de Louange', new Date('2024-06-22'), '19:00', 'Sanctuaire Principal', 'Un moment de louange et d\'adoration intense pour se connecter profondément avec Dieu.', 'https://i.postimg.cc/nc96NVts/LOGO.png', ''],
@@ -272,8 +264,6 @@ function initializeWithSeedData() {
     try {
       // Association entre les clés de seedData et les noms des feuilles
       const sheetMapping = {
-        blog: CONFIG.SHEETS.BLOG,
-        blog_comments: CONFIG.SHEETS.COMMENTS,
         events: CONFIG.SHEETS.EVENTS, 
         prayer_requests: CONFIG.SHEETS.PRAYER,
         contact_submissions: CONFIG.SHEETS.CONTACT,
@@ -315,8 +305,6 @@ function setupSpreadsheet() {
   // Définition de la structure de chaque feuille de calcul nécessaire à l'application.
   const sheetsToCreate = [    
     { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Email', 'Suggestion'] },
-    { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
-    { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
     { name: CONFIG.SHEETS.PRAYER, headers: ['Timestamp', 'Nom', 'Email', 'Pays', 'Nationalite', 'Telephone', 'Demande', 'Confidentialite'] },
     { name: CONFIG.SHEETS.CONTACT, headers: ['Timestamp', 'Nom', 'Email', 'Sujet', 'Message'] },
@@ -353,8 +341,6 @@ function verifyAndFixSheetStructure() {
   // Liste des feuilles et de leurs colonnes requises.
   const requiredSheets = [    
     { name: CONFIG.SHEETS.LOGS, headers: ['Timestamp', 'Origine', 'Action', 'Statut', 'Message', 'Email', 'Suggestion'] },
-    { name: CONFIG.SHEETS.BLOG, headers: ['ID', 'Titre', 'Auteur', 'Date', 'ImageURL', 'Contenu', 'Categorie', 'Statut'] },
-    { name: CONFIG.SHEETS.COMMENTS, headers: ['ID_Article', 'Auteur', 'Commentaire', 'Timestamp', 'Statut'] },
     { name: CONFIG.SHEETS.EVENTS, headers: ['ID', 'Titre', 'Date', 'Heure', 'Lieu', 'Description', 'ImageURL', 'LienInscription'] },
     { name: CONFIG.SHEETS.PRAYER, headers: ['Timestamp', 'Nom', 'Email', 'Pays', 'Nationalite', 'Telephone', 'Demande', 'Confidentialite'] },
     { name: CONFIG.SHEETS.CONTACT, headers: ['Timestamp', 'Nom', 'Email', 'Sujet', 'Message'] },
@@ -414,47 +400,6 @@ function logAction(origin, action, status, message, email = 'anonyme', suggestio
  * NOUVELLES FONCTIONS POUR LE CONTENU DYNAMIQUE
  * =================================================================================
  */
-
-/**
- * Récupère tous les articles de blog publiés depuis la feuille 'Blog'.
- * @returns {Object} Un objet contenant les articles ou une erreur.
- */
-function getBlogPosts() {
-  try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
-    
-    const posts = sheetToObjects(sheet)
-      .filter(post => post.Statut === 'Publié'); // On ne récupère que les articles publiés
-
-    posts.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
-    return { success: true, posts: posts };
-  } catch (e) {
-    logAction('Back-End', 'getBlogPosts', 'ERROR', e.message, 'API', "Vérifiez que la feuille 'Blog' existe et que sa structure est correcte.");
-    return { success: false, error: "Impossible de récupérer les articles." };
-  }
-}
-
-function getBlogPostById(id) {
-  try {
-    if (!id) throw new Error("Aucun ID d'article fourni.");
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.BLOG);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.BLOG}' est introuvable.`);
-    
-    const posts = sheetToObjects(sheet);
-    const post = posts.find(p => String(p.ID) === String(id));
-
-    if (!post) {
-      return { success: false, error: "Article non trouvé." };
-    }
-
-    return { success: true, post: post };
-  } catch (e) {
-    logAction('Back-End', 'getBlogPostById', 'ERROR', e.message, 'API', "Vérifiez l'ID fourni et la structure de la feuille 'Blog'.");
-    return { success: false, error: "Impossible de récupérer l'article." };
-  }
-}
 
 /**
  * Récupère toutes les ressources publiées depuis la feuille 'Ressources'.
@@ -523,12 +468,10 @@ function getDashboardData() {
     }, {});
 
     // 2. Résumé du contenu
-    const blogSheet = ss.getSheetByName(CONFIG.SHEETS.BLOG);
     const eventsSheet = ss.getSheetByName(CONFIG.SHEETS.EVENTS);
     const needsSheet = ss.getSheetByName(CONFIG.SHEETS.NEEDS);
     const resourcesSheet = ss.getSheetByName(CONFIG.SHEETS.RESOURCES);
 
-    const totalPosts = blogSheet.getLastRow() - 1;
     const totalEvents = eventsSheet.getLastRow() - 1;
     const totalNeeds = needsSheet.getLastRow() - 1;
     const totalResources = resourcesSheet.getLastRow() - 1;
@@ -541,7 +484,6 @@ function getDashboardData() {
         callsByAction
       },
       content: {
-        totalPosts,
         totalEvents,
         totalNeeds,
         totalResources
@@ -554,6 +496,29 @@ function getDashboardData() {
     return { success: false, error: "Impossible de récupérer les données du tableau de bord." };
   }
 }
+
+/**
+ * Récupère un événement spécifique par son ID.
+ * @param {string} id - L'ID de l'événement.
+ * @returns {Object} L'événement trouvé ou une erreur.
+ */
+function getEventById(id) {
+  try {
+    if (!id) throw new Error("ID événement manquant.");
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
+    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.EVENTS}' est introuvable.`);
+
+    const events = sheetToObjects(sheet);
+    const event = events.find(e => String(e.ID) === String(id));
+
+    if (!event) return { success: false, error: "Événement non trouvé." };
+    return { success: true, event: event };
+  } catch (e) {
+    logAction('Back-End', 'getEventById', 'ERROR', e.message);
+    return { success: false, error: "Erreur lors de la récupération de l'événement." };
+  }
+}
+
 /**
  * Récupère les 3 prochains événements à venir depuis la feuille 'Evenements'.
  * @returns {Object} Un objet contenant les 3 prochains événements ou une erreur.
@@ -693,70 +658,6 @@ function participateToNeed(payload, ss) {
 }
 
 /**
- * Récupère les commentaires approuvés pour un article de blog.
- * @param {string} articleId - L'ID de l'article de blog.
- * @returns {Object} Un objet contenant les commentaires.
- */
-function getComments(articleId) {
-  try {
-    if (!articleId) {
-      throw new Error("L'identifiant de l'article (articleId) est manquant.");
-    }
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Blog_Commentaires');
-    if (!sheet) throw new Error("La feuille 'Blog_Commentaires' est introuvable.");
-
-    const data = sheet.getDataRange().getValues();
-    const headers = data.shift();
-    if (!headers || headers.length === 0) return { success: true, comments: [] };
-    const idIndex = headers.indexOf('ID_Article');
-    const authorIndex = headers.indexOf('Auteur');
-    const textIndex = headers.indexOf('Commentaire');
-    const timestampIndex = headers.indexOf('Timestamp');
-    const statusIndex = headers.indexOf('Statut');
-
-    const comments = data
-      .filter(row => String(row[idIndex]) === String(articleId) && row[statusIndex] === 'Approuvé') // Filtre par ID et statut
-      .map(row => ({
-        author: row[authorIndex],
-        text: row[textIndex],
-        timestamp: row[timestampIndex]
-      }))
-      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Trie du plus récent au plus ancien
-
-    return { success: true, comments: comments };
-
-  } catch (e) {
-    logAction('getComments', 'ERROR', e.message, 'API');
-    return { success: false, error: e.message };
-  }
-}
-
-/**
- * Enregistre un nouveau commentaire pour un article de blog.
- * @param {Object} payload - Les données du commentaire (articleId, author, commentText).
- * @returns {Object} Un objet indiquant le succès ou l'échec.
- */
-function postComment(payload) {
-  try {
-    if (!payload || !payload.articleId || !payload.author || !payload.commentText) {
-      throw new Error("Données de commentaire incomplètes.");
-    }
-
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.COMMENTS);
-    if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.COMMENTS}' est introuvable.`);
-
-    // Ajoute le commentaire avec le statut "Approuvé" par défaut.
-    // Pour un système de modération, changez 'Approuvé' par 'En attente'.
-    sheet.appendRow([payload.articleId, payload.author, payload.commentText, new Date(), 'Approuvé']);
-
-    return { success: true, message: "Commentaire soumis avec succès." };
-  } catch (e) {
-    logAction('Front-End', 'postComment', 'ERROR', e.message, 'anonyme', "Vérifiez les données du formulaire et l'existence de la feuille 'Blog_Commentaires'.");
-    return { success: false, error: "Impossible de soumettre le commentaire." };
-  }
-}
-
-/**
  * Gère la soumission du formulaire de contact principal.
  * @param {Object} payload - Les données du formulaire (name, email, subject, message).
  * @returns {Object} Un objet indiquant le succès ou l'échec.
@@ -771,10 +672,167 @@ function handleContactForm(payload) {
     if (!sheet) throw new Error(`La feuille '${CONFIG.SHEETS.CONTACT}' est introuvable.`);
 
     sheet.appendRow([new Date(), payload.name, payload.email, payload.subject || 'Aucun sujet', payload.message]);
+    
+    // Envoi d'une notification par email à l'admin
+    try {
+      MailApp.sendEmail({
+        to: CONFIG.ADMIN_EMAIL,
+        subject: `Nouveau contact: ${payload.subject || 'Sans sujet'}`,
+        htmlBody: `<p><strong>De:</strong> ${payload.name} (${payload.email})</p><p><strong>Message:</strong><br>${payload.message}</p>`
+      });
+    } catch (mailErr) {
+      Logger.log("Erreur d'envoi de mail: " + mailErr.message);
+    }
+
     return { success: true, message: 'Votre message a bien été envoyé. Nous vous répondrons bientôt.' };
   } catch (e) {
     const userEmail = (payload && payload.email) || 'anonyme';
     logAction('Front-End', 'handleContactForm', 'ERROR', e.message, userEmail, "Vérifiez les données du formulaire et l'existence de la feuille 'Contact_Submissions'.");
     return { success: false, error: "Impossible d'envoyer le message." };
+  }
+}
+
+/**
+ * Envoie un email personnalisé.
+ * @param {Object} payload - { to, subject, body }
+ */
+function sendCustomEmail(payload) {
+  try {
+    const recipient = payload.to || CONFIG.ADMIN_EMAIL;
+    const subject = payload.subject || "Message de l'Église";
+    const body = payload.body || "";
+
+    MailApp.sendEmail({
+      to: recipient,
+      subject: subject,
+      htmlBody: body
+    });
+    return { success: true, message: "Email envoyé." };
+  } catch (e) {
+    logAction('Back-End', 'sendCustomEmail', 'ERROR', e.message);
+    return { success: false, error: e.message };
+  }
+}
+
+/**
+ * Crée un nouvel événement.
+ */
+function createEvent(payload) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
+    const id = 'evt' + Date.now();
+    // Ordre: ID, Titre, Date, Heure, Lieu, Description, ImageURL, LienInscription
+    sheet.appendRow([
+      id,
+      payload.titre,
+      payload.date,
+      payload.heure,
+      payload.lieu,
+      payload.description,
+      payload.image,
+      payload.lien
+    ]);
+    return { success: true, message: "Événement créé avec succès." };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+}
+
+/**
+ * Met à jour un événement existant.
+ */
+function updateEvent(payload) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.EVENTS);
+    const data = sheet.getDataRange().getValues();
+    // On suppose que l'ID est en colonne 1 (index 0)
+    for (let i = 1; i < data.length; i++) {
+      if (String(data[i][0]) === String(payload.id)) {
+        // Mise à jour des colonnes : Titre(1), Date(2), Heure(3), Lieu(4), Description(5), ImageURL(6), LienInscription(7)
+        sheet.getRange(i + 1, 2).setValue(payload.titre);
+        sheet.getRange(i + 1, 3).setValue(payload.date);
+        sheet.getRange(i + 1, 4).setValue(payload.heure);
+        sheet.getRange(i + 1, 5).setValue(payload.lieu);
+        sheet.getRange(i + 1, 6).setValue(payload.description);
+        sheet.getRange(i + 1, 7).setValue(payload.image);
+        sheet.getRange(i + 1, 8).setValue(payload.lien);
+        return { success: true, message: "Événement mis à jour avec succès." };
+      }
+    }
+    return { success: false, error: "Événement non trouvé." };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+}
+
+/**
+ * Supprime un événement par son ID.
+ */
+function deleteEvent(id) {
+  return deleteRowById(CONFIG.SHEETS.EVENTS, id);
+}
+
+/**
+ * Crée une nouvelle ressource.
+ */
+function createResource(payload) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEETS.RESOURCES);
+    const id = 'res' + Date.now();
+    // Ordre: ID, Titre, Auteur, Preface, ImageURL, Categorie, FichierURL, Statut
+    sheet.appendRow([
+      id,
+      payload.titre,
+      payload.auteur,
+      payload.description,
+      payload.image,
+      payload.categorie,
+      payload.fichier,
+      'Publié'
+    ]);
+    return { success: true, message: "Ressource créée avec succès." };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+}
+
+/**
+ * Supprime une ressource par son ID.
+ */
+function deleteResource(id) {
+  return deleteRowById(CONFIG.SHEETS.RESOURCES, id);
+}
+
+function deleteRowById(sheetName, id) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]) === String(id)) { // Suppose que l'ID est en colonne 1 (index 0)
+      sheet.deleteRow(i + 1);
+      return { success: true, message: "Élément supprimé." };
+    }
+  }
+  return { success: false, error: "ID non trouvé." };
+}
+
+/**
+ * Upload une image vers ImgBB.
+ * @param {Object} payload - { image: "base64string" }
+ */
+function uploadImage(payload) {
+  try {
+    if (!payload.image) throw new Error("Image manquante.");
+    const url = 'https://api.imgbb.com/1/upload?key=' + CONFIG.IMGBB_API_KEY;
+    const options = {
+      method: 'post',
+      payload: { image: payload.image.replace(/^data:image\/\w+;base64,/, "") }
+    };
+    const response = UrlFetchApp.fetch(url, options);
+    const json = JSON.parse(response.getContentText());
+    if (json.success) return { success: true, url: json.data.url, delete_url: json.data.delete_url };
+    throw new Error("Erreur ImgBB: " + (json.error ? json.error.message : "Inconnue"));
+  } catch (e) {
+    logAction('Back-End', 'uploadImage', 'ERROR', e.message);
+    return { success: false, error: e.message };
   }
 }
