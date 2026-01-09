@@ -28,7 +28,7 @@
       <nav class="nav flex-column">
         <a class="nav-link active" onclick="showSection('overview')"><i class="bi bi-speedometer2"></i> Vue d'ensemble</a>
         <a class="nav-link" onclick="showSection('events-mgr')"><i class="bi bi-calendar-event"></i> Événements</a>
-        <a class="nav-link" onclick="showSection('resources-mgr')"><i class="bi bi-book"></i> Ressources</a>
+        <!-- <a class="nav-link" onclick="showSection('resources-mgr')"><i class="bi bi-book"></i> Ressources</a> -->
         <a class="nav-link" onclick="showSection('images')"><i class="bi bi-images"></i> Gestion Images</a>
         <a class="nav-link" onclick="showSection('email')"><i class="bi bi-envelope"></i> Envoyer Email</a>
       </nav>
@@ -78,13 +78,13 @@
               <div class="stat-value" id="totalNeeds">-</div>
             </div>
           </div>
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <div class="stat-card">
               <i class="bi bi-book fs-1 text-info mb-2"></i>
               <h5>Ressources</h5>
               <div class="stat-value" id="totalResources">-</div>
             </div>
-          </div>
+          </div> -->
         </div>
         
         <div class="mt-4 text-end">
@@ -137,10 +137,9 @@
       </div>
 
       <!-- Section: Gestion Ressources -->
-      <div id="resources-mgr" class="section-content">
+      <!-- <div id="resources-mgr" class="section-content">
         <h2 class="mb-4">Gestion des Ressources (Articles)</h2>
         
-        <!-- Formulaire Ajout -->
         <div class="card p-4 mb-4">
           <h4>Ajouter une ressource</h4>
           <form id="resourceForm" onsubmit="createResource(event)">
@@ -188,7 +187,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Section: Images (ImgBB) -->
       <div id="images" class="section-content">
