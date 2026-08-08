@@ -21,9 +21,9 @@
   ],
   "icons": [
     {
-      "src": "/r/apple-touch-icon.png",
-      "type": "image/png",
-      "sizes": "180x180"
+      "src": "/r/LOGO.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
     },
     {
       "src": "/r/icons/icon-512x512.png",
@@ -31,9 +31,9 @@
       "sizes": "512x512"
     },
     {
-      "src": "/r/apple-touch-icon.png",
-      "type": "image/png",
-      "sizes": "180x180",
+      "src": "/r/LOGO.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
       "purpose": "maskable"
     },
     {
@@ -49,7 +49,7 @@
       "description": "Soutenir la mission de l'église",
       "url": "/Boutique.html",
       "icons": [
-        { "src": "/r/apple-touch-icon.png", "sizes": "any", "type": "image/png" }
+        { "src": "/r/LOGO.svg", "sizes": "any", "type": "image/svg+xml" }
       ]
     },
     {
@@ -58,7 +58,7 @@
       "description": "Voir les prochains événements",
       "url": "/evenements.html",
       "icons": [
-        { "src": "/r/apple-touch-icon.png", "sizes": "any", "type": "image/png" }
+        { "src": "/r/LOGO.svg", "sizes": "any", "type": "image/svg+xml" }
       ]
     },
     {
@@ -67,7 +67,7 @@
       "description": "Regarder le culte en direct",
       "url": "/live.html",
       "icons": [
-        { "src": "/r/apple-touch-icon.png", "sizes": "any", "type": "image/png" }
+        { "src": "/r/LOGO.svg", "sizes": "any", "type": "image/svg+xml" }
       ]
     }
   ],

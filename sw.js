@@ -20,7 +20,7 @@ const urlsToCache = [
   'theme.css',
   'main.js',
   'config.js',
-  'r/LOGO-photo.webp',
+  'r/LOGO.svg',
   'r/vid.mp4',
   'r/a.jpg',
   'r/b.jpg',
@@ -124,8 +124,8 @@ self.addEventListener('push', event => {
   console.log('Notification push reçue:', data);
   const options = {
     body: data.body,
-    icon: 'r/favicon.png', // CORRECTION : Utilisation du logo principal
-    badge: 'r/favicon.png', // CORRECTION : Utilisation du logo pour le badge également
+    icon: 'r/LOGO.svg', // CORRECTION : Utilisation du logo principal
+    badge: 'r/LOGO.svg', // CORRECTION : Utilisation du logo pour le badge également
     data: {
       url: data.url || '/'
     }
