@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pour vos Offrandes - Église Évangélique de Dakar</title>
-    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
+    <link rel="icon" href="r/favicon.png" type="image/png">
     <!-- SEO & Social Sharing -->
     <meta name="description" content="Soutenez la mission de l'Église Évangélique de Dakar par vos dons et offrandes. Découvrez comment participer.">
     <meta name="keywords" content="faire un don, offrande, soutenir église, dîme, virement bancaire, orange money, wave, dakar">
@@ -336,7 +336,7 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <a href="index.html" class="logo"><img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -383,7 +383,7 @@
             <div class="grid-3">
                 <!-- Carte Virement Bancaire -->
                 <div class="card donation-card animated-card">
-                    <img src="r/ecobank.svg" alt="Ecobank" class="payment-logo">
+                    <img src="r/ecobank.svg" alt="Ecobank" class="payment-logo" loading="lazy">
                     <h3>Virement Bancaire</h3>
                     <p>Compte Général (Ecobank):</p>
                     <div class="account-info" onclick="copyToClipboard('SN0940100410002753900165', this)">SN094 01004 100027539001 65</div>
@@ -393,7 +393,7 @@
 
                 <!-- Carte Orange Money -->
                 <div class="card donation-card animated-card">
-                    <img src="r/orange.svg" alt="Orange Money" class="payment-logo">
+                    <img src="r/orange.svg" alt="Orange Money" class="payment-logo" loading="lazy">
                     <h3>Paiement Mobile</h3>
                     <p>Suivez les instructions sur votre téléphone :</p>
                     <div class="account-info" onclick="copyToClipboard('#144#633#', this)">#144#633#</div>
@@ -403,7 +403,7 @@
 
                 <!-- Carte Wave -->
                 <div class="card donation-card animated-card">
-                    <img src="r/wave.webp" alt="Wave" class="payment-logo">
+                    <img src="r/wave.webp" alt="Wave" class="payment-logo" loading="lazy">
                     <h3>Wave</h3>
                     <p>Faites votre don ou offrande sans frais via l'application.</p>
                     <p>1. Ouvrez Wave et sélectionnez "Paiements".<br>2. Recherchez 'EGLISE EVANGELIQUE DE DAKAR'.</p>
@@ -454,7 +454,7 @@
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
              <div class="footer-col">
-                 <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                 <img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
                  <p class="footer-tagline">
                      Annoncer l'Évangile, former des disciples,<br />
                      manifester l'amour de Christ à Dakar et au-delà.
@@ -579,7 +579,7 @@
                             const percentage = Math.min((need.MontantActuel / need.MontantObjectif) * 100, 100);
 
                             card.innerHTML = `
-                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}">
+                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}" loading="lazy">
                                 <div class="need-content">
                                     <h4>${need.Titre}</h4>
                                     <p>${need.DescriptionCourte}</p>

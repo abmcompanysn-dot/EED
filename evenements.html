@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Événements - Église Évangélique de Dakar</title>
-    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
+    <link rel="icon" href="r/favicon.png" type="image/png">
     <!-- SEO & Social Sharing -->
     <meta name="description" content="Consultez l'agenda des prochains événements, conférences et activités spéciales de l'Église Évangélique de Dakar.">
     <meta name="keywords" content="événements église, agenda, conférence, culte spécial, activités, dakar">
     <meta name="author" content="Église Évangélique de Dakar">
     <meta property="og:title" content="Nos Événements - Église Évangélique de Dakar">
     <meta property="og:description" content="Ne manquez pas nos prochains rassemblements pour grandir ensemble dans la foi et la communion.">
-    <meta property="og:image" content="r/b.svg">
+    <meta property="og:image" content="r/b-photo.webp">
     <meta property="og:url" content="https://beed.abmcy.com/evenements.html">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -34,7 +34,7 @@
             padding: 0 20px;
             text-align: center;
             color: white;
-            background-image: linear-gradient(rgba(10, 10, 35, 0.75), rgba(10, 10, 35, 0.75)), url('r/b.svg');
+            background-image: linear-gradient(rgba(10, 10, 35, 0.75), rgba(10, 10, 35, 0.75)), url('r/b-photo.webp');
             background-size: cover; background-position: center;
             border-bottom: 1px solid var(--border-color);
         }
@@ -152,7 +152,7 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"></a>
+            <a href="index.html" class="logo"><img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar" loading="lazy"></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -205,7 +205,7 @@
             <div class="grid-3" id="regular-programs-grid">
                 <!-- Carte Culte Dominical -->
                 <div class="event-card">
-                    <img src="r/a.jpg" alt="Culte Dominical"> <!-- Remplacez par une image pertinente -->
+                    <img src="r/a.jpg" alt="Culte Dominical" loading="lazy"> <!-- Remplacez par une image pertinente -->
                     <div class="event-content">
                         <div class="event-meta">
                             <span><i class="fas fa-calendar-alt"></i> Chaque Dimanche</span>
@@ -218,7 +218,7 @@
                 </div>
                 <!-- Carte Prière du Mercredi -->
                 <div class="event-card">
-                    <img src="r/p.png" alt="Prière du Mercredi"> <!-- Remplacez par une image pertinente -->
+                    <img src="r/p.png" alt="Prière du Mercredi" loading="lazy"> <!-- Remplacez par une image pertinente -->
                     <div class="event-content">
                         <div class="event-meta">
                             <span><i class="fas fa-calendar-alt"></i> Chaque Mercredi</span>
@@ -231,7 +231,7 @@
                 </div>
                 <!-- Carte Rencontre des Jeunes -->
                 <div class="event-card">
-                    <img src="r/f.svg" alt="Rencontre des Jeunes"> <!-- Remplacez par une image pertinente -->
+                    <img src="r/f-photo.webp" alt="Rencontre des Jeunes" loading="lazy"> <!-- Remplacez par une image pertinente -->
                     <div class="event-content">
                         <div class="event-meta">
                             <span><i class="fas fa-calendar-alt"></i> Chaque Vendredi</span>
@@ -244,7 +244,7 @@
                 </div>
                 <!-- Carte École du Dimanche -->
                 <div class="event-card">
-                    <img src="r/h.svg" alt="École du Dimanche"> <!-- Remplacez par une image pertinente -->
+                    <img src="r/h-photo.webp" alt="École du Dimanche" loading="lazy"> <!-- Remplacez par une image pertinente -->
                     <div class="event-content">
                         <div class="event-meta">
                             <span><i class="fas fa-calendar-alt"></i> Chaque Dimanche</span>
@@ -265,7 +265,7 @@
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
              <div class="footer-col">
-                 <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                 <img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
                  <p class="footer-tagline">
                      Annoncer l'Évangile, former des disciples,<br />
                      manifester l'amour de Christ à Dakar et au-delà.
@@ -343,7 +343,7 @@
                             }
 
                             card.innerHTML = `
-                                <img src="${event.ImageURL}" alt="Image pour ${event.Titre}">
+                                <img src="${event.ImageURL}" alt="Image pour ${event.Titre}" loading="lazy">
                                 <div class="event-content">
                                     <div class="event-meta">
                                         <span><i class="fas fa-calendar-alt"></i> ${eventDate}</span>

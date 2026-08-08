@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/abmcompanysn-dot/EED#readme",
   "devDependencies": {
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.1.17"
   }
 }

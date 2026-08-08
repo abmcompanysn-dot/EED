@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Titre de la page, mis à jour dynamiquement par JavaScript -->
     <title>Détail de la Demande - Église Évangélique de Dakar</title>
-    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
+    <link rel="icon" href="r/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -194,7 +194,7 @@
     <header>
         <!-- Barre de navigation principale -->
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;"></a>
+            <a href="index.html" class="logo"><img src="r/LOGO-photo.webp" alt="Logo Lumière du Futur" style="height: 50px; vertical-align: middle;" loading="lazy"></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -266,7 +266,7 @@
                                 <header class="need-detail-header">
                                     <h1 class="need-detail-title">${need.Titre}</h1>
                                 </header>
-                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}" class="need-detail-image">
+                                <img src="${need.ImageURL}" alt="Image pour ${need.Titre}" class="need-detail-image" loading="lazy">
                                 
                                 <div class="progress-section">
                                     <h3>Progression du financement</h3>

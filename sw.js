@@ -1,5 +1,5 @@
-const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.3';
-const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.3';
+const STATIC_CACHE_NAME = 'lumiere-du-futur-static-v2.4';
+const DYNAMIC_CACHE_NAME = 'lumiere-du-futur-dynamic-v2.4';
 
 const urlsToCache = [
   '/',
@@ -20,13 +20,13 @@ const urlsToCache = [
   'theme.css',
   'main.js',
   'config.js',
-  'r/LOGO.svg',
+  'r/LOGO-photo.webp',
   'r/vid.mp4',
   'r/a.jpg',
   'r/b.jpg',
   'r/c.jpg',
   'r/p.png',
-  'r/rs.svg',
+  'r/rs-photo.webp',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap'
 ];
@@ -124,8 +124,8 @@ self.addEventListener('push', event => {
   console.log('Notification push reçue:', data);
   const options = {
     body: data.body,
-    icon: 'r/LOGO.svg', // CORRECTION : Utilisation du logo principal
-    badge: 'r/LOGO.svg', // CORRECTION : Utilisation du logo pour le badge également
+    icon: 'r/favicon.png', // CORRECTION : Utilisation du logo principal
+    badge: 'r/favicon.png', // CORRECTION : Utilisation du logo pour le badge également
     data: {
       url: data.url || '/'
     }

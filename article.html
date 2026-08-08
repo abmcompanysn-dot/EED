@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article - Lumière du Futur</title>
-    <link rel="icon" href="r/LOGO.svg" type="image/svg+xml">
+    <link rel="icon" href="r/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -189,7 +189,7 @@
 <body>
     <header>
         <nav>
-            <a href="index.html" class="logo"><img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar"/></a>
+            <a href="index.html" class="logo"><img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar"/></a>
             <ul class="desktop-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="apropos.html">À Propos</a></li>
@@ -221,7 +221,7 @@
         <div class="container footer-grid">
             <!-- Colonne Logo + Mission -->
              <div class="footer-col">
-                 <img src="r/LOGO.svg" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
+                 <img src="r/LOGO-photo.webp" alt="Logo Église Évangélique de Dakar" class="footer-logo" />
                  <p class="footer-tagline">
                      Annoncer l'Évangile, former des disciples,<br />
                      manifester l'amour de Christ à Dakar et au-delà.
@@ -300,7 +300,7 @@
                                     <h1 class="article-title">${post.Titre}</h1>
                                     <p class="article-meta">Par ${post.Auteur} • ${postDate}</p>
                                 </header>
-                                <img src="${post.ImageURL}" alt="Image pour ${post.Titre}" class="article-image">
+                                <img src="${post.ImageURL}" alt="Image pour ${post.Titre}" class="article-image" loading="lazy">
                                 <div class="article-content">
                                     ${formattedContent}
                                 </div>
